@@ -246,4 +246,54 @@ unlambda.comからCADRのイメージとソースが落とせるので中身を�
 &lt;/ul&gt;
 &lt;p&gt;この辺で力尽きました。
 8byteや1008byte境界のあたりがわからず。
-&lt;a href="http://www.unlambda.com/cadr/aimemo528_75pgs.pdf"&gt;aimemo528_75pgs.pdf&lt;/a&gt;のDisk structureあたりの制約なのかなあ。&lt;/p&gt;</summary></entry></feed>
+&lt;a href="http://www.unlambda.com/cadr/aimemo528_75pgs.pdf"&gt;aimemo528_75pgs.pdf&lt;/a&gt;のDisk structureあたりの制約なのかなあ。&lt;/p&gt;</summary></entry><entry><title>cattoy memo</title><link href="/cattoy-memo.html" rel="alternate"></link><published>2016-10-24T00:00:00+09:00</published><updated>2016-10-24T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:,2016-10-24:cattoy-memo.html</id><summary type="html">&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.cattoy.info"&gt;https://www.cattoy.info&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;Cat Exercise Wheelの使ってくれなさのあまり作りました。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;さくらVPS mem1G/2Coreプラン&lt;/li&gt;
+&lt;li&gt;CentOS 6.8&lt;/li&gt;
+&lt;li&gt;nginx &lt;ul&gt;
+&lt;li&gt;http2に対応するためビルドした&lt;/li&gt;
+&lt;li&gt;ついでにLibreSSLにした&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;nginx version: nginx/1.11.5
+built by gcc 4.4.7 20120313 (Red Hat 4.4.7-17) (GCC) 
+built with LibreSSL 2.5.0
+TLS SNI support enabled
+configure arguments: --prefix=/opt/nginx-1.11.5 --with-http_ssl_module --with-http_gzip_static_module --with-http_stub_status_module --with-http_v2_module --with-http_realip_module --with-openssl=../libressl-2.5.0 --with-cc-opt=&amp;#39;-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -march=native&amp;#39; --with-ld-opt=&amp;#39; -Wl,-E -lrt&amp;#39;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Let's Encryptで証明書とってhttp2化&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;自配信コンテンツはほとんどないので意味はない&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;ruby 2.3.1&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;rails 5.0.1&lt;ul&gt;
+&lt;li&gt;puma&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;sqlite3&lt;ul&gt;
+&lt;li&gt;DB動かすほどのサーバーじゃないのでとりあえず&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;認証はsorcery&lt;/li&gt;
+&lt;li&gt;エラー通知はexception_notification -&amp;gt; slack-notifierでcattoy.slack -&amp;gt; https://cattoy.slack.com/&lt;/li&gt;
+&lt;li&gt;itamae&lt;ul&gt;
+&lt;li&gt;nginx -&amp;gt; pumaまわりが未完成&lt;/li&gt;
+&lt;li&gt;面倒になってきたのでdockerの方が楽そうな気がしてきた&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;CSSフレームワークは&lt;a href="https://github.com/kathamo/Kathamo/tree/master/Kathamo-3.0.0"&gt;kathamo&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;navbarのopen/closeとturbolinksが相性が悪く、はまった。turbolinksは無効化&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</summary></entry></feed>
