@@ -23,7 +23,7 @@ AUTHOR_FEED_RSS = None
 LINKS = ()
 
 # Social widget
-SOCIAL = ()
+SOCIAL = (('github', 'https://github.com/holrock/'),)
 
 DEFAULT_PAGINATION = 10
 
