@@ -1,0 +1,9 @@
+*.DS_Store
+*.lock
+*.out
+*.pid
+*.py[cod]
+*.swp
+*~
+._*
+output
