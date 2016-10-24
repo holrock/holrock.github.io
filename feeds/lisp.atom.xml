@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug</title><link href="/" rel="alternate"></link><link href="/feeds/lisp.atom.xml" rel="self"></link><id>/</id><updated>2016-10-25T00:00:00+09:00</updated><entry><title>lmfSを見る</title><link href="/lmfswojian-ru.html" rel="alternate"></link><published>2016-10-25T00:00:00+09:00</published><updated>2016-10-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:,2016-10-25:lmfswojian-ru.html</id><summary type="html">&lt;p&gt;lsmfとはMTIのLispマシン、ファイルシステムです。
+unlambda.comからCADRのイメージとソースが落とせるので中身を見てみます。&lt;/p&gt;
+&lt;h1&gt;ダンプしてみる&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;http://unlambda.com/index.php?n=Main.Cadr からファイルを落とす&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;CADR emulator tar file&lt;/li&gt;
+&lt;li&gt;system 78.48 source file partition&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;usim.tar.gzを展開してlmfs.cをコンパイルする&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;コンパイルエラーと実行時のオーバランを修正&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gd"&gt;--- a/lmfs.c    2006-07-11 07:01:32.000000000 +0900&lt;/span&gt;
+&lt;span class="gi"&gt;+++ b/lmfs.c    2016-09-18 22:24:12.000000000 +0900&lt;/span&gt;
+&lt;span class="gu"&gt;@@ -127,6 +127,7 @@&lt;/span&gt;
+ typedef int address;
+ typedef int date;
+ typedef char flag;
+&lt;span class="gi"&gt;+typedef unsigned char u_char;&lt;/span&gt;
+
+ typedef struct tapeinfo_s {
+   date date;
+&lt;span class="gu"&gt;@@ -467,7 +468,7 @@&lt;/span&gt;
+
+   n = 0;
+
+&lt;span class="gd"&gt;-  while (1) {&lt;/span&gt;
+&lt;span class="gi"&gt;+  while (n &amp;lt; 64) {&lt;/span&gt;
+     int left, use;
+
+     left = remaining_access(&amp;amp;b);
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;カレントディレクトリで&lt;code&gt;mkdir tmp&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;./lmfs -f FILE.78.48&lt;/code&gt;と動かすと、tmp内にファイルをダンプしてくれる&lt;/li&gt;
+&lt;li&gt;FILE.sys99の方はsegmentation faultしてしまう&lt;/li&gt;
+&lt;li&gt;CADR disk image(disk.img)はdiskmakerで結合しているので、そのままでは正当なパーティーションではない&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;00000000  4c 41 42 4c 01 00 00 00  2f 03 00 00 13 00 00 00  |LABL..../.......|
+00000010  11 00 00 00 43 01 00 00  4d 43 52 31 4c 4f 44 31  |....C...MCR1LOD1|
+00000020  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+00000040  43 41 44 52 20 64 69 73  6b 6d 61 6b 65 72 20 69  |CADR diskmaker i|
+00000050  6d 61 67 65 00 20 20 20  20 20 20 20 20 20 20 20  |mage.           |
+00000060  75 63 61 64 72 2e 6d 63  72 2e 38 34 31 00 00 00  |ucadr.mcr.841...|
+00000070  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;パーティションの構成&lt;/h1&gt;
+&lt;h2&gt;partition-label&lt;/h2&gt;
+&lt;p&gt;上記、unlambda.comで配布されているunix tar of source tree for system 78.48のtree/lmfs/fs-dcls.lispに定義がある&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;defstorage&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;partition-label&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;version&lt;/span&gt;  &lt;span class="kt"&gt;fixnum&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;             &lt;span class="c1"&gt;;of structure&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;name&lt;/span&gt;                         &lt;span class="nv"&gt;char-with-length&lt;/span&gt; &lt;span class="mi"&gt;30.&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;label-size&lt;/span&gt;                                    &lt;span class="kt"&gt;fixnum&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;                &lt;span class="c1"&gt;;in words&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;partition-id&lt;/span&gt;                                                 &lt;span class="kt"&gt;fixnum&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;addresses&lt;/span&gt; &lt;span class="nv"&gt;being&lt;/span&gt; &lt;span class="nv"&gt;disk-address&lt;/span&gt;
+    &lt;span class="nv"&gt;primary-root&lt;/span&gt;                &lt;span class="c1"&gt;;for base partition&lt;/span&gt;
+    &lt;span class="nv"&gt;free-store-info&lt;/span&gt;
+    &lt;span class="nv"&gt;bad-track-info&lt;/span&gt;
+    &lt;span class="nv"&gt;volume-table&lt;/span&gt;
+  &lt;span class="nv"&gt;aspare1&lt;/span&gt; &lt;span class="nv"&gt;aspare2&lt;/span&gt; &lt;span class="nv"&gt;aspare3&lt;/span&gt; &lt;span class="nv"&gt;aspare4&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;update-times&lt;/span&gt; &lt;span class="nv"&gt;being&lt;/span&gt; &lt;span class="nv"&gt;date&lt;/span&gt;
+    &lt;span class="nv"&gt;label-accepted&lt;/span&gt;              &lt;span class="c1"&gt;;put in use&lt;/span&gt;
+    &lt;span class="nv"&gt;shut-down&lt;/span&gt;
+    &lt;span class="nv"&gt;free-map-reconstructed&lt;/span&gt;
+    &lt;span class="nv"&gt;structure-salvaged&lt;/span&gt;
+    &lt;span class="nv"&gt;scavenged&lt;/span&gt;                       &lt;span class="c1"&gt;;searching reclaimer&lt;/span&gt;
+    &lt;span class="nv"&gt;tspare1&lt;/span&gt; &lt;span class="nv"&gt;tspare2&lt;/span&gt; &lt;span class="nv"&gt;tspare3&lt;/span&gt; &lt;span class="nv"&gt;tspare4&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;uid-generator&lt;/span&gt;    &lt;span class="kt"&gt;fixnum&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;monotone-generator&lt;/span&gt;   &lt;span class="kt"&gt;fixnum&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;root-list&lt;/span&gt;            &lt;span class="nv"&gt;fh-element&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;partition-labelはpartitionの先頭に格納されている。固定長。&lt;/li&gt;
+&lt;li&gt;CADRは32bitマシンなのでfixnumは&lt;code&gt;int32_t&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;char-with-length 30.&lt;/code&gt;で定義されているnameはパーティションラベル内に格納されると次のようになる&lt;ul&gt;
+&lt;li&gt;int16_tで文字列長(fileなら4)&lt;/li&gt;
+&lt;li&gt;char[30]で文字列&lt;/li&gt;
+&lt;li&gt;lmfs.cだとchar[30]で読んでるが、&lt;code&gt;\０&lt;/code&gt;を含まない30文字の模様&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;後はprimary-rootをたどってfile-header -&amp;gt; fh-element -&amp;gt; dir-header -&amp;gt; directory-entryと読むことになる(root directory)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;FILE.78.48 imageのpartition-labelを見ると、primary-rootが7139&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;これはレコード番号なので、ブロックのサイズ(1024)とRECORD_SIZE_BLOCKS(4)をかけてオフセットを計算する&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;7139 * 4 * 1024 = 29241344&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;29241344のアドレスから読めばfile-headerが読めるはず&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;だが謎の8byteが存在するため、file-headerは29241344+8の29241352からになっている&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;またブロックサイズは1024byteっぽいが1008byteで区切られている(lmfs.cのensure_access関数)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;1024byte目にアクセスすると1008byteの位置へ調整される&lt;/li&gt;
+&lt;li&gt;各ブロックごとに16byteのパディングがある模様&lt;/li&gt;
+&lt;li&gt;次のようにアクセスする場所を調整している&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;0    1023 :    0 1007
+1024 2047 : 1008 2015
+2048 3071 : 2016 3025
+3072 4095 : 3026 4033
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;この辺は調べきれず&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;file-header&lt;/h1&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;defstorage&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;file-header&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;version&lt;/span&gt;    &lt;span class="kt"&gt;fixnum&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;logical-size&lt;/span&gt;   &lt;span class="nv"&gt;fixnum-bytes&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;bootload-generation&lt;/span&gt;  &lt;span class="kt"&gt;fixnum&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;       &lt;span class="c1"&gt;;for validating&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;version-in-bootload&lt;/span&gt;  &lt;span class="kt"&gt;fixnum&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;       &lt;span class="c1"&gt;;used in above&lt;/span&gt;
+
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;number-of-elements&lt;/span&gt; &lt;span class="nv"&gt;fixnum-bytes&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;     &lt;span class="c1"&gt;;for later expansion&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;ignore&lt;/span&gt; &lt;span class="nb"&gt;mod&lt;/span&gt; &lt;span class="nv"&gt;word&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;parts&lt;/span&gt; &lt;span class="nv"&gt;being&lt;/span&gt; &lt;span class="nv"&gt;fh-element&lt;/span&gt;       &lt;span class="c1"&gt;;and/or reformatting&lt;/span&gt;
+    &lt;span class="nv"&gt;fh-header&lt;/span&gt;           &lt;span class="c1"&gt;;this header itself&lt;/span&gt;
+    &lt;span class="nv"&gt;info&lt;/span&gt;            &lt;span class="c1"&gt;;header-resident info&lt;/span&gt;
+    &lt;span class="nv"&gt;header-fm&lt;/span&gt;           &lt;span class="c1"&gt;;file map of header&lt;/span&gt;
+    &lt;span class="nv"&gt;dire&lt;/span&gt;            &lt;span class="c1"&gt;;directory-entry-ifno&lt;/span&gt;
+    &lt;span class="nv"&gt;property-list&lt;/span&gt;
+    &lt;span class="nv"&gt;file-map&lt;/span&gt;
+    &lt;span class="nv"&gt;pad-area&lt;/span&gt;            &lt;span class="c1"&gt;;many natures of obsolescence&lt;/span&gt;
+    &lt;span class="nv"&gt;pad2-area&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;           &lt;span class="c1"&gt;;are supported&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;logical-sizseは&lt;code&gt;(logical-size   fixnum-bytes 2)&lt;/code&gt;となっているが、dump見ると4byteあるように見える&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;partsの所が各fh-elementのエントリーになる&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;directory-entryはdireが差す場所になる&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;コメントにもあるが、fh-headerはfile-header自身を指すエントリー。ちょっとわかりづらい&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;fh-element&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;defstorage&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;fh-element&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;name&lt;/span&gt;     &lt;span class="nb"&gt;char&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;location&lt;/span&gt;   &lt;span class="nv"&gt;fixnum-bytes&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;     &lt;span class="c1"&gt;;in words in log. headr&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;length&lt;/span&gt;   &lt;span class="nv"&gt;fixnum-bytes&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;      &lt;span class="c1"&gt;;in words&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;fh-elementのlocationとlengthはwordサイズなのでbyteサイズにするには*4する&lt;ul&gt;
+&lt;li&gt;たとえはdirectory-entryは、29241352 + (0x1b*4) から (0x23*4)まで&lt;/li&gt;
+&lt;li&gt;*DIR*がname&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c"&gt;% hexdump -C -s 29241460 -n 140 ./FILE.78.48&lt;/span&gt;
+&lt;span class="mi"&gt;01&lt;/span&gt;&lt;span class="n"&gt;be3074&lt;/span&gt;  &lt;span class="mi"&gt;04&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;72&lt;/span&gt; &lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="mi"&gt;74&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt;  &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt;  &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="p"&gt;..&lt;/span&gt;&lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="c"&gt;..........|&lt;/span&gt;
+&lt;span class="mi"&gt;01&lt;/span&gt;&lt;span class="n"&gt;be3084&lt;/span&gt;  &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt;  &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt;  &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="c"&gt;................|&lt;/span&gt;
+&lt;span class="mi"&gt;01&lt;/span&gt;&lt;span class="n"&gt;be3094&lt;/span&gt;  &lt;span class="mi"&gt;05&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="mi"&gt;44&lt;/span&gt; &lt;span class="mi"&gt;49&lt;/span&gt; &lt;span class="mi"&gt;52&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt;  &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt;  &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="o"&gt;.*&lt;/span&gt;&lt;span class="n"&gt;DIR&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="c"&gt;.........|&lt;/span&gt;
+&lt;span class="mi"&gt;01&lt;/span&gt;&lt;span class="n"&gt;be30a4&lt;/span&gt;  &lt;span class="mi"&gt;01&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;08&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt;  &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt;  &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="c"&gt;................|&lt;/span&gt;
+&lt;span class="mi"&gt;01&lt;/span&gt;&lt;span class="n"&gt;be30b4&lt;/span&gt;  &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;04&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt;  &lt;span class="mi"&gt;01&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="n"&gt;de&lt;/span&gt; &lt;span class="mi"&gt;79&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="n"&gt;e&lt;/span&gt; &lt;span class="n"&gt;c8&lt;/span&gt;  &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="c"&gt;.............y^.|&lt;/span&gt;
+&lt;span class="mi"&gt;01&lt;/span&gt;&lt;span class="n"&gt;be30c4&lt;/span&gt;  &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt;  &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt;  &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="c"&gt;................|&lt;/span&gt;
+&lt;span class="mi"&gt;01&lt;/span&gt;&lt;span class="n"&gt;be30d4&lt;/span&gt;  &lt;span class="n"&gt;de&lt;/span&gt; &lt;span class="mi"&gt;79&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="n"&gt;e&lt;/span&gt; &lt;span class="n"&gt;c8&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt;  &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="n"&gt;e3&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt;  &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;^&lt;span class="c"&gt;.............|&lt;/span&gt;
+&lt;span class="mi"&gt;01&lt;/span&gt;&lt;span class="n"&gt;be30e4&lt;/span&gt;  &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt;  &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt;  &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="c"&gt;................|&lt;/span&gt;
+&lt;span class="mi"&gt;01&lt;/span&gt;&lt;span class="n"&gt;be30f4&lt;/span&gt;  &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt;  &lt;span class="mi"&gt;04&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt;              &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="c"&gt;............|&lt;/span&gt;
+&lt;span class="mi"&gt;01&lt;/span&gt;&lt;span class="n"&gt;be3100&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;dir-header&lt;/h1&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;defstorage&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;dir-header&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;version&lt;/span&gt;        &lt;span class="nv"&gt;fixnum-bytes&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;     &lt;span class="c1"&gt;;structure version&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;size&lt;/span&gt;         &lt;span class="nv"&gt;fixnum-bytes&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;name&lt;/span&gt;         &lt;span class="nv"&gt;char-with-length&lt;/span&gt; &lt;span class="mi"&gt;30.&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;numbers&lt;/span&gt; &lt;span class="nv"&gt;being&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;fixnum-bytes&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="nv"&gt;number-of-entries&lt;/span&gt;          &lt;span class="c1"&gt;;for scanning&lt;/span&gt;
+  &lt;span class="nv"&gt;free-entry-list&lt;/span&gt;         &lt;span class="c1"&gt;;for easier alloc&lt;/span&gt;
+  &lt;span class="nv"&gt;entries-index-offset&lt;/span&gt;       &lt;span class="c1"&gt;;to find first one&lt;/span&gt;
+  &lt;span class="nv"&gt;direntry-size&lt;/span&gt;         &lt;span class="c1"&gt;;for scanning&lt;/span&gt;
+  &lt;span class="nv"&gt;entries-per-block&lt;/span&gt;          &lt;span class="c1"&gt;;==&lt;/span&gt;
+
+  &lt;span class="nv"&gt;default-generation-retention-count&lt;/span&gt;
+  &lt;span class="nv"&gt;uid-path-offset&lt;/span&gt;
+  &lt;span class="nv"&gt;uid-path-length&lt;/span&gt;
+  &lt;span class="nv"&gt;hierarchy-depth&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;default-volid&lt;/span&gt;      &lt;span class="kt"&gt;fixnum&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;       &lt;span class="c1"&gt;;for creation&lt;/span&gt;
+
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;auto-expunge-p&lt;/span&gt;     &lt;span class="nv"&gt;flag&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;auto-expunge-interval&lt;/span&gt;   &lt;span class="nv"&gt;date&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;auto-expunge-last-time&lt;/span&gt;  &lt;span class="nv"&gt;date&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;default-link-transparencies&lt;/span&gt; &lt;span class="nv"&gt;link-transparencies&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;dir-headerの直後に、number-of-entries * directory-entryのサイズだけdirectory-entryが格納されている&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;directory-entry&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;大きいので省略&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;defstorage&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;directory-entry&lt;/span&gt; &lt;span class="ss"&gt;:abbrev&lt;/span&gt; &lt;span class="nv"&gt;dire&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;file-name&lt;/span&gt;          &lt;span class="nv"&gt;char-with-length&lt;/span&gt; &lt;span class="mi"&gt;30.&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;     &lt;span class="c1"&gt;;File name, to 30 chars&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;file-type&lt;/span&gt;                &lt;span class="nv"&gt;char-with-length&lt;/span&gt; &lt;span class="mi"&gt;14.&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;         &lt;span class="c1"&gt;;Extension&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;file-version&lt;/span&gt;               &lt;span class="nv"&gt;fixnum-bytes&lt;/span&gt; &lt;span class="mi"&gt;3.&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;          &lt;span class="c1"&gt;;Generation&lt;/span&gt;
+  &lt;span class="o"&gt;...&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;record-0-address&lt;/span&gt;   &lt;span class="nv"&gt;disk-address&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;     &lt;span class="c1"&gt;;how to find the file&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;file-name, file-typeなどにファイルの情報&lt;/li&gt;
+&lt;li&gt;record-0-addressがパーティションに格納されているレコードのアドレスになるので、そこからまたfile-headerを読んでいくことになる&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;この辺で力尽きました。
+8byteや1008byte境界のあたりがわからず。
+&lt;a href="http://www.unlambda.com/cadr/aimemo528_75pgs.pdf"&gt;aimemo528_75pgs.pdf&lt;/a&gt;のDisk structureあたりの制約なのかなあ。&lt;/p&gt;</summary></entry></feed>
