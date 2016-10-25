@@ -39,7 +39,7 @@ cattoyに登録されている画像を集めてきて手作業で分類、学�
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;と、まあ微妙な感じでした&lt;/p&gt;</summary></entry><entry><title>lmfSを見る</title><link href="/lmfswojian-ru.html" rel="alternate"></link><published>2016-10-25T00:00:00+09:00</published><updated>2016-10-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:,2016-10-25:lmfswojian-ru.html</id><summary type="html">&lt;p&gt;lsmfとはMTIのLispマシンのファイルシステムです。
+&lt;p&gt;と、まあ微妙な感じでした&lt;/p&gt;</summary></entry><entry><title>lmfsを見る</title><link href="/lmfswojian-ru.html" rel="alternate"></link><published>2016-10-25T00:00:00+09:00</published><updated>2016-10-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:,2016-10-25:lmfswojian-ru.html</id><summary type="html">&lt;p&gt;lsmfとはMTIのLispマシンのファイルシステムです。
 unlambda.comからCADRのイメージとソースが落とせるので中身を見てみます。&lt;/p&gt;
 &lt;h1&gt;ダンプしてみる&lt;/h1&gt;
 &lt;ul&gt;
