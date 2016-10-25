@@ -1,5 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug</title><link href="/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/</id><updated>2016-10-25T00:00:00+09:00</updated><entry><title>lmfSを見る</title><link href="/lmfswojian-ru.html" rel="alternate"></link><published>2016-10-25T00:00:00+09:00</published><updated>2016-10-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:,2016-10-25:lmfswojian-ru.html</id><summary type="html">&lt;p&gt;lsmfとはMTIのLispマシン、ファイルシステムです。
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug</title><link href="/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/</id><updated>2016-10-25T00:00:00+09:00</updated><entry><title>chainerで分類(できてない)</title><link href="/chainerdefen-lei-dekitenai.html" rel="alternate"></link><published>2016-10-25T00:00:00+09:00</published><updated>2016-10-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:,2016-10-25:chainerdefen-lei-dekitenai.html</id><summary type="html">&lt;p&gt;cattoyでおもちゃの分類を自動でやりたくてchainerを試しました。
+cattoyに登録されている画像を集めてきて手作業で分類、学習をやってみましたが、
+やはり分類が面倒なのと、素材不足で全然だめでした。&lt;/p&gt;
+&lt;p&gt;やったことをメモしておきます。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;pip install chainer pillow &lt;/li&gt;
+&lt;li&gt;画像の数が多い猫じゃらし、爪とぎ、その他で分類してみる。images/nekojarashi images/tsumetogi images/otherとフォルダごとに分類&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://ksksksks2.hatenadiary.jp/entry/20160327/1459061931"&gt;http://ksksksks2.hatenadiary.jp/entry/20160327/1459061931&lt;/a&gt;
+を参考にリサイズとトレーニングデータに分ける&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;label&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;の所がlabelのままだとcompute_mean.pyでエラーになるので&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;に変更する。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;python chainer/examples/imagenet/compute_mean.py --root . train_list.txt&lt;/li&gt;
+&lt;li&gt;python chainer/examples/imagenet/train_imagenet.py -g -1 --test --epoch 50 train_list.txt validate_list.txt&lt;ul&gt;
+&lt;li&gt;GPUないので-1。遅い&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;epoch       iteration   main/loss   validation/main/loss  main/accuracy  validation/main/accuracy  lr
+5           10          6.24469     3.47694               0.378125       0.777778                  0.01
+10          20          3.63611     2.24688               0.571875       0.777778                  0.01
+15          30          1.78171     1.3616                0.471875       0.111111                  0.01
+20          40          1.13622     0.96606               0.521875       0.777778                  0.01
+26          50          0.987004    0.830154              0.553125       0.777778                  0.01
+31          60          0.974401    1.08021               0.54375        0.111111                  0.01
+36          70          0.966584    0.874548              0.528125       0.777778                  0.01
+41          80          0.96336     0.798205              0.553125       0.777778                  0.01
+47          90          0.956709    0.891943              0.546875       0.777778                  0.01
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;と、まあ微妙な感じでした&lt;/p&gt;</summary></entry><entry><title>lmfSを見る</title><link href="/lmfswojian-ru.html" rel="alternate"></link><published>2016-10-25T00:00:00+09:00</published><updated>2016-10-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:,2016-10-25:lmfswojian-ru.html</id><summary type="html">&lt;p&gt;lsmfとはMTIのLispマシン、ファイルシステムです。
 unlambda.comからCADRのイメージとソースが落とせるので中身を見てみます。&lt;/p&gt;
 &lt;h1&gt;ダンプしてみる&lt;/h1&gt;
 &lt;ul&gt;

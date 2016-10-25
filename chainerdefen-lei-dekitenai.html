@@ -2,9 +2,12 @@
 <html lang="">	
 <head>
 	<meta charset="utf-8"/>
-	<title>horlock - Starbug</title>	
+	<title>chainerで分類(できてない) - Starbug</title>	
 	<meta name="author" content="horlock">
 	
+
+	<meta name="description" content="cattoyでおもちゃの分類を自動でやりたくてchainerを試しました。 cattoyに登録されている画像を集めてきて手作業で分類、学習をやってみましたが、 やはり分類が面倒なのと、素材不足で全然だめでした。 やったことをメモしておきます。 pip install chainer pillow 画像の数が多い猫じゃらし、爪とぎ、その他で分類してみる。images/nekojarashi images/tsumetogi images/otherとフォルダごとに分類 http://ksksksks2.hatenadiary.jp/entry/20160327/1459061931 を参考にリサイズとトレーニングデータに分ける line = path + " " + label + "\n" の所がlabelのままだとcompute_mean.pyでエラーになるので line = path + " " + str(i) + "\n" に変更する。 python chainer/examples/imagenet/compute_mean.py --root . train_list.txt python chainer ...">
+
 
 	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
 	<link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
@@ -27,21 +30,18 @@
 	  <div class="wrapper">
 
 		  <div role="main" class="content">
-
-<h1>Posts published by: horlock</h1>
-
-<article class="summary">
+	<article class="full">
+			
+		<h1>chainerで分類(できてない)</h1>
+		
 <div class="metadata">
   <time datetime="2016-10-25T00:00:00+09:00" pubdate>火 25 10月 2016</time>
     <address class="vcard author">
       by <a class="url fn" href="/author/horlock.html">horlock</a>
     </address>
   in <a href="/category/python.html">python</a>
-</div>  <div>
-    <h2>
-      <a href="/chainerdefen-lei-dekitenai.html" rel="bookmark" title="Permalink to chainerで分類(できてない)">chainerで分類(できてない)</a>
-    </h2>
-    <p><p>cattoyでおもちゃの分類を自動でやりたくてchainerを試しました。
+</div>		
+		<p>cattoyでおもちゃの分類を自動でやりたくてchainerを試しました。
 cattoyに登録されている画像を集めてきて手作業で分類、学習をやってみましたが、
 やはり分類が面倒なのと、素材不足で全然だめでした。</p>
 <p>やったことをメモしておきます。</p>
@@ -63,75 +63,33 @@ cattoyに登録されている画像を集めてきて手作業で分類、学�
 <p>に変更する。</p>
 <ul>
 <li>python chainer/examples/imagenet/compute_mean.py --root . train_list.txt</li>
-<li>python chainer ...</li></ul></p>
-  </div>
-</article><article class="summary">
-<div class="metadata">
-  <time datetime="2016-10-25T00:00:00+09:00" pubdate>火 25 10月 2016</time>
-    <address class="vcard author">
-      by <a class="url fn" href="/author/horlock.html">horlock</a>
-    </address>
-  in <a href="/category/lisp.html">lisp</a>
-</div>  <div>
-    <h2>
-      <a href="/lmfswojian-ru.html" rel="bookmark" title="Permalink to lmfSを見る">lmfSを見る</a>
-    </h2>
-    <p><p>lsmfとはMTIのLispマシン、ファイルシステムです。
-unlambda.comからCADRのイメージとソースが落とせるので中身を見てみます。</p>
-<h1>ダンプしてみる</h1>
-<ul>
-<li>
-<p>http://unlambda.com/index.php?n=Main.Cadr からファイルを落とす</p>
-<ul>
-<li>CADR emulator tar file</li>
-<li>system 78.48 source file partition</li>
-</ul>
-</li>
-<li>
-<p>usim.tar.gzを展開してlmfs.cをコンパイルする</p>
-<ul>
-<li>コンパイルエラーと実行時のオーバランを修正</li>
+<li>python chainer/examples/imagenet/train_imagenet.py -g -1 --test --epoch 50 train_list.txt validate_list.txt<ul>
+<li>GPUないので-1。遅い</li>
 </ul>
 </li>
 </ul>
-<div class="highlight"><pre><span></span><span class="gd">--- a/lmfs.c    2006-07-11 07:01:32.000000000 +0900</span>
-<span class="gi">+++ b/lmfs.c    2016-09-18 22:24:12.000000000 +0900</span>
-<span class="gu">@@ -127,6 +127 ...</span></pre></div></p>
-  </div>
-</article><article class="summary">
-<div class="metadata">
-  <time datetime="2016-10-24T00:00:00+09:00" pubdate>月 24 10月 2016</time>
-    <address class="vcard author">
-      by <a class="url fn" href="/author/horlock.html">horlock</a>
-    </address>
-  in <a href="/category/cattoy.html">cattoy</a>
-</div>  <div>
-    <h2>
-      <a href="/cattoy-memo.html" rel="bookmark" title="Permalink to cattoy memo">cattoy memo</a>
-    </h2>
-    <p><ul>
-<li><a href="https://www.cattoy.info">https://www.cattoy.info</a><ul>
-<li>Cat Exercise Wheelの使ってくれなさのあまり作りました。</li>
-</ul>
-</li>
-<li>さくらVPS mem1G/2Coreプラン</li>
-<li>CentOS 6.8</li>
-<li>nginx <ul>
-<li>http2に対応するためビルドした</li>
-<li>ついでにLibreSSLにした</li>
-</ul>
-</li>
-</ul>
-<div class="highlight"><pre><span></span>nginx version: nginx/1.11.5
-built by gcc 4.4.7 20120313 (Red Hat 4.4.7-17) (GCC) 
-built with LibreSSL 2.5.0
-TLS SNI support enabled
-configure arguments: --prefix=/opt/nginx-1 ...</pre></div></p>
-  </div>
-</article>
-<div class="pagination">
-    Page 1 / 1
-</div>
+<div class="highlight"><pre><span></span>epoch       iteration   main/loss   validation/main/loss  main/accuracy  validation/main/accuracy  lr
+5           10          6.24469     3.47694               0.378125       0.777778                  0.01
+10          20          3.63611     2.24688               0.571875       0.777778                  0.01
+15          30          1.78171     1.3616                0.471875       0.111111                  0.01
+20          40          1.13622     0.96606               0.521875       0.777778                  0.01
+26          50          0.987004    0.830154              0.553125       0.777778                  0.01
+31          60          0.974401    1.08021               0.54375        0.111111                  0.01
+36          70          0.966584    0.874548              0.528125       0.777778                  0.01
+41          80          0.96336     0.798205              0.553125       0.777778                  0.01
+47          90          0.956709    0.891943              0.546875       0.777778                  0.01
+</pre></div>
+
+
+<p>と、まあ微妙な感じでした</p>	
+
+	</article>
+
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
+
 
 		  </div>	
 		  
@@ -142,7 +100,7 @@ configure arguments: --prefix=/opt/nginx-1 ...</pre></div></p>
 	          <ul>
 	              <li ><a href="/category/cattoy.html">cattoy</a></li>
 	              <li ><a href="/category/lisp.html">lisp</a></li>
-	              <li ><a href="/category/python.html">python</a></li>
+	              <li class="active"><a href="/category/python.html">python</a></li>
 	          </ul>
 	        </nav>
 
