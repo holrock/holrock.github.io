@@ -32,6 +32,30 @@
 
 <article class="summary">
 <div class="metadata">
+  <time datetime="2016-10-28T00:00:00+09:00" pubdate>金 28 10月 2016</time>
+    <address class="vcard author">
+      by <a class="url fn" href="/author/horlock.html">horlock</a>
+    </address>
+  in <a href="/category/ocaml.html">ocaml</a>
+</div>  <div>
+    <h2>
+      <a href="/conduit-with-homebrew-openssl.html" rel="bookmark" title="Permalink to conduit with homebrew openssl">conduit with homebrew openssl</a>
+    </h2>
+    <p><h1>現象</h1>
+<p>cohttpでhttpsから<code>Client.get</code>すると
+<code>(Failure "No SSL or TLS support compiled into Conduit")</code>
+とエラーになった</p>
+<h1>対策</h1>
+<div class="highlight"><pre><span></span><span class="x">CPPFLAGS=&quot;-I</span><span class="p">$</span><span class="nv">HOME</span><span class="x">/homebrew/opt/openssl/include&quot; opam install ssl</span>
+</pre></div>
+
+
+<h1>原因</h1>
+<p>homebrewでopensslを入れており、homebrewのpathを/usr/localから$HOME/homebrewに変えていたため、
+opamでsslをビルドできなかった。</p></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
   <time datetime="2016-10-25T00:00:00+09:00" pubdate>火 25 10月 2016</time>
     <address class="vcard author">
       by <a class="url fn" href="/author/horlock.html">horlock</a>
@@ -142,6 +166,7 @@ configure arguments: --prefix=/opt/nginx-1 ...</pre></div></p>
 	          <ul>
 	              <li ><a href="/category/cattoy.html">cattoy</a></li>
 	              <li ><a href="/category/lisp.html">lisp</a></li>
+	              <li ><a href="/category/ocaml.html">ocaml</a></li>
 	              <li ><a href="/category/python.html">python</a></li>
 	          </ul>
 	        </nav>

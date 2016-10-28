@@ -2,7 +2,7 @@
 <html lang="">	
 <head>
 	<meta charset="utf-8"/>
-	<title>lisp - Starbug</title>	
+	<title>ocaml - Starbug</title>	
 	<meta name="author" content="horlock">
 	
 
@@ -28,40 +28,31 @@
 
 		  <div role="main" class="content">
 
-<h1>Posts categorized under: lisp</h1>
+<h1>Posts categorized under: ocaml</h1>
 
 <article class="summary">
 <div class="metadata">
-  <time datetime="2016-10-25T00:00:00+09:00" pubdate>火 25 10月 2016</time>
+  <time datetime="2016-10-28T00:00:00+09:00" pubdate>金 28 10月 2016</time>
     <address class="vcard author">
       by <a class="url fn" href="/author/horlock.html">horlock</a>
     </address>
-  in <a href="/category/lisp.html">lisp</a>
+  in <a href="/category/ocaml.html">ocaml</a>
 </div>  <div>
     <h2>
-      <a href="/lmfswojian-ru.html" rel="bookmark" title="Permalink to lmfsを見る">lmfsを見る</a>
+      <a href="/conduit-with-homebrew-openssl.html" rel="bookmark" title="Permalink to conduit with homebrew openssl">conduit with homebrew openssl</a>
     </h2>
-    <p><p>lsmfとはMTIのLispマシンのファイルシステムです。
-unlambda.comからCADRのイメージとソースが落とせるので中身を見てみます。</p>
-<h1>ダンプしてみる</h1>
-<ul>
-<li>
-<p>http://unlambda.com/index.php?n=Main.Cadr からファイルを落とす</p>
-<ul>
-<li>CADR emulator tar file</li>
-<li>system 78.48 source file partition</li>
-</ul>
-</li>
-<li>
-<p>usim.tar.gzを展開してlmfs.cをコンパイルする</p>
-<ul>
-<li>コンパイルエラーと実行時のオーバランを修正</li>
-</ul>
-</li>
-</ul>
-<div class="highlight"><pre><span></span><span class="gd">--- a/lmfs.c    2006-07-11 07:01:32.000000000 +0900</span>
-<span class="gi">+++ b/lmfs.c    2016-09-18 22:24:12.000000000 +0900</span>
-<span class="gu">@@ -127,6 +127,7 ...</span></pre></div></p>
+    <p><h1>現象</h1>
+<p>cohttpでhttpsから<code>Client.get</code>すると
+<code>(Failure "No SSL or TLS support compiled into Conduit")</code>
+とエラーになった</p>
+<h1>対策</h1>
+<div class="highlight"><pre><span></span><span class="x">CPPFLAGS=&quot;-I</span><span class="p">$</span><span class="nv">HOME</span><span class="x">/homebrew/opt/openssl/include&quot; opam install ssl</span>
+</pre></div>
+
+
+<h1>原因</h1>
+<p>homebrewでopensslを入れており、homebrewのpathを/usr/localから$HOME/homebrewに変えていたため、
+opamでsslをビルドできなかった。</p></p>
   </div>
 </article>
 <div class="pagination">
@@ -76,8 +67,8 @@ unlambda.comからCADRのイメージとソースが落とせるので中身を�
 	          <h2>Categories</h2>
 	          <ul>
 	              <li ><a href="/category/cattoy.html">cattoy</a></li>
-	              <li class="active"><a href="/category/lisp.html">lisp</a></li>
-	              <li ><a href="/category/ocaml.html">ocaml</a></li>
+	              <li ><a href="/category/lisp.html">lisp</a></li>
+	              <li class="active"><a href="/category/ocaml.html">ocaml</a></li>
 	              <li ><a href="/category/python.html">python</a></li>
 	          </ul>
 	        </nav>
