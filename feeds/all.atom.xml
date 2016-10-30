@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug</title><link href="/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/</id><updated>2016-10-31T00:00:00+09:00</updated><entry><title>cattoyに画像proxyを入れました</title><link href="/cattoynihua-xiang-proxyworu-remashita.html" rel="alternate"></link><published>2016-10-31T00:00:00+09:00</published><updated>2016-10-31T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:,2016-10-31:cattoynihua-xiang-proxyworu-remashita.html</id><summary type="html">&lt;p&gt;cattoy.infoでは外部画像を結構な数表示しています。
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/all.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2016-10-31T00:00:00+09:00</updated><entry><title>cattoyに画像proxyを入れました</title><link href="https://holrock.github.io/cattoynihua-xiang-proxyworu-remashita.html" rel="alternate"></link><published>2016-10-31T00:00:00+09:00</published><updated>2016-10-31T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-31:cattoynihua-xiang-proxyworu-remashita.html</id><summary type="html">&lt;p&gt;cattoy.infoでは外部画像を結構な数表示しています。
 外部画像にはhttpでしかアクセスできないものもあり、せっかくwww.cattoy.infoが
 https接続でも警告が出てしまいます。&lt;/p&gt;
 &lt;p&gt;ちょうど、次の記事
@@ -11,7 +11,7 @@ https接続でも警告が出てしまいます。&lt;/p&gt;
 &lt;p&gt;構成は https -&amp;gt; nginx(cacheもここで) -&amp;gt; http -&amp;gt; omac -&amp;gt; [画像server]&lt;/p&gt;
 &lt;p&gt;今のままだとomacが落ちてもnginx側のキャッシュが有効で気がつかないことがあるようなので、
 そのうちなんとかしないと。&lt;/p&gt;
-&lt;p&gt;ほかにもデーモン化やログ管理なんかもやらないといけないのですが、なんとなく動いてしまうと満足してしまいますね。&lt;/p&gt;</summary></entry><entry><title>conduit with homebrew openssl</title><link href="/conduit-with-homebrew-openssl.html" rel="alternate"></link><published>2016-10-28T00:00:00+09:00</published><updated>2016-10-28T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:,2016-10-28:conduit-with-homebrew-openssl.html</id><summary type="html">&lt;h1&gt;現象&lt;/h1&gt;
+&lt;p&gt;ほかにもデーモン化やログ管理なんかもやらないといけないのですが、なんとなく動いてしまうと満足してしまいますね。&lt;/p&gt;</summary></entry><entry><title>conduit with homebrew openssl</title><link href="https://holrock.github.io/conduit-with-homebrew-openssl.html" rel="alternate"></link><published>2016-10-28T00:00:00+09:00</published><updated>2016-10-28T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-28:conduit-with-homebrew-openssl.html</id><summary type="html">&lt;h1&gt;現象&lt;/h1&gt;
 &lt;p&gt;cohttpでhttpsから&lt;code&gt;Client.get&lt;/code&gt;すると
 &lt;code&gt;(Failure "No SSL or TLS support compiled into Conduit")&lt;/code&gt;
 とエラーになった&lt;/p&gt;
@@ -22,7 +22,7 @@ https接続でも警告が出てしまいます。&lt;/p&gt;
 
 &lt;h1&gt;原因&lt;/h1&gt;
 &lt;p&gt;homebrewでopensslを入れており、homebrewのpathを/usr/localから$HOME/homebrewに変えていたため、
-opamでsslをビルドできなかった。&lt;/p&gt;</summary></entry><entry><title>chainerで分類(できてない)</title><link href="/chainerdefen-lei-dekitenai.html" rel="alternate"></link><published>2016-10-25T00:00:00+09:00</published><updated>2016-10-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:,2016-10-25:chainerdefen-lei-dekitenai.html</id><summary type="html">&lt;p&gt;cattoyでおもちゃの分類を自動でやりたくてchainerを試しました。
+opamでsslをビルドできなかった。&lt;/p&gt;</summary></entry><entry><title>chainerで分類(できてない)</title><link href="https://holrock.github.io/chainerdefen-lei-dekitenai.html" rel="alternate"></link><published>2016-10-25T00:00:00+09:00</published><updated>2016-10-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-25:chainerdefen-lei-dekitenai.html</id><summary type="html">&lt;p&gt;cattoyでおもちゃの分類を自動でやりたくてchainerを試しました。
 cattoyに登録されている画像を集めてきて手作業で分類、学習をやってみましたが、
 やはり分類が面倒なのと、素材不足で全然だめでした。&lt;/p&gt;
 &lt;p&gt;やったことをメモしておきます。&lt;/p&gt;
@@ -62,7 +62,7 @@ cattoyに登録されている画像を集めてきて手作業で分類、学�
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;と、まあ微妙な感じでした&lt;/p&gt;</summary></entry><entry><title>lmfsを見る</title><link href="/lmfswojian-ru.html" rel="alternate"></link><published>2016-10-25T00:00:00+09:00</published><updated>2016-10-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:,2016-10-25:lmfswojian-ru.html</id><summary type="html">&lt;p&gt;lsmfとはMTIのLispマシンのファイルシステムです。
+&lt;p&gt;と、まあ微妙な感じでした&lt;/p&gt;</summary></entry><entry><title>lmfsを見る</title><link href="https://holrock.github.io/lmfswojian-ru.html" rel="alternate"></link><published>2016-10-25T00:00:00+09:00</published><updated>2016-10-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-25:lmfswojian-ru.html</id><summary type="html">&lt;p&gt;lsmfとはMTIのLispマシンのファイルシステムです。
 unlambda.comからCADRのイメージとソースが落とせるので中身を見てみます。&lt;/p&gt;
 &lt;h1&gt;ダンプしてみる&lt;/h1&gt;
 &lt;ul&gt;
@@ -309,7 +309,7 @@ unlambda.comからCADRのイメージとソースが落とせるので中身を�
 &lt;/ul&gt;
 &lt;p&gt;この辺で力尽きました。
 8byteや1008byte境界のあたりがわからず。
-&lt;a href="http://www.unlambda.com/cadr/aimemo528_75pgs.pdf"&gt;aimemo528_75pgs.pdf&lt;/a&gt;のDisk structureあたりの制約なのかなあ。&lt;/p&gt;</summary></entry><entry><title>cattoy memo</title><link href="/cattoy-memo.html" rel="alternate"></link><published>2016-10-24T00:00:00+09:00</published><updated>2016-10-24T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:,2016-10-24:cattoy-memo.html</id><summary type="html">&lt;ul&gt;
+&lt;a href="http://www.unlambda.com/cadr/aimemo528_75pgs.pdf"&gt;aimemo528_75pgs.pdf&lt;/a&gt;のDisk structureあたりの制約なのかなあ。&lt;/p&gt;</summary></entry><entry><title>cattoy memo</title><link href="https://holrock.github.io/cattoy-memo.html" rel="alternate"></link><published>2016-10-24T00:00:00+09:00</published><updated>2016-10-24T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-24:cattoy-memo.html</id><summary type="html">&lt;ul&gt;
 &lt;li&gt;&lt;a href="https://www.cattoy.info"&gt;https://www.cattoy.info&lt;/a&gt;&lt;ul&gt;
 &lt;li&gt;Cat Exercise Wheelの使ってくれなさのあまり作りました。&lt;/li&gt;
 &lt;/ul&gt;
