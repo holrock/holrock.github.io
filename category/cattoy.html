@@ -32,6 +32,31 @@
 
 <article class="summary">
 <div class="metadata">
+  <time datetime="2016-10-31T00:00:00+09:00" pubdate>月 31 10月 2016</time>
+    <address class="vcard author">
+      by <a class="url fn" href="/author/horlock.html">horlock</a>
+    </address>
+  in <a href="/category/cattoy.html">cattoy</a>
+</div>  <div>
+    <h2>
+      <a href="/cattoynihua-xiang-proxyworu-remashita.html" rel="bookmark" title="Permalink to cattoyに画像proxyを入れました">cattoyに画像proxyを入れました</a>
+    </h2>
+    <p><p>cattoy.infoでは外部画像を結構な数表示しています。
+外部画像にはhttpでしかアクセスできないものもあり、せっかくwww.cattoy.infoが
+https接続でも警告が出てしまいます。</p>
+<p>ちょうど、次の記事
+<a href="http://qiita.com/MintoAoyama/items/6cd71b84e6225f86f819">Camoで実現するセキュアな画像プロキシサーバ</a>
+を見かけたので</p>
+<p>camoクローンをocamlで作ってみました。
+<a href="https://github.com/holrock/omac">https://github.com/holrock/omac</a></p>
+<p>まだおもちゃみたいなものですが、一応本番で動いています。</p>
+<p>構成は https -&gt; nginx(cacheもここで) -&gt; http -&gt; omac -&gt; [画像server]</p>
+<p>今のままだとomacが落ちてもnginx側のキャッシュが有効で気がつかないことがあるようなので、
+そのうちなんとかしないと。</p>
+<p>ほかにもデーモン化やログ管理なんかもやらないといけないのですが、なんとなく動いてしまうと満足してしまいますね。</p></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
   <time datetime="2016-10-24T00:00:00+09:00" pubdate>月 24 10月 2016</time>
     <address class="vcard author">
       by <a class="url fn" href="/author/horlock.html">horlock</a>

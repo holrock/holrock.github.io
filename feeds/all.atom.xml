@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug</title><link href="/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/</id><updated>2016-10-28T00:00:00+09:00</updated><entry><title>conduit with homebrew openssl</title><link href="/conduit-with-homebrew-openssl.html" rel="alternate"></link><published>2016-10-28T00:00:00+09:00</published><updated>2016-10-28T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:,2016-10-28:conduit-with-homebrew-openssl.html</id><summary type="html">&lt;h1&gt;現象&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug</title><link href="/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/</id><updated>2016-10-31T00:00:00+09:00</updated><entry><title>cattoyに画像proxyを入れました</title><link href="/cattoynihua-xiang-proxyworu-remashita.html" rel="alternate"></link><published>2016-10-31T00:00:00+09:00</published><updated>2016-10-31T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:,2016-10-31:cattoynihua-xiang-proxyworu-remashita.html</id><summary type="html">&lt;p&gt;cattoy.infoでは外部画像を結構な数表示しています。
+外部画像にはhttpでしかアクセスできないものもあり、せっかくwww.cattoy.infoが
+https接続でも警告が出てしまいます。&lt;/p&gt;
+&lt;p&gt;ちょうど、次の記事
+&lt;a href="http://qiita.com/MintoAoyama/items/6cd71b84e6225f86f819"&gt;Camoで実現するセキュアな画像プロキシサーバ&lt;/a&gt;
+を見かけたので&lt;/p&gt;
+&lt;p&gt;camoクローンをocamlで作ってみました。
+&lt;a href="https://github.com/holrock/omac"&gt;https://github.com/holrock/omac&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;まだおもちゃみたいなものですが、一応本番で動いています。&lt;/p&gt;
+&lt;p&gt;構成は https -&amp;gt; nginx(cacheもここで) -&amp;gt; http -&amp;gt; omac -&amp;gt; [画像server]&lt;/p&gt;
+&lt;p&gt;今のままだとomacが落ちてもnginx側のキャッシュが有効で気がつかないことがあるようなので、
+そのうちなんとかしないと。&lt;/p&gt;
+&lt;p&gt;ほかにもデーモン化やログ管理なんかもやらないといけないのですが、なんとなく動いてしまうと満足してしまいますね。&lt;/p&gt;</summary></entry><entry><title>conduit with homebrew openssl</title><link href="/conduit-with-homebrew-openssl.html" rel="alternate"></link><published>2016-10-28T00:00:00+09:00</published><updated>2016-10-28T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:,2016-10-28:conduit-with-homebrew-openssl.html</id><summary type="html">&lt;h1&gt;現象&lt;/h1&gt;
 &lt;p&gt;cohttpでhttpsから&lt;code&gt;Client.get&lt;/code&gt;すると
 &lt;code&gt;(Failure "No SSL or TLS support compiled into Conduit")&lt;/code&gt;
 とエラーになった&lt;/p&gt;

@@ -2,9 +2,12 @@
 <html lang="">	
 <head>
 	<meta charset="utf-8"/>
-	<title>Starbug</title>	
+	<title>cattoyに画像proxyを入れました - Starbug</title>	
 	<meta name="author" content="horlock">
 	
+
+	<meta name="description" content="cattoy.infoでは外部画像を結構な数表示しています。 外部画像にはhttpでしかアクセスできないものもあり、せっかくwww.cattoy.infoが https接続でも警告が出てしまいます。 ちょうど、次の記事 Camoで実現するセキュアな画像プロキシサーバ を見かけたので camoクローンをocamlで作ってみました。 https://github.com/holrock/omac まだおもちゃみたいなものですが、一応本番で動いています。 構成は https -> nginx(cacheもここで) -> http -> omac -> [画像server] 今のままだとomacが落ちてもnginx側のキャッシュが有効で気がつかないことがあるようなので、 そのうちなんとかしないと。 ほかにもデーモン化やログ管理なんかもやらないといけないのですが、なんとなく動いてしまうと満足してしまいますね。">
+
 
 	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
 	<link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
@@ -27,12 +30,18 @@
 	  <div class="wrapper">
 
 		  <div role="main" class="content">
-
-
-
-      <article>
-        <h1><a href="/cattoynihua-xiang-proxyworu-remashita.html">cattoyに画像proxyを入れました</a></h1>
-        <p>cattoy.infoでは外部画像を結構な数表示しています。
+	<article class="full">
+			
+		<h1>cattoyに画像proxyを入れました</h1>
+		
+<div class="metadata">
+  <time datetime="2016-10-31T00:00:00+09:00" pubdate>月 31 10月 2016</time>
+    <address class="vcard author">
+      by <a class="url fn" href="/author/horlock.html">horlock</a>
+    </address>
+  in <a href="/category/cattoy.html">cattoy</a>
+</div>		
+		<p>cattoy.infoでは外部画像を結構な数表示しています。
 外部画像にはhttpでしかアクセスできないものもあり、せっかくwww.cattoy.infoが
 https接続でも警告が出てしまいます。</p>
 <p>ちょうど、次の記事
@@ -44,43 +53,15 @@ https接続でも警告が出てしまいます。</p>
 <p>構成は https -&gt; nginx(cacheもここで) -&gt; http -&gt; omac -&gt; [画像server]</p>
 <p>今のままだとomacが落ちてもnginx側のキャッシュが有効で気がつかないことがあるようなので、
 そのうちなんとかしないと。</p>
-<p>ほかにもデーモン化やログ管理なんかもやらないといけないのですが、なんとなく動いてしまうと満足してしまいますね。</p>
-      </article>
+<p>ほかにもデーモン化やログ管理なんかもやらないといけないのですが、なんとなく動いてしまうと満足してしまいますね。</p>	
 
-      <hr />
+	</article>
 
-        <div>
-          <h3>Last posts</h3>
-          <ol class="archive">
-    
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
 
-
-      <li>
-<a href="/conduit-with-homebrew-openssl.html" rel="bookmark" title="Permalink to conduit with homebrew openssl">conduit with homebrew openssl</a>
-  <time datetime="2016-10-28T00:00:00+09:00" pubdate>金 28 10月 2016</time>
-</a>      </li>
-
-
-      <li>
-<a href="/chainerdefen-lei-dekitenai.html" rel="bookmark" title="Permalink to chainerで分類(できてない)">chainerで分類(できてない)</a>
-  <time datetime="2016-10-25T00:00:00+09:00" pubdate>火 25 10月 2016</time>
-</a>      </li>
-
-
-      <li>
-<a href="/lmfswojian-ru.html" rel="bookmark" title="Permalink to lmfsを見る">lmfsを見る</a>
-  <time datetime="2016-10-25T00:00:00+09:00" pubdate>火 25 10月 2016</time>
-</a>      </li>
-
-
-      <li>
-<a href="/cattoy-memo.html" rel="bookmark" title="Permalink to cattoy memo">cattoy memo</a>
-  <time datetime="2016-10-24T00:00:00+09:00" pubdate>月 24 10月 2016</time>
-</a>      </li>
-
-
-          </ol>
-        </div>
 
 		  </div>	
 		  
@@ -89,7 +70,7 @@ https接続でも警告が出てしまいます。</p>
 	        <nav>
 	          <h2>Categories</h2>
 	          <ul>
-	              <li ><a href="/category/cattoy.html">cattoy</a></li>
+	              <li class="active"><a href="/category/cattoy.html">cattoy</a></li>
 	              <li ><a href="/category/lisp.html">lisp</a></li>
 	              <li ><a href="/category/ocaml.html">ocaml</a></li>
 	              <li ><a href="/category/python.html">python</a></li>
