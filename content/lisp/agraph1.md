@@ -29,6 +29,6 @@ AllegroGraphを動かしてみます。
     * 今回はこれを試した [就活イベント](http://linkdata.org/work/rdf1s4668i/syukatsu_api.html)
     * [rdf/xml](http://linkdata.org/api/1/rdf1s4668i/syukatsu_rdf.xml)を保存
     * WebViewのfrom an uploaded fileからファイルを選択、フォーマットをRDF/XMLにしてOK
-    * 取り込まれるもののPのところがエスケープされたまま入ってしまう(%E4%BC%9A%E5%A0%B4\_)みたいな
+    * 取り込まれるもののPのところがエスケープされたまま入ってしまう(%E4%BC%9A%E5%A0%B4\_みたいな)
 
 今回はここまで
