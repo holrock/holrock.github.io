@@ -2,9 +2,12 @@
 <html lang="">	
 <head>
 	<meta charset="utf-8"/>
-	<title>lisp - Starbug</title>	
+	<title>AllegroGraph その1 - Starbug</title>	
 	<meta name="author" content="horlock">
 	
+
+	<meta name="description" content="AllegroGraphを動かしてみます。 http://franz.com/agraph/downloads/からAllegroGraph Virtual Machineをダウンロード 展開してVirtualboxから読み込む Virtualboxで仮想マシンを新規作成 type linux version ubuntu 64bit ディスク作成時にすでにあるディスクを使用するからAllegroGraph 6.0 Virtual Machine.vmdkを選択 ネットワークのポートフォワーディングでゲストポート10035からホストポート10034(なんでもいい)へフォワーディング設定する VMを起動 franz/allegrographでログイン デスクトップにあるStart AGを起動する ホストマシンからブラウザでlocalhost:10034へアクセスする AllegroGraph WebViewへアクセスできたら、User anonymousのところからtest/xyzzyでログイン Quick-Startにしたがって Create new repositoryにkennedyと入力しcreate http://localhost:10034/repositories/kennedyを開く from a server-side ...">
+
 
 	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
 	<link rel="stylesheet" href="https://holrock.github.io/theme/css/main.css" type="text/css" />
@@ -27,21 +30,18 @@
 	  <div class="wrapper">
 
 		  <div role="main" class="content">
-
-<h1>Posts categorized under: lisp</h1>
-
-<article class="summary">
+	<article class="full">
+			
+		<h1>AllegroGraph その1</h1>
+		
 <div class="metadata">
   <time datetime="2016-11-03T00:00:00+09:00" pubdate>木 03 11月 2016</time>
     <address class="vcard author">
       by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
     </address>
   in <a href="https://holrock.github.io/category/lisp.html">lisp</a>
-</div>  <div>
-    <h2>
-      <a href="https://holrock.github.io/allegrograph-sono1.html" rel="bookmark" title="Permalink to AllegroGraph その1">AllegroGraph その1</a>
-    </h2>
-    <p><p>AllegroGraphを動かしてみます。</p>
+</div>		
+		<p>AllegroGraphを動かしてみます。</p>
 <ul>
 <li><a href="http://franz.com/agraph/downloads/">http://franz.com/agraph/downloads/</a>からAllegroGraph Virtual Machineをダウンロード</li>
 <li>展開してVirtualboxから読み込む</li>
@@ -60,45 +60,34 @@
 <li><a href="http://franz.com/agraph/support/documentation/current/agraph-quick-start.html">Quick-Start</a>にしたがって</li>
 <li>Create new repositoryにkennedyと入力しcreate</li>
 <li>http://localhost:10034/repositories/kennedyを開く</li>
-<li>from a server-side ...</li></ul></p>
-  </div>
-</article><article class="summary">
-<div class="metadata">
-  <time datetime="2016-10-25T00:00:00+09:00" pubdate>火 25 10月 2016</time>
-    <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
-    </address>
-  in <a href="https://holrock.github.io/category/lisp.html">lisp</a>
-</div>  <div>
-    <h2>
-      <a href="https://holrock.github.io/lmfswojian-ru.html" rel="bookmark" title="Permalink to lmfsを見る">lmfsを見る</a>
-    </h2>
-    <p><p>lsmfとはMTIのLispマシンのファイルシステムです。
-unlambda.comからCADRのイメージとソースが落とせるので中身を見てみます。</p>
-<h1>ダンプしてみる</h1>
-<ul>
-<li>
-<p>http://unlambda.com/index.php?n=Main.Cadr からファイルを落とす</p>
-<ul>
-<li>CADR emulator tar file</li>
-<li>system 78.48 source file partition</li>
+<li>from a server-side fileを押してfileのところから<ul>
+<li>..で上に上がっていって、最終的に/home/franz/ag/tutorial/kennedy.ntriplesを選択</li>
+<li>OKで取り込まれる</li>
 </ul>
 </li>
-<li>
-<p>usim.tar.gzを展開してlmfs.cをコンパイルする</p>
-<ul>
-<li>コンパイルエラーと実行時のオーバランを修正</li>
+<li>Queriesから<ul>
+<li><code>select ?p ?o WHERE {&lt;http://www.franz.com/simple#person1&gt; ?p ?o}</code>クエリ投げてみて結果が見えれば成功</li>
+</ul>
+</li>
+<li>試しに他のデータも投入してみる</li>
+<li>新しくrepositoryを作って</li>
+<li><a href="http://linkdata.org/home">linkdata.org</a>から適当なデータを持ってくる<ul>
+<li>今回はこれを試した <a href="http://linkdata.org/work/rdf1s4668i/syukatsu_api.html">就活イベント</a></li>
+<li><a href="http://linkdata.org/api/1/rdf1s4668i/syukatsu_rdf.xml">rdf/xml</a>を保存</li>
+<li>WebViewのfrom an uploaded fileからファイルを選択、フォーマットをRDF/XMLにしてOK</li>
+<li>取り込まれるもののPのところがエスケープされたまま入ってしまう(%E4%BC%9A%E5%A0%B4_)みたいな</li>
 </ul>
 </li>
 </ul>
-<div class="highlight"><pre><span></span><span class="gd">--- a/lmfs.c    2006-07-11 07:01:32.000000000 +0900</span>
-<span class="gi">+++ b/lmfs.c    2016-09-18 22:24:12.000000000 +0900</span>
-<span class="gu">@@ -127,6 +127,7 ...</span></pre></div></p>
-  </div>
-</article>
-<div class="pagination">
-    Page 1 / 1
-</div>
+<p>今回はここまで</p>	
+
+	</article>
+
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
+
 
 		  </div>	
 		  

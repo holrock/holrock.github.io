@@ -31,33 +31,46 @@
 
 
       <article>
-        <h1><a href="https://holrock.github.io/macos-10121niagetaralibcryptogajian-tsukaranai.html">macOS 10.12.1にあげたらlibcryptoが見つからない</a></h1>
-        <p>macOSをSierraにあげました。</p>
-<p>その後xcode8.1のインストールをして、omacのビルドをするとlibcryptoが見つからずエラーになりました。</p>
-<div class="highlight"><pre><span></span><span class="c">% ocaml setup.ml -build </span>
-<span class="n">Finished</span><span class="p">,</span> <span class="mi">0</span> <span class="n">targets</span> <span class="p">(</span><span class="mi">0</span> <span class="n">cached</span><span class="p">)</span> <span class="n">in</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.</span>
-<span class="o">+</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">hoge</span><span class="o">/</span><span class="p">.</span><span class="n">opam</span><span class="o">/</span><span class="mf">4.03</span><span class="p">.</span><span class="mi">0</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">ocamlfind</span> <span class="n">ocamlopt</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">linkpkg</span> <span class="o">-</span><span class="n">package</span> <span class="n">cohttp</span> <span class="o">-</span><span class="n">package</span> <span class="n">cohttp</span><span class="p">.</span><span class="n">lwt</span> <span class="o">-</span><span class="n">package</span> <span class="n">conduit</span> <span class="o">-</span><span class="n">package</span> <span class="n">cryptokit</span> <span class="o">-</span><span class="n">package</span> <span class="n">lwt</span> <span class="o">-</span><span class="n">package</span> <span class="n">str</span> <span class="n">src</span><span class="o">/</span><span class="n">omac</span><span class="p">.</span><span class="n">cmx</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="p">.</span><span class="n">cmx</span> <span class="o">-</span><span class="n">o</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="p">.</span><span class="n">native</span>
-<span class="n">ld</span><span class="p">:</span> <span class="n">library</span> <span class="n">not</span> <span class="n">found</span> <span class="k">for</span> <span class="o">-</span><span class="n">lcrypto</span>
-<span class="n">clang</span><span class="p">:</span> <span class="n">error</span><span class="p">:</span> <span class="n">linker</span> <span class="n">command</span> <span class="n">failed</span> <span class="n">with</span> <span class="n">exit</span> <span class="n">code</span> <span class="mi">1</span> <span class="p">(</span><span class="n">use</span> <span class="o">-</span><span class="n">v</span> <span class="n">to</span> <span class="n">see</span> <span class="n">invocation</span><span class="p">)</span>
-<span class="n">File</span> &quot;<span class="n">caml_startup</span>&quot;<span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">:</span>
-<span class="n">Error</span><span class="p">:</span> <span class="n">Error</span> <span class="n">during</span> <span class="n">linking</span>
-<span class="n">Command</span> <span class="n">exited</span> <span class="n">with</span> <span class="n">code</span> <span class="mf">2.</span>
-<span class="n">Compilation</span> <span class="n">unsuccessful</span> <span class="n">after</span> <span class="n">building</span> <span class="mi">7</span> <span class="n">targets</span> <span class="p">(</span><span class="mi">6</span> <span class="n">cached</span><span class="p">)</span> <span class="n">in</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">01.</span>
-<span class="n">E</span><span class="p">:</span> <span class="n">Failure</span><span class="p">(</span>&quot;<span class="n">Command</span> <span class="s">&#39;&#39;</span><span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">hoge</span><span class="o">/</span><span class="p">.</span><span class="n">opam</span><span class="o">/</span><span class="mf">4.03</span><span class="p">.</span><span class="mi">0</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">ocamlbuild</span><span class="o">&#39;</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="p">.</span><span class="n">native</span> <span class="n">src</span><span class="o">/</span><span class="n">test_main</span><span class="p">.</span><span class="n">native</span> <span class="o">-</span><span class="n">tag</span> <span class="n">debug</span> <span class="o">-</span><span class="n">tag</span> <span class="n">tests</span><span class="o">&#39;</span> <span class="n">terminated</span> <span class="n">with</span> <span class="n">error</span> <span class="n">code</span> <span class="mi">10</span>&quot;<span class="p">)</span>
-<span class="n">make</span><span class="p">:</span> <span class="o">***</span> <span class="p">[</span><span class="n">build</span><span class="p">]</span> <span class="n">Error</span> <span class="mi">1</span>
-</pre></div>
-
-
-<p>homebrewで入れてるのでclangにパスを渡すため、LIBRARY_PATH環境変数に値を入れます。</p>
-<div class="highlight"><pre><span></span><span class="c">% export LIBRARY_PATH=$HOME/homebrew/Cellar/openssl/1.0.2j/lib</span>
-<span class="c">% ocaml setup.ml -build </span>
-<span class="n">Finished</span><span class="p">,</span> <span class="mi">0</span> <span class="n">targets</span> <span class="p">(</span><span class="mi">0</span> <span class="n">cached</span><span class="p">)</span> <span class="n">in</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.</span>
-<span class="n">Finished</span><span class="p">,</span> <span class="mi">11</span> <span class="n">targets</span> <span class="p">(</span><span class="mi">6</span> <span class="n">cached</span><span class="p">)</span> <span class="n">in</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">01.</span>
-</pre></div>
-
-
-<p>これでビルドできるようになりました。</p>
-<p>あれ？てことはいままでsystem側のlibにリンクしてたんだろうか。</p>
+        <h1><a href="https://holrock.github.io/allegrograph-sono1.html">AllegroGraph その1</a></h1>
+        <p>AllegroGraphを動かしてみます。</p>
+<ul>
+<li><a href="http://franz.com/agraph/downloads/">http://franz.com/agraph/downloads/</a>からAllegroGraph Virtual Machineをダウンロード</li>
+<li>展開してVirtualboxから読み込む</li>
+<li>Virtualboxで仮想マシンを新規作成<ul>
+<li>type linux</li>
+<li>version ubuntu 64bit</li>
+<li>ディスク作成時にすでにあるディスクを使用するからAllegroGraph 6.0 Virtual Machine.vmdkを選択</li>
+<li>ネットワークのポートフォワーディングでゲストポート10035からホストポート10034(なんでもいい)へフォワーディング設定する</li>
+</ul>
+</li>
+<li>VMを起動</li>
+<li>franz/allegrographでログイン</li>
+<li>デスクトップにあるStart AGを起動する</li>
+<li>ホストマシンからブラウザでlocalhost:10034へアクセスする</li>
+<li>AllegroGraph WebViewへアクセスできたら、User anonymousのところからtest/xyzzyでログイン</li>
+<li><a href="http://franz.com/agraph/support/documentation/current/agraph-quick-start.html">Quick-Start</a>にしたがって</li>
+<li>Create new repositoryにkennedyと入力しcreate</li>
+<li>http://localhost:10034/repositories/kennedyを開く</li>
+<li>from a server-side fileを押してfileのところから<ul>
+<li>..で上に上がっていって、最終的に/home/franz/ag/tutorial/kennedy.ntriplesを選択</li>
+<li>OKで取り込まれる</li>
+</ul>
+</li>
+<li>Queriesから<ul>
+<li><code>select ?p ?o WHERE {&lt;http://www.franz.com/simple#person1&gt; ?p ?o}</code>クエリ投げてみて結果が見えれば成功</li>
+</ul>
+</li>
+<li>試しに他のデータも投入してみる</li>
+<li>新しくrepositoryを作って</li>
+<li><a href="http://linkdata.org/home">linkdata.org</a>から適当なデータを持ってくる<ul>
+<li>今回はこれを試した <a href="http://linkdata.org/work/rdf1s4668i/syukatsu_api.html">就活イベント</a></li>
+<li><a href="http://linkdata.org/api/1/rdf1s4668i/syukatsu_rdf.xml">rdf/xml</a>を保存</li>
+<li>WebViewのfrom an uploaded fileからファイルを選択、フォーマットをRDF/XMLにしてOK</li>
+<li>取り込まれるもののPのところがエスケープされたまま入ってしまう(%E4%BC%9A%E5%A0%B4_)みたいな</li>
+</ul>
+</li>
+</ul>
+<p>今回はここまで</p>
       </article>
 
       <hr />
@@ -66,6 +79,12 @@
           <h3>Last posts</h3>
           <ol class="archive">
     
+
+
+      <li>
+<a href="https://holrock.github.io/macos-10121niagetaralibcryptogajian-tsukaranai.html" rel="bookmark" title="Permalink to macOS 10.12.1にあげたらlibcryptoが見つからない">macOS 10.12.1にあげたらlibcryptoが見つからない</a>
+  <time datetime="2016-11-02T00:00:00+09:00" pubdate>水 02 11月 2016</time>
+</a>      </li>
 
 
       <li>
@@ -92,10 +111,6 @@
 </a>      </li>
 
 
-      <li>
-<a href="https://holrock.github.io/cattoy-memo.html" rel="bookmark" title="Permalink to cattoy memo">cattoy memo</a>
-  <time datetime="2016-10-24T00:00:00+09:00" pubdate>月 24 10月 2016</time>
-</a>      </li>
 
 
           </ol>

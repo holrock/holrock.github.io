@@ -1,5 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/lisp.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2016-10-25T00:00:00+09:00</updated><entry><title>lmfsを見る</title><link href="https://holrock.github.io/lmfswojian-ru.html" rel="alternate"></link><published>2016-10-25T00:00:00+09:00</published><updated>2016-10-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-25:lmfswojian-ru.html</id><summary type="html">&lt;p&gt;lsmfとはMTIのLispマシンのファイルシステムです。
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/lisp.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2016-11-03T00:00:00+09:00</updated><entry><title>AllegroGraph その1</title><link href="https://holrock.github.io/allegrograph-sono1.html" rel="alternate"></link><published>2016-11-03T00:00:00+09:00</published><updated>2016-11-03T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-11-03:allegrograph-sono1.html</id><summary type="html">&lt;p&gt;AllegroGraphを動かしてみます。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://franz.com/agraph/downloads/"&gt;http://franz.com/agraph/downloads/&lt;/a&gt;からAllegroGraph Virtual Machineをダウンロード&lt;/li&gt;
+&lt;li&gt;展開してVirtualboxから読み込む&lt;/li&gt;
+&lt;li&gt;Virtualboxで仮想マシンを新規作成&lt;ul&gt;
+&lt;li&gt;type linux&lt;/li&gt;
+&lt;li&gt;version ubuntu 64bit&lt;/li&gt;
+&lt;li&gt;ディスク作成時にすでにあるディスクを使用するからAllegroGraph 6.0 Virtual Machine.vmdkを選択&lt;/li&gt;
+&lt;li&gt;ネットワークのポートフォワーディングでゲストポート10035からホストポート10034(なんでもいい)へフォワーディング設定する&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;VMを起動&lt;/li&gt;
+&lt;li&gt;franz/allegrographでログイン&lt;/li&gt;
+&lt;li&gt;デスクトップにあるStart AGを起動する&lt;/li&gt;
+&lt;li&gt;ホストマシンからブラウザでlocalhost:10034へアクセスする&lt;/li&gt;
+&lt;li&gt;AllegroGraph WebViewへアクセスできたら、User anonymousのところからtest/xyzzyでログイン&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://franz.com/agraph/support/documentation/current/agraph-quick-start.html"&gt;Quick-Start&lt;/a&gt;にしたがって&lt;/li&gt;
+&lt;li&gt;Create new repositoryにkennedyと入力しcreate&lt;/li&gt;
+&lt;li&gt;http://localhost:10034/repositories/kennedyを開く&lt;/li&gt;
+&lt;li&gt;from a server-side fileを押してfileのところから&lt;ul&gt;
+&lt;li&gt;..で上に上がっていって、最終的に/home/franz/ag/tutorial/kennedy.ntriplesを選択&lt;/li&gt;
+&lt;li&gt;OKで取り込まれる&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Queriesから&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;select ?p ?o WHERE {&amp;lt;http://www.franz.com/simple#person1&amp;gt; ?p ?o}&lt;/code&gt;クエリ投げてみて結果が見えれば成功&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;試しに他のデータも投入してみる&lt;/li&gt;
+&lt;li&gt;新しくrepositoryを作って&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://linkdata.org/home"&gt;linkdata.org&lt;/a&gt;から適当なデータを持ってくる&lt;ul&gt;
+&lt;li&gt;今回はこれを試した &lt;a href="http://linkdata.org/work/rdf1s4668i/syukatsu_api.html"&gt;就活イベント&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://linkdata.org/api/1/rdf1s4668i/syukatsu_rdf.xml"&gt;rdf/xml&lt;/a&gt;を保存&lt;/li&gt;
+&lt;li&gt;WebViewのfrom an uploaded fileからファイルを選択、フォーマットをRDF/XMLにしてOK&lt;/li&gt;
+&lt;li&gt;取り込まれるもののPのところがエスケープされたまま入ってしまう(%E4%BC%9A%E5%A0%B4_)みたいな&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;今回はここまで&lt;/p&gt;</summary></entry><entry><title>lmfsを見る</title><link href="https://holrock.github.io/lmfswojian-ru.html" rel="alternate"></link><published>2016-10-25T00:00:00+09:00</published><updated>2016-10-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-25:lmfswojian-ru.html</id><summary type="html">&lt;p&gt;lsmfとはMTIのLispマシンのファイルシステムです。
 unlambda.comからCADRのイメージとソースが落とせるので中身を見てみます。&lt;/p&gt;
 &lt;h1&gt;ダンプしてみる&lt;/h1&gt;
 &lt;ul&gt;
