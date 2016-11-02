@@ -7,7 +7,7 @@
 &lt;li&gt;type linux&lt;/li&gt;
 &lt;li&gt;version ubuntu 64bit&lt;/li&gt;
 &lt;li&gt;ディスク作成時にすでにあるディスクを使用するからAllegroGraph 6.0 Virtual Machine.vmdkを選択&lt;/li&gt;
-&lt;li&gt;ネットワークのポートフォワーディングでゲストポート10035からホストポート10034(なんでもいい)へフォワーディング設定する&lt;/li&gt;
+&lt;li&gt;ネットワークのポートフォワーディングでホストポート10034(なんでもいい)からゲストポート10035へフォワーディング設定する&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;VMを起動&lt;/li&gt;
@@ -33,7 +33,7 @@
 &lt;li&gt;今回はこれを試した &lt;a href="http://linkdata.org/work/rdf1s4668i/syukatsu_api.html"&gt;就活イベント&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://linkdata.org/api/1/rdf1s4668i/syukatsu_rdf.xml"&gt;rdf/xml&lt;/a&gt;を保存&lt;/li&gt;
 &lt;li&gt;WebViewのfrom an uploaded fileからファイルを選択、フォーマットをRDF/XMLにしてOK&lt;/li&gt;
-&lt;li&gt;取り込まれるもののPのところがエスケープされたまま入ってしまう(%E4%BC%9A%E5%A0%B4_)みたいな&lt;/li&gt;
+&lt;li&gt;取り込まれるもののPのところがエスケープされたまま入ってしまう(%E4%BC%9A%E5%A0%B4_みたいな)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;

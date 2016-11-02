@@ -6,7 +6,7 @@
 	<meta name="author" content="horlock">
 	
 
-	<meta name="description" content="AllegroGraphを動かしてみます。 http://franz.com/agraph/downloads/からAllegroGraph Virtual Machineをダウンロード 展開してVirtualboxから読み込む Virtualboxで仮想マシンを新規作成 type linux version ubuntu 64bit ディスク作成時にすでにあるディスクを使用するからAllegroGraph 6.0 Virtual Machine.vmdkを選択 ネットワークのポートフォワーディングでゲストポート10035からホストポート10034(なんでもいい)へフォワーディング設定する VMを起動 franz/allegrographでログイン デスクトップにあるStart AGを起動する ホストマシンからブラウザでlocalhost:10034へアクセスする AllegroGraph WebViewへアクセスできたら、User anonymousのところからtest/xyzzyでログイン Quick-Startにしたがって Create new repositoryにkennedyと入力しcreate http://localhost:10034/repositories/kennedyを開く from a server-side ...">
+	<meta name="description" content="AllegroGraphを動かしてみます。 http://franz.com/agraph/downloads/からAllegroGraph Virtual Machineをダウンロード 展開してVirtualboxから読み込む Virtualboxで仮想マシンを新規作成 type linux version ubuntu 64bit ディスク作成時にすでにあるディスクを使用するからAllegroGraph 6.0 Virtual Machine.vmdkを選択 ネットワークのポートフォワーディングでホストポート10034(なんでもいい)からゲストポート10035へフォワーディング設定する VMを起動 franz/allegrographでログイン デスクトップにあるStart AGを起動する ホストマシンからブラウザでlocalhost:10034へアクセスする AllegroGraph WebViewへアクセスできたら、User anonymousのところからtest/xyzzyでログイン Quick-Startにしたがって Create new repositoryにkennedyと入力しcreate http://localhost:10034/repositories/kennedyを開く from a server-side ...">
 
 
 	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
@@ -49,7 +49,7 @@
 <li>type linux</li>
 <li>version ubuntu 64bit</li>
 <li>ディスク作成時にすでにあるディスクを使用するからAllegroGraph 6.0 Virtual Machine.vmdkを選択</li>
-<li>ネットワークのポートフォワーディングでゲストポート10035からホストポート10034(なんでもいい)へフォワーディング設定する</li>
+<li>ネットワークのポートフォワーディングでホストポート10034(なんでもいい)からゲストポート10035へフォワーディング設定する</li>
 </ul>
 </li>
 <li>VMを起動</li>
@@ -75,7 +75,7 @@
 <li>今回はこれを試した <a href="http://linkdata.org/work/rdf1s4668i/syukatsu_api.html">就活イベント</a></li>
 <li><a href="http://linkdata.org/api/1/rdf1s4668i/syukatsu_rdf.xml">rdf/xml</a>を保存</li>
 <li>WebViewのfrom an uploaded fileからファイルを選択、フォーマットをRDF/XMLにしてOK</li>
-<li>取り込まれるもののPのところがエスケープされたまま入ってしまう(%E4%BC%9A%E5%A0%B4_)みたいな</li>
+<li>取り込まれるもののPのところがエスケープされたまま入ってしまう(%E4%BC%9A%E5%A0%B4_みたいな)</li>
 </ul>
 </li>
 </ul>
