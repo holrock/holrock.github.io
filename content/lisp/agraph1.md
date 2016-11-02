@@ -9,7 +9,7 @@ AllegroGraphを動かしてみます。
     * type linux
     * version ubuntu 64bit
     * ディスク作成時にすでにあるディスクを使用するからAllegroGraph 6.0 Virtual Machine.vmdkを選択
-    * ネットワークのポートフォワーディングでゲストポート10035からホストポート10034(なんでもいい)へフォワーディング設定する
+    * ネットワークのポートフォワーディングでホストポート10034(なんでもいい)からゲストポート10035へフォワーディング設定する
 * VMを起動
   * franz/allegrographでログイン
   * デスクトップにあるStart AGを起動する
