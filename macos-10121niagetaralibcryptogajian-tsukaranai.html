@@ -2,9 +2,12 @@
 <html lang="">	
 <head>
 	<meta charset="utf-8"/>
-	<title>Starbug</title>	
+	<title>macOS 10.12.1にあげたらlibcryptoが見つからない - Starbug</title>	
 	<meta name="author" content="horlock">
 	
+
+	<meta name="description" content="macOSをSierraにあげました。 その後xcode8.1のインストールをして、omacのビルドをするとlibcryptoが見つからずエラーになりました。 % ocaml setup.ml -build Finished, 0 targets (0 cached) in 00:00:00. + /Users/snt/.opam/4.03.0/bin/ocamlfind ocamlopt -g -linkpkg -package cohttp -package cohttp.lwt -package conduit -package cryptokit -package lwt -package str src/omac.cmx src/main.cmx -o src/main ...">
+
 
 	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
 	<link rel="stylesheet" href="https://holrock.github.io/theme/css/main.css" type="text/css" />
@@ -27,12 +30,18 @@
 	  <div class="wrapper">
 
 		  <div role="main" class="content">
-
-
-
-      <article>
-        <h1><a href="https://holrock.github.io/macos-10121niagetaralibcryptogajian-tsukaranai.html">macOS 10.12.1にあげたらlibcryptoが見つからない</a></h1>
-        <p>macOSをSierraにあげました。</p>
+	<article class="full">
+			
+		<h1>macOS 10.12.1にあげたらlibcryptoが見つからない</h1>
+		
+<div class="metadata">
+  <time datetime="2016-11-02T00:00:00+09:00" pubdate>水 02 11月 2016</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+    </address>
+  in <a href="https://holrock.github.io/category/ocaml.html">ocaml</a>
+</div>		
+		<p>macOSをSierraにあげました。</p>
 <p>その後xcode8.1のインストールをして、omacのビルドをするとlibcryptoが見つからずエラーになりました。</p>
 <div class="highlight"><pre><span></span><span class="c">% ocaml setup.ml -build </span>
 <span class="n">Finished</span><span class="p">,</span> <span class="mi">0</span> <span class="n">targets</span> <span class="p">(</span><span class="mi">0</span> <span class="n">cached</span><span class="p">)</span> <span class="n">in</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.</span>
@@ -57,49 +66,15 @@
 
 
 <p>これでビルドできるようになりました。</p>
-<p>あれ？てことはいままでsystem側のlibにリンクしてたんだろうか。</p>
-      </article>
+<p>あれ？てことはいままでsystem側のlibにリンクしてたんだろうか。</p>	
 
-      <hr />
+	</article>
 
-        <div>
-          <h3>Last posts</h3>
-          <ol class="archive">
-    
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
 
-
-      <li>
-<a href="https://holrock.github.io/cattoynihua-xiang-proxyworu-remashita.html" rel="bookmark" title="Permalink to cattoyに画像proxyを入れました">cattoyに画像proxyを入れました</a>
-  <time datetime="2016-10-31T00:00:00+09:00" pubdate>月 31 10月 2016</time>
-</a>      </li>
-
-
-      <li>
-<a href="https://holrock.github.io/conduit-with-homebrew-openssl.html" rel="bookmark" title="Permalink to conduit with homebrew openssl">conduit with homebrew openssl</a>
-  <time datetime="2016-10-28T00:00:00+09:00" pubdate>金 28 10月 2016</time>
-</a>      </li>
-
-
-      <li>
-<a href="https://holrock.github.io/chainerdefen-lei-dekitenai.html" rel="bookmark" title="Permalink to chainerで分類(できてない)">chainerで分類(できてない)</a>
-  <time datetime="2016-10-25T00:00:00+09:00" pubdate>火 25 10月 2016</time>
-</a>      </li>
-
-
-      <li>
-<a href="https://holrock.github.io/lmfswojian-ru.html" rel="bookmark" title="Permalink to lmfsを見る">lmfsを見る</a>
-  <time datetime="2016-10-25T00:00:00+09:00" pubdate>火 25 10月 2016</time>
-</a>      </li>
-
-
-      <li>
-<a href="https://holrock.github.io/cattoy-memo.html" rel="bookmark" title="Permalink to cattoy memo">cattoy memo</a>
-  <time datetime="2016-10-24T00:00:00+09:00" pubdate>月 24 10月 2016</time>
-</a>      </li>
-
-
-          </ol>
-        </div>
 
 		  </div>	
 		  
@@ -110,7 +85,7 @@
 	          <ul>
 	              <li ><a href="https://holrock.github.io/category/cattoy.html">cattoy</a></li>
 	              <li ><a href="https://holrock.github.io/category/lisp.html">lisp</a></li>
-	              <li ><a href="https://holrock.github.io/category/ocaml.html">ocaml</a></li>
+	              <li class="active"><a href="https://holrock.github.io/category/ocaml.html">ocaml</a></li>
 	              <li ><a href="https://holrock.github.io/category/python.html">python</a></li>
 	          </ul>
 	        </nav>
