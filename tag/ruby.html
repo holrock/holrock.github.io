@@ -2,12 +2,9 @@
 <html lang="">	
 <head>
 	<meta charset="utf-8"/>
-	<title>conduit with homebrew openssl - Starbug</title>	
+	<title>ruby - Starbug</title>	
 	<meta name="author" content="horlock">
 	
-
-	<meta name="description" content="現象 cohttpでhttpsからClient.getすると (Failure "No SSL or TLS support compiled into Conduit") とエラーになった 対策 CPPFLAGS="-I$HOME/homebrew/opt/openssl/include" opam install ssl 原因 homebrewでopensslを入れており、homebrewのpathを/usr/localから$HOME/homebrewに変えていたため、 opamでsslをビルドできなかった。">
-
 
 	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
 	<link rel="stylesheet" href="https://holrock.github.io/theme/css/main.css" type="text/css" />
@@ -30,37 +27,43 @@
 	  <div class="wrapper">
 
 		  <div role="main" class="content">
-	<article class="full">
-			
-		<h1>conduit with homebrew openssl</h1>
-		
+
+<h1>Post tagged: ruby</h1>
+
+<article class="summary">
 <div class="metadata">
-  <time datetime="2016-10-28T00:00:00+09:00" pubdate>金 28 10月 2016</time>
+  <time datetime="2016-10-24T00:00:00+09:00" pubdate>月 24 10月 2016</time>
     <address class="vcard author">
       by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
     </address>
-  in <a href="https://holrock.github.io/category/ocaml.html">ocaml</a>
-<p class="tags">tagged <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></div>		
-		<h1>現象</h1>
-<p>cohttpでhttpsから<code>Client.get</code>すると
-<code>(Failure "No SSL or TLS support compiled into Conduit")</code>
-とエラーになった</p>
-<h1>対策</h1>
-<div class="highlight"><pre><span></span><span class="x">CPPFLAGS=&quot;-I</span><span class="p">$</span><span class="nv">HOME</span><span class="x">/homebrew/opt/openssl/include&quot; opam install ssl</span>
-</pre></div>
-
-
-<h1>原因</h1>
-<p>homebrewでopensslを入れており、homebrewのpathを/usr/localから$HOME/homebrewに変えていたため、
-opamでsslをビルドできなかった。</p>	
-
-	</article>
-
-    <p>
-	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
-	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-	</p>
-
+  in <a href="https://holrock.github.io/category/cattoy.html">cattoy</a>
+<p class="tags">tagged <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a>, <a href="https://holrock.github.io/tag/ruby.html">ruby</a>, <a href="https://holrock.github.io/tag/rails.html">rails</a></p></div>  <div>
+    <h2>
+      <a href="https://holrock.github.io/cattoy-memo.html" rel="bookmark" title="Permalink to cattoy memo">cattoy memo</a>
+    </h2>
+    <p><ul>
+<li><a href="https://www.cattoy.info">https://www.cattoy.info</a><ul>
+<li>Cat Exercise Wheelの使ってくれなさのあまり作りました。</li>
+</ul>
+</li>
+<li>さくらVPS mem1G/2Coreプラン</li>
+<li>CentOS 6.8</li>
+<li>nginx <ul>
+<li>http2に対応するためビルドした</li>
+<li>ついでにLibreSSLにした</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span>nginx version: nginx/1.11.5
+built by gcc 4.4.7 20120313 (Red Hat 4.4.7-17) (GCC) 
+built with LibreSSL 2.5.0
+TLS SNI support enabled
+configure arguments: --prefix=/opt/nginx-1 ...</pre></div></p>
+  </div>
+</article>
+<div class="pagination">
+    Page 1 / 1
+</div>
 
 		  </div>	
 		  
@@ -71,7 +74,7 @@ opamでsslをビルドできなかった。</p>
 	          <ul>
 	              <li ><a href="https://holrock.github.io/category/cattoy.html">cattoy</a></li>
 	              <li ><a href="https://holrock.github.io/category/lisp.html">lisp</a></li>
-	              <li class="active"><a href="https://holrock.github.io/category/ocaml.html">ocaml</a></li>
+	              <li ><a href="https://holrock.github.io/category/ocaml.html">ocaml</a></li>
 	              <li ><a href="https://holrock.github.io/category/python.html">python</a></li>
 	          </ul>
 	        </nav>

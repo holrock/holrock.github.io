@@ -11,7 +11,7 @@ https接続でも警告が出てしまいます。&lt;/p&gt;
 &lt;p&gt;構成は https -&amp;gt; nginx(cacheもここで) -&amp;gt; http -&amp;gt; omac -&amp;gt; [画像server]&lt;/p&gt;
 &lt;p&gt;今のままだとomacが落ちてもnginx側のキャッシュが有効で気がつかないことがあるようなので、
 そのうちなんとかしないと。&lt;/p&gt;
-&lt;p&gt;ほかにもデーモン化やログ管理なんかもやらないといけないのですが、なんとなく動いてしまうと満足してしまいますね。&lt;/p&gt;</summary></entry><entry><title>cattoy memo</title><link href="https://holrock.github.io/cattoy-memo.html" rel="alternate"></link><published>2016-10-24T00:00:00+09:00</published><updated>2016-10-24T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-24:cattoy-memo.html</id><summary type="html">&lt;ul&gt;
+&lt;p&gt;ほかにもデーモン化やログ管理なんかもやらないといけないのですが、なんとなく動いてしまうと満足してしまいますね。&lt;/p&gt;</summary><category term="omac"></category><category term="ocaml"></category><category term="cattoy"></category></entry><entry><title>cattoy memo</title><link href="https://holrock.github.io/cattoy-memo.html" rel="alternate"></link><published>2016-10-24T00:00:00+09:00</published><updated>2016-10-24T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-24:cattoy-memo.html</id><summary type="html">&lt;ul&gt;
 &lt;li&gt;&lt;a href="https://www.cattoy.info"&gt;https://www.cattoy.info&lt;/a&gt;&lt;ul&gt;
 &lt;li&gt;Cat Exercise Wheelの使ってくれなさのあまり作りました。&lt;/li&gt;
 &lt;/ul&gt;
@@ -61,4 +61,4 @@ configure arguments: --prefix=/opt/nginx-1.11.5 --with-http_ssl_module --with-ht
 &lt;li&gt;navbarのopen/closeとturbolinksが相性が悪く、はまった。turbolinksは無効化&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;/ul&gt;</summary></entry></feed>
+&lt;/ul&gt;</summary><category term="cattoy"></category><category term="ruby"></category><category term="rails"></category></entry></feed>

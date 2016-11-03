@@ -2,12 +2,9 @@
 <html lang="">	
 <head>
 	<meta charset="utf-8"/>
-	<title>cattoy memo - Starbug</title>	
+	<title>cattoy - Starbug</title>	
 	<meta name="author" content="horlock">
 	
-
-	<meta name="description" content="https://www.cattoy.info Cat Exercise Wheelの使ってくれなさのあまり作りました。 さくらVPS mem1G/2Coreプラン CentOS 6.8 nginx http2に対応するためビルドした ついでにLibreSSLにした nginx version: nginx/1.11.5 built by gcc 4.4.7 20120313 (Red Hat 4.4.7-17) (GCC) built with LibreSSL 2.5.0 TLS SNI support enabled configure arguments: --prefix=/opt/nginx-1 ...">
-
 
 	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
 	<link rel="stylesheet" href="https://holrock.github.io/theme/css/main.css" type="text/css" />
@@ -30,18 +27,46 @@
 	  <div class="wrapper">
 
 		  <div role="main" class="content">
-	<article class="full">
-			
-		<h1>cattoy memo</h1>
-		
+
+<h1>Post tagged: cattoy</h1>
+
+<article class="summary">
+<div class="metadata">
+  <time datetime="2016-10-31T00:00:00+09:00" pubdate>月 31 10月 2016</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+    </address>
+  in <a href="https://holrock.github.io/category/cattoy.html">cattoy</a>
+<p class="tags">tagged <a href="https://holrock.github.io/tag/omac.html">omac</a>, <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a>, <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a></p></div>  <div>
+    <h2>
+      <a href="https://holrock.github.io/cattoynihua-xiang-proxyworu-remashita.html" rel="bookmark" title="Permalink to cattoyに画像proxyを入れました">cattoyに画像proxyを入れました</a>
+    </h2>
+    <p><p>cattoy.infoでは外部画像を結構な数表示しています。
+外部画像にはhttpでしかアクセスできないものもあり、せっかくwww.cattoy.infoが
+https接続でも警告が出てしまいます。</p>
+<p>ちょうど、次の記事
+<a href="http://qiita.com/MintoAoyama/items/6cd71b84e6225f86f819">Camoで実現するセキュアな画像プロキシサーバ</a>
+を見かけたので</p>
+<p>camoクローンをocamlで作ってみました。
+<a href="https://github.com/holrock/omac">https://github.com/holrock/omac</a></p>
+<p>まだおもちゃみたいなものですが、一応本番で動いています。</p>
+<p>構成は https -&gt; nginx(cacheもここで) -&gt; http -&gt; omac -&gt; [画像server]</p>
+<p>今のままだとomacが落ちてもnginx側のキャッシュが有効で気がつかないことがあるようなので、
+そのうちなんとかしないと。</p>
+<p>ほかにもデーモン化やログ管理なんかもやらないといけないのですが、なんとなく動いてしまうと満足してしまいますね。</p></p>
+  </div>
+</article><article class="summary">
 <div class="metadata">
   <time datetime="2016-10-24T00:00:00+09:00" pubdate>月 24 10月 2016</time>
     <address class="vcard author">
       by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
     </address>
   in <a href="https://holrock.github.io/category/cattoy.html">cattoy</a>
-<p class="tags">tagged <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a>, <a href="https://holrock.github.io/tag/ruby.html">ruby</a>, <a href="https://holrock.github.io/tag/rails.html">rails</a></p></div>		
-		<ul>
+<p class="tags">tagged <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a>, <a href="https://holrock.github.io/tag/ruby.html">ruby</a>, <a href="https://holrock.github.io/tag/rails.html">rails</a></p></div>  <div>
+    <h2>
+      <a href="https://holrock.github.io/cattoy-memo.html" rel="bookmark" title="Permalink to cattoy memo">cattoy memo</a>
+    </h2>
+    <p><ul>
 <li><a href="https://www.cattoy.info">https://www.cattoy.info</a><ul>
 <li>Cat Exercise Wheelの使ってくれなさのあまり作りました。</li>
 </ul>
@@ -58,48 +83,12 @@
 built by gcc 4.4.7 20120313 (Red Hat 4.4.7-17) (GCC) 
 built with LibreSSL 2.5.0
 TLS SNI support enabled
-configure arguments: --prefix=/opt/nginx-1.11.5 --with-http_ssl_module --with-http_gzip_static_module --with-http_stub_status_module --with-http_v2_module --with-http_realip_module --with-openssl=../libressl-2.5.0 --with-cc-opt=&#39;-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -march=native&#39; --with-ld-opt=&#39; -Wl,-E -lrt&#39;
-</pre></div>
-
-
-<ul>
-<li>
-<p>Let's Encryptで証明書とってhttp2化</p>
-<ul>
-<li>自配信コンテンツはほとんどないので意味はない</li>
-</ul>
-</li>
-<li>
-<p>ruby 2.3.1</p>
-</li>
-<li>rails 5.0.1<ul>
-<li>puma</li>
-</ul>
-</li>
-<li>sqlite3<ul>
-<li>DB動かすほどのサーバーじゃないのでとりあえず</li>
-</ul>
-</li>
-<li>認証はsorcery</li>
-<li>エラー通知はexception_notification -&gt; slack-notifierでcattoy.slack -&gt; https://cattoy.slack.com/</li>
-<li>itamae<ul>
-<li>nginx -&gt; pumaまわりが未完成</li>
-<li>面倒になってきたのでdockerの方が楽そうな気がしてきた</li>
-</ul>
-</li>
-<li>CSSフレームワークは<a href="https://github.com/kathamo/Kathamo/tree/master/Kathamo-3.0.0">kathamo</a><ul>
-<li>navbarのopen/closeとturbolinksが相性が悪く、はまった。turbolinksは無効化</li>
-</ul>
-</li>
-</ul>	
-
-	</article>
-
-    <p>
-	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
-	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-	</p>
-
+configure arguments: --prefix=/opt/nginx-1 ...</pre></div></p>
+  </div>
+</article>
+<div class="pagination">
+    Page 1 / 1
+</div>
 
 		  </div>	
 		  
@@ -108,7 +97,7 @@ configure arguments: --prefix=/opt/nginx-1.11.5 --with-http_ssl_module --with-ht
 	        <nav>
 	          <h2>Categories</h2>
 	          <ul>
-	              <li class="active"><a href="https://holrock.github.io/category/cattoy.html">cattoy</a></li>
+	              <li ><a href="https://holrock.github.io/category/cattoy.html">cattoy</a></li>
 	              <li ><a href="https://holrock.github.io/category/lisp.html">lisp</a></li>
 	              <li ><a href="https://holrock.github.io/category/ocaml.html">ocaml</a></li>
 	              <li ><a href="https://holrock.github.io/category/python.html">python</a></li>

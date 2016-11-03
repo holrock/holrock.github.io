@@ -2,7 +2,7 @@
 <html lang="">	
 <head>
 	<meta charset="utf-8"/>
-	<title>horlock - Starbug</title>	
+	<title>ocaml - Starbug</title>	
 	<meta name="author" content="horlock">
 	
 
@@ -28,41 +28,9 @@
 
 		  <div role="main" class="content">
 
-<h1>Posts published by: horlock</h1>
+<h1>Post tagged: ocaml</h1>
 
 <article class="summary">
-<div class="metadata">
-  <time datetime="2016-11-03T00:00:00+09:00" pubdate>木 03 11月 2016</time>
-    <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
-    </address>
-  in <a href="https://holrock.github.io/category/lisp.html">lisp</a>
-</div>  <div>
-    <h2>
-      <a href="https://holrock.github.io/allegrograph-sono1.html" rel="bookmark" title="Permalink to AllegroGraph その1">AllegroGraph その1</a>
-    </h2>
-    <p><p>AllegroGraphを動かしてみます。</p>
-<ul>
-<li><a href="http://franz.com/agraph/downloads/">http://franz.com/agraph/downloads/</a>からAllegroGraph Virtual Machineをダウンロード</li>
-<li>展開してVirtualboxから読み込む</li>
-<li>Virtualboxで仮想マシンを新規作成<ul>
-<li>type linux</li>
-<li>version ubuntu 64bit</li>
-<li>ディスク作成時にすでにあるディスクを使用するからAllegroGraph 6.0 Virtual Machine.vmdkを選択</li>
-<li>ネットワークのポートフォワーディングでホストポート10034(なんでもいい)からゲストポート10035へフォワーディング設定する</li>
-</ul>
-</li>
-<li>VMを起動</li>
-<li>franz/allegrographでログイン</li>
-<li>デスクトップにあるStart AGを起動する</li>
-<li>ホストマシンからブラウザでlocalhost:10034へアクセスする</li>
-<li>AllegroGraph WebViewへアクセスできたら、User anonymousのところからtest/xyzzyでログイン</li>
-<li><a href="http://franz.com/agraph/support/documentation/current/agraph-quick-start.html">Quick-Start</a>にしたがって</li>
-<li>Create new repositoryにkennedyと入力しcreate</li>
-<li>http://localhost:10034/repositories/kennedyを開く</li>
-<li>from a server-side ...</li></ul></p>
-  </div>
-</article><article class="summary">
 <div class="metadata">
   <time datetime="2016-11-02T00:00:00+09:00" pubdate>水 02 11月 2016</time>
     <address class="vcard author">
@@ -127,104 +95,6 @@ https接続でも警告が出てしまいます。</p>
 <h1>原因</h1>
 <p>homebrewでopensslを入れており、homebrewのpathを/usr/localから$HOME/homebrewに変えていたため、
 opamでsslをビルドできなかった。</p></p>
-  </div>
-</article><article class="summary">
-<div class="metadata">
-  <time datetime="2016-10-25T00:00:00+09:00" pubdate>火 25 10月 2016</time>
-    <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
-    </address>
-  in <a href="https://holrock.github.io/category/python.html">python</a>
-</div>  <div>
-    <h2>
-      <a href="https://holrock.github.io/chainerdefen-lei-dekitenai.html" rel="bookmark" title="Permalink to chainerで分類(できてない)">chainerで分類(できてない)</a>
-    </h2>
-    <p><p>cattoyでおもちゃの分類を自動でやりたくてchainerを試しました。
-cattoyに登録されている画像を集めてきて手作業で分類、学習をやってみましたが、
-やはり分類が面倒なのと、素材不足で全然だめでした。</p>
-<p>やったことをメモしておきます。</p>
-<ul>
-<li>pip install chainer pillow </li>
-<li>画像の数が多い猫じゃらし、爪とぎ、その他で分類してみる。images/nekojarashi images/tsumetogi images/otherとフォルダごとに分類</li>
-<li><a href="http://ksksksks2.hatenadiary.jp/entry/20160327/1459061931">http://ksksksks2.hatenadiary.jp/entry/20160327/1459061931</a>
-を参考にリサイズとトレーニングデータに分ける</li>
-</ul>
-<div class="highlight"><pre><span></span><span class="n">line</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">label</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
-</pre></div>
-
-
-<p>の所がlabelのままだとcompute_mean.pyでエラーになるので</p>
-<div class="highlight"><pre><span></span><span class="n">line</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
-</pre></div>
-
-
-<p>に変更する。</p>
-<ul>
-<li>python chainer/examples/imagenet/compute_mean.py --root . train_list.txt</li>
-<li>python chainer ...</li></ul></p>
-  </div>
-</article><article class="summary">
-<div class="metadata">
-  <time datetime="2016-10-25T00:00:00+09:00" pubdate>火 25 10月 2016</time>
-    <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
-    </address>
-  in <a href="https://holrock.github.io/category/lisp.html">lisp</a>
-</div>  <div>
-    <h2>
-      <a href="https://holrock.github.io/lmfswojian-ru.html" rel="bookmark" title="Permalink to lmfsを見る">lmfsを見る</a>
-    </h2>
-    <p><p>lsmfとはMTIのLispマシンのファイルシステムです。
-unlambda.comからCADRのイメージとソースが落とせるので中身を見てみます。</p>
-<h1>ダンプしてみる</h1>
-<ul>
-<li>
-<p>http://unlambda.com/index.php?n=Main.Cadr からファイルを落とす</p>
-<ul>
-<li>CADR emulator tar file</li>
-<li>system 78.48 source file partition</li>
-</ul>
-</li>
-<li>
-<p>usim.tar.gzを展開してlmfs.cをコンパイルする</p>
-<ul>
-<li>コンパイルエラーと実行時のオーバランを修正</li>
-</ul>
-</li>
-</ul>
-<div class="highlight"><pre><span></span><span class="gd">--- a/lmfs.c    2006-07-11 07:01:32.000000000 +0900</span>
-<span class="gi">+++ b/lmfs.c    2016-09-18 22:24:12.000000000 +0900</span>
-<span class="gu">@@ -127,6 +127,7 ...</span></pre></div></p>
-  </div>
-</article><article class="summary">
-<div class="metadata">
-  <time datetime="2016-10-24T00:00:00+09:00" pubdate>月 24 10月 2016</time>
-    <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
-    </address>
-  in <a href="https://holrock.github.io/category/cattoy.html">cattoy</a>
-<p class="tags">tagged <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a>, <a href="https://holrock.github.io/tag/ruby.html">ruby</a>, <a href="https://holrock.github.io/tag/rails.html">rails</a></p></div>  <div>
-    <h2>
-      <a href="https://holrock.github.io/cattoy-memo.html" rel="bookmark" title="Permalink to cattoy memo">cattoy memo</a>
-    </h2>
-    <p><ul>
-<li><a href="https://www.cattoy.info">https://www.cattoy.info</a><ul>
-<li>Cat Exercise Wheelの使ってくれなさのあまり作りました。</li>
-</ul>
-</li>
-<li>さくらVPS mem1G/2Coreプラン</li>
-<li>CentOS 6.8</li>
-<li>nginx <ul>
-<li>http2に対応するためビルドした</li>
-<li>ついでにLibreSSLにした</li>
-</ul>
-</li>
-</ul>
-<div class="highlight"><pre><span></span>nginx version: nginx/1.11.5
-built by gcc 4.4.7 20120313 (Red Hat 4.4.7-17) (GCC) 
-built with LibreSSL 2.5.0
-TLS SNI support enabled
-configure arguments: --prefix=/opt/nginx-1 ...</pre></div></p>
   </div>
 </article>
 <div class="pagination">

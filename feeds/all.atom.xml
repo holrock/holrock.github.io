@@ -62,7 +62,7 @@
 
 
 &lt;p&gt;これでビルドできるようになりました。&lt;/p&gt;
-&lt;p&gt;あれ？てことはいままでsystem側のlibにリンクしてたんだろうか。&lt;/p&gt;</summary></entry><entry><title>cattoyに画像proxyを入れました</title><link href="https://holrock.github.io/cattoynihua-xiang-proxyworu-remashita.html" rel="alternate"></link><published>2016-10-31T00:00:00+09:00</published><updated>2016-10-31T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-31:cattoynihua-xiang-proxyworu-remashita.html</id><summary type="html">&lt;p&gt;cattoy.infoでは外部画像を結構な数表示しています。
+&lt;p&gt;あれ？てことはいままでsystem側のlibにリンクしてたんだろうか。&lt;/p&gt;</summary><category term="ocaml"></category></entry><entry><title>cattoyに画像proxyを入れました</title><link href="https://holrock.github.io/cattoynihua-xiang-proxyworu-remashita.html" rel="alternate"></link><published>2016-10-31T00:00:00+09:00</published><updated>2016-10-31T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-31:cattoynihua-xiang-proxyworu-remashita.html</id><summary type="html">&lt;p&gt;cattoy.infoでは外部画像を結構な数表示しています。
 外部画像にはhttpでしかアクセスできないものもあり、せっかくwww.cattoy.infoが
 https接続でも警告が出てしまいます。&lt;/p&gt;
 &lt;p&gt;ちょうど、次の記事
@@ -74,7 +74,7 @@ https接続でも警告が出てしまいます。&lt;/p&gt;
 &lt;p&gt;構成は https -&amp;gt; nginx(cacheもここで) -&amp;gt; http -&amp;gt; omac -&amp;gt; [画像server]&lt;/p&gt;
 &lt;p&gt;今のままだとomacが落ちてもnginx側のキャッシュが有効で気がつかないことがあるようなので、
 そのうちなんとかしないと。&lt;/p&gt;
-&lt;p&gt;ほかにもデーモン化やログ管理なんかもやらないといけないのですが、なんとなく動いてしまうと満足してしまいますね。&lt;/p&gt;</summary></entry><entry><title>conduit with homebrew openssl</title><link href="https://holrock.github.io/conduit-with-homebrew-openssl.html" rel="alternate"></link><published>2016-10-28T00:00:00+09:00</published><updated>2016-10-28T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-28:conduit-with-homebrew-openssl.html</id><summary type="html">&lt;h1&gt;現象&lt;/h1&gt;
+&lt;p&gt;ほかにもデーモン化やログ管理なんかもやらないといけないのですが、なんとなく動いてしまうと満足してしまいますね。&lt;/p&gt;</summary><category term="omac"></category><category term="ocaml"></category><category term="cattoy"></category></entry><entry><title>conduit with homebrew openssl</title><link href="https://holrock.github.io/conduit-with-homebrew-openssl.html" rel="alternate"></link><published>2016-10-28T00:00:00+09:00</published><updated>2016-10-28T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-28:conduit-with-homebrew-openssl.html</id><summary type="html">&lt;h1&gt;現象&lt;/h1&gt;
 &lt;p&gt;cohttpでhttpsから&lt;code&gt;Client.get&lt;/code&gt;すると
 &lt;code&gt;(Failure "No SSL or TLS support compiled into Conduit")&lt;/code&gt;
 とエラーになった&lt;/p&gt;
@@ -85,7 +85,7 @@ https接続でも警告が出てしまいます。&lt;/p&gt;
 
 &lt;h1&gt;原因&lt;/h1&gt;
 &lt;p&gt;homebrewでopensslを入れており、homebrewのpathを/usr/localから$HOME/homebrewに変えていたため、
-opamでsslをビルドできなかった。&lt;/p&gt;</summary></entry><entry><title>chainerで分類(できてない)</title><link href="https://holrock.github.io/chainerdefen-lei-dekitenai.html" rel="alternate"></link><published>2016-10-25T00:00:00+09:00</published><updated>2016-10-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-25:chainerdefen-lei-dekitenai.html</id><summary type="html">&lt;p&gt;cattoyでおもちゃの分類を自動でやりたくてchainerを試しました。
+opamでsslをビルドできなかった。&lt;/p&gt;</summary><category term="ocaml"></category></entry><entry><title>chainerで分類(できてない)</title><link href="https://holrock.github.io/chainerdefen-lei-dekitenai.html" rel="alternate"></link><published>2016-10-25T00:00:00+09:00</published><updated>2016-10-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-25:chainerdefen-lei-dekitenai.html</id><summary type="html">&lt;p&gt;cattoyでおもちゃの分類を自動でやりたくてchainerを試しました。
 cattoyに登録されている画像を集めてきて手作業で分類、学習をやってみましたが、
 やはり分類が面倒なのと、素材不足で全然だめでした。&lt;/p&gt;
 &lt;p&gt;やったことをメモしておきます。&lt;/p&gt;
@@ -422,4 +422,4 @@ configure arguments: --prefix=/opt/nginx-1.11.5 --with-http_ssl_module --with-ht
 &lt;li&gt;navbarのopen/closeとturbolinksが相性が悪く、はまった。turbolinksは無効化&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;/ul&gt;</summary></entry></feed>
+&lt;/ul&gt;</summary><category term="cattoy"></category><category term="ruby"></category><category term="rails"></category></entry></feed>

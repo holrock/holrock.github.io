@@ -2,12 +2,9 @@
 <html lang="">	
 <head>
 	<meta charset="utf-8"/>
-	<title>conduit with homebrew openssl - Starbug</title>	
+	<title>omac - Starbug</title>	
 	<meta name="author" content="horlock">
 	
-
-	<meta name="description" content="現象 cohttpでhttpsからClient.getすると (Failure "No SSL or TLS support compiled into Conduit") とエラーになった 対策 CPPFLAGS="-I$HOME/homebrew/opt/openssl/include" opam install ssl 原因 homebrewでopensslを入れており、homebrewのpathを/usr/localから$HOME/homebrewに変えていたため、 opamでsslをビルドできなかった。">
-
 
 	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
 	<link rel="stylesheet" href="https://holrock.github.io/theme/css/main.css" type="text/css" />
@@ -30,37 +27,38 @@
 	  <div class="wrapper">
 
 		  <div role="main" class="content">
-	<article class="full">
-			
-		<h1>conduit with homebrew openssl</h1>
-		
+
+<h1>Post tagged: omac</h1>
+
+<article class="summary">
 <div class="metadata">
-  <time datetime="2016-10-28T00:00:00+09:00" pubdate>金 28 10月 2016</time>
+  <time datetime="2016-10-31T00:00:00+09:00" pubdate>月 31 10月 2016</time>
     <address class="vcard author">
       by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
     </address>
-  in <a href="https://holrock.github.io/category/ocaml.html">ocaml</a>
-<p class="tags">tagged <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></div>		
-		<h1>現象</h1>
-<p>cohttpでhttpsから<code>Client.get</code>すると
-<code>(Failure "No SSL or TLS support compiled into Conduit")</code>
-とエラーになった</p>
-<h1>対策</h1>
-<div class="highlight"><pre><span></span><span class="x">CPPFLAGS=&quot;-I</span><span class="p">$</span><span class="nv">HOME</span><span class="x">/homebrew/opt/openssl/include&quot; opam install ssl</span>
-</pre></div>
-
-
-<h1>原因</h1>
-<p>homebrewでopensslを入れており、homebrewのpathを/usr/localから$HOME/homebrewに変えていたため、
-opamでsslをビルドできなかった。</p>	
-
-	</article>
-
-    <p>
-	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
-	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-	</p>
-
+  in <a href="https://holrock.github.io/category/cattoy.html">cattoy</a>
+<p class="tags">tagged <a href="https://holrock.github.io/tag/omac.html">omac</a>, <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a>, <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a></p></div>  <div>
+    <h2>
+      <a href="https://holrock.github.io/cattoynihua-xiang-proxyworu-remashita.html" rel="bookmark" title="Permalink to cattoyに画像proxyを入れました">cattoyに画像proxyを入れました</a>
+    </h2>
+    <p><p>cattoy.infoでは外部画像を結構な数表示しています。
+外部画像にはhttpでしかアクセスできないものもあり、せっかくwww.cattoy.infoが
+https接続でも警告が出てしまいます。</p>
+<p>ちょうど、次の記事
+<a href="http://qiita.com/MintoAoyama/items/6cd71b84e6225f86f819">Camoで実現するセキュアな画像プロキシサーバ</a>
+を見かけたので</p>
+<p>camoクローンをocamlで作ってみました。
+<a href="https://github.com/holrock/omac">https://github.com/holrock/omac</a></p>
+<p>まだおもちゃみたいなものですが、一応本番で動いています。</p>
+<p>構成は https -&gt; nginx(cacheもここで) -&gt; http -&gt; omac -&gt; [画像server]</p>
+<p>今のままだとomacが落ちてもnginx側のキャッシュが有効で気がつかないことがあるようなので、
+そのうちなんとかしないと。</p>
+<p>ほかにもデーモン化やログ管理なんかもやらないといけないのですが、なんとなく動いてしまうと満足してしまいますね。</p></p>
+  </div>
+</article>
+<div class="pagination">
+    Page 1 / 1
+</div>
 
 		  </div>	
 		  
@@ -71,7 +69,7 @@ opamでsslをビルドできなかった。</p>
 	          <ul>
 	              <li ><a href="https://holrock.github.io/category/cattoy.html">cattoy</a></li>
 	              <li ><a href="https://holrock.github.io/category/lisp.html">lisp</a></li>
-	              <li class="active"><a href="https://holrock.github.io/category/ocaml.html">ocaml</a></li>
+	              <li ><a href="https://holrock.github.io/category/ocaml.html">ocaml</a></li>
 	              <li ><a href="https://holrock.github.io/category/python.html">python</a></li>
 	          </ul>
 	        </nav>
