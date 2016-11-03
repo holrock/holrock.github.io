@@ -1,5 +1,6 @@
 title: cattoy memo
 date: 2016-10-24
+tags: cattoy,ruby,rails
 
 
 * [https://www.cattoy.info](https://www.cattoy.info)

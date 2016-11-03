@@ -1,5 +1,6 @@
 title: lmfsを見る
 date: 2016-10-25
+tag: lisp,lmfs,lispmachine
 
 lsmfとはMTIのLispマシンのファイルシステムです。
 unlambda.comからCADRのイメージとソースが落とせるので中身を見てみます。

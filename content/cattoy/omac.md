@@ -1,5 +1,6 @@
 title: cattoyに画像proxyを入れました
 date: 2016-10-31
+tags: omac,ocaml,cattoy
 
 cattoy.infoでは外部画像を結構な数表示しています。
 外部画像にはhttpでしかアクセスできないものもあり、せっかくwww.cattoy.infoが

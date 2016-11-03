@@ -1,5 +1,6 @@
 title: chainerで分類(できてない)
 date: 2016-10-25
+tag: chainer, python
 
 cattoyでおもちゃの分類を自動でやりたくてchainerを試しました。
 cattoyに登録されている画像を集めてきて手作業で分類、学習をやってみましたが、
