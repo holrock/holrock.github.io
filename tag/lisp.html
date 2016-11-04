@@ -2,7 +2,7 @@
 <html lang="">	
 <head>
 	<meta charset="utf-8"/>
-	<title>cattoy - Starbug</title>	
+	<title>lisp - Starbug</title>	
 	<meta name="author" content="horlock">
 	
 
@@ -28,7 +28,7 @@
 
 		  <div role="main" class="content">
 
-<h1>Post tagged: cattoy</h1>
+<h1>Post tagged: lisp</h1>
 
 <article class="summary">
 <div class="metadata">
@@ -59,58 +59,68 @@
   </div>
 </article><article class="summary">
 <div class="metadata">
-  <time datetime="2016-10-31T00:00:00+09:00" pubdate>月 31 10月 2016</time>
+  <time datetime="2016-11-03T00:00:00+09:00" pubdate>木 03 11月 2016</time>
     <address class="vcard author">
       by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
     </address>
-  in <a href="https://holrock.github.io/category/cattoy.html">cattoy</a>
-<p class="tags">tagged <a href="https://holrock.github.io/tag/omac.html">omac</a>, <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a>, <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a></p></div>  <div>
+  in <a href="https://holrock.github.io/category/lisp.html">lisp</a>
+<p class="tags">tagged <a href="https://holrock.github.io/tag/lisp.html">lisp</a>, <a href="https://holrock.github.io/tag/allegrograph.html">allegrograph</a></p></div>  <div>
     <h2>
-      <a href="https://holrock.github.io/cattoynihua-xiang-proxyworu-remashita.html" rel="bookmark" title="Permalink to cattoyに画像proxyを入れました">cattoyに画像proxyを入れました</a>
+      <a href="https://holrock.github.io/allegrograph-sono1.html" rel="bookmark" title="Permalink to AllegroGraph その1">AllegroGraph その1</a>
     </h2>
-    <p><p>cattoy.infoでは外部画像を結構な数表示しています。
-外部画像にはhttpでしかアクセスできないものもあり、せっかくwww.cattoy.infoが
-https接続でも警告が出てしまいます。</p>
-<p>ちょうど、次の記事
-<a href="http://qiita.com/MintoAoyama/items/6cd71b84e6225f86f819">Camoで実現するセキュアな画像プロキシサーバ</a>
-を見かけたので</p>
-<p>camoクローンをocamlで作ってみました。
-<a href="https://github.com/holrock/omac">https://github.com/holrock/omac</a></p>
-<p>まだおもちゃみたいなものですが、一応本番で動いています。</p>
-<p>構成は https -&gt; nginx(cacheもここで) -&gt; http -&gt; omac -&gt; [画像server]</p>
-<p>今のままだとomacが落ちてもnginx側のキャッシュが有効で気がつかないことがあるようなので、
-そのうちなんとかしないと。</p>
-<p>ほかにもデーモン化やログ管理なんかもやらないといけないのですが、なんとなく動いてしまうと満足してしまいますね。</p></p>
+    <p><p>AllegroGraphを動かしてみます。</p>
+<ul>
+<li><a href="http://franz.com/agraph/downloads/">http://franz.com/agraph/downloads/</a>からAllegroGraph Virtual Machineをダウンロード</li>
+<li>展開してVirtualboxから読み込む</li>
+<li>Virtualboxで仮想マシンを新規作成<ul>
+<li>type linux</li>
+<li>version ubuntu 64bit</li>
+<li>ディスク作成時にすでにあるディスクを使用するからAllegroGraph 6.0 Virtual Machine.vmdkを選択</li>
+<li>ネットワークのポートフォワーディングでホストポート10034(なんでもいい)からゲストポート10035へフォワーディング設定する</li>
+</ul>
+</li>
+<li>VMを起動</li>
+<li>franz/allegrographでログイン</li>
+<li>デスクトップにあるStart AGを起動する</li>
+<li>ホストマシンからブラウザでlocalhost:10034へアクセスする</li>
+<li>AllegroGraph WebViewへアクセスできたら、User anonymousのところからtest/xyzzyでログイン</li>
+<li><a href="http://franz.com/agraph/support/documentation/current/agraph-quick-start.html">Quick-Start</a>にしたがって</li>
+<li>Create new repositoryにkennedyと入力しcreate</li>
+<li>http://localhost:10034/repositories/kennedyを開く</li>
+<li>from a server-side ...</li></ul></p>
   </div>
 </article><article class="summary">
 <div class="metadata">
-  <time datetime="2016-10-24T00:00:00+09:00" pubdate>月 24 10月 2016</time>
+  <time datetime="2016-10-25T00:00:00+09:00" pubdate>火 25 10月 2016</time>
     <address class="vcard author">
       by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
     </address>
-  in <a href="https://holrock.github.io/category/cattoy.html">cattoy</a>
-<p class="tags">tagged <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a>, <a href="https://holrock.github.io/tag/ruby.html">ruby</a>, <a href="https://holrock.github.io/tag/rails.html">rails</a></p></div>  <div>
+  in <a href="https://holrock.github.io/category/lisp.html">lisp</a>
+<p class="tags">tagged <a href="https://holrock.github.io/tag/lisp.html">lisp</a>, <a href="https://holrock.github.io/tag/lmfs.html">lmfs</a>, <a href="https://holrock.github.io/tag/lispmachine.html">lispmachine</a></p></div>  <div>
     <h2>
-      <a href="https://holrock.github.io/cattoy-memo.html" rel="bookmark" title="Permalink to cattoy memo">cattoy memo</a>
+      <a href="https://holrock.github.io/lmfswojian-ru.html" rel="bookmark" title="Permalink to lmfsを見る">lmfsを見る</a>
     </h2>
-    <p><ul>
-<li><a href="https://www.cattoy.info">https://www.cattoy.info</a><ul>
-<li>Cat Exercise Wheelの使ってくれなさのあまり作りました。</li>
+    <p><p>lsmfとはMTIのLispマシンのファイルシステムです。
+unlambda.comからCADRのイメージとソースが落とせるので中身を見てみます。</p>
+<h1>ダンプしてみる</h1>
+<ul>
+<li>
+<p>http://unlambda.com/index.php?n=Main.Cadr からファイルを落とす</p>
+<ul>
+<li>CADR emulator tar file</li>
+<li>system 78.48 source file partition</li>
 </ul>
 </li>
-<li>さくらVPS mem1G/2Coreプラン</li>
-<li>CentOS 6.8</li>
-<li>nginx <ul>
-<li>http2に対応するためビルドした</li>
-<li>ついでにLibreSSLにした</li>
+<li>
+<p>usim.tar.gzを展開してlmfs.cをコンパイルする</p>
+<ul>
+<li>コンパイルエラーと実行時のオーバランを修正</li>
 </ul>
 </li>
 </ul>
-<div class="highlight"><pre><span></span>nginx version: nginx/1.11.5
-built by gcc 4.4.7 20120313 (Red Hat 4.4.7-17) (GCC) 
-built with LibreSSL 2.5.0
-TLS SNI support enabled
-configure arguments: --prefix=/opt/nginx-1 ...</pre></div></p>
+<div class="highlight"><pre><span></span><span class="gd">--- a/lmfs.c    2006-07-11 07:01:32.000000000 +0900</span>
+<span class="gi">+++ b/lmfs.c    2016-09-18 22:24:12.000000000 +0900</span>
+<span class="gu">@@ -127,6 +127,7 ...</span></pre></div></p>
   </div>
 </article>
 <div class="pagination">

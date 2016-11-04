@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>lispmachine - Starbug</title>	
+	<meta name="author" content="horlock">
+	
+
+	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
+	<link rel="stylesheet" href="https://holrock.github.io/theme/css/main.css" type="text/css" />
+		
+
+    <link href="https://holrock.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Starbug Atom Feed" />
+</head>
+	
+<body>
+
+    <div class="container">
+	  
+	  <header role="banner">
+	    <div class="feeds">
+	        <a href="https://holrock.github.io/feeds/all.atom.xml" rel="alternate"><img src="https://holrock.github.io/theme/images/icons/feed-32px.png" alt="atom feed"/></a>
+	    </div>
+		<a href="https://holrock.github.io" class="title">Starbug</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+
+<h1>Post tagged: lispmachine</h1>
+
+<article class="summary">
+<div class="metadata">
+  <time datetime="2016-10-25T00:00:00+09:00" pubdate>火 25 10月 2016</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+    </address>
+  in <a href="https://holrock.github.io/category/lisp.html">lisp</a>
+<p class="tags">tagged <a href="https://holrock.github.io/tag/lisp.html">lisp</a>, <a href="https://holrock.github.io/tag/lmfs.html">lmfs</a>, <a href="https://holrock.github.io/tag/lispmachine.html">lispmachine</a></p></div>  <div>
+    <h2>
+      <a href="https://holrock.github.io/lmfswojian-ru.html" rel="bookmark" title="Permalink to lmfsを見る">lmfsを見る</a>
+    </h2>
+    <p><p>lsmfとはMTIのLispマシンのファイルシステムです。
+unlambda.comからCADRのイメージとソースが落とせるので中身を見てみます。</p>
+<h1>ダンプしてみる</h1>
+<ul>
+<li>
+<p>http://unlambda.com/index.php?n=Main.Cadr からファイルを落とす</p>
+<ul>
+<li>CADR emulator tar file</li>
+<li>system 78.48 source file partition</li>
+</ul>
+</li>
+<li>
+<p>usim.tar.gzを展開してlmfs.cをコンパイルする</p>
+<ul>
+<li>コンパイルエラーと実行時のオーバランを修正</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="gd">--- a/lmfs.c    2006-07-11 07:01:32.000000000 +0900</span>
+<span class="gi">+++ b/lmfs.c    2016-09-18 22:24:12.000000000 +0900</span>
+<span class="gu">@@ -127,6 +127,7 ...</span></pre></div></p>
+  </div>
+</article>
+<div class="pagination">
+    Page 1 / 1
+</div>
+
+		  </div>	
+		  
+		  <div class="sidebar">
+
+	        <nav>
+	          <h2>Categories</h2>
+	          <ul>
+	              <li ><a href="https://holrock.github.io/category/cattoy.html">cattoy</a></li>
+	              <li ><a href="https://holrock.github.io/category/lisp.html">lisp</a></li>
+	              <li ><a href="https://holrock.github.io/category/ocaml.html">ocaml</a></li>
+	              <li ><a href="https://holrock.github.io/category/python.html">python</a></li>
+	          </ul>
+	        </nav>
+
+	          <aside>
+	          <h2>Social</h2>
+			    <ul class="social">
+				  <li><a href="https://github.com/holrock/">github</a><i></i></li>
+			    </ul>
+			  </aside>
+
+
+		  </div>
+
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+		  © 2016 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+    	</p>
+
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>

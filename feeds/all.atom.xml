@@ -87,7 +87,7 @@
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;しかし、述語選ぶのが大変ですね。&lt;/p&gt;</summary></entry><entry><title>AllegroGraph その1</title><link href="https://holrock.github.io/allegrograph-sono1.html" rel="alternate"></link><published>2016-11-03T00:00:00+09:00</published><updated>2016-11-03T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-11-03:allegrograph-sono1.html</id><summary type="html">&lt;p&gt;AllegroGraphを動かしてみます。&lt;/p&gt;
+&lt;p&gt;しかし、述語選ぶのが大変ですね。&lt;/p&gt;</summary><category term="lisp"></category><category term="allegrograph"></category><category term="ruby"></category><category term="cattoy"></category></entry><entry><title>AllegroGraph その1</title><link href="https://holrock.github.io/allegrograph-sono1.html" rel="alternate"></link><published>2016-11-03T00:00:00+09:00</published><updated>2016-11-03T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-11-03:allegrograph-sono1.html</id><summary type="html">&lt;p&gt;AllegroGraphを動かしてみます。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://franz.com/agraph/downloads/"&gt;http://franz.com/agraph/downloads/&lt;/a&gt;からAllegroGraph Virtual Machineをダウンロード&lt;/li&gt;
 &lt;li&gt;展開してVirtualboxから読み込む&lt;/li&gt;
@@ -125,7 +125,7 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;今回はここまで&lt;/p&gt;</summary></entry><entry><title>macOS 10.12.1にあげたらlibcryptoが見つからない</title><link href="https://holrock.github.io/macos-10121niagetaralibcryptogajian-tsukaranai.html" rel="alternate"></link><published>2016-11-02T00:00:00+09:00</published><updated>2016-11-02T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-11-02:macos-10121niagetaralibcryptogajian-tsukaranai.html</id><summary type="html">&lt;p&gt;macOSをSierraにあげました。&lt;/p&gt;
+&lt;p&gt;今回はここまで&lt;/p&gt;</summary><category term="lisp"></category><category term="allegrograph"></category></entry><entry><title>macOS 10.12.1にあげたらlibcryptoが見つからない</title><link href="https://holrock.github.io/macos-10121niagetaralibcryptogajian-tsukaranai.html" rel="alternate"></link><published>2016-11-02T00:00:00+09:00</published><updated>2016-11-02T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-11-02:macos-10121niagetaralibcryptogajian-tsukaranai.html</id><summary type="html">&lt;p&gt;macOSをSierraにあげました。&lt;/p&gt;
 &lt;p&gt;その後xcode8.1のインストールをして、omacのビルドをするとlibcryptoが見つからずエラーになりました。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c"&gt;% ocaml setup.ml -build &lt;/span&gt;
 &lt;span class="n"&gt;Finished&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="n"&gt;targets&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="n"&gt;cached&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;00&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;00.&lt;/span&gt;
@@ -213,7 +213,7 @@ cattoyに登録されている画像を集めてきて手作業で分類、学�
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;と、まあ微妙な感じでした&lt;/p&gt;</summary></entry><entry><title>lmfsを見る</title><link href="https://holrock.github.io/lmfswojian-ru.html" rel="alternate"></link><published>2016-10-25T00:00:00+09:00</published><updated>2016-10-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-25:lmfswojian-ru.html</id><summary type="html">&lt;p&gt;lsmfとはMTIのLispマシンのファイルシステムです。
+&lt;p&gt;と、まあ微妙な感じでした&lt;/p&gt;</summary><category term="chainer"></category><category term="python"></category></entry><entry><title>lmfsを見る</title><link href="https://holrock.github.io/lmfswojian-ru.html" rel="alternate"></link><published>2016-10-25T00:00:00+09:00</published><updated>2016-10-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-25:lmfswojian-ru.html</id><summary type="html">&lt;p&gt;lsmfとはMTIのLispマシンのファイルシステムです。
 unlambda.comからCADRのイメージとソースが落とせるので中身を見てみます。&lt;/p&gt;
 &lt;h1&gt;ダンプしてみる&lt;/h1&gt;
 &lt;ul&gt;
@@ -460,7 +460,7 @@ unlambda.comからCADRのイメージとソースが落とせるので中身を�
 &lt;/ul&gt;
 &lt;p&gt;この辺で力尽きました。
 8byteや1008byte境界のあたりがわからず。
-&lt;a href="http://www.unlambda.com/cadr/aimemo528_75pgs.pdf"&gt;aimemo528_75pgs.pdf&lt;/a&gt;のDisk structureあたりの制約なのかなあ。&lt;/p&gt;</summary></entry><entry><title>cattoy memo</title><link href="https://holrock.github.io/cattoy-memo.html" rel="alternate"></link><published>2016-10-24T00:00:00+09:00</published><updated>2016-10-24T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-24:cattoy-memo.html</id><summary type="html">&lt;ul&gt;
+&lt;a href="http://www.unlambda.com/cadr/aimemo528_75pgs.pdf"&gt;aimemo528_75pgs.pdf&lt;/a&gt;のDisk structureあたりの制約なのかなあ。&lt;/p&gt;</summary><category term="lisp"></category><category term="lmfs"></category><category term="lispmachine"></category></entry><entry><title>cattoy memo</title><link href="https://holrock.github.io/cattoy-memo.html" rel="alternate"></link><published>2016-10-24T00:00:00+09:00</published><updated>2016-10-24T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-24:cattoy-memo.html</id><summary type="html">&lt;ul&gt;
 &lt;li&gt;&lt;a href="https://www.cattoy.info"&gt;https://www.cattoy.info&lt;/a&gt;&lt;ul&gt;
 &lt;li&gt;Cat Exercise Wheelの使ってくれなさのあまり作りました。&lt;/li&gt;
 &lt;/ul&gt;
