@@ -32,6 +32,33 @@
 
 <article class="summary">
 <div class="metadata">
+  <time datetime="2016-11-04T00:00:00+09:00" pubdate>金 04 11月 2016</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+    </address>
+  in <a href="https://holrock.github.io/category/lisp.html">lisp</a>
+</div>  <div>
+    <h2>
+      <a href="https://holrock.github.io/allegrograph-sono2.html" rel="bookmark" title="Permalink to AllegroGraph その2">AllegroGraph その2</a>
+    </h2>
+    <p><p>AllegroGraphが動くようになったので、データ作って投入します。</p>
+<p>データは<a href="https://www.cattoy.info">cattoy</a>から作ります。</p>
+<p><a href="https://github.com/holrock/cattoy/commit/202415749077a2820bff11d3544af3fc03453b65">こんなかんじ</a>
+にRDF出力コードを仕込んだので、</p>
+<div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="no">RDF</span><span class="o">::</span><span class="no">Graph</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">tap</span> <span class="p">{</span><span class="o">|</span><span class="n">g</span><span class="o">|</span> <span class="no">Cat</span><span class="o">.</span><span class="n">all</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span><span class="o">|</span><span class="n">c</span><span class="o">|</span> <span class="n">g</span> <span class="o">&lt;&lt;</span> <span class="n">c</span><span class="o">.</span><span class="n">to_rdf</span> <span class="p">}}</span>
+<span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;/tmp/cat.ttl&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="n">f</span> <span class="o">&lt;&lt;</span> <span class="n">g</span><span class="o">.</span><span class="n">to_ttl</span> <span class="p">}</span>
+</pre></div>
+
+
+<p>でファイルに吐き出します。
+なかみはこんなかんじです。</p>
+<div class="highlight"><pre><span></span><span class="k">@prefix</span> <span class="nt">schema</span><span class="o">:</span> <span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">schema</span><span class="nc">.org</span><span class="o">/&gt;</span> <span class="o">.</span>
+<span class="k">@prefix</span> <span class="nt">xsd</span><span class="o">:</span> <span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">www</span><span class="nc">.w3.org</span><span class="o">/</span><span class="nt">2001</span><span class="o">/</span><span class="nt">XMLSchema</span><span class="err">#</span><span class="o">&gt;</span> <span class="o">.</span>
+
+<span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">www</span><span class="nc">.cattoy.info</span><span class="o">/</span><span class="nt">histories ...</span></pre></div></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
   <time datetime="2016-11-03T00:00:00+09:00" pubdate>木 03 11月 2016</time>
     <address class="vcard author">
       by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
