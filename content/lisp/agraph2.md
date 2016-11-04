@@ -1,6 +1,6 @@
 title: AllegroGraph その2
 date: 2016-11-04
-tag: lisp,allegrograph,ruby,cattoy
+tags: lisp,allegrograph,ruby,cattoy
 
 AllegroGraphが動くようになったので、データ作って投入します。
 
