@@ -1,5 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/all.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2016-11-04T00:00:00+09:00</updated><entry><title>AllegroGraph その2</title><link href="https://holrock.github.io/allegrograph-sono2.html" rel="alternate"></link><published>2016-11-04T00:00:00+09:00</published><updated>2016-11-04T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-11-04:allegrograph-sono2.html</id><summary type="html">&lt;p&gt;AllegroGraphが動くようになったので、データ作って投入します。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/all.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2016-11-07T00:00:00+09:00</updated><entry><title>AllegroGraph その3</title><link href="https://holrock.github.io/allegrograph-sono3.html" rel="alternate"></link><published>2016-11-07T00:00:00+09:00</published><updated>2016-11-07T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-11-07:allegrograph-sono3.html</id><summary type="html">&lt;p&gt;前回全然lispじゃなかった。&lt;/p&gt;
+&lt;p&gt;今回はACLから繋いでみます。&lt;/p&gt;
+&lt;h1&gt;準備&lt;/h1&gt;
+&lt;h2&gt;Allegro CL 10.0 Free Express Editionのインストール&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Macの場合X11とかGTKとか必要とありますが、slimeから使うならなくてもいけます&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;mlispをつくる&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;AllegroGraph clientはalispでは動かないのでmlispを作ります&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://franz.com/support/faq/#s3q7"&gt;faq&lt;/a&gt;にあるので、いちどalispを起動してから次にコードを実行します&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;progn&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;build-lisp-image&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;sys:mlisp.dxl&amp;quot;&lt;/span&gt; &lt;span class="ss"&gt;:case-mode&lt;/span&gt; &lt;span class="ss"&gt;:case-sensitive-lower&lt;/span&gt;
+          &lt;span class="ss"&gt;:include-ide&lt;/span&gt; &lt;span class="no"&gt;nil&lt;/span&gt; &lt;span class="ss"&gt;:restart-app-function&lt;/span&gt; &lt;span class="no"&gt;nil&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;when&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;probe-file&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;sys:mlisp&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;delete-file&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;sys:mlisp&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;sys:copy-file&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;sys:alisp&amp;quot;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;sys:mlisp&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;mlispができたらslimeの設定を通します&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;(setq inferior-lisp-program &amp;quot;/Applications/AllegroCLexpress.app/Contents/Resources/mlisp&amp;quot;)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;AllegroGraphのポート指定&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;AllegroGraphをVirtualboxで動かしていて、それにslimeから接続する場合、必要なポートは&lt;ul&gt;
+&lt;li&gt;10035&lt;/li&gt;
+&lt;li&gt;SessionPort(random)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;SessionPortがランダムなのはポートフォワーディングする時に面倒なのでコンフィグで指定します&lt;ul&gt;
+&lt;li&gt;/home/franz/ag/lib/agraph.cfgが設定ファイルです&lt;/li&gt;
+&lt;li&gt;SessionPorts 8080-8081&lt;/li&gt;
+&lt;li&gt;みたいに適当なポートレンジを書き加えます&lt;/li&gt;
+&lt;li&gt;Virtualboxから該当ポートへのフォワーディングを指定してAllegroGraphを起動&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;AllegroGraph Clientダウンロードする&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://franz.com/agraph/downloads/clients"&gt;ここ&lt;/a&gt;からダウンロード(メールアドレスが必要)&lt;/li&gt;
+&lt;li&gt;MacのExpress EditionはAllegro CL 10.0 (non-SMP) 32-bit Mac OS Xが対応します&lt;/li&gt;
+&lt;li&gt;ダウンロード後、展開して終了&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;接続&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;tuple-storeはその2で作ったcattoyを使います&lt;/li&gt;
+&lt;li&gt;せっかくなのでprologで&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;load&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;/path/to/agraph-6.1.3-macosx86-client-lisp-acl10.0/agraph.fasl&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;in-package&lt;/span&gt; &lt;span class="ss"&gt;:db.agraph.user&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;enable-!-reader&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="c1"&gt;; (setf *default-ag-http-port* 10035) ; ポートフォワーディングで変えてる場合はここで指定&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;open-triple-store&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;cattoy&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;triple-count&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c1"&gt;; =&amp;gt; 451&lt;/span&gt;
+
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;require&lt;/span&gt; &lt;span class="ss"&gt;:prolog&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;use-package&lt;/span&gt; &lt;span class="ss"&gt;:prolog&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;register-namespace&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;sc&amp;quot;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;http://schema.org/&amp;quot;&lt;/span&gt; &lt;span class="ss"&gt;:errorp&lt;/span&gt; &lt;span class="no"&gt;nil&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;select&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;?x&lt;/span&gt; &lt;span class="nv"&gt;?y&lt;/span&gt; &lt;span class="nv"&gt;?z&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;q-&lt;/span&gt; &lt;span class="nv"&gt;?x&lt;/span&gt; &lt;span class="nv"&gt;!sc:name&lt;/span&gt; &lt;span class="nv"&gt;?y&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="c1"&gt;; =&amp;gt; ((&amp;quot;http://www.cattoy.info/cats/1&amp;quot; &amp;quot;みけ&amp;quot; nil))&lt;/span&gt;
+
+&lt;span class="c1"&gt;; こっちはattempt to call `#:q-/3&amp;#39; which is an undefined function.になって動かなかった&lt;/span&gt;
+&lt;span class="c1"&gt;; なんでだろう&lt;/span&gt;
+&lt;span class="c1"&gt;; (?- (q- ?x ?y ?z))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;とりあえず問い合わせまでできるようになりました&lt;/p&gt;
+&lt;p&gt;今回と前回使用したcattoyのturtleをダウンロードできるようにしています。&lt;/p&gt;
+&lt;p&gt;https://www.cattoy.info/cattoy.ttl&lt;/p&gt;
+&lt;p&gt;SPARQL エンドポイント置くのはちょっとサーバーリソース的に面倒だったのでデータだけです。&lt;/p&gt;</summary><category term="lisp"></category><category term="allegrograph"></category></entry><entry><title>AllegroGraph その2</title><link href="https://holrock.github.io/allegrograph-sono2.html" rel="alternate"></link><published>2016-11-04T00:00:00+09:00</published><updated>2016-11-04T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-11-04:allegrograph-sono2.html</id><summary type="html">&lt;p&gt;AllegroGraphが動くようになったので、データ作って投入します。&lt;/p&gt;
 &lt;p&gt;データは&lt;a href="https://www.cattoy.info"&gt;cattoy&lt;/a&gt;から作ります。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://github.com/holrock/cattoy/commit/202415749077a2820bff11d3544af3fc03453b65"&gt;こんなかんじ&lt;/a&gt;
 にRDF出力コードを仕込んだので、&lt;/p&gt;
