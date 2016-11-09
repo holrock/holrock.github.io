@@ -2,7 +2,7 @@
 <html lang="">	
 <head>
 	<meta charset="utf-8"/>
-	<title>cattoy - Starbug</title>	
+	<title>nginx - Starbug</title>	
 	<meta name="author" content="horlock">
 	
 
@@ -28,7 +28,7 @@
 
 		  <div role="main" class="content">
 
-<h1>Posts categorized under: cattoy</h1>
+<h1>Post tagged: nginx</h1>
 
 <article class="summary">
 <div class="metadata">
@@ -62,61 +62,6 @@
       <span class="kn">proxy_cache_lock</span> <span class="no">on</span><span class="p">;</span>
       <span class="kn">proxy_cache_valid ...</span></pre></div></p>
   </div>
-</article><article class="summary">
-<div class="metadata">
-  <time datetime="2016-10-31T00:00:00+09:00" pubdate>月 31 10月 2016</time>
-    <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
-    </address>
-  in <a href="https://holrock.github.io/category/cattoy.html">cattoy</a>
-<p class="tags">tagged <a href="https://holrock.github.io/tag/omac.html">omac</a>, <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a>, <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a></p></div>  <div>
-    <h2>
-      <a href="https://holrock.github.io/cattoynihua-xiang-proxyworu-remashita.html" rel="bookmark" title="Permalink to cattoyに画像proxyを入れました">cattoyに画像proxyを入れました</a>
-    </h2>
-    <p><p>cattoy.infoでは外部画像を結構な数表示しています。
-外部画像にはhttpでしかアクセスできないものもあり、せっかくwww.cattoy.infoが
-https接続でも警告が出てしまいます。</p>
-<p>ちょうど、次の記事
-<a href="http://qiita.com/MintoAoyama/items/6cd71b84e6225f86f819">Camoで実現するセキュアな画像プロキシサーバ</a>
-を見かけたので</p>
-<p>camoクローンをocamlで作ってみました。
-<a href="https://github.com/holrock/omac">https://github.com/holrock/omac</a></p>
-<p>まだおもちゃみたいなものですが、一応本番で動いています。</p>
-<p>構成は https -&gt; nginx(cacheもここで) -&gt; http -&gt; omac -&gt; [画像server]</p>
-<p>今のままだとomacが落ちてもnginx側のキャッシュが有効で気がつかないことがあるようなので、
-そのうちなんとかしないと。</p>
-<p>ほかにもデーモン化やログ管理なんかもやらないといけないのですが、なんとなく動いてしまうと満足してしまいますね。</p></p>
-  </div>
-</article><article class="summary">
-<div class="metadata">
-  <time datetime="2016-10-24T00:00:00+09:00" pubdate>月 24 10月 2016</time>
-    <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
-    </address>
-  in <a href="https://holrock.github.io/category/cattoy.html">cattoy</a>
-<p class="tags">tagged <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a>, <a href="https://holrock.github.io/tag/ruby.html">ruby</a>, <a href="https://holrock.github.io/tag/rails.html">rails</a></p></div>  <div>
-    <h2>
-      <a href="https://holrock.github.io/cattoy-memo.html" rel="bookmark" title="Permalink to cattoy memo">cattoy memo</a>
-    </h2>
-    <p><ul>
-<li><a href="https://www.cattoy.info">https://www.cattoy.info</a><ul>
-<li>Cat Exercise Wheelの使ってくれなさのあまり作りました。</li>
-</ul>
-</li>
-<li>さくらVPS mem1G/2Coreプラン</li>
-<li>CentOS 6.8</li>
-<li>nginx <ul>
-<li>http2に対応するためビルドした</li>
-<li>ついでにLibreSSLにした</li>
-</ul>
-</li>
-</ul>
-<div class="highlight"><pre><span></span>nginx version: nginx/1.11.5
-built by gcc 4.4.7 20120313 (Red Hat 4.4.7-17) (GCC) 
-built with LibreSSL 2.5.0
-TLS SNI support enabled
-configure arguments: --prefix=/opt/nginx-1 ...</pre></div></p>
-  </div>
 </article>
 <div class="pagination">
     Page 1 / 1
@@ -129,7 +74,7 @@ configure arguments: --prefix=/opt/nginx-1 ...</pre></div></p>
 	        <nav>
 	          <h2>Categories</h2>
 	          <ul>
-	              <li class="active"><a href="https://holrock.github.io/category/cattoy.html">cattoy</a></li>
+	              <li ><a href="https://holrock.github.io/category/cattoy.html">cattoy</a></li>
 	              <li ><a href="https://holrock.github.io/category/lisp.html">lisp</a></li>
 	              <li ><a href="https://holrock.github.io/category/ocaml.html">ocaml</a></li>
 	              <li ><a href="https://holrock.github.io/category/python.html">python</a></li>

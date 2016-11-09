@@ -1,5 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/cattoy.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2016-10-31T00:00:00+09:00</updated><entry><title>cattoyに画像proxyを入れました</title><link href="https://holrock.github.io/cattoynihua-xiang-proxyworu-remashita.html" rel="alternate"></link><published>2016-10-31T00:00:00+09:00</published><updated>2016-10-31T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-31:cattoynihua-xiang-proxyworu-remashita.html</id><summary type="html">&lt;p&gt;cattoy.infoでは外部画像を結構な数表示しています。
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/cattoy.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2016-11-10T00:00:00+09:00</updated><entry><title>nginxでimage filter</title><link href="https://holrock.github.io/nginxdeimage-filter.html" rel="alternate"></link><published>2016-11-10T00:00:00+09:00</published><updated>2016-11-10T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-11-10:nginxdeimage-filter.html</id><summary type="html">&lt;p&gt;前回、画像プロキシを使って外部画像を読み込むようにしました。&lt;/p&gt;
+&lt;p&gt;画像サイズが大きいものもあり、PageSpeed Insightsに怒られることがあります。
+今回は画像をキャッシュしつつリサイズします。&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://tech.actindi.net/3571355260"&gt;参考&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;すべて同一サーバーで運用しています。&lt;/p&gt;
+&lt;h1&gt;tlsimg.cattoy.info&lt;/h1&gt;
+&lt;p&gt;画像フロントサーバー&lt;/p&gt;
+&lt;p&gt;httpsで待ち受けるサーバーです。ここが入り口になります。&lt;/p&gt;
+&lt;p&gt;キャッシュもここでします。&lt;/p&gt;
+&lt;p&gt;proxy_cache_keyに使用する$arg_w, $arg_h, arg_qがリサイズパラメータになります。
+それぞれ幅、高さ、jpeg qualityです。&lt;/p&gt;
+&lt;p&gt;バックエンドがomacなので、$document_uriにhmacのキーを含んでいるため、サイズ指定以外は$document_uri があればユニークになります。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;  &lt;span class="k"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="kn"&gt;server_name&lt;/span&gt; &lt;span class="s"&gt;tlsimg.cattoy.info&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="kn"&gt;location&lt;/span&gt; &lt;span class="s"&gt;/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="kn"&gt;proxy_pass&lt;/span&gt; &lt;span class="s"&gt;http://localhost:8889&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="kn"&gt;proxy_cache&lt;/span&gt; &lt;span class="s"&gt;TLSIMG&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="kn"&gt;proxy_cache_key&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$host$document_uri$is_args&amp;amp;$arg_w&amp;amp;$arg_h&amp;amp;$arg_q&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="kn"&gt;proxy_cache_lock&lt;/span&gt; &lt;span class="no"&gt;on&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="kn"&gt;proxy_cache_valid&lt;/span&gt; &lt;span class="s"&gt;30d&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="kn"&gt;proxy_cache_valid&lt;/span&gt; &lt;span class="s"&gt;any&lt;/span&gt; &lt;span class="s"&gt;15s&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="kn"&gt;proxy_cache_use_stale&lt;/span&gt; &lt;span class="s"&gt;error&lt;/span&gt; &lt;span class="s"&gt;timeout&lt;/span&gt; &lt;span class="s"&gt;invalid_header&lt;/span&gt; &lt;span class="s"&gt;updating&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="kn"&gt;proxy_http_version&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="s"&gt;.1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="kn"&gt;expires&lt;/span&gt; &lt;span class="s"&gt;30d&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;localhost:8889&lt;/h1&gt;
+&lt;p&gt;画像リサイズサーバー&lt;/p&gt;
+&lt;p&gt;クエリーをみて、リサイズします。
+クエリーがない場合はそのまま画像プロキシへリクエストを流します。&lt;/p&gt;
+&lt;p&gt;画像プロキシ側にはurlパラメータを引き渡さないといけないので、ちょっと面倒です。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;  &lt;span class="k"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="kn"&gt;server_name&lt;/span&gt; &lt;span class="s"&gt;_&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="kn"&gt;listen&lt;/span&gt; &lt;span class="mi"&gt;8889&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="kn"&gt;location&lt;/span&gt; &lt;span class="s"&gt;/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="kn"&gt;if&lt;/span&gt; &lt;span class="s"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$arg_w&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;#39;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="kn"&gt;rewrite&lt;/span&gt; &lt;span class="s"&gt;^/(.*)&lt;/span&gt;$ &lt;span class="s"&gt;/original/&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt; &lt;span class="s"&gt;last&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;}&lt;/span&gt;
+      &lt;span class="kn"&gt;set&lt;/span&gt; &lt;span class="nv"&gt;$width&lt;/span&gt; &lt;span class="mi"&gt;240&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="kn"&gt;set&lt;/span&gt; &lt;span class="nv"&gt;$height&lt;/span&gt; &lt;span class="mi"&gt;240&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="kn"&gt;set&lt;/span&gt; &lt;span class="nv"&gt;$quality&lt;/span&gt; &lt;span class="mi"&gt;75&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="kn"&gt;if&lt;/span&gt; &lt;span class="s"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$arg_w&lt;/span&gt; &lt;span class="p"&gt;~&lt;/span&gt; &lt;span class="sr"&gt;(\d*))&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="kn"&gt;set&lt;/span&gt; &lt;span class="nv"&gt;$width&lt;/span&gt; &lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;}&lt;/span&gt;
+      &lt;span class="kn"&gt;if&lt;/span&gt; &lt;span class="s"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$arg_h&lt;/span&gt; &lt;span class="p"&gt;~&lt;/span&gt; &lt;span class="sr"&gt;(\d*))&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="kn"&gt;set&lt;/span&gt; &lt;span class="nv"&gt;$height&lt;/span&gt; &lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;}&lt;/span&gt;
+      &lt;span class="kn"&gt;if&lt;/span&gt; &lt;span class="s"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$arg_q&lt;/span&gt; &lt;span class="p"&gt;~&lt;/span&gt; &lt;span class="sr"&gt;(100|[1-9][0-9]|[1-9]))&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="kn"&gt;set&lt;/span&gt; &lt;span class="nv"&gt;$quality&lt;/span&gt; &lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;}&lt;/span&gt;
+      &lt;span class="kn"&gt;rewrite&lt;/span&gt; &lt;span class="s"&gt;^/(.*)&lt;/span&gt;$ &lt;span class="s"&gt;/resize/&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt; &lt;span class="s"&gt;last&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="kn"&gt;location&lt;/span&gt; &lt;span class="s"&gt;/resize/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="kn"&gt;rewrite&lt;/span&gt; &lt;span class="s"&gt;^/resize/([^/]+)&lt;/span&gt; &lt;span class="s"&gt;/&lt;/span&gt;&lt;span class="nv"&gt;$1?url=$arg_url&lt;/span&gt; &lt;span class="s"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="kn"&gt;proxy_pass&lt;/span&gt; &lt;span class="s"&gt;http://omac/&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="kn"&gt;internal&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="kn"&gt;image_filter&lt;/span&gt;                &lt;span class="s"&gt;resize&lt;/span&gt; &lt;span class="nv"&gt;$width&lt;/span&gt; &lt;span class="nv"&gt;$height&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="kn"&gt;image_filter_jpeg_quality&lt;/span&gt;   &lt;span class="nv"&gt;$quality&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="kn"&gt;image_filter_buffer&lt;/span&gt;         &lt;span class="s"&gt;20M&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="kn"&gt;image_filter_interlace&lt;/span&gt;      &lt;span class="no"&gt;on&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="kn"&gt;error_page&lt;/span&gt; &lt;span class="mi"&gt;415&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;@empty&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="kn"&gt;location&lt;/span&gt; &lt;span class="s"&gt;/original/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="kn"&gt;internal&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="kn"&gt;proxy_pass&lt;/span&gt; &lt;span class="s"&gt;http://omac/&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="kn"&gt;location&lt;/span&gt; &lt;span class="s"&gt;@empty&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="kn"&gt;empty_gif&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;画像プロキシ&lt;/h1&gt;
+&lt;p&gt;最後に画像プロキシ側の設定です。
+ここは特に変わっていません。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;  &lt;span class="nt"&gt;upstream&lt;/span&gt; &lt;span class="nt"&gt;omac&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="n"&gt;server&lt;/span&gt; &lt;span class="m"&gt;127&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="m"&gt;8999&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;議論&lt;/h1&gt;
+&lt;p&gt;もっと簡単な方法はありそうです。&lt;/p&gt;
+&lt;p&gt;本来の画像URLにw,h,qクエリパラメータがある場合はおかしくなりそうなので、
+別途ヘッダで渡すなどした方が良いと思います。
+今回はrails側のコードをなるべく変更せずに使用するため、クエリパラメーターに含めました。&lt;/p&gt;
+&lt;p&gt;リサイズ時にエラーになってしまうとempty_gifがキャッシュされてしまい、以後画像が見えなくなるのでこれも要対応です。&lt;/p&gt;</summary><category term="cattoy"></category><category term="nginx"></category></entry><entry><title>cattoyに画像proxyを入れました</title><link href="https://holrock.github.io/cattoynihua-xiang-proxyworu-remashita.html" rel="alternate"></link><published>2016-10-31T00:00:00+09:00</published><updated>2016-10-31T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-31:cattoynihua-xiang-proxyworu-remashita.html</id><summary type="html">&lt;p&gt;cattoy.infoでは外部画像を結構な数表示しています。
 外部画像にはhttpでしかアクセスできないものもあり、せっかくwww.cattoy.infoが
 https接続でも警告が出てしまいます。&lt;/p&gt;
 &lt;p&gt;ちょうど、次の記事

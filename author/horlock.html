@@ -32,6 +32,38 @@
 
 <article class="summary">
 <div class="metadata">
+  <time datetime="2016-11-10T00:00:00+09:00" pubdate>木 10 11月 2016</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+    </address>
+  in <a href="https://holrock.github.io/category/cattoy.html">cattoy</a>
+<p class="tags">tagged <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a>, <a href="https://holrock.github.io/tag/nginx.html">nginx</a></p></div>  <div>
+    <h2>
+      <a href="https://holrock.github.io/nginxdeimage-filter.html" rel="bookmark" title="Permalink to nginxでimage filter">nginxでimage filter</a>
+    </h2>
+    <p><p>前回、画像プロキシを使って外部画像を読み込むようにしました。</p>
+<p>画像サイズが大きいものもあり、PageSpeed Insightsに怒られることがあります。
+今回は画像をキャッシュしつつリサイズします。</p>
+<p><a href="http://tech.actindi.net/3571355260">参考</a></p>
+<p>すべて同一サーバーで運用しています。</p>
+<h1>tlsimg.cattoy.info</h1>
+<p>画像フロントサーバー</p>
+<p>httpsで待ち受けるサーバーです。ここが入り口になります。</p>
+<p>キャッシュもここでします。</p>
+<p>proxy_cache_keyに使用する$arg_w, $arg_h, arg_qがリサイズパラメータになります。
+それぞれ幅、高さ、jpeg qualityです。</p>
+<p>バックエンドがomacなので、$document_uriにhmacのキーを含んでいるため、サイズ指定以外は$document_uri があればユニークになります。</p>
+<div class="highlight"><pre><span></span>  <span class="k">server</span> <span class="p">{</span>
+    <span class="kn">server_name</span> <span class="s">tlsimg.cattoy.info</span><span class="p">;</span>
+    <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
+      <span class="kn">proxy_pass</span> <span class="s">http://localhost:8889</span><span class="p">;</span>
+      <span class="kn">proxy_cache</span> <span class="s">TLSIMG</span><span class="p">;</span>
+      <span class="kn">proxy_cache_key</span> <span class="s">&quot;</span><span class="nv">$host$document_uri$is_args&amp;$arg_w&amp;$arg_h&amp;$arg_q&quot;</span><span class="p">;</span>
+      <span class="kn">proxy_cache_lock</span> <span class="no">on</span><span class="p">;</span>
+      <span class="kn">proxy_cache_valid ...</span></pre></div></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
   <time datetime="2016-11-07T00:00:00+09:00" pubdate>月 07 11月 2016</time>
     <address class="vcard author">
       by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>

@@ -2,9 +2,12 @@
 <html lang="">	
 <head>
 	<meta charset="utf-8"/>
-	<title>Starbug</title>	
+	<title>nginxでimage filter - Starbug</title>	
 	<meta name="author" content="horlock">
 	
+
+	<meta name="description" content="前回、画像プロキシを使って外部画像を読み込むようにしました。 画像サイズが大きいものもあり、PageSpeed Insightsに怒られることがあります。 今回は画像をキャッシュしつつリサイズします。 参考 すべて同一サーバーで運用しています。 tlsimg.cattoy.info 画像フロントサーバー httpsで待ち受けるサーバーです。ここが入り口になります。 キャッシュもここでします。 proxy_cache_keyに使用する$arg_w, $arg_h, arg_qがリサイズパラメータになります。 それぞれ幅、高さ、jpeg qualityです。 バックエンドがomacなので、$document_uriにhmacのキーを含んでいるため、サイズ指定以外は$document_uri があればユニークになります。 server { server_name tlsimg.cattoy.info; location / { proxy_pass http://localhost:8889; proxy_cache TLSIMG; proxy_cache_key "$host$document_uri$is_args&$arg_w&$arg_h&$arg_q"; proxy_cache_lock on; proxy_cache_valid ...">
+
 
 	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
 	<link rel="stylesheet" href="https://holrock.github.io/theme/css/main.css" type="text/css" />
@@ -27,12 +30,18 @@
 	  <div class="wrapper">
 
 		  <div role="main" class="content">
-
-
-
-      <article>
-        <h1><a href="https://holrock.github.io/nginxdeimage-filter.html">nginxでimage filter</a></h1>
-        <p>前回、画像プロキシを使って外部画像を読み込むようにしました。</p>
+	<article class="full">
+			
+		<h1>nginxでimage filter</h1>
+		
+<div class="metadata">
+  <time datetime="2016-11-10T00:00:00+09:00" pubdate>木 10 11月 2016</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+    </address>
+  in <a href="https://holrock.github.io/category/cattoy.html">cattoy</a>
+<p class="tags">tagged <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a>, <a href="https://holrock.github.io/tag/nginx.html">nginx</a></p></div>		
+		<p>前回、画像プロキシを使って外部画像を読み込むようにしました。</p>
 <p>画像サイズが大きいものもあり、PageSpeed Insightsに怒られることがあります。
 今回は画像をキャッシュしつつリサイズします。</p>
 <p><a href="http://tech.actindi.net/3571355260">参考</a></p>
@@ -121,57 +130,15 @@
 <p>本来の画像URLにw,h,qクエリパラメータがある場合はおかしくなりそうなので、
 別途ヘッダで渡すなどした方が良いと思います。
 今回はrails側のコードをなるべく変更せずに使用するため、クエリパラメーターに含めました。</p>
-<p>リサイズ時にエラーになってしまうとempty_gifがキャッシュされてしまい、以後画像が見えなくなるのでこれも要対応です。</p>
-      </article>
+<p>リサイズ時にエラーになってしまうとempty_gifがキャッシュされてしまい、以後画像が見えなくなるのでこれも要対応です。</p>	
 
-      <hr />
+	</article>
 
-        <div>
-          <h3>Last posts</h3>
-          <ol class="archive">
-    
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
 
-
-      <li>
-<a href="https://holrock.github.io/allegrograph-sono3.html" rel="bookmark" title="Permalink to AllegroGraph その3">AllegroGraph その3</a>
-  <time datetime="2016-11-07T00:00:00+09:00" pubdate>月 07 11月 2016</time>
-<p class="tags">tags: <a href="https://holrock.github.io/tag/lisp.html">lisp</a><a href="https://holrock.github.io/tag/allegrograph.html">allegrograph</a></p></a>      </li>
-
-
-      <li>
-<a href="https://holrock.github.io/allegrograph-sono2.html" rel="bookmark" title="Permalink to AllegroGraph その2">AllegroGraph その2</a>
-  <time datetime="2016-11-04T00:00:00+09:00" pubdate>金 04 11月 2016</time>
-<p class="tags">tags: <a href="https://holrock.github.io/tag/lisp.html">lisp</a><a href="https://holrock.github.io/tag/allegrograph.html">allegrograph</a><a href="https://holrock.github.io/tag/ruby.html">ruby</a><a href="https://holrock.github.io/tag/cattoy.html">cattoy</a></p></a>      </li>
-
-
-      <li>
-<a href="https://holrock.github.io/allegrograph-sono1.html" rel="bookmark" title="Permalink to AllegroGraph その1">AllegroGraph その1</a>
-  <time datetime="2016-11-03T00:00:00+09:00" pubdate>木 03 11月 2016</time>
-<p class="tags">tags: <a href="https://holrock.github.io/tag/lisp.html">lisp</a><a href="https://holrock.github.io/tag/allegrograph.html">allegrograph</a></p></a>      </li>
-
-
-      <li>
-<a href="https://holrock.github.io/macos-10121niagetaralibcryptogajian-tsukaranai.html" rel="bookmark" title="Permalink to macOS 10.12.1にあげたらlibcryptoが見つからない">macOS 10.12.1にあげたらlibcryptoが見つからない</a>
-  <time datetime="2016-11-02T00:00:00+09:00" pubdate>水 02 11月 2016</time>
-<p class="tags">tags: <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></a>      </li>
-
-
-      <li>
-<a href="https://holrock.github.io/cattoynihua-xiang-proxyworu-remashita.html" rel="bookmark" title="Permalink to cattoyに画像proxyを入れました">cattoyに画像proxyを入れました</a>
-  <time datetime="2016-10-31T00:00:00+09:00" pubdate>月 31 10月 2016</time>
-<p class="tags">tags: <a href="https://holrock.github.io/tag/omac.html">omac</a><a href="https://holrock.github.io/tag/ocaml.html">ocaml</a><a href="https://holrock.github.io/tag/cattoy.html">cattoy</a></p></a>      </li>
-
-
-
-
-
-
-
-
-
-
-          </ol>
-        </div>
 
 		  </div>	
 		  
@@ -180,7 +147,7 @@
 	        <nav>
 	          <h2>Categories</h2>
 	          <ul>
-	              <li ><a href="https://holrock.github.io/category/cattoy.html">cattoy</a></li>
+	              <li class="active"><a href="https://holrock.github.io/category/cattoy.html">cattoy</a></li>
 	              <li ><a href="https://holrock.github.io/category/lisp.html">lisp</a></li>
 	              <li ><a href="https://holrock.github.io/category/ocaml.html">ocaml</a></li>
 	              <li ><a href="https://holrock.github.io/category/python.html">python</a></li>
