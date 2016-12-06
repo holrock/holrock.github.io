@@ -2,9 +2,12 @@
 <html lang="">	
 <head>
 	<meta charset="utf-8"/>
-	<title>Starbug</title>	
+	<title>ZIL - Starbug</title>	
 	<meta name="author" content="horlock">
 	
+
+	<meta name="description" content="なんとなくZ-Machine周りについて調べていたので、ZILについてメモしておきます。 ZIL(Zork Implementation Language)はZorkなどで知られるZ-Machineで動作するInteractive Fiction(IF)を記述するための言語です。 まず、Z-Machine関係の用語を説明します。 IF IFはいわゆるテキストアドベンチャーゲームです。 テキストをコマンドとして入力して進行していくゲームで、 zorkを 見るとどんなものかはすぐわかります。 Z-Machine Z-MachineはIFのための仮想マシンです。 Infocom社によって作られました。 多様なプラットフォームへの移植性を確保するため、Zork1などはZ-Machine上で動くようになっていました。 Z-MachineはZILをコンパイルして出力されるZ-codeと呼ばれるを命令を解釈して実行します。 Z-Machineの仕様は The Z-Machine Standards Document にまとまっていますが、フラグなどの扱いについて一部、ztoolsとの相違が見られました。 ZIL ここから本題です。 ZILの情報はZIL Manualなどにあります。 この後に出てくるソースコードは、ZIL Manualからの引用になります。 BASIC オリジナルのZorkは MIT Design Language(MDL)で書かれていたとあり、ZILにもその影響が強く見られます ...">
+
 
 	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
 	<link rel="stylesheet" href="https://holrock.github.io/theme/css/main.css" type="text/css" />
@@ -27,12 +30,18 @@
 	  <div class="wrapper">
 
 		  <div role="main" class="content">
-
-
-
-      <article>
-        <h1><a href="https://holrock.github.io/zil.html">ZIL</a></h1>
-        <p>なんとなくZ-Machine周りについて調べていたので、ZILについてメモしておきます。</p>
+	<article class="full">
+			
+		<h1>ZIL</h1>
+		
+<div class="metadata">
+  <time datetime="2016-12-04T00:00:00+09:00" pubdate>日 04 12月 2016</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+    </address>
+  in <a href="https://holrock.github.io/category/z-machine.html">z-machine</a>
+<p class="tags">tagged <a href="https://holrock.github.io/tag/z-machine.html">z-machine</a>, <a href="https://holrock.github.io/tag/lisp.html">lisp</a>, <a href="https://holrock.github.io/tag/zil.html">zil</a></p></div>		
+		<p>なんとなくZ-Machine周りについて調べていたので、ZILについてメモしておきます。</p>
 <p>ZIL(Zork Implementation Language)はZorkなどで知られるZ-Machineで動作するInteractive Fiction(IF)を記述するための言語です。</p>
 <p>まず、Z-Machine関係の用語を説明します。</p>
 <h2>IF</h2>
@@ -184,59 +193,15 @@ ZILは英語を前提として作られているため、日本語への移植�
 <h2>まとめ</h2>
 <p>他にもEventなどがありますが、ここでは省略します。 興味がある方はZIL Manualを読んで見てください。</p>
 <p>ZILはIFを作る目的でデザインされたコンパクトな言語です。
-あえて今テキストアドベンチャーを作るためにZILを使う必要はありませんが、IFの構成要素を知るためにZILを調べて見るのも面白いと思います。</p>
-      </article>
+あえて今テキストアドベンチャーを作るためにZILを使う必要はありませんが、IFの構成要素を知るためにZILを調べて見るのも面白いと思います。</p>	
 
-      <hr />
+	</article>
 
-        <div>
-          <h3>Last posts</h3>
-          <ol class="archive">
-    
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
 
-
-      <li>
-<a href="https://holrock.github.io/nginxdeimage-filter.html" rel="bookmark" title="Permalink to nginxでimage filter">nginxでimage filter</a>
-  <time datetime="2016-11-10T00:00:00+09:00" pubdate>木 10 11月 2016</time>
-<p class="tags">tags: <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a><a href="https://holrock.github.io/tag/nginx.html">nginx</a></p></a>      </li>
-
-
-      <li>
-<a href="https://holrock.github.io/allegrograph-sono3.html" rel="bookmark" title="Permalink to AllegroGraph その3">AllegroGraph その3</a>
-  <time datetime="2016-11-07T00:00:00+09:00" pubdate>月 07 11月 2016</time>
-<p class="tags">tags: <a href="https://holrock.github.io/tag/lisp.html">lisp</a><a href="https://holrock.github.io/tag/allegrograph.html">allegrograph</a></p></a>      </li>
-
-
-      <li>
-<a href="https://holrock.github.io/allegrograph-sono2.html" rel="bookmark" title="Permalink to AllegroGraph その2">AllegroGraph その2</a>
-  <time datetime="2016-11-04T00:00:00+09:00" pubdate>金 04 11月 2016</time>
-<p class="tags">tags: <a href="https://holrock.github.io/tag/lisp.html">lisp</a><a href="https://holrock.github.io/tag/allegrograph.html">allegrograph</a><a href="https://holrock.github.io/tag/ruby.html">ruby</a><a href="https://holrock.github.io/tag/cattoy.html">cattoy</a></p></a>      </li>
-
-
-      <li>
-<a href="https://holrock.github.io/allegrograph-sono1.html" rel="bookmark" title="Permalink to AllegroGraph その1">AllegroGraph その1</a>
-  <time datetime="2016-11-03T00:00:00+09:00" pubdate>木 03 11月 2016</time>
-<p class="tags">tags: <a href="https://holrock.github.io/tag/lisp.html">lisp</a><a href="https://holrock.github.io/tag/allegrograph.html">allegrograph</a></p></a>      </li>
-
-
-      <li>
-<a href="https://holrock.github.io/macos-10121niagetaralibcryptogajian-tsukaranai.html" rel="bookmark" title="Permalink to macOS 10.12.1にあげたらlibcryptoが見つからない">macOS 10.12.1にあげたらlibcryptoが見つからない</a>
-  <time datetime="2016-11-02T00:00:00+09:00" pubdate>水 02 11月 2016</time>
-<p class="tags">tags: <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></a>      </li>
-
-
-
-
-
-
-
-
-
-
-
-
-          </ol>
-        </div>
 
 		  </div>	
 		  
@@ -249,7 +214,7 @@ ZILは英語を前提として作られているため、日本語への移植�
 	              <li ><a href="https://holrock.github.io/category/lisp.html">lisp</a></li>
 	              <li ><a href="https://holrock.github.io/category/ocaml.html">ocaml</a></li>
 	              <li ><a href="https://holrock.github.io/category/python.html">python</a></li>
-	              <li ><a href="https://holrock.github.io/category/z-machine.html">z-machine</a></li>
+	              <li class="active"><a href="https://holrock.github.io/category/z-machine.html">z-machine</a></li>
 	          </ul>
 	        </nav>
 

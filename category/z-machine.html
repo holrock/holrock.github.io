@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>z-machine - Starbug</title>	
+	<meta name="author" content="horlock">
+	
+
+	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
+	<link rel="stylesheet" href="https://holrock.github.io/theme/css/main.css" type="text/css" />
+		
+
+    <link href="https://holrock.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Starbug Atom Feed" />
+</head>
+	
+<body>
+
+    <div class="container">
+	  
+	  <header role="banner">
+	    <div class="feeds">
+	        <a href="https://holrock.github.io/feeds/all.atom.xml" rel="alternate"><img src="https://holrock.github.io/theme/images/icons/feed-32px.png" alt="atom feed"/></a>
+	    </div>
+		<a href="https://holrock.github.io" class="title">Starbug</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+
+<h1>Posts categorized under: z-machine</h1>
+
+<article class="summary">
+<div class="metadata">
+  <time datetime="2016-12-04T00:00:00+09:00" pubdate>日 04 12月 2016</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+    </address>
+  in <a href="https://holrock.github.io/category/z-machine.html">z-machine</a>
+<p class="tags">tagged <a href="https://holrock.github.io/tag/z-machine.html">z-machine</a>, <a href="https://holrock.github.io/tag/lisp.html">lisp</a>, <a href="https://holrock.github.io/tag/zil.html">zil</a></p></div>  <div>
+    <h2>
+      <a href="https://holrock.github.io/zil.html" rel="bookmark" title="Permalink to ZIL">ZIL</a>
+    </h2>
+    <p><p>なんとなくZ-Machine周りについて調べていたので、ZILについてメモしておきます。</p>
+<p>ZIL(Zork Implementation Language)はZorkなどで知られるZ-Machineで動作するInteractive Fiction(IF)を記述するための言語です。</p>
+<p>まず、Z-Machine関係の用語を説明します。</p>
+<h2>IF</h2>
+<p>IFはいわゆるテキストアドベンチャーゲームです。
+テキストをコマンドとして入力して進行していくゲームで、
+<a href="https://ja.wikipedia.org/wiki/ゾーク#.E3.82.B3.E3.83.9E.E3.83.B3.E3.83.89.E5.85.A5.E5.8A.9B">zork</a>を
+見るとどんなものかはすぐわかります。</p>
+<h2>Z-Machine</h2>
+<p>Z-MachineはIFのための仮想マシンです。
+Infocom社によって作られました。</p>
+<p>多様なプラットフォームへの移植性を確保するため、Zork1などはZ-Machine上で動くようになっていました。</p>
+<p>Z-MachineはZILをコンパイルして出力されるZ-codeと呼ばれるを命令を解釈して実行します。</p>
+<p>Z-Machineの仕様は
+<a href="http://inform-fiction.org/zmachine/standards/z1point1/index.html">The Z-Machine Standards Document</a>
+にまとまっていますが、フラグなどの扱いについて一部、<a href="https://github.com/SamB/ztools">ztools</a>との相違が見られました。</p>
+<h2>ZIL</h2>
+<p>ここから本題です。</p>
+<p>ZILの情報は<a href="http://www.ifwiki.org/index.php/ZIL">ZIL Manual</a>などにあります。</p>
+<p>この後に出てくるソースコードは、ZIL Manualからの引用になります。</p>
+<h3>BASIC</h3>
+<p>オリジナルのZorkは MIT Design Language(MDL)で書かれていたとあり、ZILにもその影響が強く見られます ...</p></p>
+  </div>
+</article>
+<div class="pagination">
+    Page 1 / 1
+</div>
+
+		  </div>	
+		  
+		  <div class="sidebar">
+
+	        <nav>
+	          <h2>Categories</h2>
+	          <ul>
+	              <li ><a href="https://holrock.github.io/category/cattoy.html">cattoy</a></li>
+	              <li ><a href="https://holrock.github.io/category/lisp.html">lisp</a></li>
+	              <li ><a href="https://holrock.github.io/category/ocaml.html">ocaml</a></li>
+	              <li ><a href="https://holrock.github.io/category/python.html">python</a></li>
+	              <li class="active"><a href="https://holrock.github.io/category/z-machine.html">z-machine</a></li>
+	          </ul>
+	        </nav>
+
+	          <aside>
+	          <h2>Social</h2>
+			    <ul class="social">
+				  <li><a href="https://github.com/holrock/">github</a><i></i></li>
+			    </ul>
+			  </aside>
+
+
+		  </div>
+
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+		  © 2016 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+    	</p>
+
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>
