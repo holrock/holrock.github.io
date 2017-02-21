@@ -1,5 +1,232 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/ocaml.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2016-11-02T00:00:00+09:00</updated><entry><title>macOS 10.12.1にあげたらlibcryptoが見つからない</title><link href="https://holrock.github.io/macos-10121niagetaralibcryptogajian-tsukaranai.html" rel="alternate"></link><published>2016-11-02T00:00:00+09:00</published><updated>2016-11-02T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-11-02:macos-10121niagetaralibcryptogajian-tsukaranai.html</id><summary type="html">&lt;p&gt;macOSをSierraにあげました。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/ocaml.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2017-02-21T00:00:00+09:00</updated><entry><title>Biocaml SAM header</title><link href="https://holrock.github.io/biocaml-sam-header.html" rel="alternate"></link><published>2017-02-21T00:00:00+09:00</published><updated>2017-02-21T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-02-21:biocaml-sam-header.html</id><summary type="html">&lt;p&gt;ocaml製のバイオインフォマティクス用ライブラリで、
+&lt;a href="http://biocaml.org"&gt;biocaml&lt;/a&gt;というのがあります。&lt;/p&gt;
+&lt;p&gt;BAMファイルを読みたかったので使ってみましたが、
+&lt;code&gt;@HG&lt;/code&gt;ヘッダーにある&lt;code&gt;GO&lt;/code&gt;(group order)に未対応で読めなかったため、
+ちょっと修正しました。&lt;/p&gt;
+&lt;p&gt;opamで落ちてくる0.6.0用です。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;utop&lt;/span&gt; &lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="o"&gt;#&lt;/span&gt;&lt;span class="n"&gt;require&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;biocaml.unix&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;;;&lt;/span&gt;
+&lt;span class="n"&gt;utop&lt;/span&gt; &lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="k"&gt;open&lt;/span&gt; &lt;span class="nn"&gt;Biocaml_unix&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;Std&lt;/span&gt;&lt;span class="o"&gt;;;&lt;/span&gt;
+&lt;span class="n"&gt;utop&lt;/span&gt; &lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="nn"&gt;Bam&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;open_in&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;a.bam&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);;&lt;/span&gt;
+&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nn"&gt;Bam&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nn"&gt;Header&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="nn"&gt;Sam&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;alignment&lt;/span&gt; &lt;span class="nn"&gt;Core_kernel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nn"&gt;Std&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nn"&gt;Or_error&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="nn"&gt;Stream&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="nn"&gt;Core_kernel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nn"&gt;Result_wrapper&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nn"&gt;Result&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;Error&lt;/span&gt;
+ &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;unexpected tag for given header item type&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nc"&gt;HD&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nc"&gt;GO&lt;/span&gt;&lt;span class="o"&gt;)))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gh"&gt;diff --git a/lib/unix/sam.ml b/lib/unix/sam.ml&lt;/span&gt;
+&lt;span class="gh"&gt;index 9bd17ac..2da7b75 100644&lt;/span&gt;
+&lt;span class="gd"&gt;--- a/lib/unix/sam.ml&lt;/span&gt;
+&lt;span class="gi"&gt;+++ b/lib/unix/sam.ml&lt;/span&gt;
+&lt;span class="gu"&gt;@@ -26,9 +26,13 @@ type tag_value = string * string&lt;/span&gt;
+ type sort_order = [ `Unknown | `Unsorted | `Query_name | `Coordinate ]
+ [@@deriving sexp]
+
+&lt;span class="gi"&gt;+type group_order = [ `None | `Query | `Reference ]&lt;/span&gt;
+&lt;span class="gi"&gt;+[@@deriving sexp]&lt;/span&gt;
+&lt;span class="gi"&gt;+&lt;/span&gt;
+ type header_line = {
+   version : string;
+   sort_order : sort_order option;
+&lt;span class="gi"&gt;+  group_order: group_order option;&lt;/span&gt;
+ } [@@deriving sexp]
+
+ type ref_seq = {
+&lt;span class="gu"&gt;@@ -81,6 +85,7 @@ type header_item = [&lt;/span&gt;
+ type header = {
+   version : string option;
+   sort_order : sort_order option;
+&lt;span class="gi"&gt;+  group_order : group_order option;&lt;/span&gt;
+   ref_seqs : ref_seq list;
+   read_groups : read_group list;
+   programs : program list;
+&lt;span class="gu"&gt;@@ -91,6 +96,7 @@ type header = {&lt;/span&gt;
+ let empty_header = {
+   version = None;
+   sort_order = None;
+&lt;span class="gi"&gt;+  group_order = None;&lt;/span&gt;
+   ref_seqs = [];
+   read_groups = [];
+   programs = [];
+&lt;span class="gu"&gt;@@ -192,9 +198,9 @@ let parse_header_version s =&lt;/span&gt;
+     else
+       err
+
+&lt;span class="gd"&gt;-let header_line ~version ?sort_order () =&lt;/span&gt;
+&lt;span class="gi"&gt;+let header_line ~version ?sort_order ?group_order () =&lt;/span&gt;
+   parse_header_version version &amp;gt;&amp;gt;| fun version -&amp;gt;
+&lt;span class="gd"&gt;-  {version; sort_order}&lt;/span&gt;
+&lt;span class="gi"&gt;+  {version; sort_order; group_order}&lt;/span&gt;
+
+ let ref_seq
+     ~name ~length
+&lt;span class="gu"&gt;@@ -269,7 +275,7 @@ let read_group&lt;/span&gt;
+
+
+ let header
+&lt;span class="gd"&gt;-    ?version ?sort_order ?(ref_seqs=[]) ?(read_groups=[])&lt;/span&gt;
+&lt;span class="gi"&gt;+    ?version ?sort_order ?group_order ?(ref_seqs=[]) ?(read_groups=[])&lt;/span&gt;
+     ?(programs=[]) ?(comments=[]) ?(others=[])
+     ()
+     =
+&lt;span class="gu"&gt;@@ -302,7 +308,7 @@ let header&lt;/span&gt;
+   |&amp;gt; List.filter_map ~f:Fn.id
+   |&amp;gt; function
+      | [] -&amp;gt; Ok {
+&lt;span class="gd"&gt;-       version; sort_order; ref_seqs; read_groups;&lt;/span&gt;
+&lt;span class="gi"&gt;+       version; sort_order; group_order; ref_seqs; read_groups;&lt;/span&gt;
+        programs; comments; others;
+      }
+      | errs -&amp;gt; Error (Error.of_list errs)
+&lt;span class="gu"&gt;@@ -407,12 +413,20 @@ let parse_sort_order = function&lt;/span&gt;
+   | &amp;quot;coordinate&amp;quot; -&amp;gt; Ok `Coordinate
+   | x -&amp;gt; error &amp;quot;invalid sort order&amp;quot; x sexp_of_string
+
+&lt;span class="gi"&gt;+let parse_group_order = function&lt;/span&gt;
+&lt;span class="gi"&gt;+  | &amp;quot;none&amp;quot; -&amp;gt; Ok `None&lt;/span&gt;
+&lt;span class="gi"&gt;+  | &amp;quot;query&amp;quot; -&amp;gt; Ok `Query&lt;/span&gt;
+&lt;span class="gi"&gt;+  | &amp;quot;reference&amp;quot; -&amp;gt; Ok `Reference&lt;/span&gt;
+&lt;span class="gi"&gt;+  | x -&amp;gt; error &amp;quot;invalid group order&amp;quot; x sexp_of_string&lt;/span&gt;
+&lt;span class="gi"&gt;+&lt;/span&gt;
+ let parse_header_line tvl =
+   find1 `HD tvl &amp;quot;VN&amp;quot; &amp;gt;&amp;gt;= fun version -&amp;gt;
+   find01 `HD tvl &amp;quot;SO&amp;quot; &amp;gt;&amp;gt;?~
+   parse_sort_order &amp;gt;&amp;gt;= fun sort_order -&amp;gt;
+&lt;span class="gd"&gt;-  assert_tags `HD tvl [&amp;quot;VN&amp;quot;; &amp;quot;SO&amp;quot;] &amp;gt;&amp;gt;= fun () -&amp;gt;&lt;/span&gt;
+&lt;span class="gd"&gt;-  header_line ~version ?sort_order ()&lt;/span&gt;
+&lt;span class="gi"&gt;+  find01 `HD tvl &amp;quot;GO&amp;quot; &amp;gt;&amp;gt;?~&lt;/span&gt;
+&lt;span class="gi"&gt;+  parse_group_order &amp;gt;&amp;gt;= fun group_order -&amp;gt;&lt;/span&gt;
+&lt;span class="gi"&gt;+  assert_tags `HD tvl [&amp;quot;VN&amp;quot;; &amp;quot;SO&amp;quot;; &amp;quot;GO&amp;quot;] &amp;gt;&amp;gt;= fun () -&amp;gt;&lt;/span&gt;
+&lt;span class="gi"&gt;+  header_line ~version ?sort_order ?group_order ()&lt;/span&gt;
+
+ let parse_ref_seq tvl =
+   find1 `SQ tvl &amp;quot;SN&amp;quot; &amp;gt;&amp;gt;= fun name -&amp;gt;
+&lt;span class="gu"&gt;@@ -844,13 +858,25 @@ let print_sort_order x =&lt;/span&gt;
+     | `Coordinate -&amp;gt; &amp;quot;coordinate&amp;quot;
+     )
+
+&lt;span class="gd"&gt;-let print_header_line ({version; sort_order} : header_line) =&lt;/span&gt;
+&lt;span class="gd"&gt;-  sprintf &amp;quot;@HD\tVN:%s%s&amp;quot;&lt;/span&gt;
+&lt;span class="gi"&gt;+let print_group_order x =&lt;/span&gt;
+&lt;span class="gi"&gt;+  print_tag_value&amp;#39; &amp;quot;GO&amp;quot;&lt;/span&gt;
+&lt;span class="gi"&gt;+    (match x with&lt;/span&gt;
+&lt;span class="gi"&gt;+    | `None -&amp;gt; &amp;quot;none&amp;quot;&lt;/span&gt;
+&lt;span class="gi"&gt;+    | `Query -&amp;gt; &amp;quot;query&amp;quot;&lt;/span&gt;
+&lt;span class="gi"&gt;+    | `Reference -&amp;gt; &amp;quot;reference&amp;quot;&lt;/span&gt;
+&lt;span class="gi"&gt;+    )&lt;/span&gt;
+&lt;span class="gi"&gt;+&lt;/span&gt;
+&lt;span class="gi"&gt;+let print_header_line ({version; sort_order; group_order} : header_line) =&lt;/span&gt;
+&lt;span class="gi"&gt;+  sprintf &amp;quot;@HD\tVN:%s%s%s&amp;quot;&lt;/span&gt;
+     version
+     (match sort_order with
+     | None -&amp;gt; &amp;quot;&amp;quot;
+     | Some x -&amp;gt; sprintf &amp;quot;\t%s&amp;quot; (print_sort_order x)
+     )
+&lt;span class="gi"&gt;+    (match group_order with&lt;/span&gt;
+&lt;span class="gi"&gt;+    | None -&amp;gt; &amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="gi"&gt;+    | Some x -&amp;gt; sprintf &amp;quot;\t%s&amp;quot; (print_group_order x)&lt;/span&gt;
+&lt;span class="gi"&gt;+    )&lt;/span&gt;
+
+ let print_ref_seq (x:ref_seq) =
+   sprintf &amp;quot;@SQ\tSN:%s\tLN:%d%s%s%s%s&amp;quot;
+&lt;span class="gu"&gt;@@ -1011,12 +1037,12 @@ module MakeIO(Future : Future.S) = struct&lt;/span&gt;
+           Pipe.junk lines &amp;gt;&amp;gt;= fun () -&amp;gt;
+           parse_header_item line |&amp;gt; function
+           | Error _ as e -&amp;gt; return e
+&lt;span class="gd"&gt;-          | Ok (`HD ({version; sort_order} : header_line)) -&amp;gt; (&lt;/span&gt;
+&lt;span class="gi"&gt;+          | Ok (`HD ({version; sort_order; group_order} : header_line)) -&amp;gt; (&lt;/span&gt;
+             match hdr.version with
+             | Some _ -&amp;gt;
+               return (Or_error.error_string &amp;quot;multiple @HD lines not allowed&amp;quot;)
+             | None -&amp;gt;
+&lt;span class="gd"&gt;-              loop {hdr with version = Some version; sort_order}&lt;/span&gt;
+&lt;span class="gi"&gt;+              loop {hdr with version = Some version; sort_order; group_order}&lt;/span&gt;
+           )
+           | Ok (`SQ x) -&amp;gt; loop {hdr with ref_seqs = x::hdr.ref_seqs}
+           | Ok (`RG x) -&amp;gt; loop {hdr with read_groups = x::hdr.read_groups}
+&lt;span class="gu"&gt;@@ -1028,14 +1054,14 @@ module MakeIO(Future : Future.S) = struct&lt;/span&gt;
+     in
+     loop empty_header &amp;gt;&amp;gt;| function
+     | Error _ as e -&amp;gt; e
+&lt;span class="gd"&gt;-    | Ok ({version; sort_order; _} as x) -&amp;gt;&lt;/span&gt;
+&lt;span class="gi"&gt;+    | Ok ({version; sort_order; group_order; _} as x) -&amp;gt;&lt;/span&gt;
+       let ref_seqs = List.rev x.ref_seqs in
+       let read_groups = List.rev x.read_groups in
+       let programs = List.rev x.programs in
+       let comments = List.rev x.comments in
+       let others = List.rev x.others in
+       header
+&lt;span class="gd"&gt;-        ?version ?sort_order ~ref_seqs ~read_groups&lt;/span&gt;
+&lt;span class="gi"&gt;+        ?version ?sort_order ?group_order ~ref_seqs ~read_groups&lt;/span&gt;
+         ~programs ~comments ~others ()
+
+
+&lt;span class="gu"&gt;@@ -1064,7 +1090,7 @@ module MakeIO(Future : Future.S) = struct&lt;/span&gt;
+     (match h.version with
+     | None -&amp;gt; Deferred.unit
+     | Some version -&amp;gt;
+&lt;span class="gd"&gt;-      write_line w (print_header_line {version; sort_order=h.sort_order})&lt;/span&gt;
+&lt;span class="gi"&gt;+      write_line w (print_header_line {version; sort_order=h.sort_order; group_order=h.group_order})&lt;/span&gt;
+     ) &amp;gt;&amp;gt;= fun () -&amp;gt;
+     Deferred.List.iter h.ref_seqs ~f:(fun x -&amp;gt;
+       write_line w (print_ref_seq x)
+&lt;span class="gh"&gt;diff --git a/lib/unix/sam.mli b/lib/unix/sam.mli&lt;/span&gt;
+&lt;span class="gh"&gt;index 1fbf606..ff4da2a 100644&lt;/span&gt;
+&lt;span class="gd"&gt;--- a/lib/unix/sam.mli&lt;/span&gt;
+&lt;span class="gi"&gt;+++ b/lib/unix/sam.mli&lt;/span&gt;
+&lt;span class="gu"&gt;@@ -28,6 +28,9 @@ type tag_value = private string * string&lt;/span&gt;
+ type sort_order = [ `Unknown | `Unsorted | `Query_name | `Coordinate ]
+ [@@deriving sexp]
+
+&lt;span class="gi"&gt;+type group_order = [ `None | `Query | `Reference ]&lt;/span&gt;
+&lt;span class="gi"&gt;+[@@deriving sexp]&lt;/span&gt;
+&lt;span class="gi"&gt;+&lt;/span&gt;
+ (** @HD. A header consists of different types of lines. Confusingly, one of
+     these types is called {i the} &amp;quot;header line&amp;quot;, which is what this
+     type refers to. It does not refer generically to any line within a
+&lt;span class="gu"&gt;@@ -35,6 +38,7 @@ type sort_order = [ `Unknown | `Unsorted | `Query_name | `Coordinate ]&lt;/span&gt;
+ type header_line = private {
+   version : string; (** VN *)
+   sort_order : sort_order option; (** SO *)
+&lt;span class="gi"&gt;+  group_order: group_order option; (** GO *)&lt;/span&gt;
+ } [@@deriving sexp]
+
+ (** @SQ. Reference sequence. *)
+&lt;span class="gu"&gt;@@ -103,6 +107,7 @@ type header_item = private [&amp;lt;&lt;/span&gt;
+ type header = private {
+   version : string option;
+   sort_order : sort_order option;
+&lt;span class="gi"&gt;+  group_order : group_order option;&lt;/span&gt;
+   ref_seqs : ref_seq list;
+   read_groups : read_group list;
+   programs : program list;
+&lt;span class="gu"&gt;@@ -229,6 +234,7 @@ include module type of MakeIO(Future_unix)&lt;/span&gt;
+ val header_line
+   :  version:string
+   -&amp;gt; ?sort_order:sort_order
+&lt;span class="gi"&gt;+  -&amp;gt; ?group_order:group_order&lt;/span&gt;
+   -&amp;gt; unit
+   -&amp;gt; header_line Or_error.t
+
+&lt;span class="gu"&gt;@@ -264,6 +270,7 @@ val read_group&lt;/span&gt;
+ val header
+    : ?version:string
+   -&amp;gt; ?sort_order:sort_order
+&lt;span class="gi"&gt;+  -&amp;gt; ?group_order:group_order&lt;/span&gt;
+   -&amp;gt; ?ref_seqs : ref_seq list
+   -&amp;gt; ?read_groups : read_group list
+   -&amp;gt; ?programs : program list
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;utop&lt;/span&gt; &lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="nn"&gt;Bam&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;open_in&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;a.bam&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);;&lt;/span&gt;
+&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nn"&gt;Bam&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nn"&gt;Header&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="nn"&gt;Sam&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;alignment&lt;/span&gt; &lt;span class="nn"&gt;Core_kernel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nn"&gt;Std&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nn"&gt;Or_error&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="nn"&gt;Stream&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="nn"&gt;Core_kernel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nn"&gt;Std&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nn"&gt;Or_error&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;                                                                                                                                                                  &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nn"&gt;Core_kernel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nn"&gt;Result_wrapper&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nn"&gt;Result&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;Ok&lt;/span&gt; &lt;span class="o"&gt;(&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;abstr&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;,&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;abstr&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;)&lt;/span&gt; 
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;masterブランチはビルド失敗するし、ドキュメントとも乖離が激しいので
+積極的にメンテナンスはされていないようですね。&lt;/p&gt;</summary><category term="ocaml"></category></entry><entry><title>macOS 10.12.1にあげたらlibcryptoが見つからない</title><link href="https://holrock.github.io/macos-10121niagetaralibcryptogajian-tsukaranai.html" rel="alternate"></link><published>2016-11-02T00:00:00+09:00</published><updated>2016-11-02T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-11-02:macos-10121niagetaralibcryptogajian-tsukaranai.html</id><summary type="html">&lt;p&gt;macOSをSierraにあげました。&lt;/p&gt;
 &lt;p&gt;その後xcode8.1のインストールをして、omacのビルドをするとlibcryptoが見つからずエラーになりました。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c"&gt;% ocaml setup.ml -build &lt;/span&gt;
 &lt;span class="n"&gt;Finished&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="n"&gt;targets&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="n"&gt;cached&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;00&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;00.&lt;/span&gt;

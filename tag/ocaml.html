@@ -32,6 +32,30 @@
 
 <article class="summary">
 <div class="metadata">
+  <time datetime="2017-02-21T00:00:00+09:00" pubdate>火 21 2月 2017</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+    </address>
+  in <a href="https://holrock.github.io/category/ocaml.html">ocaml</a>
+<p class="tags">tagged <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></div>  <div>
+    <h2>
+      <a href="https://holrock.github.io/biocaml-sam-header.html" rel="bookmark" title="Permalink to Biocaml SAM header">Biocaml SAM header</a>
+    </h2>
+    <p><p>ocaml製のバイオインフォマティクス用ライブラリで、
+<a href="http://biocaml.org">biocaml</a>というのがあります。</p>
+<p>BAMファイルを読みたかったので使ってみましたが、
+<code>@HG</code>ヘッダーにある<code>GO</code>(group order)に未対応で読めなかったため、
+ちょっと修正しました。</p>
+<p>opamで落ちてくる0.6.0用です。</p>
+<div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="o">#</span><span class="n">require</span> <span class="s2">&quot;biocaml.unix&quot;</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="k">open</span> <span class="nn">Biocaml_unix</span><span class="p">.</span><span class="nc">Std</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="nn">Bam</span><span class="p">.</span><span class="n">read</span> <span class="o">(</span><span class="n">open_in</span> <span class="s2">&quot;a.bam&quot;</span><span class="o">);;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="o">(</span><span class="nn">Bam</span><span class="p">.</span><span class="nn">Header</span><span class="p">.</span><span class="n">t</span> <span class="o">*</span> <span class="nn">Sam</span><span class="p">.</span><span class="n">alignment</span> <span class="nn">Core_kernel</span><span class="p">.</span><span class="nn">Std</span><span class="p">.</span><span class="nn">Or_error</span><span class="p">.</span><span class="n">t</span> <span class="nn">Stream</span><span class="p">.</span><span class="n">t</span><span class="o">)</span>
+<span class="nn">Core_kernel</span><span class="p">.</span><span class="nn">Result_wrapper</span><span class="p">.</span><span class="nn">Result</span><span class="p">.</span><span class="nc">Error</span>
+ <span class="o">(</span><span class="s2">&quot;unexpected tag for given header item type ...</span></pre></div></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
   <time datetime="2016-11-02T00:00:00+09:00" pubdate>水 02 11月 2016</time>
     <address class="vcard author">
       by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>

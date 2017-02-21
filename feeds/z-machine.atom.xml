@@ -22,13 +22,15 @@ Infocom社によって作られました。&lt;/p&gt;
 &lt;h3&gt;BASIC&lt;/h3&gt;
 &lt;p&gt;オリジナルのZorkは MIT Design Language(MDL)で書かれていたとあり、ZILにもその影響が強く見られます。&lt;/p&gt;
 &lt;p&gt;サンプルコードを見て見ましょう。
-MDLと違い、式にはangle bracket (&amp;lt;&amp;gt;) だけが使われます。&lt;/p&gt;
+&lt;del&gt;MDLと違い、式にはangle bracket (&amp;lt;&amp;gt;) だけが使われます。&lt;/del&gt;&lt;/p&gt;
+&lt;p&gt;ここ不正確だったので修正。ご指摘ありがとうございます。
+フォームにangle bracket (&amp;lt;&amp;gt;), listに括弧が使われます。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;&amp;lt;*&lt;/span&gt; &lt;span class="nv"&gt;&amp;lt;+&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="nv"&gt;5&amp;gt;&lt;/span&gt; &lt;span class="nv"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="nv"&gt;&amp;lt;/&lt;/span&gt; &lt;span class="mi"&gt;26&lt;/span&gt; &lt;span class="nv"&gt;2&amp;gt;&lt;/span&gt; &lt;span class="nv"&gt;5&amp;gt;&amp;gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;括弧さえ読み替えれば、みたまんまLISPですね。&lt;/p&gt;
-&lt;p&gt;丸括弧も使用されますが、グループ化のみに使用されているようです。&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;丸括弧も使用されますが、グループ化のみに使用されているようです。&lt;/del&gt;&lt;/p&gt;
 &lt;p&gt;例えば、&lt;code&gt;cond&lt;/code&gt; の条件と式には丸括弧が使用されます。
 関数引数なども丸括弧が使われています。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;&amp;lt;COND&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;&amp;lt;if-this-is-true&amp;gt;&lt;/span&gt;

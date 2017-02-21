@@ -31,160 +31,235 @@
 
 
       <article>
-        <h1><a href="https://holrock.github.io/zil.html">ZIL</a></h1>
-        <p>なんとなくZ-Machine周りについて調べていたので、ZILについてメモしておきます。</p>
-<p>ZIL(Zork Implementation Language)はZorkなどで知られるZ-Machineで動作するInteractive Fiction(IF)を記述するための言語です。</p>
-<p>まず、Z-Machine関係の用語を説明します。</p>
-<h2>IF</h2>
-<p>IFはいわゆるテキストアドベンチャーゲームです。
-テキストをコマンドとして入力して進行していくゲームで、
-<a href="https://ja.wikipedia.org/wiki/ゾーク#.E3.82.B3.E3.83.9E.E3.83.B3.E3.83.89.E5.85.A5.E5.8A.9B">zork</a>を
-見るとどんなものかはすぐわかります。</p>
-<h2>Z-Machine</h2>
-<p>Z-MachineはIFのための仮想マシンです。
-Infocom社によって作られました。</p>
-<p>多様なプラットフォームへの移植性を確保するため、Zork1などはZ-Machine上で動くようになっていました。</p>
-<p>Z-MachineはZILをコンパイルして出力されるZ-codeと呼ばれるを命令を解釈して実行します。</p>
-<p>Z-Machineの仕様は
-<a href="http://inform-fiction.org/zmachine/standards/z1point1/index.html">The Z-Machine Standards Document</a>
-にまとまっていますが、フラグなどの扱いについて一部、<a href="https://github.com/SamB/ztools">ztools</a>との相違が見られました。</p>
-<h2>ZIL</h2>
-<p>ここから本題です。</p>
-<p>ZILの情報は<a href="http://www.ifwiki.org/index.php/ZIL">ZIL Manual</a>などにあります。</p>
-<p>この後に出てくるソースコードは、ZIL Manualからの引用になります。</p>
-<h3>BASIC</h3>
-<p>オリジナルのZorkは MIT Design Language(MDL)で書かれていたとあり、ZILにもその影響が強く見られます。</p>
-<p>サンプルコードを見て見ましょう。
-MDLと違い、式にはangle bracket (&lt;&gt;) だけが使われます。</p>
-<div class="highlight"><pre><span></span><span class="nv">&lt;*</span> <span class="nv">&lt;+</span> <span class="mi">10</span> <span class="nv">5&gt;</span> <span class="nv">&lt;-</span> <span class="nv">&lt;/</span> <span class="mi">26</span> <span class="nv">2&gt;</span> <span class="nv">5&gt;&gt;</span>
+        <h1><a href="https://holrock.github.io/biocaml-sam-header.html">Biocaml SAM header</a></h1>
+        <p>ocaml製のバイオインフォマティクス用ライブラリで、
+<a href="http://biocaml.org">biocaml</a>というのがあります。</p>
+<p>BAMファイルを読みたかったので使ってみましたが、
+<code>@HG</code>ヘッダーにある<code>GO</code>(group order)に未対応で読めなかったため、
+ちょっと修正しました。</p>
+<p>opamで落ちてくる0.6.0用です。</p>
+<div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="o">#</span><span class="n">require</span> <span class="s2">&quot;biocaml.unix&quot;</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="k">open</span> <span class="nn">Biocaml_unix</span><span class="p">.</span><span class="nc">Std</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="nn">Bam</span><span class="p">.</span><span class="n">read</span> <span class="o">(</span><span class="n">open_in</span> <span class="s2">&quot;a.bam&quot;</span><span class="o">);;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="o">(</span><span class="nn">Bam</span><span class="p">.</span><span class="nn">Header</span><span class="p">.</span><span class="n">t</span> <span class="o">*</span> <span class="nn">Sam</span><span class="p">.</span><span class="n">alignment</span> <span class="nn">Core_kernel</span><span class="p">.</span><span class="nn">Std</span><span class="p">.</span><span class="nn">Or_error</span><span class="p">.</span><span class="n">t</span> <span class="nn">Stream</span><span class="p">.</span><span class="n">t</span><span class="o">)</span>
+<span class="nn">Core_kernel</span><span class="p">.</span><span class="nn">Result_wrapper</span><span class="p">.</span><span class="nn">Result</span><span class="p">.</span><span class="nc">Error</span>
+ <span class="o">(</span><span class="s2">&quot;unexpected tag for given header item type&quot;</span> <span class="o">(</span><span class="nc">HD</span> <span class="o">(</span><span class="nc">GO</span><span class="o">)))</span>
 </pre></div>
 
 
-<p>括弧さえ読み替えれば、みたまんまLISPですね。</p>
-<p>丸括弧も使用されますが、グループ化のみに使用されているようです。</p>
-<p>例えば、<code>cond</code> の条件と式には丸括弧が使用されます。
-関数引数なども丸括弧が使われています。</p>
-<div class="highlight"><pre><span></span><span class="nv">&lt;COND</span> <span class="p">(</span><span class="nv">&lt;if-this-is-true&gt;</span>
-       <span class="nv">&lt;then-do-this&gt;</span><span class="p">)</span><span class="nb">&gt;</span>
+<div class="highlight"><pre><span></span><span class="gh">diff --git a/lib/unix/sam.ml b/lib/unix/sam.ml</span>
+<span class="gh">index 9bd17ac..2da7b75 100644</span>
+<span class="gd">--- a/lib/unix/sam.ml</span>
+<span class="gi">+++ b/lib/unix/sam.ml</span>
+<span class="gu">@@ -26,9 +26,13 @@ type tag_value = string * string</span>
+ type sort_order = [ `Unknown | `Unsorted | `Query_name | `Coordinate ]
+ [@@deriving sexp]
+
+<span class="gi">+type group_order = [ `None | `Query | `Reference ]</span>
+<span class="gi">+[@@deriving sexp]</span>
+<span class="gi">+</span>
+ type header_line = {
+   version : string;
+   sort_order : sort_order option;
+<span class="gi">+  group_order: group_order option;</span>
+ } [@@deriving sexp]
+
+ type ref_seq = {
+<span class="gu">@@ -81,6 +85,7 @@ type header_item = [</span>
+ type header = {
+   version : string option;
+   sort_order : sort_order option;
+<span class="gi">+  group_order : group_order option;</span>
+   ref_seqs : ref_seq list;
+   read_groups : read_group list;
+   programs : program list;
+<span class="gu">@@ -91,6 +96,7 @@ type header = {</span>
+ let empty_header = {
+   version = None;
+   sort_order = None;
+<span class="gi">+  group_order = None;</span>
+   ref_seqs = [];
+   read_groups = [];
+   programs = [];
+<span class="gu">@@ -192,9 +198,9 @@ let parse_header_version s =</span>
+     else
+       err
+
+<span class="gd">-let header_line ~version ?sort_order () =</span>
+<span class="gi">+let header_line ~version ?sort_order ?group_order () =</span>
+   parse_header_version version &gt;&gt;| fun version -&gt;
+<span class="gd">-  {version; sort_order}</span>
+<span class="gi">+  {version; sort_order; group_order}</span>
+
+ let ref_seq
+     ~name ~length
+<span class="gu">@@ -269,7 +275,7 @@ let read_group</span>
+
+
+ let header
+<span class="gd">-    ?version ?sort_order ?(ref_seqs=[]) ?(read_groups=[])</span>
+<span class="gi">+    ?version ?sort_order ?group_order ?(ref_seqs=[]) ?(read_groups=[])</span>
+     ?(programs=[]) ?(comments=[]) ?(others=[])
+     ()
+     =
+<span class="gu">@@ -302,7 +308,7 @@ let header</span>
+   |&gt; List.filter_map ~f:Fn.id
+   |&gt; function
+      | [] -&gt; Ok {
+<span class="gd">-       version; sort_order; ref_seqs; read_groups;</span>
+<span class="gi">+       version; sort_order; group_order; ref_seqs; read_groups;</span>
+        programs; comments; others;
+      }
+      | errs -&gt; Error (Error.of_list errs)
+<span class="gu">@@ -407,12 +413,20 @@ let parse_sort_order = function</span>
+   | &quot;coordinate&quot; -&gt; Ok `Coordinate
+   | x -&gt; error &quot;invalid sort order&quot; x sexp_of_string
+
+<span class="gi">+let parse_group_order = function</span>
+<span class="gi">+  | &quot;none&quot; -&gt; Ok `None</span>
+<span class="gi">+  | &quot;query&quot; -&gt; Ok `Query</span>
+<span class="gi">+  | &quot;reference&quot; -&gt; Ok `Reference</span>
+<span class="gi">+  | x -&gt; error &quot;invalid group order&quot; x sexp_of_string</span>
+<span class="gi">+</span>
+ let parse_header_line tvl =
+   find1 `HD tvl &quot;VN&quot; &gt;&gt;= fun version -&gt;
+   find01 `HD tvl &quot;SO&quot; &gt;&gt;?~
+   parse_sort_order &gt;&gt;= fun sort_order -&gt;
+<span class="gd">-  assert_tags `HD tvl [&quot;VN&quot;; &quot;SO&quot;] &gt;&gt;= fun () -&gt;</span>
+<span class="gd">-  header_line ~version ?sort_order ()</span>
+<span class="gi">+  find01 `HD tvl &quot;GO&quot; &gt;&gt;?~</span>
+<span class="gi">+  parse_group_order &gt;&gt;= fun group_order -&gt;</span>
+<span class="gi">+  assert_tags `HD tvl [&quot;VN&quot;; &quot;SO&quot;; &quot;GO&quot;] &gt;&gt;= fun () -&gt;</span>
+<span class="gi">+  header_line ~version ?sort_order ?group_order ()</span>
+
+ let parse_ref_seq tvl =
+   find1 `SQ tvl &quot;SN&quot; &gt;&gt;= fun name -&gt;
+<span class="gu">@@ -844,13 +858,25 @@ let print_sort_order x =</span>
+     | `Coordinate -&gt; &quot;coordinate&quot;
+     )
+
+<span class="gd">-let print_header_line ({version; sort_order} : header_line) =</span>
+<span class="gd">-  sprintf &quot;@HD\tVN:%s%s&quot;</span>
+<span class="gi">+let print_group_order x =</span>
+<span class="gi">+  print_tag_value&#39; &quot;GO&quot;</span>
+<span class="gi">+    (match x with</span>
+<span class="gi">+    | `None -&gt; &quot;none&quot;</span>
+<span class="gi">+    | `Query -&gt; &quot;query&quot;</span>
+<span class="gi">+    | `Reference -&gt; &quot;reference&quot;</span>
+<span class="gi">+    )</span>
+<span class="gi">+</span>
+<span class="gi">+let print_header_line ({version; sort_order; group_order} : header_line) =</span>
+<span class="gi">+  sprintf &quot;@HD\tVN:%s%s%s&quot;</span>
+     version
+     (match sort_order with
+     | None -&gt; &quot;&quot;
+     | Some x -&gt; sprintf &quot;\t%s&quot; (print_sort_order x)
+     )
+<span class="gi">+    (match group_order with</span>
+<span class="gi">+    | None -&gt; &quot;&quot;</span>
+<span class="gi">+    | Some x -&gt; sprintf &quot;\t%s&quot; (print_group_order x)</span>
+<span class="gi">+    )</span>
+
+ let print_ref_seq (x:ref_seq) =
+   sprintf &quot;@SQ\tSN:%s\tLN:%d%s%s%s%s&quot;
+<span class="gu">@@ -1011,12 +1037,12 @@ module MakeIO(Future : Future.S) = struct</span>
+           Pipe.junk lines &gt;&gt;= fun () -&gt;
+           parse_header_item line |&gt; function
+           | Error _ as e -&gt; return e
+<span class="gd">-          | Ok (`HD ({version; sort_order} : header_line)) -&gt; (</span>
+<span class="gi">+          | Ok (`HD ({version; sort_order; group_order} : header_line)) -&gt; (</span>
+             match hdr.version with
+             | Some _ -&gt;
+               return (Or_error.error_string &quot;multiple @HD lines not allowed&quot;)
+             | None -&gt;
+<span class="gd">-              loop {hdr with version = Some version; sort_order}</span>
+<span class="gi">+              loop {hdr with version = Some version; sort_order; group_order}</span>
+           )
+           | Ok (`SQ x) -&gt; loop {hdr with ref_seqs = x::hdr.ref_seqs}
+           | Ok (`RG x) -&gt; loop {hdr with read_groups = x::hdr.read_groups}
+<span class="gu">@@ -1028,14 +1054,14 @@ module MakeIO(Future : Future.S) = struct</span>
+     in
+     loop empty_header &gt;&gt;| function
+     | Error _ as e -&gt; e
+<span class="gd">-    | Ok ({version; sort_order; _} as x) -&gt;</span>
+<span class="gi">+    | Ok ({version; sort_order; group_order; _} as x) -&gt;</span>
+       let ref_seqs = List.rev x.ref_seqs in
+       let read_groups = List.rev x.read_groups in
+       let programs = List.rev x.programs in
+       let comments = List.rev x.comments in
+       let others = List.rev x.others in
+       header
+<span class="gd">-        ?version ?sort_order ~ref_seqs ~read_groups</span>
+<span class="gi">+        ?version ?sort_order ?group_order ~ref_seqs ~read_groups</span>
+         ~programs ~comments ~others ()
+
+
+<span class="gu">@@ -1064,7 +1090,7 @@ module MakeIO(Future : Future.S) = struct</span>
+     (match h.version with
+     | None -&gt; Deferred.unit
+     | Some version -&gt;
+<span class="gd">-      write_line w (print_header_line {version; sort_order=h.sort_order})</span>
+<span class="gi">+      write_line w (print_header_line {version; sort_order=h.sort_order; group_order=h.group_order})</span>
+     ) &gt;&gt;= fun () -&gt;
+     Deferred.List.iter h.ref_seqs ~f:(fun x -&gt;
+       write_line w (print_ref_seq x)
+<span class="gh">diff --git a/lib/unix/sam.mli b/lib/unix/sam.mli</span>
+<span class="gh">index 1fbf606..ff4da2a 100644</span>
+<span class="gd">--- a/lib/unix/sam.mli</span>
+<span class="gi">+++ b/lib/unix/sam.mli</span>
+<span class="gu">@@ -28,6 +28,9 @@ type tag_value = private string * string</span>
+ type sort_order = [ `Unknown | `Unsorted | `Query_name | `Coordinate ]
+ [@@deriving sexp]
+
+<span class="gi">+type group_order = [ `None | `Query | `Reference ]</span>
+<span class="gi">+[@@deriving sexp]</span>
+<span class="gi">+</span>
+ (** @HD. A header consists of different types of lines. Confusingly, one of
+     these types is called {i the} &quot;header line&quot;, which is what this
+     type refers to. It does not refer generically to any line within a
+<span class="gu">@@ -35,6 +38,7 @@ type sort_order = [ `Unknown | `Unsorted | `Query_name | `Coordinate ]</span>
+ type header_line = private {
+   version : string; (** VN *)
+   sort_order : sort_order option; (** SO *)
+<span class="gi">+  group_order: group_order option; (** GO *)</span>
+ } [@@deriving sexp]
+
+ (** @SQ. Reference sequence. *)
+<span class="gu">@@ -103,6 +107,7 @@ type header_item = private [&lt;</span>
+ type header = private {
+   version : string option;
+   sort_order : sort_order option;
+<span class="gi">+  group_order : group_order option;</span>
+   ref_seqs : ref_seq list;
+   read_groups : read_group list;
+   programs : program list;
+<span class="gu">@@ -229,6 +234,7 @@ include module type of MakeIO(Future_unix)</span>
+ val header_line
+   :  version:string
+   -&gt; ?sort_order:sort_order
+<span class="gi">+  -&gt; ?group_order:group_order</span>
+   -&gt; unit
+   -&gt; header_line Or_error.t
+
+<span class="gu">@@ -264,6 +270,7 @@ val read_group</span>
+ val header
+    : ?version:string
+   -&gt; ?sort_order:sort_order
+<span class="gi">+  -&gt; ?group_order:group_order</span>
+   -&gt; ?ref_seqs : ref_seq list
+   -&gt; ?read_groups : read_group list
+   -&gt; ?programs : program list
 </pre></div>
 
 
-<p>ちなみに<code>&lt;&gt;</code>は<code>FALSE</code>を意味します。</p>
-<p>次は関数定義を見て見ます。
-関数定義には <code>ROUTINE</code> を使用します。</p>
-<div class="highlight"><pre><span></span><span class="nv">&lt;ROUTINE</span> <span class="nv">RHYME</span> <span class="p">(</span><span class="s">&quot;AUX&quot;</span> <span class="nv">ARG1</span> <span class="nv">ARG2</span><span class="p">)</span>
-      <span class="nv">&lt;SET</span> <span class="nv">ARG1</span> <span class="nv">30&gt;</span>
-      <span class="nv">&lt;SET</span> <span class="nv">ARG2</span> <span class="s">&quot;September&quot;</span><span class="nb">&gt;</span>
-      <span class="nv">&lt;LINE-IN-RHYME</span> <span class="o">.</span><span class="nv">ARG1</span> <span class="o">.</span><span class="nv">ARG2&gt;</span>
-      <span class="nv">&lt;SET</span> <span class="nv">ARG1</span> <span class="nv">28&gt;</span>
-      <span class="nv">&lt;SET</span> <span class="nv">ARG2</span> <span class="s">&quot;February&quot;</span><span class="nb">&gt;</span>
-      <span class="nv">&lt;LINE-IN-RHYME</span> <span class="o">.</span><span class="nv">ARG1</span> <span class="o">.</span><span class="nv">ARG2&gt;</span>
-      <span class="nv">etc.&gt;</span>
-<span class="nv">&lt;ROUTINE</span> <span class="nv">LINE-IN-RHYME</span> <span class="p">(</span><span class="nv">ARG-A</span> <span class="nv">ARG-B</span><span class="p">)</span>
-      <span class="nv">&lt;TELL</span> <span class="nv">N</span> <span class="o">.</span><span class="nv">ARG-A</span> <span class="s">&quot; days hath &quot;</span> <span class="o">.</span><span class="nv">ARG-B</span> <span class="s">&quot;.&quot;</span> <span class="nv">CR&gt;&gt;</span>
+<div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="nn">Bam</span><span class="p">.</span><span class="n">read</span> <span class="o">(</span><span class="n">open_in</span> <span class="s2">&quot;a.bam&quot;</span><span class="o">);;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="o">(</span><span class="nn">Bam</span><span class="p">.</span><span class="nn">Header</span><span class="p">.</span><span class="n">t</span> <span class="o">*</span> <span class="nn">Sam</span><span class="p">.</span><span class="n">alignment</span> <span class="nn">Core_kernel</span><span class="p">.</span><span class="nn">Std</span><span class="p">.</span><span class="nn">Or_error</span><span class="p">.</span><span class="n">t</span> <span class="nn">Stream</span><span class="p">.</span><span class="n">t</span><span class="o">)</span>
+<span class="nn">Core_kernel</span><span class="p">.</span><span class="nn">Std</span><span class="p">.</span><span class="nn">Or_error</span><span class="p">.</span><span class="n">t</span>                                                                                                                                                                  <span class="o">=</span> <span class="nn">Core_kernel</span><span class="p">.</span><span class="nn">Result_wrapper</span><span class="p">.</span><span class="nn">Result</span><span class="p">.</span><span class="nc">Ok</span> <span class="o">(&lt;</span><span class="n">abstr</span><span class="o">&gt;,</span> <span class="o">&lt;</span><span class="n">abstr</span><span class="o">&gt;)</span> 
 </pre></div>
 
 
-<p>ここでは <code>RHYME</code> 、 <code>LINE-IN-RHYME</code> の二つのルーチンを定義しています。</p>
-<p><code>RHYME</code>の直後にある<code>("AUX" ARG1 ARG2)</code>はローカル変数宣言になります。<code>"AUX"</code>以降の<code>ARG1</code>, <code>ARG2</code>の二つの変数を宣言しています。
-通常の引数と違い、呼び出し元から渡されるものではありません。</p>
-<p>逆に<code>LINE-IN-RHYME</code>の<code>ARG-A</code>, <code>ARG-B</code>は呼び出し元から渡された引数になります。</p>
-<p>後、目につくのは<code>.ARG1</code>の<code>.</code>ですね。これはローカル変数の値を参照する意味になります。</p>
-<p>ちなみに、グローバル変数を参照する場合は<code>,</code>を使います。
-次のコードは<code>PIZZA-EATEN</code>グローバル変数の値をインクリメントするコードです。</p>
-<div class="highlight"><pre><span></span>&lt;SETG PIZZA-EATEN &lt;+ ,PIZZA-EATEN 1&gt;&gt;
-</pre></div>
-
-
-<h2>ROOM, OBJECT, ROUTINE</h2>
-<p>ZILには大きく分けて3つの要素があります。</p>
-<p>一つは先ほどのROUTINE。これはそのまま関数で、インプットに対するアクションを定義したり色々な用途に使用されます。</p>
-<p>残りの二つは、ROOMとOBJECTです。</p>
-<p>ROOMは、playerが移動したり調べたりすることができる場所のことです。今でいうLEVELに近いかもしれません。</p>
-<p>OBJECTはそのままゲーム中に存在するオブジェクトです。
-ROOMとOBJECTの定義方法は次の通りです。</p>
-<div class="highlight"><pre><span></span><span class="nv">&lt;ROOM</span> <span class="nv">LIVING-ROOM</span>
-     <span class="p">(</span><span class="nv">LOC</span> <span class="nv">ROOMS</span><span class="p">)</span>
-     <span class="p">(</span><span class="nv">DESC</span> <span class="s">&quot;Living Room&quot;</span><span class="p">)</span>
-     <span class="p">(</span><span class="nv">EAST</span> <span class="nv">TO</span> <span class="nv">KITCHEN</span><span class="p">)</span>
-     <span class="p">(</span><span class="nv">WEST</span> <span class="nv">TO</span> <span class="nv">STRANGE-PASSAGE</span> <span class="nv">IF</span> <span class="nv">CYCLOPS-FLED</span> <span class="nv">ELSE</span>
-          <span class="s">&quot;The wooden door is nailed shut.&quot;</span><span class="p">)</span>
-     <span class="p">(</span><span class="nv">DOWN</span> <span class="nv">PER</span> <span class="nv">TRAP-DOOR-EXIT</span><span class="p">)</span>
-     <span class="p">(</span><span class="nv">ACTION</span> <span class="nv">LIVING-ROOM-F</span><span class="p">)</span>
-     <span class="p">(</span><span class="nv">FLAGS</span> <span class="nv">RLANDBIT</span> <span class="nv">ONBIT</span> <span class="nv">SACREDBIT</span><span class="p">)</span>
-     <span class="p">(</span><span class="nv">GLOBAL</span> <span class="nv">STAIRS</span><span class="p">)</span>
-     <span class="p">(</span><span class="nv">THINGS</span> <span class="nv">&lt;&gt;</span> <span class="nv">NAILS</span> <span class="nv">NAILS-PSEUDO</span><span class="p">)</span><span class="nb">&gt;</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span><span class="nv">&lt;OBJECT</span> <span class="nv">LANTERN</span>
-       <span class="p">(</span><span class="nv">LOC</span> <span class="nv">LIVING-ROOM</span><span class="p">)</span>
-       <span class="p">(</span><span class="nv">SYNONYM</span> <span class="nv">LAMP</span> <span class="nv">LANTERN</span> <span class="nv">LIGHT</span><span class="p">)</span>
-       <span class="p">(</span><span class="nv">ADJECTIVE</span> <span class="nv">BRASS</span><span class="p">)</span>
-       <span class="p">(</span><span class="nv">DESC</span> <span class="s">&quot;brass lantern&quot;</span><span class="p">)</span>
-       <span class="p">(</span><span class="nv">FLAGS</span> <span class="nv">TAKEBIT</span> <span class="nv">LIGHTBIT</span><span class="p">)</span>
-       <span class="p">(</span><span class="nv">ACTION</span> <span class="nv">LANTERN-F</span><span class="p">)</span>
-       <span class="p">(</span><span class="nv">FDESC</span> <span class="s">&quot;A battery-powered lantern is on the trophy case.&quot;</span><span class="p">)</span>
-       <span class="p">(</span><span class="nv">LDESC</span> <span class="s">&quot;There is a brass lantern (battery-powered) here.&quot;</span><span class="p">)</span>
-       <span class="p">(</span><span class="nv">SIZE</span> <span class="mi">15</span><span class="p">)</span><span class="nb">&gt;</span>
-</pre></div>
-
-
-<p>これでLIVING-ROOMにLANTERNが置かれたことになります。</p>
-<h2>Input, Praser, Handler</h2>
-<p>IFはユーザーからのインプットをパースしてアクションを起こします。たとえば</p>
-<div class="highlight"><pre><span></span>&gt;HIT UNCLE OTTO WITH THE HAMMER
-You knock some sense back into Uncle Otto, and he stops
-insisting that he&#39;s Napoleon Bonaparte.
-</pre></div>
-
-
-<p><code>HIT UNCLE OTTO WITH THE HAMMER</code>がユーザーインプットで、2行目からが反応です。</p>
-<p>ZorkシリーズなどInfocomのゲームは、上記のような文法をもった構文が使えたことで有名です。</p>
-<p>パーサーはインプットを解析し、PRSA, PRSO, PRSIと呼ばれる要素へ分解します。</p>
-<p>先ほどの例では次のようになります。</p>
-<ul>
-<li>PRSA -&gt; HIT</li>
-<li>PRSO -&gt; the UNCLE OTTO object</li>
-<li>PRSI -&gt; the HAMMER object</li>
-</ul>
-<p>分解が終わると、HandlerはPRSIオブジェクトのACTION ROUTINEを呼び出します。</p>
-<p>PRSIのACTION ROUTINEで終了しなかった場合、次にPRSOのACTION ROUTINEが呼ばれ、
-動詞のデフォルトアクションが呼ばれるまで連鎖します。</p>
-<p>こうやってインプットをからゲーム内オブジェクトにインタラクションしていくことでゲームが進行していきます。</p>
-<p>面白いのは、同じLANTERNでも</p>
-<div class="highlight"><pre><span></span>THROW THE NERF BALL AT THE BRASS LANTERN
-
-THROW THE BRASS LANTERN AT THE NERF BALL
-</pre></div>
-
-
-<p>では前者の場合、LANTERNはPRSI、後者だとPRSOになるところです。</p>
-<p>動詞の定義はSYNTAXで定義します。</p>
-<div class="highlight"><pre><span></span>&lt;SYNTAX GET OBJECT = V-TAKE&gt;
-&lt;SYNTAX GET IN OBJECT = V-ENTER&gt;
-&lt;SYNTAX GET ON OBJECT = V-ENTER&gt;
-&lt;SYNTAX GET OFF OBJECT = V-EXIT&gt;
-&lt;SYNTAX GET OBJECT WITH OBJECT = V-TAKE-WITH&gt;
-</pre></div>
-
-
-<p>OBJECTとなっているところは名詞で置き換えられます。</p>
-<p>V-TAKEなどはROUTINE名です。
-同じ動詞でもsyntaxによって振り分けることができます。</p>
-<p>またSYNTAX内の括弧で囲まれた(HAVE)などのトークンは特別な意味を持ち、</p>
-<div class="highlight"><pre><span></span><span class="nv">&lt;SYNTAX</span> <span class="nv">GIVE</span> <span class="nv">OBJECT</span> <span class="p">(</span><span class="nv">HAVE</span><span class="p">)</span>
-     <span class="nv">TO</span> <span class="nv">OBJECT</span> <span class="p">(</span><span class="nv">ON-GROUND</span> <span class="nv">IN-ROOM</span><span class="p">)</span> <span class="nb">=</span> <span class="nv">V-GIVE&gt;</span>
-</pre></div>
-
-
-<p>この例では、playerがOBJECTを持っていない場合、パース時にエラーとなります。</p>
-<p>ACTIONやSYNTAXでいかに頑張るかが開発者の腕の見せ所のようです。
-ZILは英語を前提として作られているため、日本語への移植などは大変だったのではないでしょうか。</p>
-<h2>まとめ</h2>
-<p>他にもEventなどがありますが、ここでは省略します。 興味がある方はZIL Manualを読んで見てください。</p>
-<p>ZILはIFを作る目的でデザインされたコンパクトな言語です。
-あえて今テキストアドベンチャーを作るためにZILを使う必要はありませんが、IFの構成要素を知るためにZILを調べて見るのも面白いと思います。</p>
+<p>masterブランチはビルド失敗するし、ドキュメントとも乖離が激しいので
+積極的にメンテナンスはされていないようですね。</p>
       </article>
 
       <hr />
@@ -193,6 +268,12 @@ ZILは英語を前提として作られているため、日本語への移植�
           <h3>Last posts</h3>
           <ol class="archive">
     
+
+
+      <li>
+<a href="https://holrock.github.io/zil.html" rel="bookmark" title="Permalink to ZIL">ZIL</a>
+  <time datetime="2016-12-04T00:00:00+09:00" pubdate>日 04 12月 2016</time>
+<p class="tags">tags: <a href="https://holrock.github.io/tag/z-machine.html">z-machine</a><a href="https://holrock.github.io/tag/lisp.html">lisp</a><a href="https://holrock.github.io/tag/zil.html">zil</a></p></a>      </li>
 
 
       <li>
@@ -219,10 +300,6 @@ ZILは英語を前提として作られているため、日本語への移植�
 <p class="tags">tags: <a href="https://holrock.github.io/tag/lisp.html">lisp</a><a href="https://holrock.github.io/tag/allegrograph.html">allegrograph</a></p></a>      </li>
 
 
-      <li>
-<a href="https://holrock.github.io/macos-10121niagetaralibcryptogajian-tsukaranai.html" rel="bookmark" title="Permalink to macOS 10.12.1にあげたらlibcryptoが見つからない">macOS 10.12.1にあげたらlibcryptoが見つからない</a>
-  <time datetime="2016-11-02T00:00:00+09:00" pubdate>水 02 11月 2016</time>
-<p class="tags">tags: <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></a>      </li>
 
 
 
