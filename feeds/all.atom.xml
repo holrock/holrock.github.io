@@ -226,7 +226,8 @@
 
 
 &lt;p&gt;masterブランチはビルド失敗するし、ドキュメントとも乖離が激しいので
-積極的にメンテナンスはされていないようですね。&lt;/p&gt;</summary><category term="ocaml"></category></entry><entry><title>ZIL</title><link href="https://holrock.github.io/zil.html" rel="alternate"></link><published>2016-12-04T00:00:00+09:00</published><updated>2016-12-04T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-12-04:zil.html</id><summary type="html">&lt;p&gt;なんとなくZ-Machine周りについて調べていたので、ZILについてメモしておきます。&lt;/p&gt;
+積極的にメンテナンスはされていないようですね。&lt;/p&gt;
+&lt;p&gt;追記。プルリクエスト取り込んでもらいました。&lt;/p&gt;</summary><category term="ocaml"></category></entry><entry><title>ZIL</title><link href="https://holrock.github.io/zil.html" rel="alternate"></link><published>2016-12-04T00:00:00+09:00</published><updated>2016-12-04T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-12-04:zil.html</id><summary type="html">&lt;p&gt;なんとなくZ-Machine周りについて調べていたので、ZILについてメモしておきます。&lt;/p&gt;
 &lt;p&gt;ZIL(Zork Implementation Language)はZorkなどで知られるZ-Machineで動作するInteractive Fiction(IF)を記述するための言語です。&lt;/p&gt;
 &lt;p&gt;まず、Z-Machine関係の用語を説明します。&lt;/p&gt;
 &lt;h2&gt;IF&lt;/h2&gt;

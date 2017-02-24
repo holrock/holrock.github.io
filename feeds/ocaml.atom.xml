@@ -226,7 +226,8 @@
 
 
 &lt;p&gt;masterブランチはビルド失敗するし、ドキュメントとも乖離が激しいので
-積極的にメンテナンスはされていないようですね。&lt;/p&gt;</summary><category term="ocaml"></category></entry><entry><title>macOS 10.12.1にあげたらlibcryptoが見つからない</title><link href="https://holrock.github.io/macos-10121niagetaralibcryptogajian-tsukaranai.html" rel="alternate"></link><published>2016-11-02T00:00:00+09:00</published><updated>2016-11-02T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-11-02:macos-10121niagetaralibcryptogajian-tsukaranai.html</id><summary type="html">&lt;p&gt;macOSをSierraにあげました。&lt;/p&gt;
+積極的にメンテナンスはされていないようですね。&lt;/p&gt;
+&lt;p&gt;追記。プルリクエスト取り込んでもらいました。&lt;/p&gt;</summary><category term="ocaml"></category></entry><entry><title>macOS 10.12.1にあげたらlibcryptoが見つからない</title><link href="https://holrock.github.io/macos-10121niagetaralibcryptogajian-tsukaranai.html" rel="alternate"></link><published>2016-11-02T00:00:00+09:00</published><updated>2016-11-02T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-11-02:macos-10121niagetaralibcryptogajian-tsukaranai.html</id><summary type="html">&lt;p&gt;macOSをSierraにあげました。&lt;/p&gt;
 &lt;p&gt;その後xcode8.1のインストールをして、omacのビルドをするとlibcryptoが見つからずエラーになりました。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c"&gt;% ocaml setup.ml -build &lt;/span&gt;
 &lt;span class="n"&gt;Finished&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="n"&gt;targets&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="n"&gt;cached&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;00&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;00.&lt;/span&gt;
