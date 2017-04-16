@@ -36,6 +36,41 @@
     <address class="vcard author">
       by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
     </address>
+  in <a href="https://holrock.github.io/category/python.html">python</a>
+<p class="tags">tagged <a href="https://holrock.github.io/tag/chainer.html">chainer</a>, <a href="https://holrock.github.io/tag/python.html">python</a></p></div>  <div>
+    <h2>
+      <a href="https://holrock.github.io/chainerdefen-lei-dekitenai.html" rel="bookmark" title="Permalink to chainerで分類(できてない)">chainerで分類(できてない)</a>
+    </h2>
+    <p><p>cattoyでおもちゃの分類を自動でやりたくてchainerを試しました。
+cattoyに登録されている画像を集めてきて手作業で分類、学習をやってみましたが、
+やはり分類が面倒なのと、素材不足で全然だめでした。</p>
+<p>やったことをメモしておきます。</p>
+<ul>
+<li>pip install chainer pillow </li>
+<li>画像の数が多い猫じゃらし、爪とぎ、その他で分類してみる。images/nekojarashi images/tsumetogi images/otherとフォルダごとに分類</li>
+<li><a href="http://ksksksks2.hatenadiary.jp/entry/20160327/1459061931">http://ksksksks2.hatenadiary.jp/entry/20160327/1459061931</a>
+を参考にリサイズとトレーニングデータに分ける</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="n">line</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">label</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+</pre></div>
+
+
+<p>の所がlabelのままだとcompute_mean.pyでエラーになるので</p>
+<div class="highlight"><pre><span></span><span class="n">line</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+</pre></div>
+
+
+<p>に変更する。</p>
+<ul>
+<li>python chainer/examples/imagenet/compute_mean.py --root . train_list.txt</li>
+<li>python chainer ...</li></ul></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
+  <time datetime="2016-10-25T00:00:00+09:00" pubdate>火 25 10月 2016</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+    </address>
   in <a href="https://holrock.github.io/category/lisp.html">lisp</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/lisp.html">lisp</a>, <a href="https://holrock.github.io/tag/lmfs.html">lmfs</a>, <a href="https://holrock.github.io/tag/lispmachine.html">lispmachine</a></p></div>  <div>
     <h2>

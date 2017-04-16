@@ -31,236 +31,16 @@
 
 
       <article>
-        <h1><a href="https://holrock.github.io/biocaml-sam-header.html">Biocaml SAM header</a></h1>
-        <p>ocaml製のバイオインフォマティクス用ライブラリで、
-<a href="http://biocaml.org">biocaml</a>というのがあります。</p>
-<p>BAMファイルを読みたかったので使ってみましたが、
-<code>@HG</code>ヘッダーにある<code>GO</code>(group order)に未対応で読めなかったため、
-ちょっと修正しました。</p>
-<p>opamで落ちてくる0.6.0用です。</p>
-<div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="o">#</span><span class="n">require</span> <span class="s2">&quot;biocaml.unix&quot;</span><span class="o">;;</span>
-<span class="n">utop</span> <span class="o">#</span> <span class="k">open</span> <span class="nn">Biocaml_unix</span><span class="p">.</span><span class="nc">Std</span><span class="o">;;</span>
-<span class="n">utop</span> <span class="o">#</span> <span class="nn">Bam</span><span class="p">.</span><span class="n">read</span> <span class="o">(</span><span class="n">open_in</span> <span class="s2">&quot;a.bam&quot;</span><span class="o">);;</span>
-<span class="o">-</span> <span class="o">:</span> <span class="o">(</span><span class="nn">Bam</span><span class="p">.</span><span class="nn">Header</span><span class="p">.</span><span class="n">t</span> <span class="o">*</span> <span class="nn">Sam</span><span class="p">.</span><span class="n">alignment</span> <span class="nn">Core_kernel</span><span class="p">.</span><span class="nn">Std</span><span class="p">.</span><span class="nn">Or_error</span><span class="p">.</span><span class="n">t</span> <span class="nn">Stream</span><span class="p">.</span><span class="n">t</span><span class="o">)</span>
-<span class="nn">Core_kernel</span><span class="p">.</span><span class="nn">Result_wrapper</span><span class="p">.</span><span class="nn">Result</span><span class="p">.</span><span class="nc">Error</span>
- <span class="o">(</span><span class="s2">&quot;unexpected tag for given header item type&quot;</span> <span class="o">(</span><span class="nc">HD</span> <span class="o">(</span><span class="nc">GO</span><span class="o">)))</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span><span class="gh">diff --git a/lib/unix/sam.ml b/lib/unix/sam.ml</span>
-<span class="gh">index 9bd17ac..2da7b75 100644</span>
-<span class="gd">--- a/lib/unix/sam.ml</span>
-<span class="gi">+++ b/lib/unix/sam.ml</span>
-<span class="gu">@@ -26,9 +26,13 @@ type tag_value = string * string</span>
- type sort_order = [ `Unknown | `Unsorted | `Query_name | `Coordinate ]
- [@@deriving sexp]
-
-<span class="gi">+type group_order = [ `None | `Query | `Reference ]</span>
-<span class="gi">+[@@deriving sexp]</span>
-<span class="gi">+</span>
- type header_line = {
-   version : string;
-   sort_order : sort_order option;
-<span class="gi">+  group_order: group_order option;</span>
- } [@@deriving sexp]
-
- type ref_seq = {
-<span class="gu">@@ -81,6 +85,7 @@ type header_item = [</span>
- type header = {
-   version : string option;
-   sort_order : sort_order option;
-<span class="gi">+  group_order : group_order option;</span>
-   ref_seqs : ref_seq list;
-   read_groups : read_group list;
-   programs : program list;
-<span class="gu">@@ -91,6 +96,7 @@ type header = {</span>
- let empty_header = {
-   version = None;
-   sort_order = None;
-<span class="gi">+  group_order = None;</span>
-   ref_seqs = [];
-   read_groups = [];
-   programs = [];
-<span class="gu">@@ -192,9 +198,9 @@ let parse_header_version s =</span>
-     else
-       err
-
-<span class="gd">-let header_line ~version ?sort_order () =</span>
-<span class="gi">+let header_line ~version ?sort_order ?group_order () =</span>
-   parse_header_version version &gt;&gt;| fun version -&gt;
-<span class="gd">-  {version; sort_order}</span>
-<span class="gi">+  {version; sort_order; group_order}</span>
-
- let ref_seq
-     ~name ~length
-<span class="gu">@@ -269,7 +275,7 @@ let read_group</span>
-
-
- let header
-<span class="gd">-    ?version ?sort_order ?(ref_seqs=[]) ?(read_groups=[])</span>
-<span class="gi">+    ?version ?sort_order ?group_order ?(ref_seqs=[]) ?(read_groups=[])</span>
-     ?(programs=[]) ?(comments=[]) ?(others=[])
-     ()
-     =
-<span class="gu">@@ -302,7 +308,7 @@ let header</span>
-   |&gt; List.filter_map ~f:Fn.id
-   |&gt; function
-      | [] -&gt; Ok {
-<span class="gd">-       version; sort_order; ref_seqs; read_groups;</span>
-<span class="gi">+       version; sort_order; group_order; ref_seqs; read_groups;</span>
-        programs; comments; others;
-      }
-      | errs -&gt; Error (Error.of_list errs)
-<span class="gu">@@ -407,12 +413,20 @@ let parse_sort_order = function</span>
-   | &quot;coordinate&quot; -&gt; Ok `Coordinate
-   | x -&gt; error &quot;invalid sort order&quot; x sexp_of_string
-
-<span class="gi">+let parse_group_order = function</span>
-<span class="gi">+  | &quot;none&quot; -&gt; Ok `None</span>
-<span class="gi">+  | &quot;query&quot; -&gt; Ok `Query</span>
-<span class="gi">+  | &quot;reference&quot; -&gt; Ok `Reference</span>
-<span class="gi">+  | x -&gt; error &quot;invalid group order&quot; x sexp_of_string</span>
-<span class="gi">+</span>
- let parse_header_line tvl =
-   find1 `HD tvl &quot;VN&quot; &gt;&gt;= fun version -&gt;
-   find01 `HD tvl &quot;SO&quot; &gt;&gt;?~
-   parse_sort_order &gt;&gt;= fun sort_order -&gt;
-<span class="gd">-  assert_tags `HD tvl [&quot;VN&quot;; &quot;SO&quot;] &gt;&gt;= fun () -&gt;</span>
-<span class="gd">-  header_line ~version ?sort_order ()</span>
-<span class="gi">+  find01 `HD tvl &quot;GO&quot; &gt;&gt;?~</span>
-<span class="gi">+  parse_group_order &gt;&gt;= fun group_order -&gt;</span>
-<span class="gi">+  assert_tags `HD tvl [&quot;VN&quot;; &quot;SO&quot;; &quot;GO&quot;] &gt;&gt;= fun () -&gt;</span>
-<span class="gi">+  header_line ~version ?sort_order ?group_order ()</span>
-
- let parse_ref_seq tvl =
-   find1 `SQ tvl &quot;SN&quot; &gt;&gt;= fun name -&gt;
-<span class="gu">@@ -844,13 +858,25 @@ let print_sort_order x =</span>
-     | `Coordinate -&gt; &quot;coordinate&quot;
-     )
-
-<span class="gd">-let print_header_line ({version; sort_order} : header_line) =</span>
-<span class="gd">-  sprintf &quot;@HD\tVN:%s%s&quot;</span>
-<span class="gi">+let print_group_order x =</span>
-<span class="gi">+  print_tag_value&#39; &quot;GO&quot;</span>
-<span class="gi">+    (match x with</span>
-<span class="gi">+    | `None -&gt; &quot;none&quot;</span>
-<span class="gi">+    | `Query -&gt; &quot;query&quot;</span>
-<span class="gi">+    | `Reference -&gt; &quot;reference&quot;</span>
-<span class="gi">+    )</span>
-<span class="gi">+</span>
-<span class="gi">+let print_header_line ({version; sort_order; group_order} : header_line) =</span>
-<span class="gi">+  sprintf &quot;@HD\tVN:%s%s%s&quot;</span>
-     version
-     (match sort_order with
-     | None -&gt; &quot;&quot;
-     | Some x -&gt; sprintf &quot;\t%s&quot; (print_sort_order x)
-     )
-<span class="gi">+    (match group_order with</span>
-<span class="gi">+    | None -&gt; &quot;&quot;</span>
-<span class="gi">+    | Some x -&gt; sprintf &quot;\t%s&quot; (print_group_order x)</span>
-<span class="gi">+    )</span>
-
- let print_ref_seq (x:ref_seq) =
-   sprintf &quot;@SQ\tSN:%s\tLN:%d%s%s%s%s&quot;
-<span class="gu">@@ -1011,12 +1037,12 @@ module MakeIO(Future : Future.S) = struct</span>
-           Pipe.junk lines &gt;&gt;= fun () -&gt;
-           parse_header_item line |&gt; function
-           | Error _ as e -&gt; return e
-<span class="gd">-          | Ok (`HD ({version; sort_order} : header_line)) -&gt; (</span>
-<span class="gi">+          | Ok (`HD ({version; sort_order; group_order} : header_line)) -&gt; (</span>
-             match hdr.version with
-             | Some _ -&gt;
-               return (Or_error.error_string &quot;multiple @HD lines not allowed&quot;)
-             | None -&gt;
-<span class="gd">-              loop {hdr with version = Some version; sort_order}</span>
-<span class="gi">+              loop {hdr with version = Some version; sort_order; group_order}</span>
-           )
-           | Ok (`SQ x) -&gt; loop {hdr with ref_seqs = x::hdr.ref_seqs}
-           | Ok (`RG x) -&gt; loop {hdr with read_groups = x::hdr.read_groups}
-<span class="gu">@@ -1028,14 +1054,14 @@ module MakeIO(Future : Future.S) = struct</span>
-     in
-     loop empty_header &gt;&gt;| function
-     | Error _ as e -&gt; e
-<span class="gd">-    | Ok ({version; sort_order; _} as x) -&gt;</span>
-<span class="gi">+    | Ok ({version; sort_order; group_order; _} as x) -&gt;</span>
-       let ref_seqs = List.rev x.ref_seqs in
-       let read_groups = List.rev x.read_groups in
-       let programs = List.rev x.programs in
-       let comments = List.rev x.comments in
-       let others = List.rev x.others in
-       header
-<span class="gd">-        ?version ?sort_order ~ref_seqs ~read_groups</span>
-<span class="gi">+        ?version ?sort_order ?group_order ~ref_seqs ~read_groups</span>
-         ~programs ~comments ~others ()
-
-
-<span class="gu">@@ -1064,7 +1090,7 @@ module MakeIO(Future : Future.S) = struct</span>
-     (match h.version with
-     | None -&gt; Deferred.unit
-     | Some version -&gt;
-<span class="gd">-      write_line w (print_header_line {version; sort_order=h.sort_order})</span>
-<span class="gi">+      write_line w (print_header_line {version; sort_order=h.sort_order; group_order=h.group_order})</span>
-     ) &gt;&gt;= fun () -&gt;
-     Deferred.List.iter h.ref_seqs ~f:(fun x -&gt;
-       write_line w (print_ref_seq x)
-<span class="gh">diff --git a/lib/unix/sam.mli b/lib/unix/sam.mli</span>
-<span class="gh">index 1fbf606..ff4da2a 100644</span>
-<span class="gd">--- a/lib/unix/sam.mli</span>
-<span class="gi">+++ b/lib/unix/sam.mli</span>
-<span class="gu">@@ -28,6 +28,9 @@ type tag_value = private string * string</span>
- type sort_order = [ `Unknown | `Unsorted | `Query_name | `Coordinate ]
- [@@deriving sexp]
-
-<span class="gi">+type group_order = [ `None | `Query | `Reference ]</span>
-<span class="gi">+[@@deriving sexp]</span>
-<span class="gi">+</span>
- (** @HD. A header consists of different types of lines. Confusingly, one of
-     these types is called {i the} &quot;header line&quot;, which is what this
-     type refers to. It does not refer generically to any line within a
-<span class="gu">@@ -35,6 +38,7 @@ type sort_order = [ `Unknown | `Unsorted | `Query_name | `Coordinate ]</span>
- type header_line = private {
-   version : string; (** VN *)
-   sort_order : sort_order option; (** SO *)
-<span class="gi">+  group_order: group_order option; (** GO *)</span>
- } [@@deriving sexp]
-
- (** @SQ. Reference sequence. *)
-<span class="gu">@@ -103,6 +107,7 @@ type header_item = private [&lt;</span>
- type header = private {
-   version : string option;
-   sort_order : sort_order option;
-<span class="gi">+  group_order : group_order option;</span>
-   ref_seqs : ref_seq list;
-   read_groups : read_group list;
-   programs : program list;
-<span class="gu">@@ -229,6 +234,7 @@ include module type of MakeIO(Future_unix)</span>
- val header_line
-   :  version:string
-   -&gt; ?sort_order:sort_order
-<span class="gi">+  -&gt; ?group_order:group_order</span>
-   -&gt; unit
-   -&gt; header_line Or_error.t
-
-<span class="gu">@@ -264,6 +270,7 @@ val read_group</span>
- val header
-    : ?version:string
-   -&gt; ?sort_order:sort_order
-<span class="gi">+  -&gt; ?group_order:group_order</span>
-   -&gt; ?ref_seqs : ref_seq list
-   -&gt; ?read_groups : read_group list
-   -&gt; ?programs : program list
-</pre></div>
-
-
-<div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="nn">Bam</span><span class="p">.</span><span class="n">read</span> <span class="o">(</span><span class="n">open_in</span> <span class="s2">&quot;a.bam&quot;</span><span class="o">);;</span>
-<span class="o">-</span> <span class="o">:</span> <span class="o">(</span><span class="nn">Bam</span><span class="p">.</span><span class="nn">Header</span><span class="p">.</span><span class="n">t</span> <span class="o">*</span> <span class="nn">Sam</span><span class="p">.</span><span class="n">alignment</span> <span class="nn">Core_kernel</span><span class="p">.</span><span class="nn">Std</span><span class="p">.</span><span class="nn">Or_error</span><span class="p">.</span><span class="n">t</span> <span class="nn">Stream</span><span class="p">.</span><span class="n">t</span><span class="o">)</span>
-<span class="nn">Core_kernel</span><span class="p">.</span><span class="nn">Std</span><span class="p">.</span><span class="nn">Or_error</span><span class="p">.</span><span class="n">t</span>                                                                                                                                                                  <span class="o">=</span> <span class="nn">Core_kernel</span><span class="p">.</span><span class="nn">Result_wrapper</span><span class="p">.</span><span class="nn">Result</span><span class="p">.</span><span class="nc">Ok</span> <span class="o">(&lt;</span><span class="n">abstr</span><span class="o">&gt;,</span> <span class="o">&lt;</span><span class="n">abstr</span><span class="o">&gt;)</span> 
-</pre></div>
-
-
-<p>masterブランチはビルド失敗するし、ドキュメントとも乖離が激しいので
-積極的にメンテナンスはされていないようですね。</p>
-<p>追記。プルリクエスト取り込んでもらいました。</p>
+        <h1><a href="https://holrock.github.io/opamtoocaml-4041.html">opamとOCaml 4.04.1</a></h1>
+        <p>OCaml 4.04.1が出ました。
+<a href="https://caml.inria.fr/pub/distrib/ocaml-4.04/notes/Changes">Changes</a></p>
+<p><a href="https://github.com/ocaml/ocaml/pull/894">Set.mapのバグ</a>も修正されているので
+インストールしようと思いましたが、<code>opam update</code>しても<code>opam switch list</code>に出てきません。</p>
+<p>redditでも<a href="https://www.reddit.com/r/ocaml/comments/65bnx5/ocaml_4041_released_dedicated_to_the_memory_of/dg9bach/">話題</a>
+になっています。
+<a href="https://github.com/ocaml/opam-repository/pull/8968">merge</a>したから<code>opam update</code>した？というコメントもありますが、
+実際のところ、<code>opam update</code>が参照しているhttps://opam.ocaml.org/urls.txtに変更が書かれていないため、リストに出てこないようです。</p>
+<p>そうこうしているうちにhomebrewの方に4.04.1が来てたので<code>opam switch system</code>で済ませてしまいました。</p>
       </article>
 
       <hr />
@@ -269,6 +49,12 @@
           <h3>Last posts</h3>
           <ol class="archive">
     
+
+
+      <li>
+<a href="https://holrock.github.io/biocaml-sam-header.html" rel="bookmark" title="Permalink to Biocaml SAM header">Biocaml SAM header</a>
+  <time datetime="2017-02-21T00:00:00+09:00" pubdate>火 21 2月 2017</time>
+<p class="tags">tags: <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></a>      </li>
 
 
       <li>
@@ -295,10 +81,6 @@
 <p class="tags">tags: <a href="https://holrock.github.io/tag/lisp.html">lisp</a><a href="https://holrock.github.io/tag/allegrograph.html">allegrograph</a><a href="https://holrock.github.io/tag/ruby.html">ruby</a><a href="https://holrock.github.io/tag/cattoy.html">cattoy</a></p></a>      </li>
 
 
-      <li>
-<a href="https://holrock.github.io/allegrograph-sono1.html" rel="bookmark" title="Permalink to AllegroGraph その1">AllegroGraph その1</a>
-  <time datetime="2016-11-03T00:00:00+09:00" pubdate>木 03 11月 2016</time>
-<p class="tags">tags: <a href="https://holrock.github.io/tag/lisp.html">lisp</a><a href="https://holrock.github.io/tag/allegrograph.html">allegrograph</a></p></a>      </li>
 
 
 

@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/all.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2017-02-21T00:00:00+09:00</updated><entry><title>Biocaml SAM header</title><link href="https://holrock.github.io/biocaml-sam-header.html" rel="alternate"></link><published>2017-02-21T00:00:00+09:00</published><updated>2017-02-21T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-02-21:biocaml-sam-header.html</id><summary type="html">&lt;p&gt;ocaml製のバイオインフォマティクス用ライブラリで、
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/all.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2017-04-16T00:00:00+09:00</updated><entry><title>opamとOCaml 4.04.1</title><link href="https://holrock.github.io/opamtoocaml-4041.html" rel="alternate"></link><published>2017-04-16T00:00:00+09:00</published><updated>2017-04-16T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-04-16:opamtoocaml-4041.html</id><summary type="html">&lt;p&gt;OCaml 4.04.1が出ました。
+&lt;a href="https://caml.inria.fr/pub/distrib/ocaml-4.04/notes/Changes"&gt;Changes&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/ocaml/ocaml/pull/894"&gt;Set.mapのバグ&lt;/a&gt;も修正されているので
+インストールしようと思いましたが、&lt;code&gt;opam update&lt;/code&gt;しても&lt;code&gt;opam switch list&lt;/code&gt;に出てきません。&lt;/p&gt;
+&lt;p&gt;redditでも&lt;a href="https://www.reddit.com/r/ocaml/comments/65bnx5/ocaml_4041_released_dedicated_to_the_memory_of/dg9bach/"&gt;話題&lt;/a&gt;
+になっています。
+&lt;a href="https://github.com/ocaml/opam-repository/pull/8968"&gt;merge&lt;/a&gt;したから&lt;code&gt;opam update&lt;/code&gt;した？というコメントもありますが、
+実際のところ、&lt;code&gt;opam update&lt;/code&gt;が参照しているhttps://opam.ocaml.org/urls.txtに変更が書かれていないため、リストに出てこないようです。&lt;/p&gt;
+&lt;p&gt;そうこうしているうちにhomebrewの方に4.04.1が来てたので&lt;code&gt;opam switch system&lt;/code&gt;で済ませてしまいました。&lt;/p&gt;</summary><category term="ocaml"></category></entry><entry><title>Biocaml SAM header</title><link href="https://holrock.github.io/biocaml-sam-header.html" rel="alternate"></link><published>2017-02-21T00:00:00+09:00</published><updated>2017-02-21T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-02-21:biocaml-sam-header.html</id><summary type="html">&lt;p&gt;ocaml製のバイオインフォマティクス用ライブラリで、
 &lt;a href="http://biocaml.org"&gt;biocaml&lt;/a&gt;というのがあります。&lt;/p&gt;
 &lt;p&gt;BAMファイルを読みたかったので使ってみましたが、
 &lt;code&gt;@HG&lt;/code&gt;ヘッダーにある&lt;code&gt;GO&lt;/code&gt;(group order)に未対応で読めなかったため、
