@@ -1,6 +1,7 @@
-title: opamとOCaml 4.04.1
+title: OCaml 4.04.1
 date: 2017-04-16
 tags: ocaml
+
 
 OCaml 4.04.1が出ました。
 [Changes](https://caml.inria.fr/pub/distrib/ocaml-4.04/notes/Changes)
