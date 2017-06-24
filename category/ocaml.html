@@ -32,6 +32,34 @@
 
 <article class="summary">
 <div class="metadata">
+  <time datetime="2017-06-25T00:00:00+09:00" pubdate>日 25 6月 2017</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+    </address>
+  in <a href="https://holrock.github.io/category/ocaml.html">ocaml</a>
+<p class="tags">tagged <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></div>  <div>
+    <h2>
+      <a href="https://holrock.github.io/cve-2017-9772nocui-ruo-xing.html" rel="bookmark" title="Permalink to CVE-2017-9772の脆弱性">CVE-2017-9772の脆弱性</a>
+    </h2>
+    <p><p>OCaml4.04.0,4.04.1にローカル権限昇格の脆弱性があったので4.04.2が出てます。</p>
+<p><a href="https://caml.inria.fr/mantis/view.php?id=7557">0007557: local privilege escalation issue with ocaml binaries</a></p>
+<p>影響を受けるのは、以下の状況ですが、かなり限定的だと思います。詳しくは上のmantisの方に再現手順があります。</p>
+<ol>
+<li>setuidされたocamlコンパイラで生成された実行ファイルに対し</li>
+<li><code>CAML_CPLUGINS, CAML_NATIVE_CPLUGINS, CAML_BYTE_CPLUGINS</code>環境変数に細工された共有ライブラリへのパスを設定された場合</li>
+</ol>
+<p>脆弱性が埋め込まれた経緯は、</p>
+<ul>
+<li>4.04.0からocamlランタイムに<code>CAML_CPLUGINS</code>環境変数に設定された共有ライブラリを自動でロードする機能が追加されたが(<a href="https://github.com/ocaml/ocaml/pull/668">プルリク</a>)、
+ドキュメント化されずデフォルトで有効な状態だった。</li>
+<li>環境変数の読み込み時に、<a href="https://linuxjm.osdn.jp/html/LDP_man-pages/man3/getenv.3.html">secure_getenv</a>のようなset-user-IDチェックが存在しなかったため、
+素通ししてしまった。</li>
+</ul>
+<p>対策として、<code>secure_getenv</code>がある場合は使用して、なければ自前でチェックするようにしたようです。</p>
+<p><code>Sys.getenv</code>と<code>Unix.getenv</code>も変更の影響を受けるので、以前の動作が欲しい場合は<code>Sys.unsafe_getenv ...</code></p></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
   <time datetime="2017-04-16T00:00:00+09:00" pubdate>日 16 4月 2017</time>
     <address class="vcard author">
       by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>

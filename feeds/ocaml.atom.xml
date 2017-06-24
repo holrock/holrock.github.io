@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/ocaml.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2017-04-16T00:00:00+09:00</updated><entry><title>OCaml 4.04.1</title><link href="https://holrock.github.io/ocaml-4041.html" rel="alternate"></link><published>2017-04-16T00:00:00+09:00</published><updated>2017-04-16T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-04-16:ocaml-4041.html</id><summary type="html">&lt;p&gt;OCaml 4.04.1が出ました。
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/ocaml.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2017-06-25T00:00:00+09:00</updated><entry><title>CVE-2017-9772の脆弱性</title><link href="https://holrock.github.io/cve-2017-9772nocui-ruo-xing.html" rel="alternate"></link><published>2017-06-25T00:00:00+09:00</published><updated>2017-06-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-06-25:cve-2017-9772nocui-ruo-xing.html</id><summary type="html">&lt;p&gt;OCaml4.04.0,4.04.1にローカル権限昇格の脆弱性があったので4.04.2が出てます。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://caml.inria.fr/mantis/view.php?id=7557"&gt;0007557: local privilege escalation issue with ocaml binaries&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;影響を受けるのは、以下の状況ですが、かなり限定的だと思います。詳しくは上のmantisの方に再現手順があります。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;setuidされたocamlコンパイラで生成された実行ファイルに対し&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;CAML_CPLUGINS, CAML_NATIVE_CPLUGINS, CAML_BYTE_CPLUGINS&lt;/code&gt;環境変数に細工された共有ライブラリへのパスを設定された場合&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;脆弱性が埋め込まれた経緯は、&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;4.04.0からocamlランタイムに&lt;code&gt;CAML_CPLUGINS&lt;/code&gt;環境変数に設定された共有ライブラリを自動でロードする機能が追加されたが(&lt;a href="https://github.com/ocaml/ocaml/pull/668"&gt;プルリク&lt;/a&gt;)、
+ドキュメント化されずデフォルトで有効な状態だった。&lt;/li&gt;
+&lt;li&gt;環境変数の読み込み時に、&lt;a href="https://linuxjm.osdn.jp/html/LDP_man-pages/man3/getenv.3.html"&gt;secure_getenv&lt;/a&gt;のようなset-user-IDチェックが存在しなかったため、
+素通ししてしまった。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;対策として、&lt;code&gt;secure_getenv&lt;/code&gt;がある場合は使用して、なければ自前でチェックするようにしたようです。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Sys.getenv&lt;/code&gt;と&lt;code&gt;Unix.getenv&lt;/code&gt;も変更の影響を受けるので、以前の動作が欲しい場合は&lt;code&gt;Sys.unsafe_getenv&lt;/code&gt; が使用できます。&lt;/p&gt;
+&lt;p&gt;また、ocamlコンパイラ自体のビルド時に&lt;code&gt;-no-cplugins&lt;/code&gt;フラグを指定するとこの機能自体を無効化できます。
+対策でuidはチェックされるようになりましたが、
+実行時に環境変数に指定されたファイルが自動ロードされてランタイムを変更できてしまう、
+というのはどうも筋が良くない気がします。無効化しておいたほうが無難な印象です。&lt;/p&gt;</summary><category term="ocaml"></category></entry><entry><title>OCaml 4.04.1</title><link href="https://holrock.github.io/ocaml-4041.html" rel="alternate"></link><published>2017-04-16T00:00:00+09:00</published><updated>2017-04-16T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-04-16:ocaml-4041.html</id><summary type="html">&lt;p&gt;OCaml 4.04.1が出ました。
 &lt;a href="https://caml.inria.fr/pub/distrib/ocaml-4.04/notes/Changes"&gt;Changes&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://github.com/ocaml/ocaml/pull/894"&gt;Set.mapのバグ&lt;/a&gt;も修正されているので
 インストールしようと思いましたが、&lt;code&gt;opam update&lt;/code&gt;しても&lt;code&gt;opam switch list&lt;/code&gt;に出てきません。&lt;/p&gt;
