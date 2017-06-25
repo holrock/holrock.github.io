@@ -16,6 +16,7 @@
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;p&gt;https://github.com/ocaml/ocaml/pull/668/files#diff-867452b8e2d255275b14ba707321e78cR569&lt;/p&gt;
 &lt;p&gt;脆弱性が埋め込まれた経緯は、&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;4.04.0からocamlランタイムに&lt;code&gt;CAML_CPLUGINS&lt;/code&gt;環境変数に設定された共有ライブラリを自動でロードする機能が追加されたが(&lt;a href="https://github.com/ocaml/ocaml/pull/668"&gt;プルリク&lt;/a&gt;)、
