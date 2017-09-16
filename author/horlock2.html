@@ -32,6 +32,31 @@
 
 <article class="summary">
 <div class="metadata">
+  <time datetime="2016-10-31T00:00:00+09:00" pubdate>月 31 10月 2016</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+    </address>
+  in <a href="https://holrock.github.io/category/cattoy.html">cattoy</a>
+<p class="tags">tagged <a href="https://holrock.github.io/tag/omac.html">omac</a>, <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a>, <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a></p></div>  <div>
+    <h2>
+      <a href="https://holrock.github.io/cattoynihua-xiang-proxyworu-remashita.html" rel="bookmark" title="Permalink to cattoyに画像proxyを入れました">cattoyに画像proxyを入れました</a>
+    </h2>
+    <p><p>cattoy.infoでは外部画像を結構な数表示しています。
+外部画像にはhttpでしかアクセスできないものもあり、せっかくwww.cattoy.infoが
+https接続でも警告が出てしまいます。</p>
+<p>ちょうど、次の記事
+<a href="http://qiita.com/MintoAoyama/items/6cd71b84e6225f86f819">Camoで実現するセキュアな画像プロキシサーバ</a>
+を見かけたので</p>
+<p>camoクローンをocamlで作ってみました。
+<a href="https://github.com/holrock/omac">https://github.com/holrock/omac</a></p>
+<p>まだおもちゃみたいなものですが、一応本番で動いています。</p>
+<p>構成は https -&gt; nginx(cacheもここで) -&gt; http -&gt; omac -&gt; [画像server]</p>
+<p>今のままだとomacが落ちてもnginx側のキャッシュが有効で気がつかないことがあるようなので、
+そのうちなんとかしないと。</p>
+<p>ほかにもデーモン化やログ管理なんかもやらないといけないのですが、なんとなく動いてしまうと満足してしまいますね。</p></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
   <time datetime="2016-10-28T00:00:00+09:00" pubdate>金 28 10月 2016</time>
     <address class="vcard author">
       by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
@@ -46,7 +71,7 @@
 <code>(Failure "No SSL or TLS support compiled into Conduit")</code>
 とエラーになった</p>
 <h1>対策</h1>
-<div class="highlight"><pre><span></span><span class="x">CPPFLAGS=&quot;-I</span><span class="p">$</span><span class="nv">HOME</span><span class="x">/homebrew/opt/openssl/include&quot; opam install ssl</span>
+<div class="highlight"><pre><span></span>CPPFLAGS=&quot;-I$HOME/homebrew/opt/openssl/include&quot; opam install ssl
 </pre></div>
 
 
@@ -87,7 +112,7 @@ cattoyに登録されている画像を集めてきて手作業で分類、学�
 <p>に変更する。</p>
 <ul>
 <li>python chainer/examples/imagenet/compute_mean.py --root . train_list.txt</li>
-<li>python chainer ...</li></ul></p>
+<li>python chainer …</li></ul></p>
   </div>
 </article><article class="summary">
 <div class="metadata">
@@ -120,7 +145,7 @@ unlambda.comからCADRのイメージとソースが落とせるので中身を�
 </ul>
 <div class="highlight"><pre><span></span><span class="gd">--- a/lmfs.c    2006-07-11 07:01:32.000000000 +0900</span>
 <span class="gi">+++ b/lmfs.c    2016-09-18 22:24:12.000000000 +0900</span>
-<span class="gu">@@ -127,6 +127,7 ...</span></pre></div></p>
+<span class="gu">@@ -127,6 +127,7 …</span></pre></div></p>
   </div>
 </article><article class="summary">
 <div class="metadata">
@@ -150,7 +175,7 @@ unlambda.comからCADRのイメージとソースが落とせるので中身を�
 built by gcc 4.4.7 20120313 (Red Hat 4.4.7-17) (GCC) 
 built with LibreSSL 2.5.0
 TLS SNI support enabled
-configure arguments: --prefix=/opt/nginx-1 ...</pre></div></p>
+configure arguments: --prefix=/opt/nginx-1 …</pre></div></p>
   </div>
 </article>
 <div class="pagination">
@@ -169,6 +194,7 @@ configure arguments: --prefix=/opt/nginx-1 ...</pre></div></p>
 	              <li ><a href="https://holrock.github.io/category/lisp.html">lisp</a></li>
 	              <li ><a href="https://holrock.github.io/category/ocaml.html">ocaml</a></li>
 	              <li ><a href="https://holrock.github.io/category/python.html">python</a></li>
+	              <li ><a href="https://holrock.github.io/category/server.html">server</a></li>
 	              <li ><a href="https://holrock.github.io/category/z-machine.html">z-machine</a></li>
 	          </ul>
 	        </nav>
@@ -187,7 +213,7 @@ configure arguments: --prefix=/opt/nginx-1 ...</pre></div></p>
 
       <footer>
 		<p role="contentinfo">
-		  © 2016 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+		  © 2013 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
     	</p>
 
 	  </footer>	

@@ -32,6 +32,42 @@
 
 <article class="summary">
 <div class="metadata">
+  <time datetime="2017-09-16T00:00:00+09:00" pubdate>土 16 9月 2017</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+    </address>
+  in <a href="https://holrock.github.io/category/server.html">server</a>
+<p class="tags">tagged <a href="https://holrock.github.io/tag/server.html">server</a></p></div>  <div>
+    <h2>
+      <a href="https://holrock.github.io/intanetsutonitsunagaranailinuxkurasutawoyun-yong-suru.html" rel="bookmark" title="Permalink to インターネットにつながらないLinuxクラスターを運用する">インターネットにつながらないLinuxクラスターを運用する</a>
+    </h2>
+    <p><h1>はしがき</h1>
+<p>ここ最近は小規模なLinuxクラスターの運用管理もやっています。</p>
+<p>事情よりクラスター自体がインターネットに接続できないため、通常に比べ管理が面倒だったり、外部サービスを利用できないため不便なことが多々あります。
+そんな環境で色々やってるので書いておきます。</p>
+<p>環境はCentOS7です。</p>
+<h1>構成管理</h1>
+<p>ansibleを使用しています。クライアント側にインストールの必要が無いため、管理用端末のみインターネットに接続してインストールすればいいので楽です。</p>
+<p>ansible用ユーザーを作って公開鍵認証にしていますが、初回のユーザー作成と鍵配布もansibleで行うため、
+そのときだけは<code>remote_user: root</code>と<code>become_method: su</code>を使ってrootパスワードを使用しています。</p>
+<div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
+  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+  <span class="l l-Scalar l-Scalar-Plain">become_method</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">su</span>
+  <span class="l l-Scalar l-Scalar-Plain">remote_user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
+      <span class="l l-Scalar l-Scalar-Plain">user</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
+        <span class="l l-Scalar l-Scalar-Plain">append</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner ssh key</span>
+      <span class="l l-Scalar l-Scalar-Plain">authorized_key</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
+        <span class="l l-Scalar l-Scalar-Plain">key</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">lookup(&#39;file&#39;,</span><span class="nv"> </span><span class="s">&#39;../../ssh/id_rsa.pub&#39;)</span><span class="nv"> </span><span class="s">}}&quot;</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name …</span></pre></div></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
   <time datetime="2017-06-25T00:00:00+09:00" pubdate>日 25 6月 2017</time>
     <address class="vcard author">
       by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
@@ -53,7 +89,7 @@
 この件とは直接関係ありませんが環境変数から注入可にしては強力すぎるように見えます。</p>
 <div class="highlight"><pre><span></span><span class="cm">/* Load dynamic plugins indicated in the CAML_CPLUGINS environment</span>
 <span class="cm">   variable. These plugins can be used to set currently existing</span>
-<span class="cm">   hooks, such as ...</span></pre></div></p>
+<span class="cm">   hooks, such as …</span></pre></div></p>
   </div>
 </article><article class="summary">
 <div class="metadata">
@@ -98,7 +134,7 @@
 <span class="n">utop</span> <span class="o">#</span> <span class="nn">Bam</span><span class="p">.</span><span class="n">read</span> <span class="o">(</span><span class="n">open_in</span> <span class="s2">&quot;a.bam&quot;</span><span class="o">);;</span>
 <span class="o">-</span> <span class="o">:</span> <span class="o">(</span><span class="nn">Bam</span><span class="p">.</span><span class="nn">Header</span><span class="p">.</span><span class="n">t</span> <span class="o">*</span> <span class="nn">Sam</span><span class="p">.</span><span class="n">alignment</span> <span class="nn">Core_kernel</span><span class="p">.</span><span class="nn">Std</span><span class="p">.</span><span class="nn">Or_error</span><span class="p">.</span><span class="n">t</span> <span class="nn">Stream</span><span class="p">.</span><span class="n">t</span><span class="o">)</span>
 <span class="nn">Core_kernel</span><span class="p">.</span><span class="nn">Result_wrapper</span><span class="p">.</span><span class="nn">Result</span><span class="p">.</span><span class="nc">Error</span>
- <span class="o">(</span><span class="s2">&quot;unexpected tag for given header item type ...</span></pre></div></p>
+ <span class="o">(</span><span class="s2">&quot;unexpected tag for given header item type …</span></pre></div></p>
   </div>
 </article><article class="summary">
 <div class="metadata">
@@ -132,7 +168,7 @@ Infocom社によって作られました。</p>
 <p>ZILの情報は<a href="http://www.ifwiki.org/index.php/ZIL">ZIL Manual</a>などにあります。</p>
 <p>この後に出てくるソースコードは、ZIL Manualからの引用になります。</p>
 <h3>BASIC</h3>
-<p>オリジナルのZorkは MIT Design Language(MDL)で書かれていたとあり、ZILにもその影響が強く見られます ...</p></p>
+<p>オリジナルのZorkは MIT Design Language(MDL)で書かれていたとあり、ZILにもその影響が強く見られます …</p></p>
   </div>
 </article><article class="summary">
 <div class="metadata">
@@ -164,7 +200,7 @@ Infocom社によって作られました。</p>
       <span class="kn">proxy_cache</span> <span class="s">TLSIMG</span><span class="p">;</span>
       <span class="kn">proxy_cache_key</span> <span class="s">&quot;</span><span class="nv">$host$document_uri$is_args&amp;$arg_w&amp;$arg_h&amp;$arg_q&quot;</span><span class="p">;</span>
       <span class="kn">proxy_cache_lock</span> <span class="no">on</span><span class="p">;</span>
-      <span class="kn">proxy_cache_valid ...</span></pre></div></p>
+      <span class="kn">proxy_cache_valid …</span></pre></div></p>
   </div>
 </article><article class="summary">
 <div class="metadata">
@@ -200,7 +236,7 @@ Infocom社によって作られました。</p>
 <ul>
 <li>mlispができたらslimeの設定を通します</li>
 </ul>
-<div class="highlight"><pre><span></span>(setq inferior-lisp-program &quot;/Applications/AllegroCLexpress.app/Contents/Resources ...</pre></div></p>
+<div class="highlight"><pre><span></span>(setq inferior-lisp-program &quot;/Applications/AllegroCLexpress.app/Contents/Resources …</pre></div></p>
   </div>
 </article><article class="summary">
 <div class="metadata">
@@ -224,10 +260,10 @@ Infocom社によって作られました。</p>
 
 <p>でファイルに吐き出します。
 なかみはこんなかんじです。</p>
-<div class="highlight"><pre><span></span><span class="k">@prefix</span> <span class="nt">schema</span><span class="o">:</span> <span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">schema</span><span class="nc">.org</span><span class="o">/&gt;</span> <span class="o">.</span>
-<span class="k">@prefix</span> <span class="nt">xsd</span><span class="o">:</span> <span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">www</span><span class="nc">.w3.org</span><span class="o">/</span><span class="nt">2001</span><span class="o">/</span><span class="nt">XMLSchema</span><span class="err">#</span><span class="o">&gt;</span> <span class="o">.</span>
+<div class="highlight"><pre><span></span><span class="p">@</span><span class="k">prefix</span> <span class="nt">schema</span><span class="o">:</span> <span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">schema</span><span class="p">.</span><span class="nc">org</span><span class="o">/&gt;</span> <span class="o">.</span>
+<span class="p">@</span><span class="k">prefix</span> <span class="nt">xsd</span><span class="o">:</span> <span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">www</span><span class="p">.</span><span class="nc">w3</span><span class="p">.</span><span class="nc">org</span><span class="o">/</span><span class="nt">2001</span><span class="o">/</span><span class="nt">XMLSchema</span><span class="err">#</span><span class="o">&gt;</span> <span class="o">.</span>
 
-<span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">www</span><span class="nc">.cattoy.info</span><span class="o">/</span><span class="nt">histories ...</span></pre></div></p>
+<span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">www</span><span class="p">.</span><span class="nc">cattoy</span><span class="p">.</span><span class="nc">info</span><span class="o">/</span><span class="nt">histories …</span></pre></div></p>
   </div>
 </article><article class="summary">
 <div class="metadata">
@@ -259,7 +295,7 @@ Infocom社によって作られました。</p>
 <li><a href="http://franz.com/agraph/support/documentation/current/agraph-quick-start.html">Quick-Start</a>にしたがって</li>
 <li>Create new repositoryにkennedyと入力しcreate</li>
 <li>http://localhost:10034/repositories/kennedyを開く</li>
-<li>from a server-side ...</li></ul></p>
+<li>from a server-side …</li></ul></p>
   </div>
 </article><article class="summary">
 <div class="metadata">
@@ -276,32 +312,7 @@ Infocom社によって作られました。</p>
 <p>その後xcode8.1のインストールをして、omacのビルドをするとlibcryptoが見つからずエラーになりました。</p>
 <div class="highlight"><pre><span></span><span class="c">% ocaml setup.ml -build </span>
 <span class="n">Finished</span><span class="p">,</span> <span class="mi">0</span> <span class="n">targets</span> <span class="p">(</span><span class="mi">0</span> <span class="n">cached</span><span class="p">)</span> <span class="n">in</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.</span>
-<span class="o">+</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">hoge</span><span class="o">/</span><span class="p">.</span><span class="n">opam</span><span class="o">/</span><span class="mf">4.03</span><span class="p">.</span><span class="mi">0</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">ocamlfind</span> <span class="n">ocamlopt</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">linkpkg</span> <span class="o">-</span><span class="n">package</span> <span class="n">cohttp</span> <span class="o">-</span><span class="n">package</span> <span class="n">cohttp</span><span class="p">.</span><span class="n">lwt</span> <span class="o">-</span><span class="n">package</span> <span class="n">conduit</span> <span class="o">-</span><span class="n">package</span> <span class="n">cryptokit</span> <span class="o">-</span><span class="n">package</span> <span class="n">lwt</span> <span class="o">-</span><span class="n">package</span> <span class="n">str</span> <span class="n">src</span><span class="o">/</span><span class="n">omac</span><span class="p">.</span><span class="n">cmx</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="p">.</span><span class="n">cmx</span> <span class="o">-</span><span class="n">o</span> <span class="n">src</span><span class="o">/</span><span class="n">main ...</span></pre></div></p>
-  </div>
-</article><article class="summary">
-<div class="metadata">
-  <time datetime="2016-10-31T00:00:00+09:00" pubdate>月 31 10月 2016</time>
-    <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
-    </address>
-  in <a href="https://holrock.github.io/category/cattoy.html">cattoy</a>
-<p class="tags">tagged <a href="https://holrock.github.io/tag/omac.html">omac</a>, <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a>, <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a></p></div>  <div>
-    <h2>
-      <a href="https://holrock.github.io/cattoynihua-xiang-proxyworu-remashita.html" rel="bookmark" title="Permalink to cattoyに画像proxyを入れました">cattoyに画像proxyを入れました</a>
-    </h2>
-    <p><p>cattoy.infoでは外部画像を結構な数表示しています。
-外部画像にはhttpでしかアクセスできないものもあり、せっかくwww.cattoy.infoが
-https接続でも警告が出てしまいます。</p>
-<p>ちょうど、次の記事
-<a href="http://qiita.com/MintoAoyama/items/6cd71b84e6225f86f819">Camoで実現するセキュアな画像プロキシサーバ</a>
-を見かけたので</p>
-<p>camoクローンをocamlで作ってみました。
-<a href="https://github.com/holrock/omac">https://github.com/holrock/omac</a></p>
-<p>まだおもちゃみたいなものですが、一応本番で動いています。</p>
-<p>構成は https -&gt; nginx(cacheもここで) -&gt; http -&gt; omac -&gt; [画像server]</p>
-<p>今のままだとomacが落ちてもnginx側のキャッシュが有効で気がつかないことがあるようなので、
-そのうちなんとかしないと。</p>
-<p>ほかにもデーモン化やログ管理なんかもやらないといけないのですが、なんとなく動いてしまうと満足してしまいますね。</p></p>
+<span class="o">+</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">hoge</span><span class="o">/</span><span class="p">.</span><span class="n">opam</span><span class="o">/</span><span class="mf">4.03</span><span class="p">.</span><span class="mi">0</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">ocamlfind</span> <span class="n">ocamlopt</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">linkpkg</span> <span class="o">-</span><span class="n">package</span> <span class="n">cohttp</span> <span class="o">-</span><span class="n">package</span> <span class="n">cohttp</span><span class="p">.</span><span class="n">lwt</span> <span class="o">-</span><span class="n">package</span> <span class="n">conduit</span> <span class="o">-</span><span class="n">package</span> <span class="n">cryptokit</span> <span class="o">-</span><span class="n">package</span> <span class="n">lwt</span> <span class="o">-</span><span class="n">package</span> <span class="n">str</span> <span class="n">src</span><span class="o">/</span><span class="n">omac</span><span class="p">.</span><span class="n">cmx</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="p">.</span><span class="n">cmx</span> <span class="o">-</span><span class="n">o</span> <span class="n">src</span><span class="o">/</span><span class="n">main …</span></pre></div></p>
   </div>
 </article>
 <div class="pagination">
@@ -320,6 +331,7 @@ https接続でも警告が出てしまいます。</p>
 	              <li ><a href="https://holrock.github.io/category/lisp.html">lisp</a></li>
 	              <li ><a href="https://holrock.github.io/category/ocaml.html">ocaml</a></li>
 	              <li ><a href="https://holrock.github.io/category/python.html">python</a></li>
+	              <li ><a href="https://holrock.github.io/category/server.html">server</a></li>
 	              <li ><a href="https://holrock.github.io/category/z-machine.html">z-machine</a></li>
 	          </ul>
 	        </nav>
@@ -338,7 +350,7 @@ https接続でも警告が出てしまいます。</p>
 
       <footer>
 		<p role="contentinfo">
-		  © 2016 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+		  © 2013 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
     	</p>
 
 	  </footer>	

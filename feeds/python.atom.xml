@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/python.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2016-10-25T00:00:00+09:00</updated><entry><title>chainerで分類(できてない)</title><link href="https://holrock.github.io/chainerdefen-lei-dekitenai.html" rel="alternate"></link><published>2016-10-25T00:00:00+09:00</published><updated>2016-10-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-25:chainerdefen-lei-dekitenai.html</id><summary type="html">&lt;p&gt;cattoyでおもちゃの分類を自動でやりたくてchainerを試しました。
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug - python</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/python.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2016-10-25T00:00:00+09:00</updated><entry><title>chainerで分類(できてない)</title><link href="https://holrock.github.io/chainerdefen-lei-dekitenai.html" rel="alternate"></link><published>2016-10-25T00:00:00+09:00</published><updated>2016-10-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-25:/chainerdefen-lei-dekitenai.html</id><summary type="html">&lt;p&gt;cattoyでおもちゃの分類を自動でやりたくてchainerを試しました。
+cattoyに登録されている画像を集めてきて手作業で分類、学習をやってみましたが、
+やはり分類が面倒なのと、素材不足で全然だめでした。&lt;/p&gt;
+&lt;p&gt;やったことをメモしておきます。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;pip install chainer pillow &lt;/li&gt;
+&lt;li&gt;画像の数が多い猫じゃらし、爪とぎ、その他で分類してみる。images/nekojarashi images/tsumetogi images/otherとフォルダごとに分類&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://ksksksks2.hatenadiary.jp/entry/20160327/1459061931"&gt;http://ksksksks2.hatenadiary.jp/entry/20160327/1459061931&lt;/a&gt;
+を参考にリサイズとトレーニングデータに分ける&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;label&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;の所がlabelのままだとcompute_mean.pyでエラーになるので&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;に変更する。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;python chainer/examples/imagenet/compute_mean.py --root . train_list.txt&lt;/li&gt;
+&lt;li&gt;python chainer …&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;p&gt;cattoyでおもちゃの分類を自動でやりたくてchainerを試しました。
 cattoyに登録されている画像を集めてきて手作業で分類、学習をやってみましたが、
 やはり分類が面倒なのと、素材不足で全然だめでした。&lt;/p&gt;
 &lt;p&gt;やったことをメモしておきます。&lt;/p&gt;
@@ -39,4 +61,4 @@ cattoyに登録されている画像を集めてきて手作業で分類、学�
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;と、まあ微妙な感じでした&lt;/p&gt;</summary><category term="chainer"></category><category term="python"></category></entry></feed>
+&lt;p&gt;と、まあ微妙な感じでした&lt;/p&gt;</content><category term="chainer"></category><category term="python"></category></entry></feed>

@@ -6,7 +6,7 @@
 	<meta name="author" content="horlock">
 	
 
-	<meta name="description" content="前回、画像プロキシを使って外部画像を読み込むようにしました。 画像サイズが大きいものもあり、PageSpeed Insightsに怒られることがあります。 今回は画像をキャッシュしつつリサイズします。 参考 すべて同一サーバーで運用しています。 tlsimg.cattoy.info 画像フロントサーバー httpsで待ち受けるサーバーです。ここが入り口になります。 キャッシュもここでします。 proxy_cache_keyに使用する$arg_w, $arg_h, arg_qがリサイズパラメータになります。 それぞれ幅、高さ、jpeg qualityです。 バックエンドがomacなので、$document_uriにhmacのキーを含んでいるため、サイズ指定以外は$document_uri があればユニークになります。 server { server_name tlsimg.cattoy.info; location / { proxy_pass http://localhost:8889; proxy_cache TLSIMG; proxy_cache_key "$host$document_uri$is_args&$arg_w&$arg_h&$arg_q"; proxy_cache_lock on; proxy_cache_valid ...">
+	<meta name="description" content="前回、画像プロキシを使って外部画像を読み込むようにしました。 画像サイズが大きいものもあり、PageSpeed Insightsに怒られることがあります。 今回は画像をキャッシュしつつリサイズします。 参考 すべて同一サーバーで運用しています。 tlsimg.cattoy.info 画像フロントサーバー httpsで待ち受けるサーバーです。ここが入り口になります。 キャッシュもここでします。 proxy_cache_keyに使用する$arg_w, $arg_h, arg_qがリサイズパラメータになります。 それぞれ幅、高さ、jpeg qualityです。 バックエンドがomacなので、$document_uriにhmacのキーを含んでいるため、サイズ指定以外は$document_uri があればユニークになります。 server { server_name tlsimg.cattoy.info; location / { proxy_pass http://localhost:8889; proxy_cache TLSIMG; proxy_cache_key "$host$document_uri$is_args&$arg_w&$arg_h&$arg_q"; proxy_cache_lock on; proxy_cache_valid …">
 
 
 	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
@@ -120,7 +120,7 @@
 <p>最後に画像プロキシ側の設定です。
 ここは特に変わっていません。</p>
 <div class="highlight"><pre><span></span>  <span class="nt">upstream</span> <span class="nt">omac</span> <span class="p">{</span>
-      <span class="n">server</span> <span class="m">127</span><span class="o">.</span><span class="m">0</span><span class="o">.</span><span class="m">0</span><span class="o">.</span><span class="m">1</span><span class="o">:</span><span class="m">8999</span><span class="p">;</span>
+      <span class="err">server</span> <span class="err">127.0.0.1:8999</span><span class="p">;</span>
   <span class="p">}</span>
 </pre></div>
 
@@ -151,6 +151,7 @@
 	              <li ><a href="https://holrock.github.io/category/lisp.html">lisp</a></li>
 	              <li ><a href="https://holrock.github.io/category/ocaml.html">ocaml</a></li>
 	              <li ><a href="https://holrock.github.io/category/python.html">python</a></li>
+	              <li ><a href="https://holrock.github.io/category/server.html">server</a></li>
 	              <li ><a href="https://holrock.github.io/category/z-machine.html">z-machine</a></li>
 	          </ul>
 	        </nav>
@@ -169,7 +170,7 @@
 
       <footer>
 		<p role="contentinfo">
-		  © 2016 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+		  © 2013 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
     	</p>
 
 	  </footer>	

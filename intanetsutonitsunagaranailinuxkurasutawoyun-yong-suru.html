@@ -2,9 +2,12 @@
 <html lang="">	
 <head>
 	<meta charset="utf-8"/>
-	<title>Starbug</title>	
+	<title>インターネットにつながらないLinuxクラスターを運用する - Starbug</title>	
 	<meta name="author" content="horlock">
 	
+
+	<meta name="description" content="はしがき ここ最近は小規模なLinuxクラスターの運用管理もやっています。 事情よりクラスター自体がインターネットに接続できないため、通常に比べ管理が面倒だったり、外部サービスを利用できないため不便なことが多々あります。 そんな環境で色々やってるので書いておきます。 環境はCentOS7です。 構成管理 ansibleを使用しています。クライアント側にインストールの必要が無いため、管理用端末のみインターネットに接続してインストールすればいいので楽です。 ansible用ユーザーを作って公開鍵認証にしていますが、初回のユーザー作成と鍵配布もansibleで行うため、 そのときだけはremote_user: rootとbecome_method: suを使ってrootパスワードを使用しています。 --- - hosts: all become: yes become_method: su remote_user: root tasks: - name: provisioner user: name: provisioner append: yes - name: provisioner ssh key authorized_key: user: provisioner key: "{{ lookup('file', '../../ssh/id_rsa.pub') }}" - name …">
+
 
 	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
 	<link rel="stylesheet" href="https://holrock.github.io/theme/css/main.css" type="text/css" />
@@ -27,12 +30,18 @@
 	  <div class="wrapper">
 
 		  <div role="main" class="content">
-
-
-
-      <article>
-        <h1><a href="https://holrock.github.io/intanetsutonitsunagaranailinuxkurasutawoyun-yong-suru.html">インターネットにつながらないLinuxクラスターを運用する</a></h1>
-        <h1>はしがき</h1>
+	<article class="full">
+			
+		<h1>インターネットにつながらないLinuxクラスターを運用する</h1>
+		
+<div class="metadata">
+  <time datetime="2017-09-16T00:00:00+09:00" pubdate>土 16 9月 2017</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+    </address>
+  in <a href="https://holrock.github.io/category/server.html">server</a>
+<p class="tags">tagged <a href="https://holrock.github.io/tag/server.html">server</a></p></div>		
+		<h1>はしがき</h1>
 <p>ここ最近は小規模なLinuxクラスターの運用管理もやっています。</p>
 <p>事情よりクラスター自体がインターネットに接続できないため、通常に比べ管理が面倒だったり、外部サービスを利用できないため不便なことが多々あります。
 そんな環境で色々やってるので書いておきます。</p>
@@ -232,67 +241,15 @@ alertmanagerから送られてくるjsonをそのまま表示しています。<
 自前で運用するリスクやコストもかかるので<strong>可能なら</strong>避けたほうが良いでしょう。</p>
 <p>10年ぐらい前の運用はこんな感じだった気もするので、世の中便利になったのではないでしょうか。
 AWSとかdockerとかすごいなあと思いました。</p>
-<p>他にも思いついたら書いていきたいと思います。</p>
-      </article>
+<p>他にも思いついたら書いていきたいと思います。</p>	
 
-      <hr />
+	</article>
 
-        <div>
-          <h3>Last posts</h3>
-          <ol class="archive">
-    
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
 
-
-      <li>
-<a href="https://holrock.github.io/cve-2017-9772nocui-ruo-xing.html" rel="bookmark" title="Permalink to CVE-2017-9772の脆弱性">CVE-2017-9772の脆弱性</a>
-  <time datetime="2017-06-25T00:00:00+09:00" pubdate>日 25 6月 2017</time>
-<p class="tags">tags: <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></a>      </li>
-
-
-      <li>
-<a href="https://holrock.github.io/ocaml-4041.html" rel="bookmark" title="Permalink to OCaml 4.04.1">OCaml 4.04.1</a>
-  <time datetime="2017-04-16T00:00:00+09:00" pubdate>日 16 4月 2017</time>
-<p class="tags">tags: <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></a>      </li>
-
-
-      <li>
-<a href="https://holrock.github.io/biocaml-sam-header.html" rel="bookmark" title="Permalink to Biocaml SAM header">Biocaml SAM header</a>
-  <time datetime="2017-02-21T00:00:00+09:00" pubdate>火 21 2月 2017</time>
-<p class="tags">tags: <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></a>      </li>
-
-
-      <li>
-<a href="https://holrock.github.io/zil.html" rel="bookmark" title="Permalink to ZIL">ZIL</a>
-  <time datetime="2016-12-04T00:00:00+09:00" pubdate>日 04 12月 2016</time>
-<p class="tags">tags: <a href="https://holrock.github.io/tag/z-machine.html">z-machine</a><a href="https://holrock.github.io/tag/lisp.html">lisp</a><a href="https://holrock.github.io/tag/zil.html">zil</a></p></a>      </li>
-
-
-      <li>
-<a href="https://holrock.github.io/nginxdeimage-filter.html" rel="bookmark" title="Permalink to nginxでimage filter">nginxでimage filter</a>
-  <time datetime="2016-11-10T00:00:00+09:00" pubdate>木 10 11月 2016</time>
-<p class="tags">tags: <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a><a href="https://holrock.github.io/tag/nginx.html">nginx</a></p></a>      </li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-          </ol>
-        </div>
 
 		  </div>	
 		  
@@ -305,7 +262,7 @@ AWSとかdockerとかすごいなあと思いました。</p>
 	              <li ><a href="https://holrock.github.io/category/lisp.html">lisp</a></li>
 	              <li ><a href="https://holrock.github.io/category/ocaml.html">ocaml</a></li>
 	              <li ><a href="https://holrock.github.io/category/python.html">python</a></li>
-	              <li ><a href="https://holrock.github.io/category/server.html">server</a></li>
+	              <li class="active"><a href="https://holrock.github.io/category/server.html">server</a></li>
 	              <li ><a href="https://holrock.github.io/category/z-machine.html">z-machine</a></li>
 	          </ul>
 	        </nav>

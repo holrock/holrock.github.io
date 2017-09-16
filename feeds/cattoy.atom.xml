@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/cattoy.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2016-11-10T00:00:00+09:00</updated><entry><title>nginxでimage filter</title><link href="https://holrock.github.io/nginxdeimage-filter.html" rel="alternate"></link><published>2016-11-10T00:00:00+09:00</published><updated>2016-11-10T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-11-10:nginxdeimage-filter.html</id><summary type="html">&lt;p&gt;前回、画像プロキシを使って外部画像を読み込むようにしました。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug - cattoy</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/cattoy.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2016-11-10T00:00:00+09:00</updated><entry><title>nginxでimage filter</title><link href="https://holrock.github.io/nginxdeimage-filter.html" rel="alternate"></link><published>2016-11-10T00:00:00+09:00</published><updated>2016-11-10T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-11-10:/nginxdeimage-filter.html</id><summary type="html">&lt;p&gt;前回、画像プロキシを使って外部画像を読み込むようにしました。&lt;/p&gt;
+&lt;p&gt;画像サイズが大きいものもあり、PageSpeed Insightsに怒られることがあります。
+今回は画像をキャッシュしつつリサイズします。&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://tech.actindi.net/3571355260"&gt;参考&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;すべて同一サーバーで運用しています。&lt;/p&gt;
+&lt;h1&gt;tlsimg.cattoy.info&lt;/h1&gt;
+&lt;p&gt;画像フロントサーバー&lt;/p&gt;
+&lt;p&gt;httpsで待ち受けるサーバーです。ここが入り口になります。&lt;/p&gt;
+&lt;p&gt;キャッシュもここでします。&lt;/p&gt;
+&lt;p&gt;proxy_cache_keyに使用する$arg_w, $arg_h, arg_qがリサイズパラメータになります。
+それぞれ幅、高さ、jpeg qualityです。&lt;/p&gt;
+&lt;p&gt;バックエンドがomacなので、$document_uriにhmacのキーを含んでいるため、サイズ指定以外は$document_uri があればユニークになります。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;  &lt;span class="k"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="kn"&gt;server_name&lt;/span&gt; &lt;span class="s"&gt;tlsimg.cattoy.info&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="kn"&gt;location&lt;/span&gt; &lt;span class="s"&gt;/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="kn"&gt;proxy_pass&lt;/span&gt; &lt;span class="s"&gt;http://localhost:8889&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="kn"&gt;proxy_cache&lt;/span&gt; &lt;span class="s"&gt;TLSIMG&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="kn"&gt;proxy_cache_key&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$host$document_uri$is_args&amp;amp;$arg_w&amp;amp;$arg_h&amp;amp;$arg_q&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="kn"&gt;proxy_cache_lock&lt;/span&gt; &lt;span class="no"&gt;on&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="kn"&gt;proxy_cache_valid …&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;前回、画像プロキシを使って外部画像を読み込むようにしました。&lt;/p&gt;
 &lt;p&gt;画像サイズが大きいものもあり、PageSpeed Insightsに怒られることがあります。
 今回は画像をキャッシュしつつリサイズします。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://tech.actindi.net/3571355260"&gt;参考&lt;/a&gt;&lt;/p&gt;
@@ -78,7 +97,7 @@
 &lt;p&gt;最後に画像プロキシ側の設定です。
 ここは特に変わっていません。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;  &lt;span class="nt"&gt;upstream&lt;/span&gt; &lt;span class="nt"&gt;omac&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-      &lt;span class="n"&gt;server&lt;/span&gt; &lt;span class="m"&gt;127&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="m"&gt;8999&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="err"&gt;server&lt;/span&gt; &lt;span class="err"&gt;127.0.0.1:8999&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
   &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -88,7 +107,7 @@
 &lt;p&gt;本来の画像URLにw,h,qクエリパラメータがある場合はおかしくなりそうなので、
 別途ヘッダで渡すなどした方が良いと思います。
 今回はrails側のコードをなるべく変更せずに使用するため、クエリパラメーターに含めました。&lt;/p&gt;
-&lt;p&gt;リサイズ時にエラーになってしまうとempty_gifがキャッシュされてしまい、以後画像が見えなくなるのでこれも要対応です。&lt;/p&gt;</summary><category term="cattoy"></category><category term="nginx"></category></entry><entry><title>cattoyに画像proxyを入れました</title><link href="https://holrock.github.io/cattoynihua-xiang-proxyworu-remashita.html" rel="alternate"></link><published>2016-10-31T00:00:00+09:00</published><updated>2016-10-31T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-31:cattoynihua-xiang-proxyworu-remashita.html</id><summary type="html">&lt;p&gt;cattoy.infoでは外部画像を結構な数表示しています。
+&lt;p&gt;リサイズ時にエラーになってしまうとempty_gifがキャッシュされてしまい、以後画像が見えなくなるのでこれも要対応です。&lt;/p&gt;</content><category term="cattoy"></category><category term="nginx"></category></entry><entry><title>cattoyに画像proxyを入れました</title><link href="https://holrock.github.io/cattoynihua-xiang-proxyworu-remashita.html" rel="alternate"></link><published>2016-10-31T00:00:00+09:00</published><updated>2016-10-31T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-31:/cattoynihua-xiang-proxyworu-remashita.html</id><summary type="html">&lt;p&gt;cattoy.infoでは外部画像を結構な数表示しています。
 外部画像にはhttpでしかアクセスできないものもあり、せっかくwww.cattoy.infoが
 https接続でも警告が出てしまいます。&lt;/p&gt;
 &lt;p&gt;ちょうど、次の記事
@@ -100,7 +119,36 @@ https接続でも警告が出てしまいます。&lt;/p&gt;
 &lt;p&gt;構成は https -&amp;gt; nginx(cacheもここで) -&amp;gt; http -&amp;gt; omac -&amp;gt; [画像server]&lt;/p&gt;
 &lt;p&gt;今のままだとomacが落ちてもnginx側のキャッシュが有効で気がつかないことがあるようなので、
 そのうちなんとかしないと。&lt;/p&gt;
-&lt;p&gt;ほかにもデーモン化やログ管理なんかもやらないといけないのですが、なんとなく動いてしまうと満足してしまいますね。&lt;/p&gt;</summary><category term="omac"></category><category term="ocaml"></category><category term="cattoy"></category></entry><entry><title>cattoy memo</title><link href="https://holrock.github.io/cattoy-memo.html" rel="alternate"></link><published>2016-10-24T00:00:00+09:00</published><updated>2016-10-24T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-24:cattoy-memo.html</id><summary type="html">&lt;ul&gt;
+&lt;p&gt;ほかにもデーモン化やログ管理なんかもやらないといけないのですが、なんとなく動いてしまうと満足してしまいますね。&lt;/p&gt;</summary><content type="html">&lt;p&gt;cattoy.infoでは外部画像を結構な数表示しています。
+外部画像にはhttpでしかアクセスできないものもあり、せっかくwww.cattoy.infoが
+https接続でも警告が出てしまいます。&lt;/p&gt;
+&lt;p&gt;ちょうど、次の記事
+&lt;a href="http://qiita.com/MintoAoyama/items/6cd71b84e6225f86f819"&gt;Camoで実現するセキュアな画像プロキシサーバ&lt;/a&gt;
+を見かけたので&lt;/p&gt;
+&lt;p&gt;camoクローンをocamlで作ってみました。
+&lt;a href="https://github.com/holrock/omac"&gt;https://github.com/holrock/omac&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;まだおもちゃみたいなものですが、一応本番で動いています。&lt;/p&gt;
+&lt;p&gt;構成は https -&amp;gt; nginx(cacheもここで) -&amp;gt; http -&amp;gt; omac -&amp;gt; [画像server]&lt;/p&gt;
+&lt;p&gt;今のままだとomacが落ちてもnginx側のキャッシュが有効で気がつかないことがあるようなので、
+そのうちなんとかしないと。&lt;/p&gt;
+&lt;p&gt;ほかにもデーモン化やログ管理なんかもやらないといけないのですが、なんとなく動いてしまうと満足してしまいますね。&lt;/p&gt;</content><category term="omac"></category><category term="ocaml"></category><category term="cattoy"></category></entry><entry><title>cattoy memo</title><link href="https://holrock.github.io/cattoy-memo.html" rel="alternate"></link><published>2016-10-24T00:00:00+09:00</published><updated>2016-10-24T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-24:/cattoy-memo.html</id><summary type="html">&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.cattoy.info"&gt;https://www.cattoy.info&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;Cat Exercise Wheelの使ってくれなさのあまり作りました。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;さくらVPS mem1G/2Coreプラン&lt;/li&gt;
+&lt;li&gt;CentOS 6.8&lt;/li&gt;
+&lt;li&gt;nginx &lt;ul&gt;
+&lt;li&gt;http2に対応するためビルドした&lt;/li&gt;
+&lt;li&gt;ついでにLibreSSLにした&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;nginx version: nginx/1.11.5
+built by gcc 4.4.7 20120313 (Red Hat 4.4.7-17) (GCC) 
+built with LibreSSL 2.5.0
+TLS SNI support enabled
+configure arguments: --prefix=/opt/nginx-1 …&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;ul&gt;
 &lt;li&gt;&lt;a href="https://www.cattoy.info"&gt;https://www.cattoy.info&lt;/a&gt;&lt;ul&gt;
 &lt;li&gt;Cat Exercise Wheelの使ってくれなさのあまり作りました。&lt;/li&gt;
 &lt;/ul&gt;
@@ -150,4 +198,4 @@ configure arguments: --prefix=/opt/nginx-1.11.5 --with-http_ssl_module --with-ht
 &lt;li&gt;navbarのopen/closeとturbolinksが相性が悪く、はまった。turbolinksは無効化&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;/ul&gt;</summary><category term="cattoy"></category><category term="ruby"></category><category term="rails"></category></entry></feed>
+&lt;/ul&gt;</content><category term="cattoy"></category><category term="ruby"></category><category term="rails"></category></entry></feed>

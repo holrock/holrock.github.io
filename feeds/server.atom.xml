@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug - server</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/server.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2017-09-16T00:00:00+09:00</updated><entry><title>インターネットにつながらないLinuxクラスターを運用する</title><link href="https://holrock.github.io/intanetsutonitsunagaranailinuxkurasutawoyun-yong-suru.html" rel="alternate"></link><published>2017-09-16T00:00:00+09:00</published><updated>2017-09-16T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-09-16:/intanetsutonitsunagaranailinuxkurasutawoyun-yong-suru.html</id><summary type="html">&lt;h1&gt;はしがき&lt;/h1&gt;
+&lt;p&gt;ここ最近は小規模なLinuxクラスターの運用管理もやっています。&lt;/p&gt;
+&lt;p&gt;事情よりクラスター自体がインターネットに接続できないため、通常に比べ管理が面倒だったり、外部サービスを利用できないため不便なことが多々あります。
+そんな環境で色々やってるので書いておきます。&lt;/p&gt;
+&lt;p&gt;環境はCentOS7です。&lt;/p&gt;
+&lt;h1&gt;構成管理&lt;/h1&gt;
+&lt;p&gt;ansibleを使用しています。クライアント側にインストールの必要が無いため、管理用端末のみインターネットに接続してインストールすればいいので楽です。&lt;/p&gt;
+&lt;p&gt;ansible用ユーザーを作って公開鍵認証にしていますが、初回のユーザー作成と鍵配布もansibleで行うため、
+そのときだけは&lt;code&gt;remote_user: root&lt;/code&gt;と&lt;code&gt;become_method: su&lt;/code&gt;を使ってrootパスワードを使用しています。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nn"&gt;---&lt;/span&gt;
+&lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;hosts&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;all&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;become&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;yes&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;become_method&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;su&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;remote_user&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;root&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;tasks&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;user&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner&lt;/span&gt;
+        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;append&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;yes&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner ssh key&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;authorized_key&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;user&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner&lt;/span&gt;
+        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;key&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;lookup(&amp;#39;file&amp;#39;,&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;../../ssh/id_rsa.pub&amp;#39;)&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&amp;quot;&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name …&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;h1&gt;はしがき&lt;/h1&gt;
+&lt;p&gt;ここ最近は小規模なLinuxクラスターの運用管理もやっています。&lt;/p&gt;
+&lt;p&gt;事情よりクラスター自体がインターネットに接続できないため、通常に比べ管理が面倒だったり、外部サービスを利用できないため不便なことが多々あります。
+そんな環境で色々やってるので書いておきます。&lt;/p&gt;
+&lt;p&gt;環境はCentOS7です。&lt;/p&gt;
+&lt;h1&gt;構成管理&lt;/h1&gt;
+&lt;p&gt;ansibleを使用しています。クライアント側にインストールの必要が無いため、管理用端末のみインターネットに接続してインストールすればいいので楽です。&lt;/p&gt;
+&lt;p&gt;ansible用ユーザーを作って公開鍵認証にしていますが、初回のユーザー作成と鍵配布もansibleで行うため、
+そのときだけは&lt;code&gt;remote_user: root&lt;/code&gt;と&lt;code&gt;become_method: su&lt;/code&gt;を使ってrootパスワードを使用しています。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nn"&gt;---&lt;/span&gt;
+&lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;hosts&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;all&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;become&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;yes&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;become_method&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;su&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;remote_user&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;root&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;tasks&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;user&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner&lt;/span&gt;
+        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;append&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;yes&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner ssh key&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;authorized_key&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;user&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner&lt;/span&gt;
+        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;key&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;lookup(&amp;#39;file&amp;#39;,&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;../../ssh/id_rsa.pub&amp;#39;)&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&amp;quot;&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;add sudoers&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;lineinfile&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="p p-Indicator"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="no"&gt;dest=/etc/sudoers&lt;/span&gt;
+        &lt;span class="no"&gt;line=&amp;#39;provisioner ALL=(ALL) NOPASSWD: ALL&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;上記のplaybookを&lt;code&gt;--ask-become-pass&lt;/code&gt;, &lt;code&gt;--ask-pass&lt;/code&gt;付きで流します。&lt;/p&gt;
+&lt;p&gt;これ以後はprovisionerユーザーがsudo可能になるので、
+他のplaybook&lt;code&gt;become:yes&lt;/code&gt;だけでシステム設定できるようになりました。&lt;/p&gt;
+&lt;p&gt;ちなみにこのときにansible.cfgで&lt;code&gt;ssh_args&lt;/code&gt;でssh鍵を指定していると接続エラーになるので、
+手動でコメントアウトしています。いい方法ないかな。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[ssh_connection]&lt;/span&gt;
+&lt;span class="na"&gt;ssh_args&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;-F ssh/ssh_config #ここ&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;package&lt;/h1&gt;
+&lt;h2&gt;yum&lt;/h2&gt;
+&lt;p&gt;インターネットにつながらないため、yumなどがそのままでは使用できません。
+rpmをコピーする方法では依存関係処理が面倒なため、フルミラーを作ります。
+ftp.riken.jpあたりからrsyncしてくるのが早いです。&lt;/p&gt;
+&lt;p&gt;yumミラーはhttpで見えるようにしてもいいのですが、今回は全ノードがnfsをマウントしているのでそこにおいています。&lt;/p&gt;
+&lt;p&gt;/etc/yum.repos.dの中身を消して、次のようにローカルのものに書き換えれば完了です。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt; [local-repo-os]
+name=local-repo-os
+baseurl=file:///nfs/mirror/centos/7/os/x86_64
+enabled=1
+
+[local-repo-updates]
+name=local-repo-updates
+baseurl=file:///nfs/mirror/centos/7/updates/x86_64
+enabled=1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;R&lt;/h2&gt;
+&lt;p&gt;yum以外にもRのリポジトリミラーも作っています。&lt;/p&gt;
+&lt;p&gt;Rの場合、rsyncでコピー後、Rからwrite_PACKAGE関数を読んでパッケージリストを作る必要があります。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;tools&lt;span class="o"&gt;:::&lt;/span&gt;write_PACKAGES&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/nfs/mirror/R/src/contrib&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;その後、$HOME/.Rprofileにmirrorの場所を指定すると通常どおり&lt;code&gt;install.packages&lt;/code&gt;が使用できるようになります。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kp"&gt;options&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;repos&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;file:///nfs/mirror/R&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;a href="https://www.bioconductor.org/about/mirrors/mirror-how-to/"&gt;bioconductor&lt;/a&gt;もミラーしているのですが、ディレクトリ構成が異なりcontribディレクトリの場所を&lt;code&gt;install.packages&lt;/code&gt;が見つけてくれないため、上記のoptionsではうまく行きません。&lt;/p&gt;
+&lt;p&gt;今のところ&lt;code&gt;contriburl&lt;/code&gt;を直接指定していますが、もっといい方法がありそうです。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;install.packages&lt;span class="p"&gt;(&lt;/span&gt;“package”&lt;span class="p"&gt;,&lt;/span&gt; contriburl&lt;span class="o"&gt;=&lt;/span&gt;”&lt;span class="kp"&gt;file&lt;/span&gt;&lt;span class="o"&gt;:///&lt;/span&gt;nfs&lt;span class="o"&gt;/&lt;/span&gt;mirror&lt;span class="o"&gt;/&lt;/span&gt;biocondutor&lt;span class="o"&gt;/&lt;/span&gt;packages&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="m"&gt;3.5&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;contrib”&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;stringi&lt;/h3&gt;
+&lt;p&gt;ネットワークにつながらない環境で、&lt;code&gt;tidyverse&lt;/code&gt;などをインストールしようとすると大抵stringiのインストールで失敗します。
+stringiがicudtNN.zip(NNは数字)をインストール中にダウンロードしようとするためです。&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://static.rexamine.com/packages/"&gt;http://static.rexamine.com/packages/&lt;/a&gt;から対応バージョンのzipファイルをダウンロードして、ノードにコピーします。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;configure.vers&lt;/code&gt;に&lt;code&gt;ICUDT_DIR&lt;/code&gt;をzipのあるパスを指定してインストール可能です。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;install.packages&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;stringi&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; configure.vars&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;ICUDT_DIR=&amp;lt;dir_to_copy_icudt_from&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;python&lt;/h2&gt;
+&lt;p&gt;直接whlファイルをpipで入れるときにプラットフォームが合わないとエラーになることがあります。&lt;/p&gt;
+&lt;p&gt;whlフィアルの名前が&lt;code&gt;-cp27m-manylinux1_x86_64.whl&lt;/code&gt;のようにmanylinuxとなっていたら&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pip&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pip&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pep425tags&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_supported&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;とやって出て来るプラットフォーム名に合わせるとインストール可能になります。&lt;/p&gt;
+&lt;p&gt;pythonのミラーは今後の課題です。&lt;/p&gt;
+&lt;h1&gt;ntp&lt;/h1&gt;
+&lt;p&gt;結構忘れがちなのがノードの時計です。ほっとくと結構ずれますが、publicなntpサーバーには接続できないため補正がかかりません。
+内部ntpサーバーを立ればクラスター内の時刻同期は出来ますが、外部とはずれ続けます。その時刻の補正も必要です。&lt;/p&gt;
+&lt;p&gt;対策として、&lt;a href="http://tic.citizen.co.jp/timeserver/"&gt;シチズンGPSタイムサーバー&lt;/a&gt;を使っています。
+アンテナを窓際において動かしていますが、 幸い受信感度は良く、問題なく時刻合わせが出来ています。&lt;/p&gt;
+&lt;h1&gt;監視&lt;/h1&gt;
+&lt;p&gt;外部監視サービスは使用できないので、自前で運用することになります。&lt;/p&gt;
+&lt;p&gt;今回は&lt;a href="https://prometheus.io"&gt;prometheus&lt;/a&gt;を使い、
+グラフはgrafanaで表示しています。&lt;/p&gt;
+&lt;p&gt;prometheusを選んだ理由は、触ってみたかったというのが一番ですが&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;単一バイナリで楽&lt;/li&gt;
+&lt;li&gt;アラートもできる&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;という点からも使ってみようという気になりました。&lt;/p&gt;
+&lt;p&gt;service discoveryは使用してないためあまり恩恵がないかもしれませんが、
+規模が大きくなったらconsulあたりを入れようかとも考えています。&lt;/p&gt;
+&lt;p&gt;使ってみた感想としては、&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;node_exporter楽&lt;/li&gt;
+&lt;li&gt;Textfile Collectorで追加も楽&lt;/li&gt;
+&lt;li&gt;queryやconfigのドキュメントが最小限なのでなれるまで時間かかる&lt;/li&gt;
+&lt;li&gt;わかればgrafanaからグラフ作るのも色々できる&lt;/li&gt;
+&lt;li&gt;alert.rulesの書式がいつの間にかymlになってて動かなくなってた&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;zabbixのようになんでも入りではありませんが、手をかけることで育っていく感じがしています。&lt;/p&gt;
+&lt;h1&gt;アラート&lt;/h1&gt;
+&lt;p&gt;アラートルールは&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ノードダウン&lt;/li&gt;
+&lt;li&gt;RAID状態(textfile collectorで自前で出してる数値)&lt;/li&gt;
+&lt;li&gt;DISK空き容量&lt;/li&gt;
+&lt;li&gt;CPU温度&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;などをとりあえず設定しています。雑です。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;groups&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+&lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;alert.rules&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;rules&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;alert&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;InstanceDown&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;expr&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;up == 0&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;for&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;2m&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;labels&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;severity&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;critical&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;annotations&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;description&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;$labels.instance&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;has&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;been&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;down&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;for&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;more&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;than&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;2&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;minutes.&amp;#39;&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;summary&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Instance {{ $labels.instance }} down&lt;/span&gt;
+  &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;alert&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;RAIDFail&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;expr&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;raid_failed + raid_degraded &amp;gt; 0&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;labels&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;severity&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;critical&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;annotations&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;description&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;$labels.instance&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;raid&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;failed&amp;#39;&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;summary&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Instance {{ $labels.instance }} raid failed&lt;/span&gt;
+  &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;alert&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;DiskSpace&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;expr&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;min(node_filesystem_free / node_filesystem_size) &amp;lt; 0.05&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;labels&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;severity&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;critical&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;annotations&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;description&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;$labels.instance&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;disk&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;full&amp;#39;&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;summary&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Instance {{ $labels.instance }} disk full&lt;/span&gt;
+  &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;alert&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;CPUTemp&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;expr&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;node_hwmon_temp_celsius{chip=~&amp;quot;platform_coretemp_.*&amp;quot;} &amp;gt; 80&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;labels&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;severity&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;critical&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;annotations&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;description&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;$labels.instance&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;cpu&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;over&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;temp&amp;#39;&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;summary&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Instance {{ $labels.instance }} cpu over temp&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;通知&lt;/h2&gt;
+&lt;p&gt;アラートできるようになりましたが、インターネットにつながらない場合アラートを送る先が難しいです。
+slack通知などができれば楽なのですがそういうわけにもいきません。
+grafanaのダッシュボードをずっと見ててもいいのですがあまり楽しくはないです。&lt;/p&gt;
+&lt;p&gt;このクラスターは自分たちが使用しているため、24時間365日の監視は必要なく、
+アラートは業務中に自分が気がつけばいいだろうということにしました。&lt;/p&gt;
+&lt;p&gt;alertmanagerから任意のwebhookを呼べるので、
+今回は使用しているStumpWM内にwebサーバーを動かし受信、メッセージを表示させてみました。&lt;/p&gt;
+&lt;p&gt;.stumpwm/init.lispの初期化コード内でwookieを立てて、
+alertmanagerから送られてくるjsonをそのまま表示しています。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;ql:quickload&lt;/span&gt; &lt;span class="ss"&gt;&amp;#39;wookie&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;ql:quickload&lt;/span&gt; &lt;span class="ss"&gt;&amp;#39;cl-json&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;wookie:load-plugins&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;wookie:defroute&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;:post&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;/&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;req&lt;/span&gt; &lt;span class="nv"&gt;res&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="nv"&gt;body&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;wookie-util:body-to-string&lt;/span&gt;
+                &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;wookie:request-body&lt;/span&gt; &lt;span class="nv"&gt;req&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+                &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;wookie-util:get-header&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;wookie:request-headers&lt;/span&gt; &lt;span class="nv"&gt;req&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;context-type&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+          &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="vg"&gt;*print-right-margin*&lt;/span&gt; &lt;span class="mi"&gt;30&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;stumpwm:message&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;ALERT~%~W&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;cl-json:decode-json-from-string&lt;/span&gt; &lt;span class="nv"&gt;body&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;wookie:send-response&lt;/span&gt; &lt;span class="nv"&gt;res&lt;/span&gt; &lt;span class="ss"&gt;:body&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;OK&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;bt:make-thread&lt;/span&gt; 
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;as:with-event-loop&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;
+      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;wookie:start-server&lt;/span&gt;
+        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;make-instance&lt;/span&gt; &lt;span class="ss"&gt;&amp;#39;wookie:listener&lt;/span&gt; &lt;span class="ss"&gt;:port&lt;/span&gt; &lt;span class="mi"&gt;9999&lt;/span&gt;&lt;span class="p"&gt;))))))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;お手軽ですが、まあ気がつくだろうという感じです。&lt;/p&gt;
+&lt;p&gt;余談ですがアラートをテストしていて、 アラートが動いてないことに気がつくためのアラートはどうしたらいいんだろうと考えています。&lt;/p&gt;
+&lt;h1&gt;まとめ&lt;/h1&gt;
+&lt;p&gt;インターネットにつながらないと、色々なエコシステムに乗ることが出来ず面倒です。
+自前で運用するリスクやコストもかかるので&lt;strong&gt;可能なら&lt;/strong&gt;避けたほうが良いでしょう。&lt;/p&gt;
+&lt;p&gt;10年ぐらい前の運用はこんな感じだった気もするので、世の中便利になったのではないでしょうか。
+AWSとかdockerとかすごいなあと思いました。&lt;/p&gt;
+&lt;p&gt;他にも思いついたら書いていきたいと思います。&lt;/p&gt;</content><category term="server"></category></entry></feed>

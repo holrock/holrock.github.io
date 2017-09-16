@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/z-machine.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2016-12-04T00:00:00+09:00</updated><entry><title>ZIL</title><link href="https://holrock.github.io/zil.html" rel="alternate"></link><published>2016-12-04T00:00:00+09:00</published><updated>2016-12-04T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-12-04:zil.html</id><summary type="html">&lt;p&gt;なんとなくZ-Machine周りについて調べていたので、ZILについてメモしておきます。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug - z-machine</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/z-machine.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2016-12-04T00:00:00+09:00</updated><entry><title>ZIL</title><link href="https://holrock.github.io/zil.html" rel="alternate"></link><published>2016-12-04T00:00:00+09:00</published><updated>2016-12-04T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-12-04:/zil.html</id><summary type="html">&lt;p&gt;なんとなくZ-Machine周りについて調べていたので、ZILについてメモしておきます。&lt;/p&gt;
+&lt;p&gt;ZIL(Zork Implementation Language)はZorkなどで知られるZ-Machineで動作するInteractive Fiction(IF)を記述するための言語です。&lt;/p&gt;
+&lt;p&gt;まず、Z-Machine関係の用語を説明します。&lt;/p&gt;
+&lt;h2&gt;IF&lt;/h2&gt;
+&lt;p&gt;IFはいわゆるテキストアドベンチャーゲームです。
+テキストをコマンドとして入力して進行していくゲームで、
+&lt;a href="https://ja.wikipedia.org/wiki/ゾーク#.E3.82.B3.E3.83.9E.E3.83.B3.E3.83.89.E5.85.A5.E5.8A.9B"&gt;zork&lt;/a&gt;を
+見るとどんなものかはすぐわかります。&lt;/p&gt;
+&lt;h2&gt;Z-Machine&lt;/h2&gt;
+&lt;p&gt;Z-MachineはIFのための仮想マシンです。
+Infocom社によって作られました。&lt;/p&gt;
+&lt;p&gt;多様なプラットフォームへの移植性を確保するため、Zork1などはZ-Machine上で動くようになっていました。&lt;/p&gt;
+&lt;p&gt;Z-MachineはZILをコンパイルして出力されるZ-codeと呼ばれるを命令を解釈して実行します。&lt;/p&gt;
+&lt;p&gt;Z-Machineの仕様は
+&lt;a href="http://inform-fiction.org/zmachine/standards/z1point1/index.html"&gt;The Z-Machine Standards Document&lt;/a&gt;
+にまとまっていますが、フラグなどの扱いについて一部、&lt;a href="https://github.com/SamB/ztools"&gt;ztools&lt;/a&gt;との相違が見られました。&lt;/p&gt;
+&lt;h2&gt;ZIL&lt;/h2&gt;
+&lt;p&gt;ここから本題です。&lt;/p&gt;
+&lt;p&gt;ZILの情報は&lt;a href="http://www.ifwiki.org/index.php/ZIL"&gt;ZIL Manual&lt;/a&gt;などにあります。&lt;/p&gt;
+&lt;p&gt;この後に出てくるソースコードは、ZIL Manualからの引用になります。&lt;/p&gt;
+&lt;h3&gt;BASIC&lt;/h3&gt;
+&lt;p&gt;オリジナルのZorkは MIT Design Language(MDL)で書かれていたとあり、ZILにもその影響が強く見られます …&lt;/p&gt;</summary><content type="html">&lt;p&gt;なんとなくZ-Machine周りについて調べていたので、ZILについてメモしておきます。&lt;/p&gt;
 &lt;p&gt;ZIL(Zork Implementation Language)はZorkなどで知られるZ-Machineで動作するInteractive Fiction(IF)を記述するための言語です。&lt;/p&gt;
 &lt;p&gt;まず、Z-Machine関係の用語を説明します。&lt;/p&gt;
 &lt;h2&gt;IF&lt;/h2&gt;
@@ -22,7 +43,7 @@ Infocom社によって作られました。&lt;/p&gt;
 &lt;h3&gt;BASIC&lt;/h3&gt;
 &lt;p&gt;オリジナルのZorkは MIT Design Language(MDL)で書かれていたとあり、ZILにもその影響が強く見られます。&lt;/p&gt;
 &lt;p&gt;サンプルコードを見て見ましょう。
-&lt;del&gt;MDLと違い、式にはangle bracket (&amp;lt;&amp;gt;) だけが使われます。&lt;/del&gt;&lt;/p&gt;
+~~MDLと違い、式にはangle bracket (&amp;lt;&amp;gt;) だけが使われます。~~&lt;/p&gt;
 &lt;p&gt;ここ不正確だったので修正。ご指摘ありがとうございます。
 フォームにangle bracket (&amp;lt;&amp;gt;), listに括弧が使われます。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;&amp;lt;*&lt;/span&gt; &lt;span class="nv"&gt;&amp;lt;+&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="nv"&gt;5&amp;gt;&lt;/span&gt; &lt;span class="nv"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="nv"&gt;&amp;lt;/&lt;/span&gt; &lt;span class="mi"&gt;26&lt;/span&gt; &lt;span class="nv"&gt;2&amp;gt;&lt;/span&gt; &lt;span class="nv"&gt;5&amp;gt;&amp;gt;&lt;/span&gt;
@@ -30,7 +51,7 @@ Infocom社によって作られました。&lt;/p&gt;
 
 
 &lt;p&gt;括弧さえ読み替えれば、みたまんまLISPですね。&lt;/p&gt;
-&lt;p&gt;&lt;del&gt;丸括弧も使用されますが、グループ化のみに使用されているようです。&lt;/del&gt;&lt;/p&gt;
+&lt;p&gt;~~丸括弧も使用されますが、グループ化のみに使用されているようです。~~&lt;/p&gt;
 &lt;p&gt;例えば、&lt;code&gt;cond&lt;/code&gt; の条件と式には丸括弧が使用されます。
 関数引数なども丸括弧が使われています。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;&amp;lt;COND&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;&amp;lt;if-this-is-true&amp;gt;&lt;/span&gt;
@@ -153,4 +174,4 @@ ZILは英語を前提として作られているため、日本語への移植�
 &lt;h2&gt;まとめ&lt;/h2&gt;
 &lt;p&gt;他にもEventなどがありますが、ここでは省略します。 興味がある方はZIL Manualを読んで見てください。&lt;/p&gt;
 &lt;p&gt;ZILはIFを作る目的でデザインされたコンパクトな言語です。
-あえて今テキストアドベンチャーを作るためにZILを使う必要はありませんが、IFの構成要素を知るためにZILを調べて見るのも面白いと思います。&lt;/p&gt;</summary><category term="z-machine"></category><category term="lisp"></category><category term="zil"></category></entry></feed>
+あえて今テキストアドベンチャーを作るためにZILを使う必要はありませんが、IFの構成要素を知るためにZILを調べて見るのも面白いと思います。&lt;/p&gt;</content><category term="z-machine"></category><category term="lisp"></category><category term="zil"></category></entry></feed>

@@ -1,5 +1,240 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/all.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2017-06-25T00:00:00+09:00</updated><entry><title>CVE-2017-9772の脆弱性</title><link href="https://holrock.github.io/cve-2017-9772nocui-ruo-xing.html" rel="alternate"></link><published>2017-06-25T00:00:00+09:00</published><updated>2017-06-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-06-25:cve-2017-9772nocui-ruo-xing.html</id><summary type="html">&lt;p&gt;OCaml4.04.0,4.04.1にローカル権限昇格の脆弱性があったので4.04.2が出てます。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/all.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2017-09-16T00:00:00+09:00</updated><entry><title>インターネットにつながらないLinuxクラスターを運用する</title><link href="https://holrock.github.io/intanetsutonitsunagaranailinuxkurasutawoyun-yong-suru.html" rel="alternate"></link><published>2017-09-16T00:00:00+09:00</published><updated>2017-09-16T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-09-16:/intanetsutonitsunagaranailinuxkurasutawoyun-yong-suru.html</id><summary type="html">&lt;h1&gt;はしがき&lt;/h1&gt;
+&lt;p&gt;ここ最近は小規模なLinuxクラスターの運用管理もやっています。&lt;/p&gt;
+&lt;p&gt;事情よりクラスター自体がインターネットに接続できないため、通常に比べ管理が面倒だったり、外部サービスを利用できないため不便なことが多々あります。
+そんな環境で色々やってるので書いておきます。&lt;/p&gt;
+&lt;p&gt;環境はCentOS7です。&lt;/p&gt;
+&lt;h1&gt;構成管理&lt;/h1&gt;
+&lt;p&gt;ansibleを使用しています。クライアント側にインストールの必要が無いため、管理用端末のみインターネットに接続してインストールすればいいので楽です。&lt;/p&gt;
+&lt;p&gt;ansible用ユーザーを作って公開鍵認証にしていますが、初回のユーザー作成と鍵配布もansibleで行うため、
+そのときだけは&lt;code&gt;remote_user: root&lt;/code&gt;と&lt;code&gt;become_method: su&lt;/code&gt;を使ってrootパスワードを使用しています。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nn"&gt;---&lt;/span&gt;
+&lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;hosts&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;all&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;become&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;yes&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;become_method&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;su&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;remote_user&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;root&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;tasks&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;user&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner&lt;/span&gt;
+        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;append&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;yes&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner ssh key&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;authorized_key&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;user&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner&lt;/span&gt;
+        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;key&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;lookup(&amp;#39;file&amp;#39;,&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;../../ssh/id_rsa.pub&amp;#39;)&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&amp;quot;&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name …&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;h1&gt;はしがき&lt;/h1&gt;
+&lt;p&gt;ここ最近は小規模なLinuxクラスターの運用管理もやっています。&lt;/p&gt;
+&lt;p&gt;事情よりクラスター自体がインターネットに接続できないため、通常に比べ管理が面倒だったり、外部サービスを利用できないため不便なことが多々あります。
+そんな環境で色々やってるので書いておきます。&lt;/p&gt;
+&lt;p&gt;環境はCentOS7です。&lt;/p&gt;
+&lt;h1&gt;構成管理&lt;/h1&gt;
+&lt;p&gt;ansibleを使用しています。クライアント側にインストールの必要が無いため、管理用端末のみインターネットに接続してインストールすればいいので楽です。&lt;/p&gt;
+&lt;p&gt;ansible用ユーザーを作って公開鍵認証にしていますが、初回のユーザー作成と鍵配布もansibleで行うため、
+そのときだけは&lt;code&gt;remote_user: root&lt;/code&gt;と&lt;code&gt;become_method: su&lt;/code&gt;を使ってrootパスワードを使用しています。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nn"&gt;---&lt;/span&gt;
+&lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;hosts&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;all&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;become&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;yes&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;become_method&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;su&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;remote_user&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;root&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;tasks&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;user&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner&lt;/span&gt;
+        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;append&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;yes&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner ssh key&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;authorized_key&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;user&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner&lt;/span&gt;
+        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;key&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;lookup(&amp;#39;file&amp;#39;,&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;../../ssh/id_rsa.pub&amp;#39;)&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&amp;quot;&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;add sudoers&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;lineinfile&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="p p-Indicator"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="no"&gt;dest=/etc/sudoers&lt;/span&gt;
+        &lt;span class="no"&gt;line=&amp;#39;provisioner ALL=(ALL) NOPASSWD: ALL&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;上記のplaybookを&lt;code&gt;--ask-become-pass&lt;/code&gt;, &lt;code&gt;--ask-pass&lt;/code&gt;付きで流します。&lt;/p&gt;
+&lt;p&gt;これ以後はprovisionerユーザーがsudo可能になるので、
+他のplaybook&lt;code&gt;become:yes&lt;/code&gt;だけでシステム設定できるようになりました。&lt;/p&gt;
+&lt;p&gt;ちなみにこのときにansible.cfgで&lt;code&gt;ssh_args&lt;/code&gt;でssh鍵を指定していると接続エラーになるので、
+手動でコメントアウトしています。いい方法ないかな。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[ssh_connection]&lt;/span&gt;
+&lt;span class="na"&gt;ssh_args&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;-F ssh/ssh_config #ここ&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;package&lt;/h1&gt;
+&lt;h2&gt;yum&lt;/h2&gt;
+&lt;p&gt;インターネットにつながらないため、yumなどがそのままでは使用できません。
+rpmをコピーする方法では依存関係処理が面倒なため、フルミラーを作ります。
+ftp.riken.jpあたりからrsyncしてくるのが早いです。&lt;/p&gt;
+&lt;p&gt;yumミラーはhttpで見えるようにしてもいいのですが、今回は全ノードがnfsをマウントしているのでそこにおいています。&lt;/p&gt;
+&lt;p&gt;/etc/yum.repos.dの中身を消して、次のようにローカルのものに書き換えれば完了です。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt; [local-repo-os]
+name=local-repo-os
+baseurl=file:///nfs/mirror/centos/7/os/x86_64
+enabled=1
+
+[local-repo-updates]
+name=local-repo-updates
+baseurl=file:///nfs/mirror/centos/7/updates/x86_64
+enabled=1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;R&lt;/h2&gt;
+&lt;p&gt;yum以外にもRのリポジトリミラーも作っています。&lt;/p&gt;
+&lt;p&gt;Rの場合、rsyncでコピー後、Rからwrite_PACKAGE関数を読んでパッケージリストを作る必要があります。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;tools&lt;span class="o"&gt;:::&lt;/span&gt;write_PACKAGES&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/nfs/mirror/R/src/contrib&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;その後、$HOME/.Rprofileにmirrorの場所を指定すると通常どおり&lt;code&gt;install.packages&lt;/code&gt;が使用できるようになります。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kp"&gt;options&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;repos&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;file:///nfs/mirror/R&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;a href="https://www.bioconductor.org/about/mirrors/mirror-how-to/"&gt;bioconductor&lt;/a&gt;もミラーしているのですが、ディレクトリ構成が異なりcontribディレクトリの場所を&lt;code&gt;install.packages&lt;/code&gt;が見つけてくれないため、上記のoptionsではうまく行きません。&lt;/p&gt;
+&lt;p&gt;今のところ&lt;code&gt;contriburl&lt;/code&gt;を直接指定していますが、もっといい方法がありそうです。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;install.packages&lt;span class="p"&gt;(&lt;/span&gt;“package”&lt;span class="p"&gt;,&lt;/span&gt; contriburl&lt;span class="o"&gt;=&lt;/span&gt;”&lt;span class="kp"&gt;file&lt;/span&gt;&lt;span class="o"&gt;:///&lt;/span&gt;nfs&lt;span class="o"&gt;/&lt;/span&gt;mirror&lt;span class="o"&gt;/&lt;/span&gt;biocondutor&lt;span class="o"&gt;/&lt;/span&gt;packages&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="m"&gt;3.5&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;contrib”&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;stringi&lt;/h3&gt;
+&lt;p&gt;ネットワークにつながらない環境で、&lt;code&gt;tidyverse&lt;/code&gt;などをインストールしようとすると大抵stringiのインストールで失敗します。
+stringiがicudtNN.zip(NNは数字)をインストール中にダウンロードしようとするためです。&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://static.rexamine.com/packages/"&gt;http://static.rexamine.com/packages/&lt;/a&gt;から対応バージョンのzipファイルをダウンロードして、ノードにコピーします。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;configure.vers&lt;/code&gt;に&lt;code&gt;ICUDT_DIR&lt;/code&gt;をzipのあるパスを指定してインストール可能です。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;install.packages&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;stringi&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; configure.vars&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;ICUDT_DIR=&amp;lt;dir_to_copy_icudt_from&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;python&lt;/h2&gt;
+&lt;p&gt;直接whlファイルをpipで入れるときにプラットフォームが合わないとエラーになることがあります。&lt;/p&gt;
+&lt;p&gt;whlフィアルの名前が&lt;code&gt;-cp27m-manylinux1_x86_64.whl&lt;/code&gt;のようにmanylinuxとなっていたら&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pip&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pip&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pep425tags&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_supported&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;とやって出て来るプラットフォーム名に合わせるとインストール可能になります。&lt;/p&gt;
+&lt;p&gt;pythonのミラーは今後の課題です。&lt;/p&gt;
+&lt;h1&gt;ntp&lt;/h1&gt;
+&lt;p&gt;結構忘れがちなのがノードの時計です。ほっとくと結構ずれますが、publicなntpサーバーには接続できないため補正がかかりません。
+内部ntpサーバーを立ればクラスター内の時刻同期は出来ますが、外部とはずれ続けます。その時刻の補正も必要です。&lt;/p&gt;
+&lt;p&gt;対策として、&lt;a href="http://tic.citizen.co.jp/timeserver/"&gt;シチズンGPSタイムサーバー&lt;/a&gt;を使っています。
+アンテナを窓際において動かしていますが、 幸い受信感度は良く、問題なく時刻合わせが出来ています。&lt;/p&gt;
+&lt;h1&gt;監視&lt;/h1&gt;
+&lt;p&gt;外部監視サービスは使用できないので、自前で運用することになります。&lt;/p&gt;
+&lt;p&gt;今回は&lt;a href="https://prometheus.io"&gt;prometheus&lt;/a&gt;を使い、
+グラフはgrafanaで表示しています。&lt;/p&gt;
+&lt;p&gt;prometheusを選んだ理由は、触ってみたかったというのが一番ですが&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;単一バイナリで楽&lt;/li&gt;
+&lt;li&gt;アラートもできる&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;という点からも使ってみようという気になりました。&lt;/p&gt;
+&lt;p&gt;service discoveryは使用してないためあまり恩恵がないかもしれませんが、
+規模が大きくなったらconsulあたりを入れようかとも考えています。&lt;/p&gt;
+&lt;p&gt;使ってみた感想としては、&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;node_exporter楽&lt;/li&gt;
+&lt;li&gt;Textfile Collectorで追加も楽&lt;/li&gt;
+&lt;li&gt;queryやconfigのドキュメントが最小限なのでなれるまで時間かかる&lt;/li&gt;
+&lt;li&gt;わかればgrafanaからグラフ作るのも色々できる&lt;/li&gt;
+&lt;li&gt;alert.rulesの書式がいつの間にかymlになってて動かなくなってた&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;zabbixのようになんでも入りではありませんが、手をかけることで育っていく感じがしています。&lt;/p&gt;
+&lt;h1&gt;アラート&lt;/h1&gt;
+&lt;p&gt;アラートルールは&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ノードダウン&lt;/li&gt;
+&lt;li&gt;RAID状態(textfile collectorで自前で出してる数値)&lt;/li&gt;
+&lt;li&gt;DISK空き容量&lt;/li&gt;
+&lt;li&gt;CPU温度&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;などをとりあえず設定しています。雑です。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;groups&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+&lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;alert.rules&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;rules&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;alert&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;InstanceDown&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;expr&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;up == 0&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;for&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;2m&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;labels&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;severity&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;critical&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;annotations&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;description&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;$labels.instance&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;has&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;been&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;down&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;for&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;more&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;than&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;2&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;minutes.&amp;#39;&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;summary&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Instance {{ $labels.instance }} down&lt;/span&gt;
+  &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;alert&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;RAIDFail&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;expr&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;raid_failed + raid_degraded &amp;gt; 0&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;labels&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;severity&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;critical&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;annotations&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;description&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;$labels.instance&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;raid&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;failed&amp;#39;&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;summary&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Instance {{ $labels.instance }} raid failed&lt;/span&gt;
+  &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;alert&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;DiskSpace&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;expr&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;min(node_filesystem_free / node_filesystem_size) &amp;lt; 0.05&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;labels&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;severity&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;critical&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;annotations&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;description&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;$labels.instance&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;disk&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;full&amp;#39;&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;summary&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Instance {{ $labels.instance }} disk full&lt;/span&gt;
+  &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;alert&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;CPUTemp&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;expr&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;node_hwmon_temp_celsius{chip=~&amp;quot;platform_coretemp_.*&amp;quot;} &amp;gt; 80&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;labels&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;severity&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;critical&lt;/span&gt;
+    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;annotations&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;description&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;$labels.instance&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;cpu&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;over&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;temp&amp;#39;&lt;/span&gt;
+      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;summary&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Instance {{ $labels.instance }} cpu over temp&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;通知&lt;/h2&gt;
+&lt;p&gt;アラートできるようになりましたが、インターネットにつながらない場合アラートを送る先が難しいです。
+slack通知などができれば楽なのですがそういうわけにもいきません。
+grafanaのダッシュボードをずっと見ててもいいのですがあまり楽しくはないです。&lt;/p&gt;
+&lt;p&gt;このクラスターは自分たちが使用しているため、24時間365日の監視は必要なく、
+アラートは業務中に自分が気がつけばいいだろうということにしました。&lt;/p&gt;
+&lt;p&gt;alertmanagerから任意のwebhookを呼べるので、
+今回は使用しているStumpWM内にwebサーバーを動かし受信、メッセージを表示させてみました。&lt;/p&gt;
+&lt;p&gt;.stumpwm/init.lispの初期化コード内でwookieを立てて、
+alertmanagerから送られてくるjsonをそのまま表示しています。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;ql:quickload&lt;/span&gt; &lt;span class="ss"&gt;&amp;#39;wookie&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;ql:quickload&lt;/span&gt; &lt;span class="ss"&gt;&amp;#39;cl-json&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;wookie:load-plugins&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;wookie:defroute&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;:post&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;/&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;req&lt;/span&gt; &lt;span class="nv"&gt;res&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="nv"&gt;body&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;wookie-util:body-to-string&lt;/span&gt;
+                &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;wookie:request-body&lt;/span&gt; &lt;span class="nv"&gt;req&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+                &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;wookie-util:get-header&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;wookie:request-headers&lt;/span&gt; &lt;span class="nv"&gt;req&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;context-type&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+          &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="vg"&gt;*print-right-margin*&lt;/span&gt; &lt;span class="mi"&gt;30&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;stumpwm:message&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;ALERT~%~W&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;cl-json:decode-json-from-string&lt;/span&gt; &lt;span class="nv"&gt;body&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;wookie:send-response&lt;/span&gt; &lt;span class="nv"&gt;res&lt;/span&gt; &lt;span class="ss"&gt;:body&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;OK&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;bt:make-thread&lt;/span&gt; 
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;as:with-event-loop&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;
+      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;wookie:start-server&lt;/span&gt;
+        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;make-instance&lt;/span&gt; &lt;span class="ss"&gt;&amp;#39;wookie:listener&lt;/span&gt; &lt;span class="ss"&gt;:port&lt;/span&gt; &lt;span class="mi"&gt;9999&lt;/span&gt;&lt;span class="p"&gt;))))))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;お手軽ですが、まあ気がつくだろうという感じです。&lt;/p&gt;
+&lt;p&gt;余談ですがアラートをテストしていて、 アラートが動いてないことに気がつくためのアラートはどうしたらいいんだろうと考えています。&lt;/p&gt;
+&lt;h1&gt;まとめ&lt;/h1&gt;
+&lt;p&gt;インターネットにつながらないと、色々なエコシステムに乗ることが出来ず面倒です。
+自前で運用するリスクやコストもかかるので&lt;strong&gt;可能なら&lt;/strong&gt;避けたほうが良いでしょう。&lt;/p&gt;
+&lt;p&gt;10年ぐらい前の運用はこんな感じだった気もするので、世の中便利になったのではないでしょうか。
+AWSとかdockerとかすごいなあと思いました。&lt;/p&gt;
+&lt;p&gt;他にも思いついたら書いていきたいと思います。&lt;/p&gt;</content><category term="server"></category></entry><entry><title>CVE-2017-9772の脆弱性</title><link href="https://holrock.github.io/cve-2017-9772nocui-ruo-xing.html" rel="alternate"></link><published>2017-06-25T00:00:00+09:00</published><updated>2017-06-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-06-25:/cve-2017-9772nocui-ruo-xing.html</id><summary type="html">&lt;p&gt;OCaml4.04.0,4.04.1にローカル権限昇格の脆弱性があったので4.04.2が出てます。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://caml.inria.fr/mantis/view.php?id=7557"&gt;0007557: local privilege escalation issue with ocaml binaries&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;影響を受けるのは以下の状況ですが、かなり限定的だと思います。詳しくは上のmantisの方に再現手順があります。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;ocamlコンパイラで生成され、setuid, setgidされた実行ファイルが実行される際に&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;CAML_CPLUGINS, CAML_NATIVE_CPLUGINS, CAML_BYTE_CPLUGINS&lt;/code&gt;環境変数に共有ライブラリへのパスを設定された場合&lt;/li&gt;
+&lt;li&gt;共有ライブラリ内でのsetreuidによって権限昇格が可能になる&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;注入される共有ライブラリは既存のランタイム内hookが利用可能で、
+この件とは直接関係ありませんが環境変数から注入可にしては強力すぎるように見えます。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cm"&gt;/* Load dynamic plugins indicated in the CAML_CPLUGINS environment&lt;/span&gt;
+&lt;span class="cm"&gt;   variable. These plugins can be used to set currently existing&lt;/span&gt;
+&lt;span class="cm"&gt;   hooks, such as …&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;OCaml4.04.0,4.04.1にローカル権限昇格の脆弱性があったので4.04.2が出てます。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://caml.inria.fr/mantis/view.php?id=7557"&gt;0007557: local privilege escalation issue with ocaml binaries&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;影響を受けるのは以下の状況ですが、かなり限定的だと思います。詳しくは上のmantisの方に再現手順があります。&lt;/p&gt;
 &lt;ol&gt;
@@ -29,7 +264,7 @@
 &lt;p&gt;また、ocamlコンパイラ自体のビルド時に&lt;code&gt;-no-cplugins&lt;/code&gt;フラグを指定するとこの機能自体を無効化できます。
 対策でuidはチェックされるようになりましたが、
 実行時に環境変数に指定されたファイルが自動ロードされてランタイムを変更できてしまう、
-というのはどうも筋が良くない気がします。無効化しておいたほうが無難な印象です。&lt;/p&gt;</summary><category term="ocaml"></category></entry><entry><title>OCaml 4.04.1</title><link href="https://holrock.github.io/ocaml-4041.html" rel="alternate"></link><published>2017-04-16T00:00:00+09:00</published><updated>2017-04-16T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-04-16:ocaml-4041.html</id><summary type="html">&lt;p&gt;OCaml 4.04.1が出ました。
+というのはどうも筋が良くない気がします。無効化しておいたほうが無難な印象です。&lt;/p&gt;</content><category term="ocaml"></category></entry><entry><title>OCaml 4.04.1</title><link href="https://holrock.github.io/ocaml-4041.html" rel="alternate"></link><published>2017-04-16T00:00:00+09:00</published><updated>2017-04-16T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-04-16:/ocaml-4041.html</id><summary type="html">&lt;p&gt;OCaml 4.04.1が出ました。
 &lt;a href="https://caml.inria.fr/pub/distrib/ocaml-4.04/notes/Changes"&gt;Changes&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://github.com/ocaml/ocaml/pull/894"&gt;Set.mapのバグ&lt;/a&gt;も修正されているので
 インストールしようと思いましたが、&lt;code&gt;opam update&lt;/code&gt;しても&lt;code&gt;opam switch list&lt;/code&gt;に出てきません。&lt;/p&gt;
@@ -37,7 +272,26 @@
 になっています。
 &lt;a href="https://github.com/ocaml/opam-repository/pull/8968"&gt;merge&lt;/a&gt;したから&lt;code&gt;opam update&lt;/code&gt;した？というコメントもありますが、
 実際のところ、&lt;code&gt;opam update&lt;/code&gt;が参照しているhttps://opam.ocaml.org/urls.txtに変更が書かれていないため、リストに出てこないようです。&lt;/p&gt;
-&lt;p&gt;そうこうしているうちにhomebrewの方に4.04.1が来てたので&lt;code&gt;opam switch system&lt;/code&gt;で済ませてしまいました。&lt;/p&gt;</summary><category term="ocaml"></category></entry><entry><title>Biocaml SAM header</title><link href="https://holrock.github.io/biocaml-sam-header.html" rel="alternate"></link><published>2017-02-21T00:00:00+09:00</published><updated>2017-02-21T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-02-21:biocaml-sam-header.html</id><summary type="html">&lt;p&gt;ocaml製のバイオインフォマティクス用ライブラリで、
+&lt;p&gt;そうこうしているうちにhomebrewの方に4.04.1が来てたので&lt;code&gt;opam switch system&lt;/code&gt;で済ませてしまいました。&lt;/p&gt;</summary><content type="html">&lt;p&gt;OCaml 4.04.1が出ました。
+&lt;a href="https://caml.inria.fr/pub/distrib/ocaml-4.04/notes/Changes"&gt;Changes&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/ocaml/ocaml/pull/894"&gt;Set.mapのバグ&lt;/a&gt;も修正されているので
+インストールしようと思いましたが、&lt;code&gt;opam update&lt;/code&gt;しても&lt;code&gt;opam switch list&lt;/code&gt;に出てきません。&lt;/p&gt;
+&lt;p&gt;redditでも&lt;a href="https://www.reddit.com/r/ocaml/comments/65bnx5/ocaml_4041_released_dedicated_to_the_memory_of/dg9bach/"&gt;話題&lt;/a&gt;
+になっています。
+&lt;a href="https://github.com/ocaml/opam-repository/pull/8968"&gt;merge&lt;/a&gt;したから&lt;code&gt;opam update&lt;/code&gt;した？というコメントもありますが、
+実際のところ、&lt;code&gt;opam update&lt;/code&gt;が参照しているhttps://opam.ocaml.org/urls.txtに変更が書かれていないため、リストに出てこないようです。&lt;/p&gt;
+&lt;p&gt;そうこうしているうちにhomebrewの方に4.04.1が来てたので&lt;code&gt;opam switch system&lt;/code&gt;で済ませてしまいました。&lt;/p&gt;</content><category term="ocaml"></category></entry><entry><title>Biocaml SAM header</title><link href="https://holrock.github.io/biocaml-sam-header.html" rel="alternate"></link><published>2017-02-21T00:00:00+09:00</published><updated>2017-02-21T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-02-21:/biocaml-sam-header.html</id><summary type="html">&lt;p&gt;ocaml製のバイオインフォマティクス用ライブラリで、
+&lt;a href="http://biocaml.org"&gt;biocaml&lt;/a&gt;というのがあります。&lt;/p&gt;
+&lt;p&gt;BAMファイルを読みたかったので使ってみましたが、
+&lt;code&gt;@HG&lt;/code&gt;ヘッダーにある&lt;code&gt;GO&lt;/code&gt;(group order)に未対応で読めなかったため、
+ちょっと修正しました。&lt;/p&gt;
+&lt;p&gt;opamで落ちてくる0.6.0用です。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;utop&lt;/span&gt; &lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="o"&gt;#&lt;/span&gt;&lt;span class="n"&gt;require&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;biocaml.unix&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;;;&lt;/span&gt;
+&lt;span class="n"&gt;utop&lt;/span&gt; &lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="k"&gt;open&lt;/span&gt; &lt;span class="nn"&gt;Biocaml_unix&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;Std&lt;/span&gt;&lt;span class="o"&gt;;;&lt;/span&gt;
+&lt;span class="n"&gt;utop&lt;/span&gt; &lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="nn"&gt;Bam&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;open_in&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;a.bam&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);;&lt;/span&gt;
+&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nn"&gt;Bam&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nn"&gt;Header&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="nn"&gt;Sam&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;alignment&lt;/span&gt; &lt;span class="nn"&gt;Core_kernel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nn"&gt;Std&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nn"&gt;Or_error&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="nn"&gt;Stream&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="nn"&gt;Core_kernel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nn"&gt;Result_wrapper&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nn"&gt;Result&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;Error&lt;/span&gt;
+ &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;unexpected tag for given header item type …&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;ocaml製のバイオインフォマティクス用ライブラリで、
 &lt;a href="http://biocaml.org"&gt;biocaml&lt;/a&gt;というのがあります。&lt;/p&gt;
 &lt;p&gt;BAMファイルを読みたかったので使ってみましたが、
 &lt;code&gt;@HG&lt;/code&gt;ヘッダーにある&lt;code&gt;GO&lt;/code&gt;(group order)に未対応で読めなかったため、
@@ -265,7 +519,28 @@
 
 &lt;p&gt;masterブランチはビルド失敗するし、ドキュメントとも乖離が激しいので
 積極的にメンテナンスはされていないようですね。&lt;/p&gt;
-&lt;p&gt;追記。プルリクエスト取り込んでもらいました。&lt;/p&gt;</summary><category term="ocaml"></category></entry><entry><title>ZIL</title><link href="https://holrock.github.io/zil.html" rel="alternate"></link><published>2016-12-04T00:00:00+09:00</published><updated>2016-12-04T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-12-04:zil.html</id><summary type="html">&lt;p&gt;なんとなくZ-Machine周りについて調べていたので、ZILについてメモしておきます。&lt;/p&gt;
+&lt;p&gt;追記。プルリクエスト取り込んでもらいました。&lt;/p&gt;</content><category term="ocaml"></category></entry><entry><title>ZIL</title><link href="https://holrock.github.io/zil.html" rel="alternate"></link><published>2016-12-04T00:00:00+09:00</published><updated>2016-12-04T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-12-04:/zil.html</id><summary type="html">&lt;p&gt;なんとなくZ-Machine周りについて調べていたので、ZILについてメモしておきます。&lt;/p&gt;
+&lt;p&gt;ZIL(Zork Implementation Language)はZorkなどで知られるZ-Machineで動作するInteractive Fiction(IF)を記述するための言語です。&lt;/p&gt;
+&lt;p&gt;まず、Z-Machine関係の用語を説明します。&lt;/p&gt;
+&lt;h2&gt;IF&lt;/h2&gt;
+&lt;p&gt;IFはいわゆるテキストアドベンチャーゲームです。
+テキストをコマンドとして入力して進行していくゲームで、
+&lt;a href="https://ja.wikipedia.org/wiki/ゾーク#.E3.82.B3.E3.83.9E.E3.83.B3.E3.83.89.E5.85.A5.E5.8A.9B"&gt;zork&lt;/a&gt;を
+見るとどんなものかはすぐわかります。&lt;/p&gt;
+&lt;h2&gt;Z-Machine&lt;/h2&gt;
+&lt;p&gt;Z-MachineはIFのための仮想マシンです。
+Infocom社によって作られました。&lt;/p&gt;
+&lt;p&gt;多様なプラットフォームへの移植性を確保するため、Zork1などはZ-Machine上で動くようになっていました。&lt;/p&gt;
+&lt;p&gt;Z-MachineはZILをコンパイルして出力されるZ-codeと呼ばれるを命令を解釈して実行します。&lt;/p&gt;
+&lt;p&gt;Z-Machineの仕様は
+&lt;a href="http://inform-fiction.org/zmachine/standards/z1point1/index.html"&gt;The Z-Machine Standards Document&lt;/a&gt;
+にまとまっていますが、フラグなどの扱いについて一部、&lt;a href="https://github.com/SamB/ztools"&gt;ztools&lt;/a&gt;との相違が見られました。&lt;/p&gt;
+&lt;h2&gt;ZIL&lt;/h2&gt;
+&lt;p&gt;ここから本題です。&lt;/p&gt;
+&lt;p&gt;ZILの情報は&lt;a href="http://www.ifwiki.org/index.php/ZIL"&gt;ZIL Manual&lt;/a&gt;などにあります。&lt;/p&gt;
+&lt;p&gt;この後に出てくるソースコードは、ZIL Manualからの引用になります。&lt;/p&gt;
+&lt;h3&gt;BASIC&lt;/h3&gt;
+&lt;p&gt;オリジナルのZorkは MIT Design Language(MDL)で書かれていたとあり、ZILにもその影響が強く見られます …&lt;/p&gt;</summary><content type="html">&lt;p&gt;なんとなくZ-Machine周りについて調べていたので、ZILについてメモしておきます。&lt;/p&gt;
 &lt;p&gt;ZIL(Zork Implementation Language)はZorkなどで知られるZ-Machineで動作するInteractive Fiction(IF)を記述するための言語です。&lt;/p&gt;
 &lt;p&gt;まず、Z-Machine関係の用語を説明します。&lt;/p&gt;
 &lt;h2&gt;IF&lt;/h2&gt;
@@ -288,7 +563,7 @@ Infocom社によって作られました。&lt;/p&gt;
 &lt;h3&gt;BASIC&lt;/h3&gt;
 &lt;p&gt;オリジナルのZorkは MIT Design Language(MDL)で書かれていたとあり、ZILにもその影響が強く見られます。&lt;/p&gt;
 &lt;p&gt;サンプルコードを見て見ましょう。
-&lt;del&gt;MDLと違い、式にはangle bracket (&amp;lt;&amp;gt;) だけが使われます。&lt;/del&gt;&lt;/p&gt;
+~~MDLと違い、式にはangle bracket (&amp;lt;&amp;gt;) だけが使われます。~~&lt;/p&gt;
 &lt;p&gt;ここ不正確だったので修正。ご指摘ありがとうございます。
 フォームにangle bracket (&amp;lt;&amp;gt;), listに括弧が使われます。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;&amp;lt;*&lt;/span&gt; &lt;span class="nv"&gt;&amp;lt;+&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="nv"&gt;5&amp;gt;&lt;/span&gt; &lt;span class="nv"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="nv"&gt;&amp;lt;/&lt;/span&gt; &lt;span class="mi"&gt;26&lt;/span&gt; &lt;span class="nv"&gt;2&amp;gt;&lt;/span&gt; &lt;span class="nv"&gt;5&amp;gt;&amp;gt;&lt;/span&gt;
@@ -296,7 +571,7 @@ Infocom社によって作られました。&lt;/p&gt;
 
 
 &lt;p&gt;括弧さえ読み替えれば、みたまんまLISPですね。&lt;/p&gt;
-&lt;p&gt;&lt;del&gt;丸括弧も使用されますが、グループ化のみに使用されているようです。&lt;/del&gt;&lt;/p&gt;
+&lt;p&gt;~~丸括弧も使用されますが、グループ化のみに使用されているようです。~~&lt;/p&gt;
 &lt;p&gt;例えば、&lt;code&gt;cond&lt;/code&gt; の条件と式には丸括弧が使用されます。
 関数引数なども丸括弧が使われています。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;&amp;lt;COND&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;&amp;lt;if-this-is-true&amp;gt;&lt;/span&gt;
@@ -419,7 +694,26 @@ ZILは英語を前提として作られているため、日本語への移植�
 &lt;h2&gt;まとめ&lt;/h2&gt;
 &lt;p&gt;他にもEventなどがありますが、ここでは省略します。 興味がある方はZIL Manualを読んで見てください。&lt;/p&gt;
 &lt;p&gt;ZILはIFを作る目的でデザインされたコンパクトな言語です。
-あえて今テキストアドベンチャーを作るためにZILを使う必要はありませんが、IFの構成要素を知るためにZILを調べて見るのも面白いと思います。&lt;/p&gt;</summary><category term="z-machine"></category><category term="lisp"></category><category term="zil"></category></entry><entry><title>nginxでimage filter</title><link href="https://holrock.github.io/nginxdeimage-filter.html" rel="alternate"></link><published>2016-11-10T00:00:00+09:00</published><updated>2016-11-10T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-11-10:nginxdeimage-filter.html</id><summary type="html">&lt;p&gt;前回、画像プロキシを使って外部画像を読み込むようにしました。&lt;/p&gt;
+あえて今テキストアドベンチャーを作るためにZILを使う必要はありませんが、IFの構成要素を知るためにZILを調べて見るのも面白いと思います。&lt;/p&gt;</content><category term="z-machine"></category><category term="lisp"></category><category term="zil"></category></entry><entry><title>nginxでimage filter</title><link href="https://holrock.github.io/nginxdeimage-filter.html" rel="alternate"></link><published>2016-11-10T00:00:00+09:00</published><updated>2016-11-10T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-11-10:/nginxdeimage-filter.html</id><summary type="html">&lt;p&gt;前回、画像プロキシを使って外部画像を読み込むようにしました。&lt;/p&gt;
+&lt;p&gt;画像サイズが大きいものもあり、PageSpeed Insightsに怒られることがあります。
+今回は画像をキャッシュしつつリサイズします。&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://tech.actindi.net/3571355260"&gt;参考&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;すべて同一サーバーで運用しています。&lt;/p&gt;
+&lt;h1&gt;tlsimg.cattoy.info&lt;/h1&gt;
+&lt;p&gt;画像フロントサーバー&lt;/p&gt;
+&lt;p&gt;httpsで待ち受けるサーバーです。ここが入り口になります。&lt;/p&gt;
+&lt;p&gt;キャッシュもここでします。&lt;/p&gt;
+&lt;p&gt;proxy_cache_keyに使用する$arg_w, $arg_h, arg_qがリサイズパラメータになります。
+それぞれ幅、高さ、jpeg qualityです。&lt;/p&gt;
+&lt;p&gt;バックエンドがomacなので、$document_uriにhmacのキーを含んでいるため、サイズ指定以外は$document_uri があればユニークになります。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;  &lt;span class="k"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="kn"&gt;server_name&lt;/span&gt; &lt;span class="s"&gt;tlsimg.cattoy.info&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="kn"&gt;location&lt;/span&gt; &lt;span class="s"&gt;/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="kn"&gt;proxy_pass&lt;/span&gt; &lt;span class="s"&gt;http://localhost:8889&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="kn"&gt;proxy_cache&lt;/span&gt; &lt;span class="s"&gt;TLSIMG&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="kn"&gt;proxy_cache_key&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$host$document_uri$is_args&amp;amp;$arg_w&amp;amp;$arg_h&amp;amp;$arg_q&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="kn"&gt;proxy_cache_lock&lt;/span&gt; &lt;span class="no"&gt;on&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="kn"&gt;proxy_cache_valid …&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;前回、画像プロキシを使って外部画像を読み込むようにしました。&lt;/p&gt;
 &lt;p&gt;画像サイズが大きいものもあり、PageSpeed Insightsに怒られることがあります。
 今回は画像をキャッシュしつつリサイズします。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://tech.actindi.net/3571355260"&gt;参考&lt;/a&gt;&lt;/p&gt;
@@ -498,7 +792,7 @@ ZILは英語を前提として作られているため、日本語への移植�
 &lt;p&gt;最後に画像プロキシ側の設定です。
 ここは特に変わっていません。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;  &lt;span class="nt"&gt;upstream&lt;/span&gt; &lt;span class="nt"&gt;omac&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-      &lt;span class="n"&gt;server&lt;/span&gt; &lt;span class="m"&gt;127&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="m"&gt;8999&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="err"&gt;server&lt;/span&gt; &lt;span class="err"&gt;127.0.0.1:8999&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
   &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -508,7 +802,30 @@ ZILは英語を前提として作られているため、日本語への移植�
 &lt;p&gt;本来の画像URLにw,h,qクエリパラメータがある場合はおかしくなりそうなので、
 別途ヘッダで渡すなどした方が良いと思います。
 今回はrails側のコードをなるべく変更せずに使用するため、クエリパラメーターに含めました。&lt;/p&gt;
-&lt;p&gt;リサイズ時にエラーになってしまうとempty_gifがキャッシュされてしまい、以後画像が見えなくなるのでこれも要対応です。&lt;/p&gt;</summary><category term="cattoy"></category><category term="nginx"></category></entry><entry><title>AllegroGraph その3</title><link href="https://holrock.github.io/allegrograph-sono3.html" rel="alternate"></link><published>2016-11-07T00:00:00+09:00</published><updated>2016-11-07T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-11-07:allegrograph-sono3.html</id><summary type="html">&lt;p&gt;前回全然lispじゃなかった。&lt;/p&gt;
+&lt;p&gt;リサイズ時にエラーになってしまうとempty_gifがキャッシュされてしまい、以後画像が見えなくなるのでこれも要対応です。&lt;/p&gt;</content><category term="cattoy"></category><category term="nginx"></category></entry><entry><title>AllegroGraph その3</title><link href="https://holrock.github.io/allegrograph-sono3.html" rel="alternate"></link><published>2016-11-07T00:00:00+09:00</published><updated>2016-11-07T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-11-07:/allegrograph-sono3.html</id><summary type="html">&lt;p&gt;前回全然lispじゃなかった。&lt;/p&gt;
+&lt;p&gt;今回はACLから繋いでみます。&lt;/p&gt;
+&lt;h1&gt;準備&lt;/h1&gt;
+&lt;h2&gt;Allegro CL 10.0 Free Express Editionのインストール&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Macの場合X11とかGTKとか必要とありますが、slimeから使うならなくてもいけます&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;mlispをつくる&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;AllegroGraph clientはalispでは動かないのでmlispを作ります&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://franz.com/support/faq/#s3q7"&gt;faq&lt;/a&gt;にあるので、いちどalispを起動してから次にコードを実行します&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;progn&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;build-lisp-image&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;sys:mlisp.dxl&amp;quot;&lt;/span&gt; &lt;span class="ss"&gt;:case-mode&lt;/span&gt; &lt;span class="ss"&gt;:case-sensitive-lower&lt;/span&gt;
+          &lt;span class="ss"&gt;:include-ide&lt;/span&gt; &lt;span class="no"&gt;nil&lt;/span&gt; &lt;span class="ss"&gt;:restart-app-function&lt;/span&gt; &lt;span class="no"&gt;nil&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;when&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;probe-file&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;sys:mlisp&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;delete-file&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;sys:mlisp&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;sys:copy-file&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;sys:alisp&amp;quot;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;sys:mlisp&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;mlispができたらslimeの設定を通します&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;(setq inferior-lisp-program &amp;quot;/Applications/AllegroCLexpress.app/Contents/Resources …&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;前回全然lispじゃなかった。&lt;/p&gt;
 &lt;p&gt;今回はACLから繋いでみます。&lt;/p&gt;
 &lt;h1&gt;準備&lt;/h1&gt;
 &lt;h2&gt;Allegro CL 10.0 Free Express Editionのインストール&lt;/h2&gt;
@@ -587,7 +904,7 @@ ZILは英語を前提として作られているため、日本語への移植�
 &lt;p&gt;とりあえず問い合わせまでできるようになりました&lt;/p&gt;
 &lt;p&gt;今回と前回使用したcattoyのturtleをダウンロードできるようにしています。&lt;/p&gt;
 &lt;p&gt;https://www.cattoy.info/cattoy.ttl&lt;/p&gt;
-&lt;p&gt;SPARQL エンドポイント置くのはちょっとサーバーリソース的に面倒だったのでデータだけです。&lt;/p&gt;</summary><category term="lisp"></category><category term="allegrograph"></category></entry><entry><title>AllegroGraph その2</title><link href="https://holrock.github.io/allegrograph-sono2.html" rel="alternate"></link><published>2016-11-04T00:00:00+09:00</published><updated>2016-11-04T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-11-04:allegrograph-sono2.html</id><summary type="html">&lt;p&gt;AllegroGraphが動くようになったので、データ作って投入します。&lt;/p&gt;
+&lt;p&gt;SPARQL エンドポイント置くのはちょっとサーバーリソース的に面倒だったのでデータだけです。&lt;/p&gt;</content><category term="lisp"></category><category term="allegrograph"></category></entry><entry><title>AllegroGraph その2</title><link href="https://holrock.github.io/allegrograph-sono2.html" rel="alternate"></link><published>2016-11-04T00:00:00+09:00</published><updated>2016-11-04T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-11-04:/allegrograph-sono2.html</id><summary type="html">&lt;p&gt;AllegroGraphが動くようになったので、データ作って投入します。&lt;/p&gt;
 &lt;p&gt;データは&lt;a href="https://www.cattoy.info"&gt;cattoy&lt;/a&gt;から作ります。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://github.com/holrock/cattoy/commit/202415749077a2820bff11d3544af3fc03453b65"&gt;こんなかんじ&lt;/a&gt;
 にRDF出力コードを仕込んだので、&lt;/p&gt;
@@ -598,31 +915,45 @@ ZILは英語を前提として作られているため、日本語への移植�
 
 &lt;p&gt;でファイルに吐き出します。
 なかみはこんなかんじです。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;@prefix&lt;/span&gt; &lt;span class="nt"&gt;schema&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="nt"&gt;schema&lt;/span&gt;&lt;span class="nc"&gt;.org&lt;/span&gt;&lt;span class="o"&gt;/&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt;
-&lt;span class="k"&gt;@prefix&lt;/span&gt; &lt;span class="nt"&gt;xsd&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="nt"&gt;www&lt;/span&gt;&lt;span class="nc"&gt;.w3.org&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;2001&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;XMLSchema&lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;@&lt;/span&gt;&lt;span class="k"&gt;prefix&lt;/span&gt; &lt;span class="nt"&gt;schema&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="nt"&gt;schema&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;org&lt;/span&gt;&lt;span class="o"&gt;/&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="p"&gt;@&lt;/span&gt;&lt;span class="k"&gt;prefix&lt;/span&gt; &lt;span class="nt"&gt;xsd&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="nt"&gt;www&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;w3&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;org&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;2001&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;XMLSchema&lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt;
 
-&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="nt"&gt;www&lt;/span&gt;&lt;span class="nc"&gt;.cattoy.info&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;histories&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;1&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nt"&gt;schema&lt;/span&gt;&lt;span class="nd"&gt;:creator&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="nt"&gt;www&lt;/span&gt;&lt;span class="nc"&gt;.cattoy.info&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;cats&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;1&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-   &lt;span class="nt"&gt;schema&lt;/span&gt;&lt;span class="nd"&gt;:itemReviewed&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="nt"&gt;www&lt;/span&gt;&lt;span class="nc"&gt;.cattoy.info&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;toys&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;1&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-   &lt;span class="nt"&gt;schema&lt;/span&gt;&lt;span class="nd"&gt;:ratingValue&lt;/span&gt; &lt;span class="nt"&gt;1&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
-   &lt;span class="nt"&gt;schema&lt;/span&gt;&lt;span class="nd"&gt;:reviewBody&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;羽よりネズミが好き。音がして嚙めるものが好きっぽい&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="nt"&gt;www&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;cattoy&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;info&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;histories …&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;AllegroGraphが動くようになったので、データ作って投入します。&lt;/p&gt;
+&lt;p&gt;データは&lt;a href="https://www.cattoy.info"&gt;cattoy&lt;/a&gt;から作ります。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/holrock/cattoy/commit/202415749077a2820bff11d3544af3fc03453b65"&gt;こんなかんじ&lt;/a&gt;
+にRDF出力コードを仕込んだので、&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;RDF&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="no"&gt;Graph&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tap&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="no"&gt;Cat&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;all&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;each&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_rdf&lt;/span&gt; &lt;span class="p"&gt;}}&lt;/span&gt;
+&lt;span class="no"&gt;File&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/tmp/cat.ttl&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;w&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_ttl&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 
-&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="nt"&gt;www&lt;/span&gt;&lt;span class="nc"&gt;.cattoy.info&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;histories&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;10&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nt"&gt;schema&lt;/span&gt;&lt;span class="nd"&gt;:creator&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="nt"&gt;www&lt;/span&gt;&lt;span class="nc"&gt;.cattoy.info&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;cats&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;1&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;;&lt;/span&gt;
-   &lt;span class="nt"&gt;schema&lt;/span&gt;&lt;span class="nd"&gt;:itemReviewed&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="nt"&gt;www&lt;/span&gt;&lt;span class="nc"&gt;.cattoy.info&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;toys&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;10&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;;&lt;/span&gt;
-   &lt;span class="nt"&gt;schema&lt;/span&gt;&lt;span class="nd"&gt;:ratingValue&lt;/span&gt; &lt;span class="nt"&gt;1&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
-   &lt;span class="nt"&gt;schema&lt;/span&gt;&lt;span class="nd"&gt;:reviewBody&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;たまに猫キックしてた&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt;
 
-&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="nt"&gt;www&lt;/span&gt;&lt;span class="nc"&gt;.cattoy.info&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;cats&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;1&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nt"&gt;schema&lt;/span&gt;&lt;span class="nd"&gt;:name&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;みけ&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt;
+&lt;p&gt;でファイルに吐き出します。
+なかみはこんなかんじです。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;@&lt;/span&gt;&lt;span class="k"&gt;prefix&lt;/span&gt; &lt;span class="nt"&gt;schema&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="nt"&gt;schema&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;org&lt;/span&gt;&lt;span class="o"&gt;/&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="p"&gt;@&lt;/span&gt;&lt;span class="k"&gt;prefix&lt;/span&gt; &lt;span class="nt"&gt;xsd&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="nt"&gt;www&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;w3&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;org&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;2001&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;XMLSchema&lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt;
+
+&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="nt"&gt;www&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;cattoy&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;info&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;histories&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;1&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nt"&gt;schema&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nd"&gt;creator&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="nt"&gt;www&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;cattoy&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;info&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;cats&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;1&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+   &lt;span class="nt"&gt;schema&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nd"&gt;itemReviewed&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="nt"&gt;www&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;cattoy&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;info&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;toys&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;1&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+   &lt;span class="nt"&gt;schema&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nd"&gt;ratingValue&lt;/span&gt; &lt;span class="nt"&gt;1&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+   &lt;span class="nt"&gt;schema&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nd"&gt;reviewBody&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;羽よりネズミが好き。音がして嚙めるものが好きっぽい&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt;
+
+&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="nt"&gt;www&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;cattoy&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;info&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;histories&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;10&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nt"&gt;schema&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nd"&gt;creator&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="nt"&gt;www&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;cattoy&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;info&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;cats&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;1&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;;&lt;/span&gt;
+   &lt;span class="nt"&gt;schema&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nd"&gt;itemReviewed&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="nt"&gt;www&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;cattoy&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;info&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;toys&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;10&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;;&lt;/span&gt;
+   &lt;span class="nt"&gt;schema&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nd"&gt;ratingValue&lt;/span&gt; &lt;span class="nt"&gt;1&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+   &lt;span class="nt"&gt;schema&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nd"&gt;reviewBody&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;たまに猫キックしてた&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt;
+
+&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="nt"&gt;www&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;cattoy&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;info&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;cats&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;1&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nt"&gt;schema&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nd"&gt;name&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;みけ&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;これをWebViewに取り込んで、クエリを投げます&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;prefix&lt;/span&gt; &lt;span class="nt"&gt;sc&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="nt"&gt;schema&lt;/span&gt;&lt;span class="nc"&gt;.org&lt;/span&gt;&lt;span class="o"&gt;/&amp;gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;prefix&lt;/span&gt; &lt;span class="nt"&gt;sc&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="nt"&gt;schema&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;org&lt;/span&gt;&lt;span class="o"&gt;/&amp;gt;&lt;/span&gt;
 
 &lt;span class="nt"&gt;select&lt;/span&gt; &lt;span class="o"&gt;?&lt;/span&gt;&lt;span class="nt"&gt;cat&lt;/span&gt; &lt;span class="o"&gt;?&lt;/span&gt;&lt;span class="nt"&gt;history&lt;/span&gt; &lt;span class="o"&gt;?&lt;/span&gt;&lt;span class="nt"&gt;body&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="o"&gt;?&lt;/span&gt;&lt;span class="n"&gt;cat&lt;/span&gt; &lt;span class="n"&gt;sc&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;みけ&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+  &lt;span class="err"&gt;?cat&lt;/span&gt; &lt;span class="n"&gt;sc&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;みけ&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
   &lt;span class="o"&gt;?&lt;/span&gt;&lt;span class="n"&gt;history&lt;/span&gt; &lt;span class="n"&gt;sc&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;creator&lt;/span&gt; &lt;span class="o"&gt;?&lt;/span&gt;&lt;span class="n"&gt;cat&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-  &lt;span class="n"&gt;sc&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;reviewBody&lt;/span&gt; &lt;span class="o"&gt;?&lt;/span&gt;&lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-  &lt;span class="n"&gt;sc&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;ratingValue&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;-1&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;^^&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="n"&gt;www&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;w3&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;org&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="m"&gt;2001&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;XMLSchema&lt;/span&gt;&lt;span class="m"&gt;#intege&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;.&lt;/span&gt;
+  &lt;span class="n"&gt;sc&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;reviewBody&lt;/span&gt; &lt;span class="o"&gt;?&lt;/span&gt;&lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="n"&gt;sc&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;ratingValue&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;-1&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;^^&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="n"&gt;www&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;w3&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;org&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;2001&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;XMLSchema&lt;/span&gt;&lt;span class="mh"&gt;#intege&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;.&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -675,7 +1006,26 @@ ZILは英語を前提として作られているため、日本語への移植�
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;しかし、述語選ぶのが大変ですね。&lt;/p&gt;</summary><category term="lisp"></category><category term="allegrograph"></category><category term="ruby"></category><category term="cattoy"></category></entry><entry><title>AllegroGraph その1</title><link href="https://holrock.github.io/allegrograph-sono1.html" rel="alternate"></link><published>2016-11-03T00:00:00+09:00</published><updated>2016-11-03T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-11-03:allegrograph-sono1.html</id><summary type="html">&lt;p&gt;AllegroGraphを動かしてみます。&lt;/p&gt;
+&lt;p&gt;しかし、述語選ぶのが大変ですね。&lt;/p&gt;</content><category term="lisp"></category><category term="allegrograph"></category><category term="ruby"></category><category term="cattoy"></category></entry><entry><title>AllegroGraph その1</title><link href="https://holrock.github.io/allegrograph-sono1.html" rel="alternate"></link><published>2016-11-03T00:00:00+09:00</published><updated>2016-11-03T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-11-03:/allegrograph-sono1.html</id><summary type="html">&lt;p&gt;AllegroGraphを動かしてみます。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://franz.com/agraph/downloads/"&gt;http://franz.com/agraph/downloads/&lt;/a&gt;からAllegroGraph Virtual Machineをダウンロード&lt;/li&gt;
+&lt;li&gt;展開してVirtualboxから読み込む&lt;/li&gt;
+&lt;li&gt;Virtualboxで仮想マシンを新規作成&lt;ul&gt;
+&lt;li&gt;type linux&lt;/li&gt;
+&lt;li&gt;version ubuntu 64bit&lt;/li&gt;
+&lt;li&gt;ディスク作成時にすでにあるディスクを使用するからAllegroGraph 6.0 Virtual Machine.vmdkを選択&lt;/li&gt;
+&lt;li&gt;ネットワークのポートフォワーディングでホストポート10034(なんでもいい)からゲストポート10035へフォワーディング設定する&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;VMを起動&lt;/li&gt;
+&lt;li&gt;franz/allegrographでログイン&lt;/li&gt;
+&lt;li&gt;デスクトップにあるStart AGを起動する&lt;/li&gt;
+&lt;li&gt;ホストマシンからブラウザでlocalhost:10034へアクセスする&lt;/li&gt;
+&lt;li&gt;AllegroGraph WebViewへアクセスできたら、User anonymousのところからtest/xyzzyでログイン&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://franz.com/agraph/support/documentation/current/agraph-quick-start.html"&gt;Quick-Start&lt;/a&gt;にしたがって&lt;/li&gt;
+&lt;li&gt;Create new repositoryにkennedyと入力しcreate&lt;/li&gt;
+&lt;li&gt;http://localhost:10034/repositories/kennedyを開く&lt;/li&gt;
+&lt;li&gt;from a server-side …&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;p&gt;AllegroGraphを動かしてみます。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://franz.com/agraph/downloads/"&gt;http://franz.com/agraph/downloads/&lt;/a&gt;からAllegroGraph Virtual Machineをダウンロード&lt;/li&gt;
 &lt;li&gt;展開してVirtualboxから読み込む&lt;/li&gt;
@@ -713,7 +1063,11 @@ ZILは英語を前提として作られているため、日本語への移植�
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;今回はここまで&lt;/p&gt;</summary><category term="lisp"></category><category term="allegrograph"></category></entry><entry><title>macOS 10.12.1にあげたらlibcryptoが見つからない</title><link href="https://holrock.github.io/macos-10121niagetaralibcryptogajian-tsukaranai.html" rel="alternate"></link><published>2016-11-02T00:00:00+09:00</published><updated>2016-11-02T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-11-02:macos-10121niagetaralibcryptogajian-tsukaranai.html</id><summary type="html">&lt;p&gt;macOSをSierraにあげました。&lt;/p&gt;
+&lt;p&gt;今回はここまで&lt;/p&gt;</content><category term="lisp"></category><category term="allegrograph"></category></entry><entry><title>macOS 10.12.1にあげたらlibcryptoが見つからない</title><link href="https://holrock.github.io/macos-10121niagetaralibcryptogajian-tsukaranai.html" rel="alternate"></link><published>2016-11-02T00:00:00+09:00</published><updated>2016-11-02T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-11-02:/macos-10121niagetaralibcryptogajian-tsukaranai.html</id><summary type="html">&lt;p&gt;macOSをSierraにあげました。&lt;/p&gt;
+&lt;p&gt;その後xcode8.1のインストールをして、omacのビルドをするとlibcryptoが見つからずエラーになりました。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c"&gt;% ocaml setup.ml -build &lt;/span&gt;
+&lt;span class="n"&gt;Finished&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="n"&gt;targets&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="n"&gt;cached&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;00&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;00.&lt;/span&gt;
+&lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Users&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;hoge&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;opam&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;4.03&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ocamlfind&lt;/span&gt; &lt;span class="n"&gt;ocamlopt&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;linkpkg&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;package&lt;/span&gt; &lt;span class="n"&gt;cohttp&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;package&lt;/span&gt; &lt;span class="n"&gt;cohttp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lwt&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;package&lt;/span&gt; &lt;span class="n"&gt;conduit&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;package&lt;/span&gt; &lt;span class="n"&gt;cryptokit&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;package&lt;/span&gt; &lt;span class="n"&gt;lwt&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;package&lt;/span&gt; &lt;span class="n"&gt;str&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;omac&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cmx&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cmx&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;o&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;main …&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;macOSをSierraにあげました。&lt;/p&gt;
 &lt;p&gt;その後xcode8.1のインストールをして、omacのビルドをするとlibcryptoが見つからずエラーになりました。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c"&gt;% ocaml setup.ml -build &lt;/span&gt;
 &lt;span class="n"&gt;Finished&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="n"&gt;targets&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="n"&gt;cached&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;00&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;00.&lt;/span&gt;
@@ -738,7 +1092,7 @@ ZILは英語を前提として作られているため、日本語への移植�
 
 
 &lt;p&gt;これでビルドできるようになりました。&lt;/p&gt;
-&lt;p&gt;あれ？てことはいままでsystem側のlibにリンクしてたんだろうか。&lt;/p&gt;</summary><category term="ocaml"></category></entry><entry><title>cattoyに画像proxyを入れました</title><link href="https://holrock.github.io/cattoynihua-xiang-proxyworu-remashita.html" rel="alternate"></link><published>2016-10-31T00:00:00+09:00</published><updated>2016-10-31T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-31:cattoynihua-xiang-proxyworu-remashita.html</id><summary type="html">&lt;p&gt;cattoy.infoでは外部画像を結構な数表示しています。
+&lt;p&gt;あれ？てことはいままでsystem側のlibにリンクしてたんだろうか。&lt;/p&gt;</content><category term="ocaml"></category></entry><entry><title>cattoyに画像proxyを入れました</title><link href="https://holrock.github.io/cattoynihua-xiang-proxyworu-remashita.html" rel="alternate"></link><published>2016-10-31T00:00:00+09:00</published><updated>2016-10-31T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-31:/cattoynihua-xiang-proxyworu-remashita.html</id><summary type="html">&lt;p&gt;cattoy.infoでは外部画像を結構な数表示しています。
 外部画像にはhttpでしかアクセスできないものもあり、せっかくwww.cattoy.infoが
 https接続でも警告が出てしまいます。&lt;/p&gt;
 &lt;p&gt;ちょうど、次の記事
@@ -750,18 +1104,63 @@ https接続でも警告が出てしまいます。&lt;/p&gt;
 &lt;p&gt;構成は https -&amp;gt; nginx(cacheもここで) -&amp;gt; http -&amp;gt; omac -&amp;gt; [画像server]&lt;/p&gt;
 &lt;p&gt;今のままだとomacが落ちてもnginx側のキャッシュが有効で気がつかないことがあるようなので、
 そのうちなんとかしないと。&lt;/p&gt;
-&lt;p&gt;ほかにもデーモン化やログ管理なんかもやらないといけないのですが、なんとなく動いてしまうと満足してしまいますね。&lt;/p&gt;</summary><category term="omac"></category><category term="ocaml"></category><category term="cattoy"></category></entry><entry><title>conduit with homebrew openssl</title><link href="https://holrock.github.io/conduit-with-homebrew-openssl.html" rel="alternate"></link><published>2016-10-28T00:00:00+09:00</published><updated>2016-10-28T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-28:conduit-with-homebrew-openssl.html</id><summary type="html">&lt;h1&gt;現象&lt;/h1&gt;
+&lt;p&gt;ほかにもデーモン化やログ管理なんかもやらないといけないのですが、なんとなく動いてしまうと満足してしまいますね。&lt;/p&gt;</summary><content type="html">&lt;p&gt;cattoy.infoでは外部画像を結構な数表示しています。
+外部画像にはhttpでしかアクセスできないものもあり、せっかくwww.cattoy.infoが
+https接続でも警告が出てしまいます。&lt;/p&gt;
+&lt;p&gt;ちょうど、次の記事
+&lt;a href="http://qiita.com/MintoAoyama/items/6cd71b84e6225f86f819"&gt;Camoで実現するセキュアな画像プロキシサーバ&lt;/a&gt;
+を見かけたので&lt;/p&gt;
+&lt;p&gt;camoクローンをocamlで作ってみました。
+&lt;a href="https://github.com/holrock/omac"&gt;https://github.com/holrock/omac&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;まだおもちゃみたいなものですが、一応本番で動いています。&lt;/p&gt;
+&lt;p&gt;構成は https -&amp;gt; nginx(cacheもここで) -&amp;gt; http -&amp;gt; omac -&amp;gt; [画像server]&lt;/p&gt;
+&lt;p&gt;今のままだとomacが落ちてもnginx側のキャッシュが有効で気がつかないことがあるようなので、
+そのうちなんとかしないと。&lt;/p&gt;
+&lt;p&gt;ほかにもデーモン化やログ管理なんかもやらないといけないのですが、なんとなく動いてしまうと満足してしまいますね。&lt;/p&gt;</content><category term="omac"></category><category term="ocaml"></category><category term="cattoy"></category></entry><entry><title>conduit with homebrew openssl</title><link href="https://holrock.github.io/conduit-with-homebrew-openssl.html" rel="alternate"></link><published>2016-10-28T00:00:00+09:00</published><updated>2016-10-28T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-28:/conduit-with-homebrew-openssl.html</id><summary type="html">&lt;h1&gt;現象&lt;/h1&gt;
 &lt;p&gt;cohttpでhttpsから&lt;code&gt;Client.get&lt;/code&gt;すると
 &lt;code&gt;(Failure "No SSL or TLS support compiled into Conduit")&lt;/code&gt;
 とエラーになった&lt;/p&gt;
 &lt;h1&gt;対策&lt;/h1&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;CPPFLAGS=&amp;quot;-I&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;HOME&lt;/span&gt;&lt;span class="x"&gt;/homebrew/opt/openssl/include&amp;quot; opam install ssl&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;CPPFLAGS=&amp;quot;-I$HOME/homebrew/opt/openssl/include&amp;quot; opam install ssl
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h1&gt;原因&lt;/h1&gt;
 &lt;p&gt;homebrewでopensslを入れており、homebrewのpathを/usr/localから$HOME/homebrewに変えていたため、
-opamでsslをビルドできなかった。&lt;/p&gt;</summary><category term="ocaml"></category></entry><entry><title>chainerで分類(できてない)</title><link href="https://holrock.github.io/chainerdefen-lei-dekitenai.html" rel="alternate"></link><published>2016-10-25T00:00:00+09:00</published><updated>2016-10-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-25:chainerdefen-lei-dekitenai.html</id><summary type="html">&lt;p&gt;cattoyでおもちゃの分類を自動でやりたくてchainerを試しました。
+opamでsslをビルドできなかった。&lt;/p&gt;</summary><content type="html">&lt;h1&gt;現象&lt;/h1&gt;
+&lt;p&gt;cohttpでhttpsから&lt;code&gt;Client.get&lt;/code&gt;すると
+&lt;code&gt;(Failure "No SSL or TLS support compiled into Conduit")&lt;/code&gt;
+とエラーになった&lt;/p&gt;
+&lt;h1&gt;対策&lt;/h1&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;CPPFLAGS=&amp;quot;-I$HOME/homebrew/opt/openssl/include&amp;quot; opam install ssl
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;原因&lt;/h1&gt;
+&lt;p&gt;homebrewでopensslを入れており、homebrewのpathを/usr/localから$HOME/homebrewに変えていたため、
+opamでsslをビルドできなかった。&lt;/p&gt;</content><category term="ocaml"></category></entry><entry><title>chainerで分類(できてない)</title><link href="https://holrock.github.io/chainerdefen-lei-dekitenai.html" rel="alternate"></link><published>2016-10-25T00:00:00+09:00</published><updated>2016-10-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-25:/chainerdefen-lei-dekitenai.html</id><summary type="html">&lt;p&gt;cattoyでおもちゃの分類を自動でやりたくてchainerを試しました。
+cattoyに登録されている画像を集めてきて手作業で分類、学習をやってみましたが、
+やはり分類が面倒なのと、素材不足で全然だめでした。&lt;/p&gt;
+&lt;p&gt;やったことをメモしておきます。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;pip install chainer pillow &lt;/li&gt;
+&lt;li&gt;画像の数が多い猫じゃらし、爪とぎ、その他で分類してみる。images/nekojarashi images/tsumetogi images/otherとフォルダごとに分類&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://ksksksks2.hatenadiary.jp/entry/20160327/1459061931"&gt;http://ksksksks2.hatenadiary.jp/entry/20160327/1459061931&lt;/a&gt;
+を参考にリサイズとトレーニングデータに分ける&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;label&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;の所がlabelのままだとcompute_mean.pyでエラーになるので&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;に変更する。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;python chainer/examples/imagenet/compute_mean.py --root . train_list.txt&lt;/li&gt;
+&lt;li&gt;python chainer …&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;p&gt;cattoyでおもちゃの分類を自動でやりたくてchainerを試しました。
 cattoyに登録されている画像を集めてきて手作業で分類、学習をやってみましたが、
 やはり分類が面倒なのと、素材不足で全然だめでした。&lt;/p&gt;
 &lt;p&gt;やったことをメモしておきます。&lt;/p&gt;
@@ -801,7 +1200,27 @@ cattoyに登録されている画像を集めてきて手作業で分類、学�
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;と、まあ微妙な感じでした&lt;/p&gt;</summary><category term="chainer"></category><category term="python"></category></entry><entry><title>lmfsを見る</title><link href="https://holrock.github.io/lmfswojian-ru.html" rel="alternate"></link><published>2016-10-25T00:00:00+09:00</published><updated>2016-10-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-25:lmfswojian-ru.html</id><summary type="html">&lt;p&gt;lsmfとはMTIのLispマシンのファイルシステムです。
+&lt;p&gt;と、まあ微妙な感じでした&lt;/p&gt;</content><category term="chainer"></category><category term="python"></category></entry><entry><title>lmfsを見る</title><link href="https://holrock.github.io/lmfswojian-ru.html" rel="alternate"></link><published>2016-10-25T00:00:00+09:00</published><updated>2016-10-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-25:/lmfswojian-ru.html</id><summary type="html">&lt;p&gt;lsmfとはMTIのLispマシンのファイルシステムです。
+unlambda.comからCADRのイメージとソースが落とせるので中身を見てみます。&lt;/p&gt;
+&lt;h1&gt;ダンプしてみる&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;http://unlambda.com/index.php?n=Main.Cadr からファイルを落とす&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;CADR emulator tar file&lt;/li&gt;
+&lt;li&gt;system 78.48 source file partition&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;usim.tar.gzを展開してlmfs.cをコンパイルする&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;コンパイルエラーと実行時のオーバランを修正&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gd"&gt;--- a/lmfs.c    2006-07-11 07:01:32.000000000 +0900&lt;/span&gt;
+&lt;span class="gi"&gt;+++ b/lmfs.c    2016-09-18 22:24:12.000000000 +0900&lt;/span&gt;
+&lt;span class="gu"&gt;@@ -127,6 +127,7 …&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;lsmfとはMTIのLispマシンのファイルシステムです。
 unlambda.comからCADRのイメージとソースが落とせるので中身を見てみます。&lt;/p&gt;
 &lt;h1&gt;ダンプしてみる&lt;/h1&gt;
 &lt;ul&gt;
@@ -1048,7 +1467,24 @@ unlambda.comからCADRのイメージとソースが落とせるので中身を�
 &lt;/ul&gt;
 &lt;p&gt;この辺で力尽きました。
 8byteや1008byte境界のあたりがわからず。
-&lt;a href="http://www.unlambda.com/cadr/aimemo528_75pgs.pdf"&gt;aimemo528_75pgs.pdf&lt;/a&gt;のDisk structureあたりの制約なのかなあ。&lt;/p&gt;</summary><category term="lisp"></category><category term="lmfs"></category><category term="lispmachine"></category></entry><entry><title>cattoy memo</title><link href="https://holrock.github.io/cattoy-memo.html" rel="alternate"></link><published>2016-10-24T00:00:00+09:00</published><updated>2016-10-24T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-24:cattoy-memo.html</id><summary type="html">&lt;ul&gt;
+&lt;a href="http://www.unlambda.com/cadr/aimemo528_75pgs.pdf"&gt;aimemo528_75pgs.pdf&lt;/a&gt;のDisk structureあたりの制約なのかなあ。&lt;/p&gt;</content><category term="lisp"></category><category term="lmfs"></category><category term="lispmachine"></category></entry><entry><title>cattoy memo</title><link href="https://holrock.github.io/cattoy-memo.html" rel="alternate"></link><published>2016-10-24T00:00:00+09:00</published><updated>2016-10-24T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-24:/cattoy-memo.html</id><summary type="html">&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.cattoy.info"&gt;https://www.cattoy.info&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;Cat Exercise Wheelの使ってくれなさのあまり作りました。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;さくらVPS mem1G/2Coreプラン&lt;/li&gt;
+&lt;li&gt;CentOS 6.8&lt;/li&gt;
+&lt;li&gt;nginx &lt;ul&gt;
+&lt;li&gt;http2に対応するためビルドした&lt;/li&gt;
+&lt;li&gt;ついでにLibreSSLにした&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;nginx version: nginx/1.11.5
+built by gcc 4.4.7 20120313 (Red Hat 4.4.7-17) (GCC) 
+built with LibreSSL 2.5.0
+TLS SNI support enabled
+configure arguments: --prefix=/opt/nginx-1 …&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;ul&gt;
 &lt;li&gt;&lt;a href="https://www.cattoy.info"&gt;https://www.cattoy.info&lt;/a&gt;&lt;ul&gt;
 &lt;li&gt;Cat Exercise Wheelの使ってくれなさのあまり作りました。&lt;/li&gt;
 &lt;/ul&gt;
@@ -1098,4 +1534,4 @@ configure arguments: --prefix=/opt/nginx-1.11.5 --with-http_ssl_module --with-ht
 &lt;li&gt;navbarのopen/closeとturbolinksが相性が悪く、はまった。turbolinksは無効化&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;/ul&gt;</summary><category term="cattoy"></category><category term="ruby"></category><category term="rails"></category></entry></feed>
+&lt;/ul&gt;</content><category term="cattoy"></category><category term="ruby"></category><category term="rails"></category></entry></feed>

@@ -6,7 +6,7 @@
 	<meta name="author" content="horlock">
 	
 
-	<meta name="description" content="前回全然lispじゃなかった。 今回はACLから繋いでみます。 準備 Allegro CL 10.0 Free Express Editionのインストール Macの場合X11とかGTKとか必要とありますが、slimeから使うならなくてもいけます mlispをつくる AllegroGraph clientはalispでは動かないのでmlispを作ります faqにあるので、いちどalispを起動してから次にコードを実行します (progn (build-lisp-image "sys:mlisp.dxl" :case-mode :case-sensitive-lower :include-ide nil :restart-app-function nil) (when (probe-file "sys:mlisp") (delete-file "sys:mlisp")) (sys:copy-file "sys:alisp" "sys:mlisp")) mlispができたらslimeの設定を通します (setq inferior-lisp-program "/Applications/AllegroCLexpress.app/Contents/Resources ...">
+	<meta name="description" content="前回全然lispじゃなかった。 今回はACLから繋いでみます。 準備 Allegro CL 10.0 Free Express Editionのインストール Macの場合X11とかGTKとか必要とありますが、slimeから使うならなくてもいけます mlispをつくる AllegroGraph clientはalispでは動かないのでmlispを作ります faqにあるので、いちどalispを起動してから次にコードを実行します (progn (build-lisp-image "sys:mlisp.dxl" :case-mode :case-sensitive-lower :include-ide nil :restart-app-function nil) (when (probe-file "sys:mlisp") (delete-file "sys:mlisp")) (sys:copy-file "sys:alisp" "sys:mlisp")) mlispができたらslimeの設定を通します (setq inferior-lisp-program "/Applications/AllegroCLexpress.app/Contents/Resources …">
 
 
 	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
@@ -141,6 +141,7 @@
 	              <li class="active"><a href="https://holrock.github.io/category/lisp.html">lisp</a></li>
 	              <li ><a href="https://holrock.github.io/category/ocaml.html">ocaml</a></li>
 	              <li ><a href="https://holrock.github.io/category/python.html">python</a></li>
+	              <li ><a href="https://holrock.github.io/category/server.html">server</a></li>
 	              <li ><a href="https://holrock.github.io/category/z-machine.html">z-machine</a></li>
 	          </ul>
 	        </nav>
@@ -159,7 +160,7 @@
 
       <footer>
 		<p role="contentinfo">
-		  © 2016 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+		  © 2013 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
     	</p>
 
 	  </footer>	

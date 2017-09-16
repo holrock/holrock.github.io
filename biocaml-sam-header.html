@@ -6,7 +6,7 @@
 	<meta name="author" content="horlock">
 	
 
-	<meta name="description" content="ocaml製のバイオインフォマティクス用ライブラリで、 biocamlというのがあります。 BAMファイルを読みたかったので使ってみましたが、 @HGヘッダーにあるGO(group order)に未対応で読めなかったため、 ちょっと修正しました。 opamで落ちてくる0.6.0用です。 utop # #require "biocaml.unix";; utop # open Biocaml_unix.Std;; utop # Bam.read (open_in "a.bam");; - : (Bam.Header.t * Sam.alignment Core_kernel.Std.Or_error.t Stream.t) Core_kernel.Result_wrapper.Result.Error ("unexpected tag for given header item type ...">
+	<meta name="description" content="ocaml製のバイオインフォマティクス用ライブラリで、 biocamlというのがあります。 BAMファイルを読みたかったので使ってみましたが、 @HGヘッダーにあるGO(group order)に未対応で読めなかったため、 ちょっと修正しました。 opamで落ちてくる0.6.0用です。 utop # #require "biocaml.unix";; utop # open Biocaml_unix.Std;; utop # Bam.read (open_in "a.bam");; - : (Bam.Header.t * Sam.alignment Core_kernel.Std.Or_error.t Stream.t) Core_kernel.Result_wrapper.Result.Error ("unexpected tag for given header item type …">
 
 
 	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
@@ -290,6 +290,7 @@
 	              <li ><a href="https://holrock.github.io/category/lisp.html">lisp</a></li>
 	              <li class="active"><a href="https://holrock.github.io/category/ocaml.html">ocaml</a></li>
 	              <li ><a href="https://holrock.github.io/category/python.html">python</a></li>
+	              <li ><a href="https://holrock.github.io/category/server.html">server</a></li>
 	              <li ><a href="https://holrock.github.io/category/z-machine.html">z-machine</a></li>
 	          </ul>
 	        </nav>
@@ -308,7 +309,7 @@
 
       <footer>
 		<p role="contentinfo">
-		  © 2016 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+		  © 2013 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
     	</p>
 
 	  </footer>	

@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/ocaml.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2017-06-25T00:00:00+09:00</updated><entry><title>CVE-2017-9772の脆弱性</title><link href="https://holrock.github.io/cve-2017-9772nocui-ruo-xing.html" rel="alternate"></link><published>2017-06-25T00:00:00+09:00</published><updated>2017-06-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-06-25:cve-2017-9772nocui-ruo-xing.html</id><summary type="html">&lt;p&gt;OCaml4.04.0,4.04.1にローカル権限昇格の脆弱性があったので4.04.2が出てます。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug - ocaml</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/ocaml.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2017-06-25T00:00:00+09:00</updated><entry><title>CVE-2017-9772の脆弱性</title><link href="https://holrock.github.io/cve-2017-9772nocui-ruo-xing.html" rel="alternate"></link><published>2017-06-25T00:00:00+09:00</published><updated>2017-06-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-06-25:/cve-2017-9772nocui-ruo-xing.html</id><summary type="html">&lt;p&gt;OCaml4.04.0,4.04.1にローカル権限昇格の脆弱性があったので4.04.2が出てます。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://caml.inria.fr/mantis/view.php?id=7557"&gt;0007557: local privilege escalation issue with ocaml binaries&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;影響を受けるのは以下の状況ですが、かなり限定的だと思います。詳しくは上のmantisの方に再現手順があります。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;ocamlコンパイラで生成され、setuid, setgidされた実行ファイルが実行される際に&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;CAML_CPLUGINS, CAML_NATIVE_CPLUGINS, CAML_BYTE_CPLUGINS&lt;/code&gt;環境変数に共有ライブラリへのパスを設定された場合&lt;/li&gt;
+&lt;li&gt;共有ライブラリ内でのsetreuidによって権限昇格が可能になる&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;注入される共有ライブラリは既存のランタイム内hookが利用可能で、
+この件とは直接関係ありませんが環境変数から注入可にしては強力すぎるように見えます。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cm"&gt;/* Load dynamic plugins indicated in the CAML_CPLUGINS environment&lt;/span&gt;
+&lt;span class="cm"&gt;   variable. These plugins can be used to set currently existing&lt;/span&gt;
+&lt;span class="cm"&gt;   hooks, such as …&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;OCaml4.04.0,4.04.1にローカル権限昇格の脆弱性があったので4.04.2が出てます。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://caml.inria.fr/mantis/view.php?id=7557"&gt;0007557: local privilege escalation issue with ocaml binaries&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;影響を受けるのは以下の状況ですが、かなり限定的だと思います。詳しくは上のmantisの方に再現手順があります。&lt;/p&gt;
 &lt;ol&gt;
@@ -29,7 +41,7 @@
 &lt;p&gt;また、ocamlコンパイラ自体のビルド時に&lt;code&gt;-no-cplugins&lt;/code&gt;フラグを指定するとこの機能自体を無効化できます。
 対策でuidはチェックされるようになりましたが、
 実行時に環境変数に指定されたファイルが自動ロードされてランタイムを変更できてしまう、
-というのはどうも筋が良くない気がします。無効化しておいたほうが無難な印象です。&lt;/p&gt;</summary><category term="ocaml"></category></entry><entry><title>OCaml 4.04.1</title><link href="https://holrock.github.io/ocaml-4041.html" rel="alternate"></link><published>2017-04-16T00:00:00+09:00</published><updated>2017-04-16T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-04-16:ocaml-4041.html</id><summary type="html">&lt;p&gt;OCaml 4.04.1が出ました。
+というのはどうも筋が良くない気がします。無効化しておいたほうが無難な印象です。&lt;/p&gt;</content><category term="ocaml"></category></entry><entry><title>OCaml 4.04.1</title><link href="https://holrock.github.io/ocaml-4041.html" rel="alternate"></link><published>2017-04-16T00:00:00+09:00</published><updated>2017-04-16T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-04-16:/ocaml-4041.html</id><summary type="html">&lt;p&gt;OCaml 4.04.1が出ました。
 &lt;a href="https://caml.inria.fr/pub/distrib/ocaml-4.04/notes/Changes"&gt;Changes&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://github.com/ocaml/ocaml/pull/894"&gt;Set.mapのバグ&lt;/a&gt;も修正されているので
 インストールしようと思いましたが、&lt;code&gt;opam update&lt;/code&gt;しても&lt;code&gt;opam switch list&lt;/code&gt;に出てきません。&lt;/p&gt;
@@ -37,7 +49,26 @@
 になっています。
 &lt;a href="https://github.com/ocaml/opam-repository/pull/8968"&gt;merge&lt;/a&gt;したから&lt;code&gt;opam update&lt;/code&gt;した？というコメントもありますが、
 実際のところ、&lt;code&gt;opam update&lt;/code&gt;が参照しているhttps://opam.ocaml.org/urls.txtに変更が書かれていないため、リストに出てこないようです。&lt;/p&gt;
-&lt;p&gt;そうこうしているうちにhomebrewの方に4.04.1が来てたので&lt;code&gt;opam switch system&lt;/code&gt;で済ませてしまいました。&lt;/p&gt;</summary><category term="ocaml"></category></entry><entry><title>Biocaml SAM header</title><link href="https://holrock.github.io/biocaml-sam-header.html" rel="alternate"></link><published>2017-02-21T00:00:00+09:00</published><updated>2017-02-21T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-02-21:biocaml-sam-header.html</id><summary type="html">&lt;p&gt;ocaml製のバイオインフォマティクス用ライブラリで、
+&lt;p&gt;そうこうしているうちにhomebrewの方に4.04.1が来てたので&lt;code&gt;opam switch system&lt;/code&gt;で済ませてしまいました。&lt;/p&gt;</summary><content type="html">&lt;p&gt;OCaml 4.04.1が出ました。
+&lt;a href="https://caml.inria.fr/pub/distrib/ocaml-4.04/notes/Changes"&gt;Changes&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/ocaml/ocaml/pull/894"&gt;Set.mapのバグ&lt;/a&gt;も修正されているので
+インストールしようと思いましたが、&lt;code&gt;opam update&lt;/code&gt;しても&lt;code&gt;opam switch list&lt;/code&gt;に出てきません。&lt;/p&gt;
+&lt;p&gt;redditでも&lt;a href="https://www.reddit.com/r/ocaml/comments/65bnx5/ocaml_4041_released_dedicated_to_the_memory_of/dg9bach/"&gt;話題&lt;/a&gt;
+になっています。
+&lt;a href="https://github.com/ocaml/opam-repository/pull/8968"&gt;merge&lt;/a&gt;したから&lt;code&gt;opam update&lt;/code&gt;した？というコメントもありますが、
+実際のところ、&lt;code&gt;opam update&lt;/code&gt;が参照しているhttps://opam.ocaml.org/urls.txtに変更が書かれていないため、リストに出てこないようです。&lt;/p&gt;
+&lt;p&gt;そうこうしているうちにhomebrewの方に4.04.1が来てたので&lt;code&gt;opam switch system&lt;/code&gt;で済ませてしまいました。&lt;/p&gt;</content><category term="ocaml"></category></entry><entry><title>Biocaml SAM header</title><link href="https://holrock.github.io/biocaml-sam-header.html" rel="alternate"></link><published>2017-02-21T00:00:00+09:00</published><updated>2017-02-21T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-02-21:/biocaml-sam-header.html</id><summary type="html">&lt;p&gt;ocaml製のバイオインフォマティクス用ライブラリで、
+&lt;a href="http://biocaml.org"&gt;biocaml&lt;/a&gt;というのがあります。&lt;/p&gt;
+&lt;p&gt;BAMファイルを読みたかったので使ってみましたが、
+&lt;code&gt;@HG&lt;/code&gt;ヘッダーにある&lt;code&gt;GO&lt;/code&gt;(group order)に未対応で読めなかったため、
+ちょっと修正しました。&lt;/p&gt;
+&lt;p&gt;opamで落ちてくる0.6.0用です。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;utop&lt;/span&gt; &lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="o"&gt;#&lt;/span&gt;&lt;span class="n"&gt;require&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;biocaml.unix&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;;;&lt;/span&gt;
+&lt;span class="n"&gt;utop&lt;/span&gt; &lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="k"&gt;open&lt;/span&gt; &lt;span class="nn"&gt;Biocaml_unix&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;Std&lt;/span&gt;&lt;span class="o"&gt;;;&lt;/span&gt;
+&lt;span class="n"&gt;utop&lt;/span&gt; &lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="nn"&gt;Bam&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;open_in&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;a.bam&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);;&lt;/span&gt;
+&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nn"&gt;Bam&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nn"&gt;Header&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="nn"&gt;Sam&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;alignment&lt;/span&gt; &lt;span class="nn"&gt;Core_kernel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nn"&gt;Std&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nn"&gt;Or_error&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="nn"&gt;Stream&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="nn"&gt;Core_kernel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nn"&gt;Result_wrapper&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nn"&gt;Result&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;Error&lt;/span&gt;
+ &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;unexpected tag for given header item type …&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;ocaml製のバイオインフォマティクス用ライブラリで、
 &lt;a href="http://biocaml.org"&gt;biocaml&lt;/a&gt;というのがあります。&lt;/p&gt;
 &lt;p&gt;BAMファイルを読みたかったので使ってみましたが、
 &lt;code&gt;@HG&lt;/code&gt;ヘッダーにある&lt;code&gt;GO&lt;/code&gt;(group order)に未対応で読めなかったため、
@@ -265,7 +296,11 @@
 
 &lt;p&gt;masterブランチはビルド失敗するし、ドキュメントとも乖離が激しいので
 積極的にメンテナンスはされていないようですね。&lt;/p&gt;
-&lt;p&gt;追記。プルリクエスト取り込んでもらいました。&lt;/p&gt;</summary><category term="ocaml"></category></entry><entry><title>macOS 10.12.1にあげたらlibcryptoが見つからない</title><link href="https://holrock.github.io/macos-10121niagetaralibcryptogajian-tsukaranai.html" rel="alternate"></link><published>2016-11-02T00:00:00+09:00</published><updated>2016-11-02T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-11-02:macos-10121niagetaralibcryptogajian-tsukaranai.html</id><summary type="html">&lt;p&gt;macOSをSierraにあげました。&lt;/p&gt;
+&lt;p&gt;追記。プルリクエスト取り込んでもらいました。&lt;/p&gt;</content><category term="ocaml"></category></entry><entry><title>macOS 10.12.1にあげたらlibcryptoが見つからない</title><link href="https://holrock.github.io/macos-10121niagetaralibcryptogajian-tsukaranai.html" rel="alternate"></link><published>2016-11-02T00:00:00+09:00</published><updated>2016-11-02T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-11-02:/macos-10121niagetaralibcryptogajian-tsukaranai.html</id><summary type="html">&lt;p&gt;macOSをSierraにあげました。&lt;/p&gt;
+&lt;p&gt;その後xcode8.1のインストールをして、omacのビルドをするとlibcryptoが見つからずエラーになりました。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c"&gt;% ocaml setup.ml -build &lt;/span&gt;
+&lt;span class="n"&gt;Finished&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="n"&gt;targets&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="n"&gt;cached&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;00&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;00.&lt;/span&gt;
+&lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Users&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;hoge&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;opam&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;4.03&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ocamlfind&lt;/span&gt; &lt;span class="n"&gt;ocamlopt&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;linkpkg&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;package&lt;/span&gt; &lt;span class="n"&gt;cohttp&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;package&lt;/span&gt; &lt;span class="n"&gt;cohttp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lwt&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;package&lt;/span&gt; &lt;span class="n"&gt;conduit&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;package&lt;/span&gt; &lt;span class="n"&gt;cryptokit&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;package&lt;/span&gt; &lt;span class="n"&gt;lwt&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;package&lt;/span&gt; &lt;span class="n"&gt;str&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;omac&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cmx&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cmx&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;o&lt;/span&gt; &lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;main …&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;macOSをSierraにあげました。&lt;/p&gt;
 &lt;p&gt;その後xcode8.1のインストールをして、omacのビルドをするとlibcryptoが見つからずエラーになりました。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c"&gt;% ocaml setup.ml -build &lt;/span&gt;
 &lt;span class="n"&gt;Finished&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="n"&gt;targets&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="n"&gt;cached&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="mi"&gt;00&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;00&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;00.&lt;/span&gt;
@@ -290,15 +325,26 @@
 
 
 &lt;p&gt;これでビルドできるようになりました。&lt;/p&gt;
-&lt;p&gt;あれ？てことはいままでsystem側のlibにリンクしてたんだろうか。&lt;/p&gt;</summary><category term="ocaml"></category></entry><entry><title>conduit with homebrew openssl</title><link href="https://holrock.github.io/conduit-with-homebrew-openssl.html" rel="alternate"></link><published>2016-10-28T00:00:00+09:00</published><updated>2016-10-28T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-28:conduit-with-homebrew-openssl.html</id><summary type="html">&lt;h1&gt;現象&lt;/h1&gt;
+&lt;p&gt;あれ？てことはいままでsystem側のlibにリンクしてたんだろうか。&lt;/p&gt;</content><category term="ocaml"></category></entry><entry><title>conduit with homebrew openssl</title><link href="https://holrock.github.io/conduit-with-homebrew-openssl.html" rel="alternate"></link><published>2016-10-28T00:00:00+09:00</published><updated>2016-10-28T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-28:/conduit-with-homebrew-openssl.html</id><summary type="html">&lt;h1&gt;現象&lt;/h1&gt;
 &lt;p&gt;cohttpでhttpsから&lt;code&gt;Client.get&lt;/code&gt;すると
 &lt;code&gt;(Failure "No SSL or TLS support compiled into Conduit")&lt;/code&gt;
 とエラーになった&lt;/p&gt;
 &lt;h1&gt;対策&lt;/h1&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;CPPFLAGS=&amp;quot;-I&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;HOME&lt;/span&gt;&lt;span class="x"&gt;/homebrew/opt/openssl/include&amp;quot; opam install ssl&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;CPPFLAGS=&amp;quot;-I$HOME/homebrew/opt/openssl/include&amp;quot; opam install ssl
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h1&gt;原因&lt;/h1&gt;
 &lt;p&gt;homebrewでopensslを入れており、homebrewのpathを/usr/localから$HOME/homebrewに変えていたため、
-opamでsslをビルドできなかった。&lt;/p&gt;</summary><category term="ocaml"></category></entry></feed>
+opamでsslをビルドできなかった。&lt;/p&gt;</summary><content type="html">&lt;h1&gt;現象&lt;/h1&gt;
+&lt;p&gt;cohttpでhttpsから&lt;code&gt;Client.get&lt;/code&gt;すると
+&lt;code&gt;(Failure "No SSL or TLS support compiled into Conduit")&lt;/code&gt;
+とエラーになった&lt;/p&gt;
+&lt;h1&gt;対策&lt;/h1&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;CPPFLAGS=&amp;quot;-I$HOME/homebrew/opt/openssl/include&amp;quot; opam install ssl
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;原因&lt;/h1&gt;
+&lt;p&gt;homebrewでopensslを入れており、homebrewのpathを/usr/localから$HOME/homebrewに変えていたため、
+opamでsslをビルドできなかった。&lt;/p&gt;</content><category term="ocaml"></category></entry></feed>

@@ -31,38 +31,208 @@
 
 
       <article>
-        <h1><a href="https://holrock.github.io/cve-2017-9772nocui-ruo-xing.html">CVE-2017-9772の脆弱性</a></h1>
-        <p>OCaml4.04.0,4.04.1にローカル権限昇格の脆弱性があったので4.04.2が出てます。</p>
-<p><a href="https://caml.inria.fr/mantis/view.php?id=7557">0007557: local privilege escalation issue with ocaml binaries</a></p>
-<p>影響を受けるのは以下の状況ですが、かなり限定的だと思います。詳しくは上のmantisの方に再現手順があります。</p>
-<ol>
-<li>ocamlコンパイラで生成され、setuid, setgidされた実行ファイルが実行される際に</li>
-<li><code>CAML_CPLUGINS, CAML_NATIVE_CPLUGINS, CAML_BYTE_CPLUGINS</code>環境変数に共有ライブラリへのパスを設定された場合</li>
-<li>共有ライブラリ内でのsetreuidによって権限昇格が可能になる</li>
-</ol>
-<p>注入される共有ライブラリは既存のランタイム内hookが利用可能で、
-この件とは直接関係ありませんが環境変数から注入可にしては強力すぎるように見えます。</p>
-<div class="highlight"><pre><span></span><span class="cm">/* Load dynamic plugins indicated in the CAML_CPLUGINS environment</span>
-<span class="cm">   variable. These plugins can be used to set currently existing</span>
-<span class="cm">   hooks, such as GC hooks and system calls tracing (see misc.h).</span>
-<span class="cm"> */</span><span class="w"></span>
+        <h1><a href="https://holrock.github.io/intanetsutonitsunagaranailinuxkurasutawoyun-yong-suru.html">インターネットにつながらないLinuxクラスターを運用する</a></h1>
+        <h1>はしがき</h1>
+<p>ここ最近は小規模なLinuxクラスターの運用管理もやっています。</p>
+<p>事情よりクラスター自体がインターネットに接続できないため、通常に比べ管理が面倒だったり、外部サービスを利用できないため不便なことが多々あります。
+そんな環境で色々やってるので書いておきます。</p>
+<p>環境はCentOS7です。</p>
+<h1>構成管理</h1>
+<p>ansibleを使用しています。クライアント側にインストールの必要が無いため、管理用端末のみインターネットに接続してインストールすればいいので楽です。</p>
+<p>ansible用ユーザーを作って公開鍵認証にしていますが、初回のユーザー作成と鍵配布もansibleで行うため、
+そのときだけは<code>remote_user: root</code>と<code>become_method: su</code>を使ってrootパスワードを使用しています。</p>
+<div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
+  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+  <span class="l l-Scalar l-Scalar-Plain">become_method</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">su</span>
+  <span class="l l-Scalar l-Scalar-Plain">remote_user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
+      <span class="l l-Scalar l-Scalar-Plain">user</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
+        <span class="l l-Scalar l-Scalar-Plain">append</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner ssh key</span>
+      <span class="l l-Scalar l-Scalar-Plain">authorized_key</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
+        <span class="l l-Scalar l-Scalar-Plain">key</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">lookup(&#39;file&#39;,</span><span class="nv"> </span><span class="s">&#39;../../ssh/id_rsa.pub&#39;)</span><span class="nv"> </span><span class="s">}}&quot;</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">add sudoers</span>
+      <span class="l l-Scalar l-Scalar-Plain">lineinfile</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">&gt;</span>
+        <span class="no">dest=/etc/sudoers</span>
+        <span class="no">line=&#39;provisioner ALL=(ALL) NOPASSWD: ALL&#39;</span>
 </pre></div>
 
 
-<p>https://github.com/ocaml/ocaml/pull/668/files#diff-867452b8e2d255275b14ba707321e78cR569</p>
-<p>脆弱性が埋め込まれた経緯は、</p>
+<p>上記のplaybookを<code>--ask-become-pass</code>, <code>--ask-pass</code>付きで流します。</p>
+<p>これ以後はprovisionerユーザーがsudo可能になるので、
+他のplaybook<code>become:yes</code>だけでシステム設定できるようになりました。</p>
+<p>ちなみにこのときにansible.cfgで<code>ssh_args</code>でssh鍵を指定していると接続エラーになるので、
+手動でコメントアウトしています。いい方法ないかな。</p>
+<div class="highlight"><pre><span></span><span class="k">[ssh_connection]</span>
+<span class="na">ssh_args</span> <span class="o">=</span> <span class="s">-F ssh/ssh_config #ここ</span>
+</pre></div>
+
+
+<h1>package</h1>
+<h2>yum</h2>
+<p>インターネットにつながらないため、yumなどがそのままでは使用できません。
+rpmをコピーする方法では依存関係処理が面倒なため、フルミラーを作ります。
+ftp.riken.jpあたりからrsyncしてくるのが早いです。</p>
+<p>yumミラーはhttpで見えるようにしてもいいのですが、今回は全ノードがnfsをマウントしているのでそこにおいています。</p>
+<p>/etc/yum.repos.dの中身を消して、次のようにローカルのものに書き換えれば完了です。</p>
+<div class="highlight"><pre><span></span> [local-repo-os]
+name=local-repo-os
+baseurl=file:///nfs/mirror/centos/7/os/x86_64
+enabled=1
+
+[local-repo-updates]
+name=local-repo-updates
+baseurl=file:///nfs/mirror/centos/7/updates/x86_64
+enabled=1
+</pre></div>
+
+
+<h2>R</h2>
+<p>yum以外にもRのリポジトリミラーも作っています。</p>
+<p>Rの場合、rsyncでコピー後、Rからwrite_PACKAGE関数を読んでパッケージリストを作る必要があります。</p>
+<div class="highlight"><pre><span></span>tools<span class="o">:::</span>write_PACKAGES<span class="p">(</span><span class="s">&quot;/nfs/mirror/R/src/contrib&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>その後、$HOME/.Rprofileにmirrorの場所を指定すると通常どおり<code>install.packages</code>が使用できるようになります。</p>
+<div class="highlight"><pre><span></span><span class="kp">options</span><span class="p">(</span>repos<span class="o">=</span><span class="s">&quot;file:///nfs/mirror/R&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<p><a href="https://www.bioconductor.org/about/mirrors/mirror-how-to/">bioconductor</a>もミラーしているのですが、ディレクトリ構成が異なりcontribディレクトリの場所を<code>install.packages</code>が見つけてくれないため、上記のoptionsではうまく行きません。</p>
+<p>今のところ<code>contriburl</code>を直接指定していますが、もっといい方法がありそうです。</p>
+<div class="highlight"><pre><span></span>install.packages<span class="p">(</span>“package”<span class="p">,</span> contriburl<span class="o">=</span>”<span class="kp">file</span><span class="o">:///</span>nfs<span class="o">/</span>mirror<span class="o">/</span>biocondutor<span class="o">/</span>packages<span class="o">/</span><span class="m">3.5</span><span class="o">/</span>contrib”<span class="p">)</span>
+</pre></div>
+
+
+<h3>stringi</h3>
+<p>ネットワークにつながらない環境で、<code>tidyverse</code>などをインストールしようとすると大抵stringiのインストールで失敗します。
+stringiがicudtNN.zip(NNは数字)をインストール中にダウンロードしようとするためです。</p>
+<p><a href="http://static.rexamine.com/packages/">http://static.rexamine.com/packages/</a>から対応バージョンのzipファイルをダウンロードして、ノードにコピーします。</p>
+<p><code>configure.vers</code>に<code>ICUDT_DIR</code>をzipのあるパスを指定してインストール可能です。</p>
+<div class="highlight"><pre><span></span>install.packages<span class="p">(</span><span class="s">&quot;stringi&quot;</span><span class="p">,</span> configure.vars<span class="o">=</span><span class="s">&quot;ICUDT_DIR=&lt;dir_to_copy_icudt_from&gt;&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<h2>python</h2>
+<p>直接whlファイルをpipで入れるときにプラットフォームが合わないとエラーになることがあります。</p>
+<p>whlフィアルの名前が<code>-cp27m-manylinux1_x86_64.whl</code>のようにmanylinuxとなっていたら</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pip</span><span class="p">;</span> <span class="k">print</span><span class="p">(</span><span class="n">pip</span><span class="o">.</span><span class="n">pep425tags</span><span class="o">.</span><span class="n">get_supported</span><span class="p">()</span>
+</pre></div>
+
+
+<p>とやって出て来るプラットフォーム名に合わせるとインストール可能になります。</p>
+<p>pythonのミラーは今後の課題です。</p>
+<h1>ntp</h1>
+<p>結構忘れがちなのがノードの時計です。ほっとくと結構ずれますが、publicなntpサーバーには接続できないため補正がかかりません。
+内部ntpサーバーを立ればクラスター内の時刻同期は出来ますが、外部とはずれ続けます。その時刻の補正も必要です。</p>
+<p>対策として、<a href="http://tic.citizen.co.jp/timeserver/">シチズンGPSタイムサーバー</a>を使っています。
+アンテナを窓際において動かしていますが、 幸い受信感度は良く、問題なく時刻合わせが出来ています。</p>
+<h1>監視</h1>
+<p>外部監視サービスは使用できないので、自前で運用することになります。</p>
+<p>今回は<a href="https://prometheus.io">prometheus</a>を使い、
+グラフはgrafanaで表示しています。</p>
+<p>prometheusを選んだ理由は、触ってみたかったというのが一番ですが</p>
 <ul>
-<li>4.04.0からocamlランタイムに<code>CAML_CPLUGINS</code>環境変数に設定された共有ライブラリを自動でロードする機能が追加されたが(<a href="https://github.com/ocaml/ocaml/pull/668">プルリク</a>)、
-ドキュメント化されずデフォルトで有効な状態だった。</li>
-<li>環境変数の読み込み時に、<a href="https://linuxjm.osdn.jp/html/LDP_man-pages/man3/getenv.3.html">secure_getenv</a>のようなset-user-IDチェックが存在しなかったため、
-素通ししてしまった。</li>
+<li>単一バイナリで楽</li>
+<li>アラートもできる</li>
 </ul>
-<p>対策として、<code>secure_getenv</code>がある場合は使用して、なければ自前でチェックするようにしたようです。</p>
-<p><code>Sys.getenv</code>と<code>Unix.getenv</code>も変更の影響を受けるので、以前の動作が欲しい場合は<code>Sys.unsafe_getenv</code> が使用できます。</p>
-<p>また、ocamlコンパイラ自体のビルド時に<code>-no-cplugins</code>フラグを指定するとこの機能自体を無効化できます。
-対策でuidはチェックされるようになりましたが、
-実行時に環境変数に指定されたファイルが自動ロードされてランタイムを変更できてしまう、
-というのはどうも筋が良くない気がします。無効化しておいたほうが無難な印象です。</p>
+<p>という点からも使ってみようという気になりました。</p>
+<p>service discoveryは使用してないためあまり恩恵がないかもしれませんが、
+規模が大きくなったらconsulあたりを入れようかとも考えています。</p>
+<p>使ってみた感想としては、</p>
+<ul>
+<li>node_exporter楽</li>
+<li>Textfile Collectorで追加も楽</li>
+<li>queryやconfigのドキュメントが最小限なのでなれるまで時間かかる</li>
+<li>わかればgrafanaからグラフ作るのも色々できる</li>
+<li>alert.rulesの書式がいつの間にかymlになってて動かなくなってた</li>
+</ul>
+<p>zabbixのようになんでも入りではありませんが、手をかけることで育っていく感じがしています。</p>
+<h1>アラート</h1>
+<p>アラートルールは</p>
+<ul>
+<li>ノードダウン</li>
+<li>RAID状態(textfile collectorで自前で出してる数値)</li>
+<li>DISK空き容量</li>
+<li>CPU温度</li>
+</ul>
+<p>などをとりあえず設定しています。雑です。</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">groups</span><span class="p p-Indicator">:</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">alert.rules</span>
+  <span class="l l-Scalar l-Scalar-Plain">rules</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">alert</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">InstanceDown</span>
+    <span class="l l-Scalar l-Scalar-Plain">expr</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">up == 0</span>
+    <span class="l l-Scalar l-Scalar-Plain">for</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">2m</span>
+    <span class="l l-Scalar l-Scalar-Plain">labels</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">severity</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">critical</span>
+    <span class="l l-Scalar l-Scalar-Plain">annotations</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">$labels.instance</span><span class="nv"> </span><span class="s">}}</span><span class="nv"> </span><span class="s">has</span><span class="nv"> </span><span class="s">been</span><span class="nv"> </span><span class="s">down</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">more</span><span class="nv"> </span><span class="s">than</span><span class="nv"> </span><span class="s">2</span><span class="nv"> </span><span class="s">minutes.&#39;</span>
+      <span class="l l-Scalar l-Scalar-Plain">summary</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Instance {{ $labels.instance }} down</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">alert</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">RAIDFail</span>
+    <span class="l l-Scalar l-Scalar-Plain">expr</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">raid_failed + raid_degraded &gt; 0</span>
+    <span class="l l-Scalar l-Scalar-Plain">labels</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">severity</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">critical</span>
+    <span class="l l-Scalar l-Scalar-Plain">annotations</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">$labels.instance</span><span class="nv"> </span><span class="s">}}</span><span class="nv"> </span><span class="s">raid</span><span class="nv"> </span><span class="s">failed&#39;</span>
+      <span class="l l-Scalar l-Scalar-Plain">summary</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Instance {{ $labels.instance }} raid failed</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">alert</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">DiskSpace</span>
+    <span class="l l-Scalar l-Scalar-Plain">expr</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">min(node_filesystem_free / node_filesystem_size) &lt; 0.05</span>
+    <span class="l l-Scalar l-Scalar-Plain">labels</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">severity</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">critical</span>
+    <span class="l l-Scalar l-Scalar-Plain">annotations</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">$labels.instance</span><span class="nv"> </span><span class="s">}}</span><span class="nv"> </span><span class="s">disk</span><span class="nv"> </span><span class="s">full&#39;</span>
+      <span class="l l-Scalar l-Scalar-Plain">summary</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Instance {{ $labels.instance }} disk full</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">alert</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">CPUTemp</span>
+    <span class="l l-Scalar l-Scalar-Plain">expr</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">node_hwmon_temp_celsius{chip=~&quot;platform_coretemp_.*&quot;} &gt; 80</span>
+    <span class="l l-Scalar l-Scalar-Plain">labels</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">severity</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">critical</span>
+    <span class="l l-Scalar l-Scalar-Plain">annotations</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">$labels.instance</span><span class="nv"> </span><span class="s">}}</span><span class="nv"> </span><span class="s">cpu</span><span class="nv"> </span><span class="s">over</span><span class="nv"> </span><span class="s">temp&#39;</span>
+      <span class="l l-Scalar l-Scalar-Plain">summary</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Instance {{ $labels.instance }} cpu over temp</span>
+</pre></div>
+
+
+<h2>通知</h2>
+<p>アラートできるようになりましたが、インターネットにつながらない場合アラートを送る先が難しいです。
+slack通知などができれば楽なのですがそういうわけにもいきません。
+grafanaのダッシュボードをずっと見ててもいいのですがあまり楽しくはないです。</p>
+<p>このクラスターは自分たちが使用しているため、24時間365日の監視は必要なく、
+アラートは業務中に自分が気がつけばいいだろうということにしました。</p>
+<p>alertmanagerから任意のwebhookを呼べるので、
+今回は使用しているStumpWM内にwebサーバーを動かし受信、メッセージを表示させてみました。</p>
+<p>.stumpwm/init.lispの初期化コード内でwookieを立てて、
+alertmanagerから送られてくるjsonをそのまま表示しています。</p>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">ql:quickload</span> <span class="ss">&#39;wookie</span><span class="p">)</span>
+<span class="p">(</span><span class="nv">ql:quickload</span> <span class="ss">&#39;cl-json</span><span class="p">)</span>
+<span class="p">(</span><span class="nv">wookie:load-plugins</span><span class="p">)</span>
+<span class="p">(</span><span class="nv">wookie:defroute</span> <span class="p">(</span><span class="ss">:post</span> <span class="s">&quot;/&quot;</span><span class="p">)</span> <span class="p">(</span><span class="nv">req</span> <span class="nv">res</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">body</span> <span class="p">(</span><span class="nv">wookie-util:body-to-string</span>
+                <span class="p">(</span><span class="nv">wookie:request-body</span> <span class="nv">req</span><span class="p">)</span>
+                <span class="p">(</span><span class="nv">wookie-util:get-header</span> <span class="p">(</span><span class="nv">wookie:request-headers</span> <span class="nv">req</span><span class="p">)</span> <span class="s">&quot;context-type&quot;</span><span class="p">)))</span>
+          <span class="p">(</span><span class="vg">*print-right-margin*</span> <span class="mi">30</span><span class="p">))</span>
+    <span class="p">(</span><span class="nv">stumpwm:message</span> <span class="s">&quot;ALERT~%~W&quot;</span> <span class="p">(</span><span class="nv">cl-json:decode-json-from-string</span> <span class="nv">body</span><span class="p">)))</span>
+  <span class="p">(</span><span class="nv">wookie:send-response</span> <span class="nv">res</span> <span class="ss">:body</span> <span class="s">&quot;OK&quot;</span><span class="p">))</span>
+<span class="p">(</span><span class="nv">bt:make-thread</span> 
+  <span class="p">(</span><span class="k">lambda</span> <span class="p">()</span>
+    <span class="p">(</span><span class="nv">as:with-event-loop</span> <span class="p">()</span>
+      <span class="p">(</span><span class="nv">wookie:start-server</span>
+        <span class="p">(</span><span class="nb">make-instance</span> <span class="ss">&#39;wookie:listener</span> <span class="ss">:port</span> <span class="mi">9999</span><span class="p">))))))</span>
+</pre></div>
+
+
+<p>お手軽ですが、まあ気がつくだろうという感じです。</p>
+<p>余談ですがアラートをテストしていて、 アラートが動いてないことに気がつくためのアラートはどうしたらいいんだろうと考えています。</p>
+<h1>まとめ</h1>
+<p>インターネットにつながらないと、色々なエコシステムに乗ることが出来ず面倒です。
+自前で運用するリスクやコストもかかるので<strong>可能なら</strong>避けたほうが良いでしょう。</p>
+<p>10年ぐらい前の運用はこんな感じだった気もするので、世の中便利になったのではないでしょうか。
+AWSとかdockerとかすごいなあと思いました。</p>
+<p>他にも思いついたら書いていきたいと思います。</p>
       </article>
 
       <hr />
@@ -71,6 +241,12 @@
           <h3>Last posts</h3>
           <ol class="archive">
     
+
+
+      <li>
+<a href="https://holrock.github.io/cve-2017-9772nocui-ruo-xing.html" rel="bookmark" title="Permalink to CVE-2017-9772の脆弱性">CVE-2017-9772の脆弱性</a>
+  <time datetime="2017-06-25T00:00:00+09:00" pubdate>日 25 6月 2017</time>
+<p class="tags">tags: <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></a>      </li>
 
 
       <li>
@@ -97,10 +273,6 @@
 <p class="tags">tags: <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a><a href="https://holrock.github.io/tag/nginx.html">nginx</a></p></a>      </li>
 
 
-      <li>
-<a href="https://holrock.github.io/allegrograph-sono3.html" rel="bookmark" title="Permalink to AllegroGraph その3">AllegroGraph その3</a>
-  <time datetime="2016-11-07T00:00:00+09:00" pubdate>月 07 11月 2016</time>
-<p class="tags">tags: <a href="https://holrock.github.io/tag/lisp.html">lisp</a><a href="https://holrock.github.io/tag/allegrograph.html">allegrograph</a></p></a>      </li>
 
 
 
@@ -133,6 +305,7 @@
 	              <li ><a href="https://holrock.github.io/category/lisp.html">lisp</a></li>
 	              <li ><a href="https://holrock.github.io/category/ocaml.html">ocaml</a></li>
 	              <li ><a href="https://holrock.github.io/category/python.html">python</a></li>
+	              <li ><a href="https://holrock.github.io/category/server.html">server</a></li>
 	              <li ><a href="https://holrock.github.io/category/z-machine.html">z-machine</a></li>
 	          </ul>
 	        </nav>
@@ -151,7 +324,7 @@
 
       <footer>
 		<p role="contentinfo">
-		  © 2016 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+		  © 2013 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
     	</p>
 
 	  </footer>	
