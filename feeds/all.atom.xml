@@ -1,5 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/all.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2017-09-16T00:00:00+09:00</updated><entry><title>インターネットにつながらないLinuxクラスターを運用する</title><link href="https://holrock.github.io/intanetsutonitsunagaranailinuxkurasutawoyun-yong-suru.html" rel="alternate"></link><published>2017-09-16T00:00:00+09:00</published><updated>2017-09-16T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-09-16:/intanetsutonitsunagaranailinuxkurasutawoyun-yong-suru.html</id><summary type="html">&lt;h1&gt;はしがき&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/all.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2017-10-25T00:00:00+09:00</updated><entry><title>torque 6.1でarray jobが300しか実行されない</title><link href="https://holrock.github.io/torque-61dearray-jobga300shikashi-xing-sarenai.html" rel="alternate"></link><published>2017-10-25T00:00:00+09:00</published><updated>2017-10-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-10-25:/torque-61dearray-jobga300shikashi-xing-sarenai.html</id><summary type="html">&lt;p&gt;torqueのバージョンを上げると&lt;code&gt;qstat -q&lt;/code&gt;でみたときに下記のように300しかでなくなった。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Queue            Memory CPU Time Walltime Node  Run Que Lm  State
+---------------- ------ -------- -------- ----  --- --- --  -----
+batch              --      --       --      --    0  300 --   E R
+                                               ----- -----
+                                                   0   300
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;http://docs.adaptivecomputing.com/torque/6-1-0/releaseNotes/Content/topics/releaseNotes/newFeatures.htm&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Job Arrays Now Only Partially Instantiated By Default&lt;/p&gt;
+&lt;p&gt;Job arrays are now only partially instantiated by default …&lt;/p&gt;&lt;/blockquote&gt;</summary><content type="html">&lt;p&gt;torqueのバージョンを上げると&lt;code&gt;qstat -q&lt;/code&gt;でみたときに下記のように300しかでなくなった。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Queue            Memory CPU Time Walltime Node  Run Que Lm  State
+---------------- ------ -------- -------- ----  --- --- --  -----
+batch              --      --       --      --    0  300 --   E R
+                                               ----- -----
+                                                   0   300
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;http://docs.adaptivecomputing.com/torque/6-1-0/releaseNotes/Content/topics/releaseNotes/newFeatures.htm&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Job Arrays Now Only Partially Instantiated By Default&lt;/p&gt;
+&lt;p&gt;Job arrays are now only partially instantiated by default; additional idle jobs are added as the array is executed. This is controlled by the new idle_slot_limit server parameter.&lt;/p&gt;
+&lt;p&gt;A new qsub -i option has also be added to set the slot limit for the job array being submitted. If set for a non-array job, it will be rejected. If the user requests an idle slot limit that exceeds the server parameter's default, the job will be rejected.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;ということなので&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;qmgr -c 'set server idle_slot_limit = 1000'&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;のように適当な値を入れる必要がある。&lt;/p&gt;
+&lt;p&gt;qsubにも-i オプションが増えてるのでarray jobのコントロールがやりやすくなっている。&lt;/p&gt;</content></entry><entry><title>maui alert</title><link href="https://holrock.github.io/maui-alert.html" rel="alternate"></link><published>2017-10-18T00:00:00+09:00</published><updated>2017-10-18T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-10-18:/maui-alert.html</id><summary type="html">&lt;p&gt;&lt;code&gt;ALERT:    cannnot create reservation in MJobReserv&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;というメッセージがmaui.logに出ているときは
+&lt;code&gt;RESDEPTH&lt;/code&gt;の値を大きくする。&lt;/p&gt;
+&lt;p&gt;http://docs.adaptivecomputing.com/maui/a.fparameters.php&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;code&gt;ALERT:    cannnot create reservation in MJobReserv&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;というメッセージがmaui.logに出ているときは
+&lt;code&gt;RESDEPTH&lt;/code&gt;の値を大きくする。&lt;/p&gt;
+&lt;p&gt;http://docs.adaptivecomputing.com/maui/a.fparameters.php&lt;/p&gt;</content></entry><entry><title>インターネットにつながらないLinuxクラスターを運用する</title><link href="https://holrock.github.io/intanetsutonitsunagaranailinuxkurasutawoyun-yong-suru.html" rel="alternate"></link><published>2017-09-16T00:00:00+09:00</published><updated>2017-09-16T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-09-16:/intanetsutonitsunagaranailinuxkurasutawoyun-yong-suru.html</id><summary type="html">&lt;h1&gt;はしがき&lt;/h1&gt;
 &lt;p&gt;ここ最近は小規模なLinuxクラスターの運用管理もやっています。&lt;/p&gt;
 &lt;p&gt;事情よりクラスター自体がインターネットに接続できないため、通常に比べ管理が面倒だったり、外部サービスを利用できないため不便なことが多々あります。
 そんな環境で色々やってるので書いておきます。&lt;/p&gt;

@@ -31,208 +31,26 @@
 
 
       <article>
-        <h1><a href="https://holrock.github.io/intanetsutonitsunagaranailinuxkurasutawoyun-yong-suru.html">インターネットにつながらないLinuxクラスターを運用する</a></h1>
-        <h1>はしがき</h1>
-<p>ここ最近は小規模なLinuxクラスターの運用管理もやっています。</p>
-<p>事情よりクラスター自体がインターネットに接続できないため、通常に比べ管理が面倒だったり、外部サービスを利用できないため不便なことが多々あります。
-そんな環境で色々やってるので書いておきます。</p>
-<p>環境はCentOS7です。</p>
-<h1>構成管理</h1>
-<p>ansibleを使用しています。クライアント側にインストールの必要が無いため、管理用端末のみインターネットに接続してインストールすればいいので楽です。</p>
-<p>ansible用ユーザーを作って公開鍵認証にしていますが、初回のユーザー作成と鍵配布もansibleで行うため、
-そのときだけは<code>remote_user: root</code>と<code>become_method: su</code>を使ってrootパスワードを使用しています。</p>
-<div class="highlight"><pre><span></span><span class="nn">---</span>
-<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
-  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
-  <span class="l l-Scalar l-Scalar-Plain">become_method</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">su</span>
-  <span class="l l-Scalar l-Scalar-Plain">remote_user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
-  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
-      <span class="l l-Scalar l-Scalar-Plain">user</span><span class="p p-Indicator">:</span>
-        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
-        <span class="l l-Scalar l-Scalar-Plain">append</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner ssh key</span>
-      <span class="l l-Scalar l-Scalar-Plain">authorized_key</span><span class="p p-Indicator">:</span>
-        <span class="l l-Scalar l-Scalar-Plain">user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
-        <span class="l l-Scalar l-Scalar-Plain">key</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">lookup(&#39;file&#39;,</span><span class="nv"> </span><span class="s">&#39;../../ssh/id_rsa.pub&#39;)</span><span class="nv"> </span><span class="s">}}&quot;</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">add sudoers</span>
-      <span class="l l-Scalar l-Scalar-Plain">lineinfile</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">&gt;</span>
-        <span class="no">dest=/etc/sudoers</span>
-        <span class="no">line=&#39;provisioner ALL=(ALL) NOPASSWD: ALL&#39;</span>
+        <h1><a href="https://holrock.github.io/torque-61dearray-jobga300shikashi-xing-sarenai.html">torque 6.1でarray jobが300しか実行されない</a></h1>
+        <p>torqueのバージョンを上げると<code>qstat -q</code>でみたときに下記のように300しかでなくなった。</p>
+<div class="highlight"><pre><span></span>Queue            Memory CPU Time Walltime Node  Run Que Lm  State
+---------------- ------ -------- -------- ----  --- --- --  -----
+batch              --      --       --      --    0  300 --   E R
+                                               ----- -----
+                                                   0   300
 </pre></div>
 
 
-<p>上記のplaybookを<code>--ask-become-pass</code>, <code>--ask-pass</code>付きで流します。</p>
-<p>これ以後はprovisionerユーザーがsudo可能になるので、
-他のplaybook<code>become:yes</code>だけでシステム設定できるようになりました。</p>
-<p>ちなみにこのときにansible.cfgで<code>ssh_args</code>でssh鍵を指定していると接続エラーになるので、
-手動でコメントアウトしています。いい方法ないかな。</p>
-<div class="highlight"><pre><span></span><span class="k">[ssh_connection]</span>
-<span class="na">ssh_args</span> <span class="o">=</span> <span class="s">-F ssh/ssh_config #ここ</span>
-</pre></div>
-
-
-<h1>package</h1>
-<h2>yum</h2>
-<p>インターネットにつながらないため、yumなどがそのままでは使用できません。
-rpmをコピーする方法では依存関係処理が面倒なため、フルミラーを作ります。
-ftp.riken.jpあたりからrsyncしてくるのが早いです。</p>
-<p>yumミラーはhttpで見えるようにしてもいいのですが、今回は全ノードがnfsをマウントしているのでそこにおいています。</p>
-<p>/etc/yum.repos.dの中身を消して、次のようにローカルのものに書き換えれば完了です。</p>
-<div class="highlight"><pre><span></span> [local-repo-os]
-name=local-repo-os
-baseurl=file:///nfs/mirror/centos/7/os/x86_64
-enabled=1
-
-[local-repo-updates]
-name=local-repo-updates
-baseurl=file:///nfs/mirror/centos/7/updates/x86_64
-enabled=1
-</pre></div>
-
-
-<h2>R</h2>
-<p>yum以外にもRのリポジトリミラーも作っています。</p>
-<p>Rの場合、rsyncでコピー後、Rからwrite_PACKAGE関数を読んでパッケージリストを作る必要があります。</p>
-<div class="highlight"><pre><span></span>tools<span class="o">:::</span>write_PACKAGES<span class="p">(</span><span class="s">&quot;/nfs/mirror/R/src/contrib&quot;</span><span class="p">)</span>
-</pre></div>
-
-
-<p>その後、$HOME/.Rprofileにmirrorの場所を指定すると通常どおり<code>install.packages</code>が使用できるようになります。</p>
-<div class="highlight"><pre><span></span><span class="kp">options</span><span class="p">(</span>repos<span class="o">=</span><span class="s">&quot;file:///nfs/mirror/R&quot;</span><span class="p">)</span>
-</pre></div>
-
-
-<p><a href="https://www.bioconductor.org/about/mirrors/mirror-how-to/">bioconductor</a>もミラーしているのですが、ディレクトリ構成が異なりcontribディレクトリの場所を<code>install.packages</code>が見つけてくれないため、上記のoptionsではうまく行きません。</p>
-<p>今のところ<code>contriburl</code>を直接指定していますが、もっといい方法がありそうです。</p>
-<div class="highlight"><pre><span></span>install.packages<span class="p">(</span>“package”<span class="p">,</span> contriburl<span class="o">=</span>”<span class="kp">file</span><span class="o">:///</span>nfs<span class="o">/</span>mirror<span class="o">/</span>biocondutor<span class="o">/</span>packages<span class="o">/</span><span class="m">3.5</span><span class="o">/</span>contrib”<span class="p">)</span>
-</pre></div>
-
-
-<h3>stringi</h3>
-<p>ネットワークにつながらない環境で、<code>tidyverse</code>などをインストールしようとすると大抵stringiのインストールで失敗します。
-stringiがicudtNN.zip(NNは数字)をインストール中にダウンロードしようとするためです。</p>
-<p><a href="http://static.rexamine.com/packages/">http://static.rexamine.com/packages/</a>から対応バージョンのzipファイルをダウンロードして、ノードにコピーします。</p>
-<p><code>configure.vers</code>に<code>ICUDT_DIR</code>をzipのあるパスを指定してインストール可能です。</p>
-<div class="highlight"><pre><span></span>install.packages<span class="p">(</span><span class="s">&quot;stringi&quot;</span><span class="p">,</span> configure.vars<span class="o">=</span><span class="s">&quot;ICUDT_DIR=&lt;dir_to_copy_icudt_from&gt;&quot;</span><span class="p">)</span>
-</pre></div>
-
-
-<h2>python</h2>
-<p>直接whlファイルをpipで入れるときにプラットフォームが合わないとエラーになることがあります。</p>
-<p>whlフィアルの名前が<code>-cp27m-manylinux1_x86_64.whl</code>のようにmanylinuxとなっていたら</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pip</span><span class="p">;</span> <span class="k">print</span><span class="p">(</span><span class="n">pip</span><span class="o">.</span><span class="n">pep425tags</span><span class="o">.</span><span class="n">get_supported</span><span class="p">()</span>
-</pre></div>
-
-
-<p>とやって出て来るプラットフォーム名に合わせるとインストール可能になります。</p>
-<p>pythonのミラーは今後の課題です。</p>
-<h1>ntp</h1>
-<p>結構忘れがちなのがノードの時計です。ほっとくと結構ずれますが、publicなntpサーバーには接続できないため補正がかかりません。
-内部ntpサーバーを立ればクラスター内の時刻同期は出来ますが、外部とはずれ続けます。その時刻の補正も必要です。</p>
-<p>対策として、<a href="http://tic.citizen.co.jp/timeserver/">シチズンGPSタイムサーバー</a>を使っています。
-アンテナを窓際において動かしていますが、 幸い受信感度は良く、問題なく時刻合わせが出来ています。</p>
-<h1>監視</h1>
-<p>外部監視サービスは使用できないので、自前で運用することになります。</p>
-<p>今回は<a href="https://prometheus.io">prometheus</a>を使い、
-グラフはgrafanaで表示しています。</p>
-<p>prometheusを選んだ理由は、触ってみたかったというのが一番ですが</p>
-<ul>
-<li>単一バイナリで楽</li>
-<li>アラートもできる</li>
-</ul>
-<p>という点からも使ってみようという気になりました。</p>
-<p>service discoveryは使用してないためあまり恩恵がないかもしれませんが、
-規模が大きくなったらconsulあたりを入れようかとも考えています。</p>
-<p>使ってみた感想としては、</p>
-<ul>
-<li>node_exporter楽</li>
-<li>Textfile Collectorで追加も楽</li>
-<li>queryやconfigのドキュメントが最小限なのでなれるまで時間かかる</li>
-<li>わかればgrafanaからグラフ作るのも色々できる</li>
-<li>alert.rulesの書式がいつの間にかymlになってて動かなくなってた</li>
-</ul>
-<p>zabbixのようになんでも入りではありませんが、手をかけることで育っていく感じがしています。</p>
-<h1>アラート</h1>
-<p>アラートルールは</p>
-<ul>
-<li>ノードダウン</li>
-<li>RAID状態(textfile collectorで自前で出してる数値)</li>
-<li>DISK空き容量</li>
-<li>CPU温度</li>
-</ul>
-<p>などをとりあえず設定しています。雑です。</p>
-<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">groups</span><span class="p p-Indicator">:</span>
-<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">alert.rules</span>
-  <span class="l l-Scalar l-Scalar-Plain">rules</span><span class="p p-Indicator">:</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">alert</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">InstanceDown</span>
-    <span class="l l-Scalar l-Scalar-Plain">expr</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">up == 0</span>
-    <span class="l l-Scalar l-Scalar-Plain">for</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">2m</span>
-    <span class="l l-Scalar l-Scalar-Plain">labels</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">severity</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">critical</span>
-    <span class="l l-Scalar l-Scalar-Plain">annotations</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">$labels.instance</span><span class="nv"> </span><span class="s">}}</span><span class="nv"> </span><span class="s">has</span><span class="nv"> </span><span class="s">been</span><span class="nv"> </span><span class="s">down</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">more</span><span class="nv"> </span><span class="s">than</span><span class="nv"> </span><span class="s">2</span><span class="nv"> </span><span class="s">minutes.&#39;</span>
-      <span class="l l-Scalar l-Scalar-Plain">summary</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Instance {{ $labels.instance }} down</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">alert</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">RAIDFail</span>
-    <span class="l l-Scalar l-Scalar-Plain">expr</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">raid_failed + raid_degraded &gt; 0</span>
-    <span class="l l-Scalar l-Scalar-Plain">labels</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">severity</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">critical</span>
-    <span class="l l-Scalar l-Scalar-Plain">annotations</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">$labels.instance</span><span class="nv"> </span><span class="s">}}</span><span class="nv"> </span><span class="s">raid</span><span class="nv"> </span><span class="s">failed&#39;</span>
-      <span class="l l-Scalar l-Scalar-Plain">summary</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Instance {{ $labels.instance }} raid failed</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">alert</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">DiskSpace</span>
-    <span class="l l-Scalar l-Scalar-Plain">expr</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">min(node_filesystem_free / node_filesystem_size) &lt; 0.05</span>
-    <span class="l l-Scalar l-Scalar-Plain">labels</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">severity</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">critical</span>
-    <span class="l l-Scalar l-Scalar-Plain">annotations</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">$labels.instance</span><span class="nv"> </span><span class="s">}}</span><span class="nv"> </span><span class="s">disk</span><span class="nv"> </span><span class="s">full&#39;</span>
-      <span class="l l-Scalar l-Scalar-Plain">summary</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Instance {{ $labels.instance }} disk full</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">alert</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">CPUTemp</span>
-    <span class="l l-Scalar l-Scalar-Plain">expr</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">node_hwmon_temp_celsius{chip=~&quot;platform_coretemp_.*&quot;} &gt; 80</span>
-    <span class="l l-Scalar l-Scalar-Plain">labels</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">severity</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">critical</span>
-    <span class="l l-Scalar l-Scalar-Plain">annotations</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">$labels.instance</span><span class="nv"> </span><span class="s">}}</span><span class="nv"> </span><span class="s">cpu</span><span class="nv"> </span><span class="s">over</span><span class="nv"> </span><span class="s">temp&#39;</span>
-      <span class="l l-Scalar l-Scalar-Plain">summary</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Instance {{ $labels.instance }} cpu over temp</span>
-</pre></div>
-
-
-<h2>通知</h2>
-<p>アラートできるようになりましたが、インターネットにつながらない場合アラートを送る先が難しいです。
-slack通知などができれば楽なのですがそういうわけにもいきません。
-grafanaのダッシュボードをずっと見ててもいいのですがあまり楽しくはないです。</p>
-<p>このクラスターは自分たちが使用しているため、24時間365日の監視は必要なく、
-アラートは業務中に自分が気がつけばいいだろうということにしました。</p>
-<p>alertmanagerから任意のwebhookを呼べるので、
-今回は使用しているStumpWM内にwebサーバーを動かし受信、メッセージを表示させてみました。</p>
-<p>.stumpwm/init.lispの初期化コード内でwookieを立てて、
-alertmanagerから送られてくるjsonをそのまま表示しています。</p>
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">ql:quickload</span> <span class="ss">&#39;wookie</span><span class="p">)</span>
-<span class="p">(</span><span class="nv">ql:quickload</span> <span class="ss">&#39;cl-json</span><span class="p">)</span>
-<span class="p">(</span><span class="nv">wookie:load-plugins</span><span class="p">)</span>
-<span class="p">(</span><span class="nv">wookie:defroute</span> <span class="p">(</span><span class="ss">:post</span> <span class="s">&quot;/&quot;</span><span class="p">)</span> <span class="p">(</span><span class="nv">req</span> <span class="nv">res</span><span class="p">)</span>
-  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">body</span> <span class="p">(</span><span class="nv">wookie-util:body-to-string</span>
-                <span class="p">(</span><span class="nv">wookie:request-body</span> <span class="nv">req</span><span class="p">)</span>
-                <span class="p">(</span><span class="nv">wookie-util:get-header</span> <span class="p">(</span><span class="nv">wookie:request-headers</span> <span class="nv">req</span><span class="p">)</span> <span class="s">&quot;context-type&quot;</span><span class="p">)))</span>
-          <span class="p">(</span><span class="vg">*print-right-margin*</span> <span class="mi">30</span><span class="p">))</span>
-    <span class="p">(</span><span class="nv">stumpwm:message</span> <span class="s">&quot;ALERT~%~W&quot;</span> <span class="p">(</span><span class="nv">cl-json:decode-json-from-string</span> <span class="nv">body</span><span class="p">)))</span>
-  <span class="p">(</span><span class="nv">wookie:send-response</span> <span class="nv">res</span> <span class="ss">:body</span> <span class="s">&quot;OK&quot;</span><span class="p">))</span>
-<span class="p">(</span><span class="nv">bt:make-thread</span> 
-  <span class="p">(</span><span class="k">lambda</span> <span class="p">()</span>
-    <span class="p">(</span><span class="nv">as:with-event-loop</span> <span class="p">()</span>
-      <span class="p">(</span><span class="nv">wookie:start-server</span>
-        <span class="p">(</span><span class="nb">make-instance</span> <span class="ss">&#39;wookie:listener</span> <span class="ss">:port</span> <span class="mi">9999</span><span class="p">))))))</span>
-</pre></div>
-
-
-<p>お手軽ですが、まあ気がつくだろうという感じです。</p>
-<p>余談ですがアラートをテストしていて、 アラートが動いてないことに気がつくためのアラートはどうしたらいいんだろうと考えています。</p>
-<h1>まとめ</h1>
-<p>インターネットにつながらないと、色々なエコシステムに乗ることが出来ず面倒です。
-自前で運用するリスクやコストもかかるので<strong>可能なら</strong>避けたほうが良いでしょう。</p>
-<p>10年ぐらい前の運用はこんな感じだった気もするので、世の中便利になったのではないでしょうか。
-AWSとかdockerとかすごいなあと思いました。</p>
-<p>他にも思いついたら書いていきたいと思います。</p>
+<p>http://docs.adaptivecomputing.com/torque/6-1-0/releaseNotes/Content/topics/releaseNotes/newFeatures.htm</p>
+<blockquote>
+<p>Job Arrays Now Only Partially Instantiated By Default</p>
+<p>Job arrays are now only partially instantiated by default; additional idle jobs are added as the array is executed. This is controlled by the new idle_slot_limit server parameter.</p>
+<p>A new qsub -i option has also be added to set the slot limit for the job array being submitted. If set for a non-array job, it will be rejected. If the user requests an idle slot limit that exceeds the server parameter's default, the job will be rejected.</p>
+</blockquote>
+<p>ということなので</p>
+<p><code>qmgr -c 'set server idle_slot_limit = 1000'</code></p>
+<p>のように適当な値を入れる必要がある。</p>
+<p>qsubにも-i オプションが増えてるのでarray jobのコントロールがやりやすくなっている。</p>
       </article>
 
       <hr />
@@ -241,6 +59,18 @@ AWSとかdockerとかすごいなあと思いました。</p>
           <h3>Last posts</h3>
           <ol class="archive">
     
+
+
+      <li>
+<a href="https://holrock.github.io/maui-alert.html" rel="bookmark" title="Permalink to maui alert">maui alert</a>
+  <time datetime="2017-10-18T00:00:00+09:00" pubdate>水 18 10月 2017</time>
+</a>      </li>
+
+
+      <li>
+<a href="https://holrock.github.io/intanetsutonitsunagaranailinuxkurasutawoyun-yong-suru.html" rel="bookmark" title="Permalink to インターネットにつながらないLinuxクラスターを運用する">インターネットにつながらないLinuxクラスターを運用する</a>
+  <time datetime="2017-09-16T00:00:00+09:00" pubdate>土 16 9月 2017</time>
+<p class="tags">tags: <a href="https://holrock.github.io/tag/server.html">server</a></p></a>      </li>
 
 
       <li>
@@ -261,16 +91,8 @@ AWSとかdockerとかすごいなあと思いました。</p>
 <p class="tags">tags: <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></a>      </li>
 
 
-      <li>
-<a href="https://holrock.github.io/zil.html" rel="bookmark" title="Permalink to ZIL">ZIL</a>
-  <time datetime="2016-12-04T00:00:00+09:00" pubdate>日 04 12月 2016</time>
-<p class="tags">tags: <a href="https://holrock.github.io/tag/z-machine.html">z-machine</a><a href="https://holrock.github.io/tag/lisp.html">lisp</a><a href="https://holrock.github.io/tag/zil.html">zil</a></p></a>      </li>
 
 
-      <li>
-<a href="https://holrock.github.io/nginxdeimage-filter.html" rel="bookmark" title="Permalink to nginxでimage filter">nginxでimage filter</a>
-  <time datetime="2016-11-10T00:00:00+09:00" pubdate>木 10 11月 2016</time>
-<p class="tags">tags: <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a><a href="https://holrock.github.io/tag/nginx.html">nginx</a></p></a>      </li>
 
 
 

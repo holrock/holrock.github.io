@@ -32,6 +32,55 @@
 
 <article class="summary">
 <div class="metadata">
+  <time datetime="2016-11-03T00:00:00+09:00" pubdate>木 03 11月 2016</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+    </address>
+  in <a href="https://holrock.github.io/category/lisp.html">lisp</a>
+<p class="tags">tagged <a href="https://holrock.github.io/tag/lisp.html">lisp</a>, <a href="https://holrock.github.io/tag/allegrograph.html">allegrograph</a></p></div>  <div>
+    <h2>
+      <a href="https://holrock.github.io/allegrograph-sono1.html" rel="bookmark" title="Permalink to AllegroGraph その1">AllegroGraph その1</a>
+    </h2>
+    <p><p>AllegroGraphを動かしてみます。</p>
+<ul>
+<li><a href="http://franz.com/agraph/downloads/">http://franz.com/agraph/downloads/</a>からAllegroGraph Virtual Machineをダウンロード</li>
+<li>展開してVirtualboxから読み込む</li>
+<li>Virtualboxで仮想マシンを新規作成<ul>
+<li>type linux</li>
+<li>version ubuntu 64bit</li>
+<li>ディスク作成時にすでにあるディスクを使用するからAllegroGraph 6.0 Virtual Machine.vmdkを選択</li>
+<li>ネットワークのポートフォワーディングでホストポート10034(なんでもいい)からゲストポート10035へフォワーディング設定する</li>
+</ul>
+</li>
+<li>VMを起動</li>
+<li>franz/allegrographでログイン</li>
+<li>デスクトップにあるStart AGを起動する</li>
+<li>ホストマシンからブラウザでlocalhost:10034へアクセスする</li>
+<li>AllegroGraph WebViewへアクセスできたら、User anonymousのところからtest/xyzzyでログイン</li>
+<li><a href="http://franz.com/agraph/support/documentation/current/agraph-quick-start.html">Quick-Start</a>にしたがって</li>
+<li>Create new repositoryにkennedyと入力しcreate</li>
+<li>http://localhost:10034/repositories/kennedyを開く</li>
+<li>from a server-side …</li></ul></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
+  <time datetime="2016-11-02T00:00:00+09:00" pubdate>水 02 11月 2016</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+    </address>
+  in <a href="https://holrock.github.io/category/ocaml.html">ocaml</a>
+<p class="tags">tagged <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></div>  <div>
+    <h2>
+      <a href="https://holrock.github.io/macos-10121niagetaralibcryptogajian-tsukaranai.html" rel="bookmark" title="Permalink to macOS 10.12.1にあげたらlibcryptoが見つからない">macOS 10.12.1にあげたらlibcryptoが見つからない</a>
+    </h2>
+    <p><p>macOSをSierraにあげました。</p>
+<p>その後xcode8.1のインストールをして、omacのビルドをするとlibcryptoが見つからずエラーになりました。</p>
+<div class="highlight"><pre><span></span><span class="c">% ocaml setup.ml -build </span>
+<span class="n">Finished</span><span class="p">,</span> <span class="mi">0</span> <span class="n">targets</span> <span class="p">(</span><span class="mi">0</span> <span class="n">cached</span><span class="p">)</span> <span class="n">in</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.</span>
+<span class="o">+</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">hoge</span><span class="o">/</span><span class="p">.</span><span class="n">opam</span><span class="o">/</span><span class="mf">4.03</span><span class="p">.</span><span class="mi">0</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">ocamlfind</span> <span class="n">ocamlopt</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">linkpkg</span> <span class="o">-</span><span class="n">package</span> <span class="n">cohttp</span> <span class="o">-</span><span class="n">package</span> <span class="n">cohttp</span><span class="p">.</span><span class="n">lwt</span> <span class="o">-</span><span class="n">package</span> <span class="n">conduit</span> <span class="o">-</span><span class="n">package</span> <span class="n">cryptokit</span> <span class="o">-</span><span class="n">package</span> <span class="n">lwt</span> <span class="o">-</span><span class="n">package</span> <span class="n">str</span> <span class="n">src</span><span class="o">/</span><span class="n">omac</span><span class="p">.</span><span class="n">cmx</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="p">.</span><span class="n">cmx</span> <span class="o">-</span><span class="n">o</span> <span class="n">src</span><span class="o">/</span><span class="n">main …</span></pre></div></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
   <time datetime="2016-10-31T00:00:00+09:00" pubdate>月 31 10月 2016</time>
     <address class="vcard author">
       by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>

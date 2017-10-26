@@ -32,6 +32,47 @@
 
 <article class="summary">
 <div class="metadata">
+  <time datetime="2017-10-25T00:00:00+09:00" pubdate>水 25 10月 2017</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+    </address>
+  in <a href="https://holrock.github.io/category/server.html">server</a>
+</div>  <div>
+    <h2>
+      <a href="https://holrock.github.io/torque-61dearray-jobga300shikashi-xing-sarenai.html" rel="bookmark" title="Permalink to torque 6.1でarray jobが300しか実行されない">torque 6.1でarray jobが300しか実行されない</a>
+    </h2>
+    <p><p>torqueのバージョンを上げると<code>qstat -q</code>でみたときに下記のように300しかでなくなった。</p>
+<div class="highlight"><pre><span></span>Queue            Memory CPU Time Walltime Node  Run Que Lm  State
+---------------- ------ -------- -------- ----  --- --- --  -----
+batch              --      --       --      --    0  300 --   E R
+                                               ----- -----
+                                                   0   300
+</pre></div>
+
+
+<p>http://docs.adaptivecomputing.com/torque/6-1-0/releaseNotes/Content/topics/releaseNotes/newFeatures.htm</p>
+<blockquote>
+<p>Job Arrays Now Only Partially Instantiated By Default</p>
+<p>Job arrays are now only partially instantiated by default …</p></blockquote></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
+  <time datetime="2017-10-18T00:00:00+09:00" pubdate>水 18 10月 2017</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+    </address>
+  in <a href="https://holrock.github.io/category/server.html">server</a>
+</div>  <div>
+    <h2>
+      <a href="https://holrock.github.io/maui-alert.html" rel="bookmark" title="Permalink to maui alert">maui alert</a>
+    </h2>
+    <p><p><code>ALERT:    cannnot create reservation in MJobReserv</code></p>
+<p>というメッセージがmaui.logに出ているときは
+<code>RESDEPTH</code>の値を大きくする。</p>
+<p>http://docs.adaptivecomputing.com/maui/a.fparameters.php</p></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
   <time datetime="2017-09-16T00:00:00+09:00" pubdate>土 16 9月 2017</time>
     <address class="vcard author">
       by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
