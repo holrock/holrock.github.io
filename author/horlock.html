@@ -32,6 +32,42 @@
 
 <article class="summary">
 <div class="metadata">
+  <time datetime="2017-11-13T00:00:00+09:00" pubdate>月 13 11月 2017</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+    </address>
+  in <a href="https://holrock.github.io/category/python.html">python</a>
+<p class="tags">tagged <a href="https://holrock.github.io/tag/server.html">server</a>, <a href="https://holrock.github.io/tag/python.html">python</a></p></div>  <div>
+    <h2>
+      <a href="https://holrock.github.io/pypinomirawozuo-ru.html" rel="bookmark" title="Permalink to pypiのミラーを作る">pypiのミラーを作る</a>
+    </h2>
+    <p><p><a href="https://pypi.python.org/pypi/bandersnatch">bandersnatch</a>を使用してpypiミラーを作成します。</p>
+<p>数日ほど時間がかかる上、500GiBぐらいディスクを使います。</p>
+<h1>bandersnatchのインストール</h1>
+<div class="highlight"><pre><span></span>$ virtualenv bandersnatch
+$ <span class="nb">cd</span> bandersnatch
+$ bin/pip install -r https://bitbucket.org/pypa/bandersnatch/raw/stable/requirements.txt
+</pre></div>
+
+
+<h1>bandersnatch.conf</h1>
+<div class="highlight"><pre><span></span># ミラーのコピー先
+directory = /usr/local/mirror/pypi/
+master = https://pypi.python.org
+timeout = 10
+# worker=1だとすごく時間がかかる
+workers = 3
+hash-index = false
+stop-on-error = false
+delete-packages = true
+</pre></div>
+
+
+<h1>不要なバイナリのコピーをやめる</h1>
+<p>完全なミラーを作る必要がなく、linuxでだけ使用するのでwin32 …</p></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
   <time datetime="2017-10-25T00:00:00+09:00" pubdate>水 25 10月 2017</time>
     <address class="vcard author">
       by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
@@ -278,33 +314,6 @@ Infocom社によって作られました。</p>
 <li>mlispができたらslimeの設定を通します</li>
 </ul>
 <div class="highlight"><pre><span></span>(setq inferior-lisp-program &quot;/Applications/AllegroCLexpress.app/Contents/Resources …</pre></div></p>
-  </div>
-</article><article class="summary">
-<div class="metadata">
-  <time datetime="2016-11-04T00:00:00+09:00" pubdate>金 04 11月 2016</time>
-    <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
-    </address>
-  in <a href="https://holrock.github.io/category/lisp.html">lisp</a>
-<p class="tags">tagged <a href="https://holrock.github.io/tag/lisp.html">lisp</a>, <a href="https://holrock.github.io/tag/allegrograph.html">allegrograph</a>, <a href="https://holrock.github.io/tag/ruby.html">ruby</a>, <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a></p></div>  <div>
-    <h2>
-      <a href="https://holrock.github.io/allegrograph-sono2.html" rel="bookmark" title="Permalink to AllegroGraph その2">AllegroGraph その2</a>
-    </h2>
-    <p><p>AllegroGraphが動くようになったので、データ作って投入します。</p>
-<p>データは<a href="https://www.cattoy.info">cattoy</a>から作ります。</p>
-<p><a href="https://github.com/holrock/cattoy/commit/202415749077a2820bff11d3544af3fc03453b65">こんなかんじ</a>
-にRDF出力コードを仕込んだので、</p>
-<div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="no">RDF</span><span class="o">::</span><span class="no">Graph</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">tap</span> <span class="p">{</span><span class="o">|</span><span class="n">g</span><span class="o">|</span> <span class="no">Cat</span><span class="o">.</span><span class="n">all</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span><span class="o">|</span><span class="n">c</span><span class="o">|</span> <span class="n">g</span> <span class="o">&lt;&lt;</span> <span class="n">c</span><span class="o">.</span><span class="n">to_rdf</span> <span class="p">}}</span>
-<span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;/tmp/cat.ttl&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="n">f</span> <span class="o">&lt;&lt;</span> <span class="n">g</span><span class="o">.</span><span class="n">to_ttl</span> <span class="p">}</span>
-</pre></div>
-
-
-<p>でファイルに吐き出します。
-なかみはこんなかんじです。</p>
-<div class="highlight"><pre><span></span><span class="p">@</span><span class="k">prefix</span> <span class="nt">schema</span><span class="o">:</span> <span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">schema</span><span class="p">.</span><span class="nc">org</span><span class="o">/&gt;</span> <span class="o">.</span>
-<span class="p">@</span><span class="k">prefix</span> <span class="nt">xsd</span><span class="o">:</span> <span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">www</span><span class="p">.</span><span class="nc">w3</span><span class="p">.</span><span class="nc">org</span><span class="o">/</span><span class="nt">2001</span><span class="o">/</span><span class="nt">XMLSchema</span><span class="err">#</span><span class="o">&gt;</span> <span class="o">.</span>
-
-<span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">www</span><span class="p">.</span><span class="nc">cattoy</span><span class="p">.</span><span class="nc">info</span><span class="o">/</span><span class="nt">histories …</span></pre></div></p>
   </div>
 </article>
 <div class="pagination">

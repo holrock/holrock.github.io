@@ -2,9 +2,12 @@
 <html lang="">	
 <head>
 	<meta charset="utf-8"/>
-	<title>Starbug</title>	
+	<title>pypiのミラーを作る - Starbug</title>	
 	<meta name="author" content="horlock">
 	
+
+	<meta name="description" content="bandersnatchを使用してpypiミラーを作成します。 数日ほど時間がかかる上、500GiBぐらいディスクを使います。 bandersnatchのインストール $ virtualenv bandersnatch $ cd bandersnatch $ bin/pip install -r https://bitbucket.org/pypa/bandersnatch/raw/stable/requirements.txt bandersnatch.conf # ミラーのコピー先 directory = /usr/local/mirror/pypi/ master = https://pypi.python.org timeout = 10 # worker=1だとすごく時間がかかる workers = 3 hash-index = false stop-on-error = false delete-packages = true 不要なバイナリのコピーをやめる 完全なミラーを作る必要がなく、linuxでだけ使用するのでwin32 …">
+
 
 	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
 	<link rel="stylesheet" href="https://holrock.github.io/theme/css/main.css" type="text/css" />
@@ -27,12 +30,18 @@
 	  <div class="wrapper">
 
 		  <div role="main" class="content">
-
-
-
-      <article>
-        <h1><a href="https://holrock.github.io/pypinomirawozuo-ru.html">pypiのミラーを作る</a></h1>
-        <p><a href="https://pypi.python.org/pypi/bandersnatch">bandersnatch</a>を使用してpypiミラーを作成します。</p>
+	<article class="full">
+			
+		<h1>pypiのミラーを作る</h1>
+		
+<div class="metadata">
+  <time datetime="2017-11-13T00:00:00+09:00" pubdate>月 13 11月 2017</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+    </address>
+  in <a href="https://holrock.github.io/category/python.html">python</a>
+<p class="tags">tagged <a href="https://holrock.github.io/tag/server.html">server</a>, <a href="https://holrock.github.io/tag/python.html">python</a></p></div>		
+		<p><a href="https://pypi.python.org/pypi/bandersnatch">bandersnatch</a>を使用してpypiミラーを作成します。</p>
 <p>数日ほど時間がかかる上、500GiBぐらいディスクを使います。</p>
 <h1>bandersnatchのインストール</h1>
 <div class="highlight"><pre><span></span>$ virtualenv bandersnatch
@@ -118,73 +127,15 @@ trusted-host = hostname
 </pre></div>
 
 
-<p>これで<code>pip install</code>がインターネットに接続できない環境でも使えるようになりました。</p>
-      </article>
+<p>これで<code>pip install</code>がインターネットに接続できない環境でも使えるようになりました。</p>	
 
-      <hr />
+	</article>
 
-        <div>
-          <h3>Last posts</h3>
-          <ol class="archive">
-    
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
 
-
-      <li>
-<a href="https://holrock.github.io/torque-61dearray-jobga300shikashi-xing-sarenai.html" rel="bookmark" title="Permalink to torque 6.1でarray jobが300しか実行されない">torque 6.1でarray jobが300しか実行されない</a>
-  <time datetime="2017-10-25T00:00:00+09:00" pubdate>水 25 10月 2017</time>
-</a>      </li>
-
-
-      <li>
-<a href="https://holrock.github.io/maui-alert.html" rel="bookmark" title="Permalink to maui alert">maui alert</a>
-  <time datetime="2017-10-18T00:00:00+09:00" pubdate>水 18 10月 2017</time>
-</a>      </li>
-
-
-      <li>
-<a href="https://holrock.github.io/intanetsutonitsunagaranailinuxkurasutawoyun-yong-suru.html" rel="bookmark" title="Permalink to インターネットにつながらないLinuxクラスターを運用する">インターネットにつながらないLinuxクラスターを運用する</a>
-  <time datetime="2017-09-16T00:00:00+09:00" pubdate>土 16 9月 2017</time>
-<p class="tags">tags: <a href="https://holrock.github.io/tag/server.html">server</a></p></a>      </li>
-
-
-      <li>
-<a href="https://holrock.github.io/cve-2017-9772nocui-ruo-xing.html" rel="bookmark" title="Permalink to CVE-2017-9772の脆弱性">CVE-2017-9772の脆弱性</a>
-  <time datetime="2017-06-25T00:00:00+09:00" pubdate>日 25 6月 2017</time>
-<p class="tags">tags: <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></a>      </li>
-
-
-      <li>
-<a href="https://holrock.github.io/ocaml-4041.html" rel="bookmark" title="Permalink to OCaml 4.04.1">OCaml 4.04.1</a>
-  <time datetime="2017-04-16T00:00:00+09:00" pubdate>日 16 4月 2017</time>
-<p class="tags">tags: <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></a>      </li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-          </ol>
-        </div>
 
 		  </div>	
 		  
@@ -196,7 +147,7 @@ trusted-host = hostname
 	              <li ><a href="https://holrock.github.io/category/cattoy.html">cattoy</a></li>
 	              <li ><a href="https://holrock.github.io/category/lisp.html">lisp</a></li>
 	              <li ><a href="https://holrock.github.io/category/ocaml.html">ocaml</a></li>
-	              <li ><a href="https://holrock.github.io/category/python.html">python</a></li>
+	              <li class="active"><a href="https://holrock.github.io/category/python.html">python</a></li>
 	              <li ><a href="https://holrock.github.io/category/server.html">server</a></li>
 	              <li ><a href="https://holrock.github.io/category/z-machine.html">z-machine</a></li>
 	          </ul>

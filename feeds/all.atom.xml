@@ -1,5 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/all.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2017-10-25T00:00:00+09:00</updated><entry><title>torque 6.1でarray jobが300しか実行されない</title><link href="https://holrock.github.io/torque-61dearray-jobga300shikashi-xing-sarenai.html" rel="alternate"></link><published>2017-10-25T00:00:00+09:00</published><updated>2017-10-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-10-25:/torque-61dearray-jobga300shikashi-xing-sarenai.html</id><summary type="html">&lt;p&gt;torqueのバージョンを上げると&lt;code&gt;qstat -q&lt;/code&gt;でみたときに下記のように300しかでなくなった。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/all.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2017-11-13T00:00:00+09:00</updated><entry><title>pypiのミラーを作る</title><link href="https://holrock.github.io/pypinomirawozuo-ru.html" rel="alternate"></link><published>2017-11-13T00:00:00+09:00</published><updated>2017-11-13T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-11-13:/pypinomirawozuo-ru.html</id><summary type="html">&lt;p&gt;&lt;a href="https://pypi.python.org/pypi/bandersnatch"&gt;bandersnatch&lt;/a&gt;を使用してpypiミラーを作成します。&lt;/p&gt;
+&lt;p&gt;数日ほど時間がかかる上、500GiBぐらいディスクを使います。&lt;/p&gt;
+&lt;h1&gt;bandersnatchのインストール&lt;/h1&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ virtualenv bandersnatch
+$ &lt;span class="nb"&gt;cd&lt;/span&gt; bandersnatch
+$ bin/pip install -r https://bitbucket.org/pypa/bandersnatch/raw/stable/requirements.txt
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;bandersnatch.conf&lt;/h1&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# ミラーのコピー先
+directory = /usr/local/mirror/pypi/
+master = https://pypi.python.org
+timeout = 10
+# worker=1だとすごく時間がかかる
+workers = 3
+hash-index = false
+stop-on-error = false
+delete-packages = true
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;不要なバイナリのコピーをやめる&lt;/h1&gt;
+&lt;p&gt;完全なミラーを作る必要がなく、linuxでだけ使用するのでwin32 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://pypi.python.org/pypi/bandersnatch"&gt;bandersnatch&lt;/a&gt;を使用してpypiミラーを作成します。&lt;/p&gt;
+&lt;p&gt;数日ほど時間がかかる上、500GiBぐらいディスクを使います。&lt;/p&gt;
+&lt;h1&gt;bandersnatchのインストール&lt;/h1&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ virtualenv bandersnatch
+$ &lt;span class="nb"&gt;cd&lt;/span&gt; bandersnatch
+$ bin/pip install -r https://bitbucket.org/pypa/bandersnatch/raw/stable/requirements.txt
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;bandersnatch.conf&lt;/h1&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# ミラーのコピー先
+directory = /usr/local/mirror/pypi/
+master = https://pypi.python.org
+timeout = 10
+# worker=1だとすごく時間がかかる
+workers = 3
+hash-index = false
+stop-on-error = false
+delete-packages = true
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;不要なバイナリのコピーをやめる&lt;/h1&gt;
+&lt;p&gt;完全なミラーを作る必要がなく、linuxでだけ使用するのでwin32, macosxのwhlなどは不要です。&lt;/p&gt;
+&lt;p&gt;lib/python3.6/site-packages/bandersnatch/package.py 
+にパッチを当ててダウンロードしないようにしました。
+バージョンは2.0.0です。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;sync_release_files&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;release_files&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;release&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;releases&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;values&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+            &lt;span class="n"&gt;release_files&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;extend&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;release&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;purge_files&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;release_files&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;release_file&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;release_files&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;download_file&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;release_file&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;url&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;release_file&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;md5_digest&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;ここにダウンロードしない条件を入れました&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;sync_release_files&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;release_files&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;release&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;releases&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;values&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+            &lt;span class="n"&gt;release_files&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;extend&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;release&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;purge_files&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;release_files&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;release_file&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;release_files&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+           &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;search&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;macosx|win32|win_amd64&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;release_file&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;url&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]):&lt;/span&gt;
+               &lt;span class="n"&gt;logger&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;info&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;u&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;skip: {0}&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;release_file&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;url&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]))&lt;/span&gt;
+           &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+               &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;download_file&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;release_file&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;url&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;release_file&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;md5_digest&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;実行&lt;/h1&gt;
+&lt;p&gt;かなり時間がかかります。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;bandersnatch -c ./bandersnatch.conf mirror
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;webサーバーを立てる&lt;/h1&gt;
+&lt;p&gt;nginxをインストールし、ミラーしたパスへaliasを設定します。&lt;/p&gt;
+&lt;p&gt;nginx.conf&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;server {
+
+    ...
+
+    location /pipy {
+        alias /usr/local/mirror/pypi/web;
+        autoindex on;
+        charset utf-8;
+    }
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;pip.confの設定&lt;/h1&gt;
+&lt;p&gt;$HOME/.config/pip/pip.conf&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;index-url = http://hostname/pipy/simple
+trusted-host = hostname
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;これで&lt;code&gt;pip install&lt;/code&gt;がインターネットに接続できない環境でも使えるようになりました。&lt;/p&gt;</content><category term="server"></category><category term="python"></category></entry><entry><title>torque 6.1でarray jobが300しか実行されない</title><link href="https://holrock.github.io/torque-61dearray-jobga300shikashi-xing-sarenai.html" rel="alternate"></link><published>2017-10-25T00:00:00+09:00</published><updated>2017-10-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-10-25:/torque-61dearray-jobga300shikashi-xing-sarenai.html</id><summary type="html">&lt;p&gt;torqueのバージョンを上げると&lt;code&gt;qstat -q&lt;/code&gt;でみたときに下記のように300しかでなくなった。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Queue            Memory CPU Time Walltime Node  Run Que Lm  State
 ---------------- ------ -------- -------- ----  --- --- --  -----
 batch              --      --       --      --    0  300 --   E R

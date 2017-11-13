@@ -32,6 +32,42 @@
 
 <article class="summary">
 <div class="metadata">
+  <time datetime="2017-11-13T00:00:00+09:00" pubdate>月 13 11月 2017</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+    </address>
+  in <a href="https://holrock.github.io/category/python.html">python</a>
+<p class="tags">tagged <a href="https://holrock.github.io/tag/server.html">server</a>, <a href="https://holrock.github.io/tag/python.html">python</a></p></div>  <div>
+    <h2>
+      <a href="https://holrock.github.io/pypinomirawozuo-ru.html" rel="bookmark" title="Permalink to pypiのミラーを作る">pypiのミラーを作る</a>
+    </h2>
+    <p><p><a href="https://pypi.python.org/pypi/bandersnatch">bandersnatch</a>を使用してpypiミラーを作成します。</p>
+<p>数日ほど時間がかかる上、500GiBぐらいディスクを使います。</p>
+<h1>bandersnatchのインストール</h1>
+<div class="highlight"><pre><span></span>$ virtualenv bandersnatch
+$ <span class="nb">cd</span> bandersnatch
+$ bin/pip install -r https://bitbucket.org/pypa/bandersnatch/raw/stable/requirements.txt
+</pre></div>
+
+
+<h1>bandersnatch.conf</h1>
+<div class="highlight"><pre><span></span># ミラーのコピー先
+directory = /usr/local/mirror/pypi/
+master = https://pypi.python.org
+timeout = 10
+# worker=1だとすごく時間がかかる
+workers = 3
+hash-index = false
+stop-on-error = false
+delete-packages = true
+</pre></div>
+
+
+<h1>不要なバイナリのコピーをやめる</h1>
+<p>完全なミラーを作る必要がなく、linuxでだけ使用するのでwin32 …</p></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
   <time datetime="2017-09-16T00:00:00+09:00" pubdate>土 16 9月 2017</time>
     <address class="vcard author">
       by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
