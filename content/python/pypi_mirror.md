@@ -49,6 +49,8 @@ lib/python3.6/site-packages/bandersnatch/package.py
             self.download_file(release_file['url'], release_file['md5_digest'])
 ```
 
+ここにダウンロードしない条件を入れました
+
 ```python
     def sync_release_files(self):
         release_files = []
