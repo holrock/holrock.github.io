@@ -88,7 +88,7 @@ server {
 
     ...
 
-    location /pipy {
+    location /pypi {
         alias /usr/local/mirror/pypi/web;
         autoindex on;
         charset utf-8;
