@@ -32,6 +32,42 @@
 
 <article class="summary">
 <div class="metadata">
+  <time datetime="2016-11-07T00:00:00+09:00" pubdate>月 07 11月 2016</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+    </address>
+  in <a href="https://holrock.github.io/category/lisp.html">lisp</a>
+<p class="tags">tagged <a href="https://holrock.github.io/tag/lisp.html">lisp</a>, <a href="https://holrock.github.io/tag/allegrograph.html">allegrograph</a></p></div>  <div>
+    <h2>
+      <a href="https://holrock.github.io/allegrograph-sono3.html" rel="bookmark" title="Permalink to AllegroGraph その3">AllegroGraph その3</a>
+    </h2>
+    <p><p>前回全然lispじゃなかった。</p>
+<p>今回はACLから繋いでみます。</p>
+<h1>準備</h1>
+<h2>Allegro CL 10.0 Free Express Editionのインストール</h2>
+<ul>
+<li>Macの場合X11とかGTKとか必要とありますが、slimeから使うならなくてもいけます</li>
+</ul>
+<h2>mlispをつくる</h2>
+<ul>
+<li>AllegroGraph clientはalispでは動かないのでmlispを作ります</li>
+<li><a href="http://franz.com/support/faq/#s3q7">faq</a>にあるので、いちどalispを起動してから次にコードを実行します</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="k">progn</span>
+  <span class="p">(</span><span class="nv">build-lisp-image</span> <span class="s">&quot;sys:mlisp.dxl&quot;</span> <span class="ss">:case-mode</span> <span class="ss">:case-sensitive-lower</span>
+          <span class="ss">:include-ide</span> <span class="no">nil</span> <span class="ss">:restart-app-function</span> <span class="no">nil</span><span class="p">)</span>
+    <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nb">probe-file</span> <span class="s">&quot;sys:mlisp&quot;</span><span class="p">)</span> <span class="p">(</span><span class="nb">delete-file</span> <span class="s">&quot;sys:mlisp&quot;</span><span class="p">))</span>
+      <span class="p">(</span><span class="nv">sys:copy-file</span> <span class="s">&quot;sys:alisp&quot;</span> <span class="s">&quot;sys:mlisp&quot;</span><span class="p">))</span>
+</pre></div>
+
+
+<ul>
+<li>mlispができたらslimeの設定を通します</li>
+</ul>
+<div class="highlight"><pre><span></span>(setq inferior-lisp-program &quot;/Applications/AllegroCLexpress.app/Contents/Resources …</pre></div></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
   <time datetime="2016-11-04T00:00:00+09:00" pubdate>金 04 11月 2016</time>
     <address class="vcard author">
       by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
@@ -270,6 +306,7 @@ configure arguments: --prefix=/opt/nginx-1 …</pre></div></p>
 	              <li ><a href="https://holrock.github.io/category/lisp.html">lisp</a></li>
 	              <li ><a href="https://holrock.github.io/category/ocaml.html">ocaml</a></li>
 	              <li ><a href="https://holrock.github.io/category/python.html">python</a></li>
+	              <li ><a href="https://holrock.github.io/category/ruby.html">ruby</a></li>
 	              <li ><a href="https://holrock.github.io/category/server.html">server</a></li>
 	              <li ><a href="https://holrock.github.io/category/z-machine.html">z-machine</a></li>
 	          </ul>

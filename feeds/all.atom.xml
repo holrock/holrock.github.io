@@ -1,5 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/all.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2017-11-13T00:00:00+09:00</updated><entry><title>pypiのミラーを作る</title><link href="https://holrock.github.io/pypinomirawozuo-ru.html" rel="alternate"></link><published>2017-11-13T00:00:00+09:00</published><updated>2017-11-13T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-11-13:/pypinomirawozuo-ru.html</id><summary type="html">&lt;p&gt;&lt;a href="https://pypi.python.org/pypi/bandersnatch"&gt;bandersnatch&lt;/a&gt;を使用してpypiミラーを作成します。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/all.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2017-12-23T00:00:00+09:00</updated><entry><title>rub2を公開しました</title><link href="https://holrock.github.io/rub2wogong-kai-shimashita.html" rel="alternate"></link><published>2017-12-23T00:00:00+09:00</published><updated>2017-12-23T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-12-23:/rub2wogong-kai-shimashita.html</id><summary type="html">&lt;p&gt;&lt;a href="https://github.com/holrock/rub2"&gt;github&lt;/a&gt;
+&lt;a href="https://rubygems.org/gems/rub2"&gt;gem&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;rub2はtorque qsub用ruby DSLです。&lt;/p&gt;
+&lt;p&gt;簡単なjobを簡単に書くことを目的にデザインされています。&lt;/p&gt;
+&lt;p&gt;何年か内部で使用していたツールですが、gem化のついでに公開しました。&lt;/p&gt;
+&lt;p&gt;rubyでtorque jobを書く方はそういないと思いますが、お役に立てば幸いです。&lt;/p&gt;
+&lt;h2&gt;簡単なサンプル&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;require&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;rub2&amp;#39;&lt;/span&gt;
+
+&lt;span class="n"&gt;submit&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;SimpleJob&amp;quot;&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+  &lt;span class="n"&gt;execute_with&lt;/span&gt; &lt;span class="no"&gt;Dir&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;glob&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/etc/*.conf&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
+     &lt;span class="s2"&gt;&amp;quot;wc -l &lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;と書くと、&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;wc -l nfs.conf
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;のようなjobが&lt;code&gt;Dir.glob("/etc/*.conf")&lt;/code&gt;が返した配列の要素ごとに生成され実行されます。&lt;/p&gt;
+&lt;p&gt;その後、各jobやqstatの状態を監視し、すべてのjobが終了するまで待ち合わせます。&lt;/p&gt;
+&lt;h2&gt;あれこれ&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;execute_with&lt;/code&gt; は配列(複数可)をに受取り、 blockの結果をbashスクリプトとして出力します。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;shellでエラーになる時や …&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://github.com/holrock/rub2"&gt;github&lt;/a&gt;
+&lt;a href="https://rubygems.org/gems/rub2"&gt;gem&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;rub2はtorque qsub用ruby DSLです。&lt;/p&gt;
+&lt;p&gt;簡単なjobを簡単に書くことを目的にデザインされています。&lt;/p&gt;
+&lt;p&gt;何年か内部で使用していたツールですが、gem化のついでに公開しました。&lt;/p&gt;
+&lt;p&gt;rubyでtorque jobを書く方はそういないと思いますが、お役に立てば幸いです。&lt;/p&gt;
+&lt;h2&gt;簡単なサンプル&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;require&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;rub2&amp;#39;&lt;/span&gt;
+
+&lt;span class="n"&gt;submit&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;SimpleJob&amp;quot;&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+  &lt;span class="n"&gt;execute_with&lt;/span&gt; &lt;span class="no"&gt;Dir&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;glob&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/etc/*.conf&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
+     &lt;span class="s2"&gt;&amp;quot;wc -l &lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;と書くと、&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;wc -l nfs.conf
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;のようなjobが&lt;code&gt;Dir.glob("/etc/*.conf")&lt;/code&gt;が返した配列の要素ごとに生成され実行されます。&lt;/p&gt;
+&lt;p&gt;その後、各jobやqstatの状態を監視し、すべてのjobが終了するまで待ち合わせます。&lt;/p&gt;
+&lt;h2&gt;あれこれ&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;execute_with&lt;/code&gt; は配列(複数可)をに受取り、 blockの結果をbashスクリプトとして出力します。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;shellでエラーになる時や、事前に動作を確認したい時は&lt;code&gt;dry_run&lt;/code&gt;を指定して実行すると、
+実際にsubmitされるスクリプトが出力されるので、参考にしてください。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;node側にもrubyがインストールされている必要があります。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;torqueのバージョンによっては動かないことがあります。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</content><category term="ruby"></category></entry><entry><title>pypiのミラーを作る</title><link href="https://holrock.github.io/pypinomirawozuo-ru.html" rel="alternate"></link><published>2017-11-13T00:00:00+09:00</published><updated>2017-11-13T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-11-13:/pypinomirawozuo-ru.html</id><summary type="html">&lt;p&gt;&lt;a href="https://pypi.python.org/pypi/bandersnatch"&gt;bandersnatch&lt;/a&gt;を使用してpypiミラーを作成します。&lt;/p&gt;
 &lt;p&gt;数日ほど時間がかかる上、500GiBぐらいディスクを使います。&lt;/p&gt;
 &lt;h1&gt;bandersnatchのインストール&lt;/h1&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ virtualenv bandersnatch

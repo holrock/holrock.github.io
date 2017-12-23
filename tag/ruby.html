@@ -32,6 +32,49 @@
 
 <article class="summary">
 <div class="metadata">
+  <time datetime="2017-12-23T00:00:00+09:00" pubdate>土 23 12月 2017</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+    </address>
+  in <a href="https://holrock.github.io/category/ruby.html">ruby</a>
+<p class="tags">tagged <a href="https://holrock.github.io/tag/ruby.html">ruby</a></p></div>  <div>
+    <h2>
+      <a href="https://holrock.github.io/rub2wogong-kai-shimashita.html" rel="bookmark" title="Permalink to rub2を公開しました">rub2を公開しました</a>
+    </h2>
+    <p><p><a href="https://github.com/holrock/rub2">github</a>
+<a href="https://rubygems.org/gems/rub2">gem</a></p>
+<p>rub2はtorque qsub用ruby DSLです。</p>
+<p>簡単なjobを簡単に書くことを目的にデザインされています。</p>
+<p>何年か内部で使用していたツールですが、gem化のついでに公開しました。</p>
+<p>rubyでtorque jobを書く方はそういないと思いますが、お役に立てば幸いです。</p>
+<h2>簡単なサンプル</h2>
+<div class="highlight"><pre><span></span><span class="nb">require</span> <span class="s1">&#39;rub2&#39;</span>
+
+<span class="n">submit</span> <span class="s2">&quot;SimpleJob&quot;</span> <span class="k">do</span>
+  <span class="n">execute_with</span> <span class="no">Dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;/etc/*.conf&quot;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span>
+     <span class="s2">&quot;wc -l </span><span class="si">#{</span><span class="n">file</span><span class="si">}</span><span class="s2">&quot;</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+
+
+<p>と書くと、</p>
+<div class="highlight"><pre><span></span>wc -l nfs.conf
+</pre></div>
+
+
+<p>のようなjobが<code>Dir.glob("/etc/*.conf")</code>が返した配列の要素ごとに生成され実行されます。</p>
+<p>その後、各jobやqstatの状態を監視し、すべてのjobが終了するまで待ち合わせます。</p>
+<h2>あれこれ</h2>
+<ul>
+<li>
+<p><code>execute_with</code> は配列(複数可)をに受取り、 blockの結果をbashスクリプトとして出力します。</p>
+</li>
+<li>
+<p>shellでエラーになる時や …</p></li></ul></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
   <time datetime="2016-11-04T00:00:00+09:00" pubdate>金 04 11月 2016</time>
     <address class="vcard author">
       by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
@@ -103,6 +146,7 @@ configure arguments: --prefix=/opt/nginx-1 …</pre></div></p>
 	              <li ><a href="https://holrock.github.io/category/lisp.html">lisp</a></li>
 	              <li ><a href="https://holrock.github.io/category/ocaml.html">ocaml</a></li>
 	              <li ><a href="https://holrock.github.io/category/python.html">python</a></li>
+	              <li ><a href="https://holrock.github.io/category/ruby.html">ruby</a></li>
 	              <li ><a href="https://holrock.github.io/category/server.html">server</a></li>
 	              <li ><a href="https://holrock.github.io/category/z-machine.html">z-machine</a></li>
 	          </ul>

@@ -2,9 +2,12 @@
 <html lang="">	
 <head>
 	<meta charset="utf-8"/>
-	<title>Starbug</title>	
+	<title>rub2を公開しました - Starbug</title>	
 	<meta name="author" content="horlock">
 	
+
+	<meta name="description" content="github gem rub2はtorque qsub用ruby DSLです。 簡単なjobを簡単に書くことを目的にデザインされています。 何年か内部で使用していたツールですが、gem化のついでに公開しました。 rubyでtorque jobを書く方はそういないと思いますが、お役に立てば幸いです。 簡単なサンプル require 'rub2' submit "SimpleJob" do execute_with Dir.glob("/etc/*.conf") do |file| "wc -l #{file}" end end と書くと、 wc -l nfs.conf のようなjobがDir.glob("/etc/*.conf")が返した配列の要素ごとに生成され実行されます。 その後、各jobやqstatの状態を監視し、すべてのjobが終了するまで待ち合わせます。 あれこれ execute_with は配列(複数可)をに受取り、 blockの結果をbashスクリプトとして出力します。 shellでエラーになる時や …">
+
 
 	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
 	<link rel="stylesheet" href="https://holrock.github.io/theme/css/main.css" type="text/css" />
@@ -27,12 +30,18 @@
 	  <div class="wrapper">
 
 		  <div role="main" class="content">
-
-
-
-      <article>
-        <h1><a href="https://holrock.github.io/rub2wogong-kai-shimashita.html">rub2を公開しました</a></h1>
-        <p><a href="https://github.com/holrock/rub2">github</a>
+	<article class="full">
+			
+		<h1>rub2を公開しました</h1>
+		
+<div class="metadata">
+  <time datetime="2017-12-23T00:00:00+09:00" pubdate>土 23 12月 2017</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+    </address>
+  in <a href="https://holrock.github.io/category/ruby.html">ruby</a>
+<p class="tags">tagged <a href="https://holrock.github.io/tag/ruby.html">ruby</a></p></div>		
+		<p><a href="https://github.com/holrock/rub2">github</a>
 <a href="https://rubygems.org/gems/rub2">gem</a></p>
 <p>rub2はtorque qsub用ruby DSLです。</p>
 <p>簡単なjobを簡単に書くことを目的にデザインされています。</p>
@@ -71,75 +80,15 @@
 <li>
 <p>torqueのバージョンによっては動かないことがあります。</p>
 </li>
-</ul>
-      </article>
+</ul>	
 
-      <hr />
+	</article>
 
-        <div>
-          <h3>Last posts</h3>
-          <ol class="archive">
-    
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
 
-
-      <li>
-<a href="https://holrock.github.io/pypinomirawozuo-ru.html" rel="bookmark" title="Permalink to pypiのミラーを作る">pypiのミラーを作る</a>
-  <time datetime="2017-11-13T00:00:00+09:00" pubdate>月 13 11月 2017</time>
-<p class="tags">tags: <a href="https://holrock.github.io/tag/server.html">server</a><a href="https://holrock.github.io/tag/python.html">python</a></p></a>      </li>
-
-
-      <li>
-<a href="https://holrock.github.io/torque-61dearray-jobga300shikashi-xing-sarenai.html" rel="bookmark" title="Permalink to torque 6.1でarray jobが300しか実行されない">torque 6.1でarray jobが300しか実行されない</a>
-  <time datetime="2017-10-25T00:00:00+09:00" pubdate>水 25 10月 2017</time>
-</a>      </li>
-
-
-      <li>
-<a href="https://holrock.github.io/maui-alert.html" rel="bookmark" title="Permalink to maui alert">maui alert</a>
-  <time datetime="2017-10-18T00:00:00+09:00" pubdate>水 18 10月 2017</time>
-</a>      </li>
-
-
-      <li>
-<a href="https://holrock.github.io/intanetsutonitsunagaranailinuxkurasutawoyun-yong-suru.html" rel="bookmark" title="Permalink to インターネットにつながらないLinuxクラスターを運用する">インターネットにつながらないLinuxクラスターを運用する</a>
-  <time datetime="2017-09-16T00:00:00+09:00" pubdate>土 16 9月 2017</time>
-<p class="tags">tags: <a href="https://holrock.github.io/tag/server.html">server</a></p></a>      </li>
-
-
-      <li>
-<a href="https://holrock.github.io/cve-2017-9772nocui-ruo-xing.html" rel="bookmark" title="Permalink to CVE-2017-9772の脆弱性">CVE-2017-9772の脆弱性</a>
-  <time datetime="2017-06-25T00:00:00+09:00" pubdate>日 25 6月 2017</time>
-<p class="tags">tags: <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></a>      </li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-          </ol>
-        </div>
 
 		  </div>	
 		  
@@ -152,7 +101,7 @@
 	              <li ><a href="https://holrock.github.io/category/lisp.html">lisp</a></li>
 	              <li ><a href="https://holrock.github.io/category/ocaml.html">ocaml</a></li>
 	              <li ><a href="https://holrock.github.io/category/python.html">python</a></li>
-	              <li ><a href="https://holrock.github.io/category/ruby.html">ruby</a></li>
+	              <li class="active"><a href="https://holrock.github.io/category/ruby.html">ruby</a></li>
 	              <li ><a href="https://holrock.github.io/category/server.html">server</a></li>
 	              <li ><a href="https://holrock.github.io/category/z-machine.html">z-machine</a></li>
 	          </ul>
