@@ -6,7 +6,7 @@
 	<meta name="author" content="horlock">
 	
 
-	<meta name="description" content="github gem rub2はtorque qsub用ruby DSLです。 簡単なjobを簡単に書くことを目的にデザインされています。 何年か内部で使用していたツールですが、gem化のついでに公開しました。 rubyでtorque jobを書く方はそういないと思いますが、お役に立てば幸いです。 簡単なサンプル require 'rub2' submit "SimpleJob" do execute_with Dir.glob("/etc/*.conf") do |file| "wc -l #{file}" end end と書くと、 wc -l nfs.conf のようなjobがDir.glob("/etc/*.conf")が返した配列の要素ごとに生成され実行されます。 その後、各jobやqstatの状態を監視し、すべてのjobが終了するまで待ち合わせます。 あれこれ execute_with は配列(複数可)をに受取り、 blockの結果をbashスクリプトとして出力します。 shellでエラーになる時や …">
+	<meta name="description" content="github gem rub2はtorque qsub用ruby DSLです。 簡単なjobを簡単に書くことを目的にデザインされています。 rub2を使うことで得られるメリットは jobの終了を待つ 多数のファイルなどに対するarry jobが簡単にかける 失敗したjobのリトライができる などがあります。 何年か内部で使用していたツールですが、gem化のついでに公開しました。 rubyでtorque jobを書く方はそういないと思いますが、お役に立てば幸いです。 簡単なサンプル require 'rub2' submit "SimpleJob" do execute_with Dir.glob("/etc/*.conf") do |file| "wc -l #{file}" end end と書くと、 wc -l nfs.conf のようなjobがDir.glob("/etc/*.conf")が返した配列の要素ごとに生成され実行されます。 その後、各jobやqstatの状態を監視し、すべてのjobが終了するまで待ち合わせます。 あれこれ …">
 
 
 	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
@@ -43,8 +43,15 @@
 <p class="tags">tagged <a href="https://holrock.github.io/tag/ruby.html">ruby</a></p></div>		
 		<p><a href="https://github.com/holrock/rub2">github</a>
 <a href="https://rubygems.org/gems/rub2">gem</a></p>
-<p>rub2はtorque qsub用ruby DSLです。</p>
-<p>簡単なjobを簡単に書くことを目的にデザインされています。</p>
+<p>rub2はtorque qsub用ruby DSLです。
+簡単なjobを簡単に書くことを目的にデザインされています。</p>
+<p>rub2を使うことで得られるメリットは</p>
+<ul>
+<li>jobの終了を待つ</li>
+<li>多数のファイルなどに対するarry jobが簡単にかける</li>
+<li>失敗したjobのリトライができる</li>
+</ul>
+<p>などがあります。</p>
 <p>何年か内部で使用していたツールですが、gem化のついでに公開しました。</p>
 <p>rubyでtorque jobを書く方はそういないと思いますが、お役に立てば幸いです。</p>
 <h2>簡単なサンプル</h2>
@@ -79,6 +86,10 @@
 </li>
 <li>
 <p>torqueのバージョンによっては動かないことがあります。</p>
+</li>
+<li>
+<p>複雑なjobの場合、引数を渡して実行するshellスクリプトを書いて、それをrub2から呼ぶとシンプルになります。
+shellスクリプト再利用もしやすいのでおすすめです。</p>
 </li>
 </ul>	
 

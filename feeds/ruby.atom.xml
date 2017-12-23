@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug - ruby</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/ruby.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2017-12-23T00:00:00+09:00</updated><entry><title>rub2を公開しました</title><link href="https://holrock.github.io/rub2wogong-kai-shimashita.html" rel="alternate"></link><published>2017-12-23T00:00:00+09:00</published><updated>2017-12-23T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-12-23:/rub2wogong-kai-shimashita.html</id><summary type="html">&lt;p&gt;&lt;a href="https://github.com/holrock/rub2"&gt;github&lt;/a&gt;
 &lt;a href="https://rubygems.org/gems/rub2"&gt;gem&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;rub2はtorque qsub用ruby DSLです。&lt;/p&gt;
-&lt;p&gt;簡単なjobを簡単に書くことを目的にデザインされています。&lt;/p&gt;
+&lt;p&gt;rub2はtorque qsub用ruby DSLです。
+簡単なjobを簡単に書くことを目的にデザインされています。&lt;/p&gt;
+&lt;p&gt;rub2を使うことで得られるメリットは&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;jobの終了を待つ&lt;/li&gt;
+&lt;li&gt;多数のファイルなどに対するarry jobが簡単にかける&lt;/li&gt;
+&lt;li&gt;失敗したjobのリトライができる&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;などがあります。&lt;/p&gt;
 &lt;p&gt;何年か内部で使用していたツールですが、gem化のついでに公開しました。&lt;/p&gt;
 &lt;p&gt;rubyでtorque jobを書く方はそういないと思いますが、お役に立てば幸いです。&lt;/p&gt;
 &lt;h2&gt;簡単なサンプル&lt;/h2&gt;
@@ -23,16 +30,17 @@
 
 &lt;p&gt;のようなjobが&lt;code&gt;Dir.glob("/etc/*.conf")&lt;/code&gt;が返した配列の要素ごとに生成され実行されます。&lt;/p&gt;
 &lt;p&gt;その後、各jobやqstatの状態を監視し、すべてのjobが終了するまで待ち合わせます。&lt;/p&gt;
-&lt;h2&gt;あれこれ&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;code&gt;execute_with&lt;/code&gt; は配列(複数可)をに受取り、 blockの結果をbashスクリプトとして出力します。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;shellでエラーになる時や …&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://github.com/holrock/rub2"&gt;github&lt;/a&gt;
+&lt;h2&gt;あれこれ …&lt;/h2&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://github.com/holrock/rub2"&gt;github&lt;/a&gt;
 &lt;a href="https://rubygems.org/gems/rub2"&gt;gem&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;rub2はtorque qsub用ruby DSLです。&lt;/p&gt;
-&lt;p&gt;簡単なjobを簡単に書くことを目的にデザインされています。&lt;/p&gt;
+&lt;p&gt;rub2はtorque qsub用ruby DSLです。
+簡単なjobを簡単に書くことを目的にデザインされています。&lt;/p&gt;
+&lt;p&gt;rub2を使うことで得られるメリットは&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;jobの終了を待つ&lt;/li&gt;
+&lt;li&gt;多数のファイルなどに対するarry jobが簡単にかける&lt;/li&gt;
+&lt;li&gt;失敗したjobのリトライができる&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;などがあります。&lt;/p&gt;
 &lt;p&gt;何年か内部で使用していたツールですが、gem化のついでに公開しました。&lt;/p&gt;
 &lt;p&gt;rubyでtorque jobを書く方はそういないと思いますが、お役に立てば幸いです。&lt;/p&gt;
 &lt;h2&gt;簡単なサンプル&lt;/h2&gt;
@@ -67,5 +75,9 @@
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;torqueのバージョンによっては動かないことがあります。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;複雑なjobの場合、引数を渡して実行するshellスクリプトを書いて、それをrub2から呼ぶとシンプルになります。
+shellスクリプト再利用もしやすいのでおすすめです。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;</content><category term="ruby"></category></entry></feed>

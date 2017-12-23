@@ -43,8 +43,15 @@
     </h2>
     <p><p><a href="https://github.com/holrock/rub2">github</a>
 <a href="https://rubygems.org/gems/rub2">gem</a></p>
-<p>rub2はtorque qsub用ruby DSLです。</p>
-<p>簡単なjobを簡単に書くことを目的にデザインされています。</p>
+<p>rub2はtorque qsub用ruby DSLです。
+簡単なjobを簡単に書くことを目的にデザインされています。</p>
+<p>rub2を使うことで得られるメリットは</p>
+<ul>
+<li>jobの終了を待つ</li>
+<li>多数のファイルなどに対するarry jobが簡単にかける</li>
+<li>失敗したjobのリトライができる</li>
+</ul>
+<p>などがあります。</p>
 <p>何年か内部で使用していたツールですが、gem化のついでに公開しました。</p>
 <p>rubyでtorque jobを書く方はそういないと思いますが、お役に立てば幸いです。</p>
 <h2>簡単なサンプル</h2>
@@ -65,13 +72,7 @@
 
 <p>のようなjobが<code>Dir.glob("/etc/*.conf")</code>が返した配列の要素ごとに生成され実行されます。</p>
 <p>その後、各jobやqstatの状態を監視し、すべてのjobが終了するまで待ち合わせます。</p>
-<h2>あれこれ</h2>
-<ul>
-<li>
-<p><code>execute_with</code> は配列(複数可)をに受取り、 blockの結果をbashスクリプトとして出力します。</p>
-</li>
-<li>
-<p>shellでエラーになる時や …</p></li></ul></p>
+<h2>あれこれ …</h2></p>
   </div>
 </article><article class="summary">
 <div class="metadata">

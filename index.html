@@ -34,8 +34,15 @@
         <h1><a href="https://holrock.github.io/rub2wogong-kai-shimashita.html">rub2を公開しました</a></h1>
         <p><a href="https://github.com/holrock/rub2">github</a>
 <a href="https://rubygems.org/gems/rub2">gem</a></p>
-<p>rub2はtorque qsub用ruby DSLです。</p>
-<p>簡単なjobを簡単に書くことを目的にデザインされています。</p>
+<p>rub2はtorque qsub用ruby DSLです。
+簡単なjobを簡単に書くことを目的にデザインされています。</p>
+<p>rub2を使うことで得られるメリットは</p>
+<ul>
+<li>jobの終了を待つ</li>
+<li>多数のファイルなどに対するarry jobが簡単にかける</li>
+<li>失敗したjobのリトライができる</li>
+</ul>
+<p>などがあります。</p>
 <p>何年か内部で使用していたツールですが、gem化のついでに公開しました。</p>
 <p>rubyでtorque jobを書く方はそういないと思いますが、お役に立てば幸いです。</p>
 <h2>簡単なサンプル</h2>
@@ -70,6 +77,10 @@
 </li>
 <li>
 <p>torqueのバージョンによっては動かないことがあります。</p>
+</li>
+<li>
+<p>複雑なjobの場合、引数を渡して実行するshellスクリプトを書いて、それをrub2から呼ぶとシンプルになります。
+shellスクリプト再利用もしやすいのでおすすめです。</p>
 </li>
 </ul>
       </article>
