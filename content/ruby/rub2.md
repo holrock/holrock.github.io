@@ -6,8 +6,15 @@ tags: ruby
 [gem](https://rubygems.org/gems/rub2)
 
 rub2はtorque qsub用ruby DSLです。
-
 簡単なjobを簡単に書くことを目的にデザインされています。
+
+rub2を使うことで得られるメリットは
+
+* jobの終了を待つ
+* 多数のファイルなどに対するarry jobが簡単にかける
+* 失敗したjobのリトライができる
+
+などがあります。
 
 何年か内部で使用していたツールですが、gem化のついでに公開しました。
 
