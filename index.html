@@ -31,58 +31,11 @@
 
 
       <article>
-        <h1><a href="https://holrock.github.io/rub2wogong-kai-shimashita.html">rub2を公開しました</a></h1>
-        <p><a href="https://github.com/holrock/rub2">github</a>
-<a href="https://rubygems.org/gems/rub2">gem</a></p>
-<p>rub2はtorque qsub用ruby DSLです。
-簡単なjobを簡単に書くことを目的にデザインされています。</p>
-<p>rub2を使うことで得られるメリットは</p>
-<ul>
-<li>jobの終了を待つ</li>
-<li>多数のファイルなどに対するarry jobが簡単にかける</li>
-<li>失敗したjobのリトライができる</li>
-</ul>
-<p>などがあります。</p>
-<p>何年か内部で使用していたツールですが、gem化のついでに公開しました。</p>
-<p>rubyでtorque jobを書く方はそういないと思いますが、お役に立てば幸いです。</p>
-<h2>簡単なサンプル</h2>
-<div class="highlight"><pre><span></span><span class="nb">require</span> <span class="s1">&#39;rub2&#39;</span>
-
-<span class="n">submit</span> <span class="s2">&quot;SimpleJob&quot;</span> <span class="k">do</span>
-  <span class="n">execute_with</span> <span class="no">Dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;/etc/*.conf&quot;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span>
-     <span class="s2">&quot;wc -l </span><span class="si">#{</span><span class="n">file</span><span class="si">}</span><span class="s2">&quot;</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-</pre></div>
-
-
-<p>と書くと、</p>
-<div class="highlight"><pre><span></span>wc -l nfs.conf
-</pre></div>
-
-
-<p>のようなjobが<code>Dir.glob("/etc/*.conf")</code>が返した配列の要素ごとに生成され実行されます。</p>
-<p>その後、各jobやqstatの状態を監視し、すべてのjobが終了するまで待ち合わせます。</p>
-<h2>あれこれ</h2>
-<ul>
-<li>
-<p><code>execute_with</code> は配列(複数可)をに受取り、 blockの結果をbashスクリプトとして出力します。</p>
-</li>
-<li>
-<p>shellでエラーになる時や、事前に動作を確認したい時は<code>dry_run</code>を指定して実行すると、
-実際にsubmitされるスクリプトが出力されるので、参考にしてください。</p>
-</li>
-<li>
-<p>node側にもrubyがインストールされている必要があります。</p>
-</li>
-<li>
-<p>torqueのバージョンによっては動かないことがあります。</p>
-</li>
-<li>
-<p>複雑なjobの場合、引数を渡して実行するshellスクリプトを書いて、それをrub2から呼ぶとシンプルになります。
-shellスクリプト再利用もしやすいのでおすすめです。</p>
-</li>
-</ul>
+        <h1><a href="https://holrock.github.io/torquestat.html">torquestat</a></h1>
+        <p><img alt="screenshot" src="https://raw.githubusercontent.com/holrock/holrock.github.io/working/content/images/torquestat.png"></p>
+<p><a href="https://github.com/holrock/torquestat">github</a></p>
+<p>年末年始にgolangやり直しで作ってたtorqueの監視ツールです。</p>
+<p>こういうのが1バイナリでサクッとできるのはいいですね。</p>
       </article>
 
       <hr />
@@ -91,6 +44,12 @@ shellスクリプト再利用もしやすいのでおすすめです。</p>
           <h3>Last posts</h3>
           <ol class="archive">
     
+
+
+      <li>
+<a href="https://holrock.github.io/rub2wogong-kai-shimashita.html" rel="bookmark" title="Permalink to rub2を公開しました">rub2を公開しました</a>
+  <time datetime="2017-12-23T00:00:00+09:00" pubdate>土 23 12月 2017</time>
+<p class="tags">tags: <a href="https://holrock.github.io/tag/ruby.html">ruby</a></p></a>      </li>
 
 
       <li>
@@ -117,10 +76,6 @@ shellスクリプト再利用もしやすいのでおすすめです。</p>
 <p class="tags">tags: <a href="https://holrock.github.io/tag/server.html">server</a></p></a>      </li>
 
 
-      <li>
-<a href="https://holrock.github.io/cve-2017-9772nocui-ruo-xing.html" rel="bookmark" title="Permalink to CVE-2017-9772の脆弱性">CVE-2017-9772の脆弱性</a>
-  <time datetime="2017-06-25T00:00:00+09:00" pubdate>日 25 6月 2017</time>
-<p class="tags">tags: <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></a>      </li>
 
 
 
