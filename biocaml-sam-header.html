@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>Biocaml SAM header - Starbug</title>	
-	<meta name="author" content="horlock">
+	<meta name="author" content="holrock">
 	
 
 	<meta name="description" content="ocaml製のバイオインフォマティクス用ライブラリで、 biocamlというのがあります。 BAMファイルを読みたかったので使ってみましたが、 @HGヘッダーにあるGO(group order)に未対応で読めなかったため、 ちょっと修正しました。 opamで落ちてくる0.6.0用です。 utop # #require "biocaml.unix";; utop # open Biocaml_unix.Std;; utop # Bam.read (open_in "a.bam");; - : (Bam.Header.t * Sam.alignment Core_kernel.Std.Or_error.t Stream.t) Core_kernel.Result_wrapper.Result.Error ("unexpected tag for given header item type …">
@@ -37,7 +37,7 @@
 <div class="metadata">
   <time datetime="2017-02-21T00:00:00+09:00" pubdate>火 21 2月 2017</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/ocaml.html">ocaml</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></div>		
@@ -47,16 +47,16 @@
 <code>@HG</code>ヘッダーにある<code>GO</code>(group order)に未対応で読めなかったため、
 ちょっと修正しました。</p>
 <p>opamで落ちてくる0.6.0用です。</p>
-<div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="o">#</span><span class="n">require</span> <span class="s2">&quot;biocaml.unix&quot;</span><span class="o">;;</span>
+<div class="highlight"><pre><span></span><code><span class="n">utop</span> <span class="o">#</span> <span class="o">#</span><span class="n">require</span> <span class="s2">&quot;biocaml.unix&quot;</span><span class="o">;;</span>
 <span class="n">utop</span> <span class="o">#</span> <span class="k">open</span> <span class="nn">Biocaml_unix</span><span class="p">.</span><span class="nc">Std</span><span class="o">;;</span>
 <span class="n">utop</span> <span class="o">#</span> <span class="nn">Bam</span><span class="p">.</span><span class="n">read</span> <span class="o">(</span><span class="n">open_in</span> <span class="s2">&quot;a.bam&quot;</span><span class="o">);;</span>
 <span class="o">-</span> <span class="o">:</span> <span class="o">(</span><span class="nn">Bam</span><span class="p">.</span><span class="nn">Header</span><span class="p">.</span><span class="n">t</span> <span class="o">*</span> <span class="nn">Sam</span><span class="p">.</span><span class="n">alignment</span> <span class="nn">Core_kernel</span><span class="p">.</span><span class="nn">Std</span><span class="p">.</span><span class="nn">Or_error</span><span class="p">.</span><span class="n">t</span> <span class="nn">Stream</span><span class="p">.</span><span class="n">t</span><span class="o">)</span>
 <span class="nn">Core_kernel</span><span class="p">.</span><span class="nn">Result_wrapper</span><span class="p">.</span><span class="nn">Result</span><span class="p">.</span><span class="nc">Error</span>
  <span class="o">(</span><span class="s2">&quot;unexpected tag for given header item type&quot;</span> <span class="o">(</span><span class="nc">HD</span> <span class="o">(</span><span class="nc">GO</span><span class="o">)))</span>
-</pre></div>
+</code></pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="gh">diff --git a/lib/unix/sam.ml b/lib/unix/sam.ml</span>
+<div class="highlight"><pre><span></span><code><span class="gh">diff --git a/lib/unix/sam.ml b/lib/unix/sam.ml</span>
 <span class="gh">index 9bd17ac..2da7b75 100644</span>
 <span class="gd">--- a/lib/unix/sam.ml</span>
 <span class="gi">+++ b/lib/unix/sam.ml</span>
@@ -258,13 +258,13 @@
    -&gt; ?ref_seqs : ref_seq list
    -&gt; ?read_groups : read_group list
    -&gt; ?programs : program list
-</pre></div>
+</code></pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="nn">Bam</span><span class="p">.</span><span class="n">read</span> <span class="o">(</span><span class="n">open_in</span> <span class="s2">&quot;a.bam&quot;</span><span class="o">);;</span>
+<div class="highlight"><pre><span></span><code><span class="n">utop</span> <span class="o">#</span> <span class="nn">Bam</span><span class="p">.</span><span class="n">read</span> <span class="o">(</span><span class="n">open_in</span> <span class="s2">&quot;a.bam&quot;</span><span class="o">);;</span>
 <span class="o">-</span> <span class="o">:</span> <span class="o">(</span><span class="nn">Bam</span><span class="p">.</span><span class="nn">Header</span><span class="p">.</span><span class="n">t</span> <span class="o">*</span> <span class="nn">Sam</span><span class="p">.</span><span class="n">alignment</span> <span class="nn">Core_kernel</span><span class="p">.</span><span class="nn">Std</span><span class="p">.</span><span class="nn">Or_error</span><span class="p">.</span><span class="n">t</span> <span class="nn">Stream</span><span class="p">.</span><span class="n">t</span><span class="o">)</span>
 <span class="nn">Core_kernel</span><span class="p">.</span><span class="nn">Std</span><span class="p">.</span><span class="nn">Or_error</span><span class="p">.</span><span class="n">t</span>                                                                                                                                                                  <span class="o">=</span> <span class="nn">Core_kernel</span><span class="p">.</span><span class="nn">Result_wrapper</span><span class="p">.</span><span class="nn">Result</span><span class="p">.</span><span class="nc">Ok</span> <span class="o">(&lt;</span><span class="n">abstr</span><span class="o">&gt;,</span> <span class="o">&lt;</span><span class="n">abstr</span><span class="o">&gt;)</span> 
-</pre></div>
+</code></pre></div>
 
 
 <p>masterブランチはビルド失敗するし、ドキュメントとも乖離が激しいので
@@ -310,7 +310,7 @@
 
       <footer>
 		<p role="contentinfo">
-		  © 2013 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+		  © 2013 holrock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
     	</p>
 
 	  </footer>	

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>pypiのミラーを作る - Starbug</title>	
-	<meta name="author" content="horlock">
+	<meta name="author" content="holrock">
 	
 
 	<meta name="description" content="bandersnatchを使用してpypiミラーを作成します。 数日ほど時間がかかる上、500GiBぐらいディスクを使います。 bandersnatchのインストール $ virtualenv bandersnatch $ cd bandersnatch $ bin/pip install -r https://bitbucket.org/pypa/bandersnatch/raw/stable/requirements.txt bandersnatch.conf # ミラーのコピー先 directory = /usr/local/mirror/pypi/ master = https://pypi.python.org timeout = 10 # worker=1だとすごく時間がかかる workers = 3 hash-index = false stop-on-error = false delete-packages = true 不要なバイナリのコピーをやめる 完全なミラーを作る必要がなく、linuxでだけ使用するのでwin32 …">
@@ -37,30 +37,30 @@
 <div class="metadata">
   <time datetime="2017-11-13T00:00:00+09:00" pubdate>月 13 11月 2017</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/python.html">python</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/server.html">server</a>, <a href="https://holrock.github.io/tag/python.html">python</a></p></div>		
 		<p><a href="https://pypi.python.org/pypi/bandersnatch">bandersnatch</a>を使用してpypiミラーを作成します。</p>
 <p>数日ほど時間がかかる上、500GiBぐらいディスクを使います。</p>
 <h1>bandersnatchのインストール</h1>
-<div class="highlight"><pre><span></span>$ virtualenv bandersnatch
+<div class="highlight"><pre><span></span><code>$ virtualenv bandersnatch
 $ <span class="nb">cd</span> bandersnatch
 $ bin/pip install -r https://bitbucket.org/pypa/bandersnatch/raw/stable/requirements.txt
-</pre></div>
+</code></pre></div>
 
 
 <h1>bandersnatch.conf</h1>
-<div class="highlight"><pre><span></span># ミラーのコピー先
-directory = /usr/local/mirror/pypi/
-master = https://pypi.python.org
-timeout = 10
-# worker=1だとすごく時間がかかる
-workers = 3
-hash-index = false
-stop-on-error = false
-delete-packages = true
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err"># ミラーのコピー先</span>
+<span class="err">directory = /usr/local/mirror/pypi/</span>
+<span class="err">master = https://pypi.python.org</span>
+<span class="err">timeout = 10</span>
+<span class="err"># worker=1だとすごく時間がかかる</span>
+<span class="err">workers = 3</span>
+<span class="err">hash-index = false</span>
+<span class="err">stop-on-error = false</span>
+<span class="err">delete-packages = true</span>
+</code></pre></div>
 
 
 <h1>不要なバイナリのコピーをやめる</h1>
@@ -68,7 +68,7 @@ delete-packages = true
 <p>lib/python3.6/site-packages/bandersnatch/package.py 
 にパッチを当ててダウンロードしないようにしました。
 バージョンは2.0.0です。</p>
-<div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">sync_release_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">sync_release_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">release_files</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="k">for</span> <span class="n">release</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">releases</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
@@ -78,11 +78,11 @@ delete-packages = true
 
         <span class="k">for</span> <span class="n">release_file</span> <span class="ow">in</span> <span class="n">release_files</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">download_file</span><span class="p">(</span><span class="n">release_file</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">],</span> <span class="n">release_file</span><span class="p">[</span><span class="s1">&#39;md5_digest&#39;</span><span class="p">])</span>
-</pre></div>
+</code></pre></div>
 
 
 <p>ここにダウンロードしない条件を入れました</p>
-<div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">sync_release_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">sync_release_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">release_files</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="k">for</span> <span class="n">release</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">releases</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
@@ -92,39 +92,39 @@ delete-packages = true
 
         <span class="k">for</span> <span class="n">release_file</span> <span class="ow">in</span> <span class="n">release_files</span><span class="p">:</span>
            <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;macosx|win32|win_amd64&#39;</span><span class="p">,</span> <span class="n">release_file</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">]):</span>
-               <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;skip: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">release_file</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">]))</span>
+               <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;skip: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">release_file</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">]))</span>
            <span class="k">else</span><span class="p">:</span>
                <span class="bp">self</span><span class="o">.</span><span class="n">download_file</span><span class="p">(</span><span class="n">release_file</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">],</span> <span class="n">release_file</span><span class="p">[</span><span class="s1">&#39;md5_digest&#39;</span><span class="p">])</span>
-</pre></div>
+</code></pre></div>
 
 
 <h1>実行</h1>
 <p>かなり時間がかかります。</p>
-<div class="highlight"><pre><span></span>bandersnatch -c ./bandersnatch.conf mirror
-</pre></div>
+<div class="highlight"><pre><span></span><code>bandersnatch -c ./bandersnatch.conf mirror
+</code></pre></div>
 
 
 <h1>webサーバーを立てる</h1>
 <p>nginxをインストールし、ミラーしたパスへaliasを設定します。</p>
 <p>nginx.conf</p>
-<div class="highlight"><pre><span></span>server {
+<div class="highlight"><pre><span></span><code><span class="n">server</span> <span class="err">{</span>
 
-    ...
+    <span class="p">...</span>
 
-    location /pypi {
-        alias /usr/local/mirror/pypi/web;
-        autoindex on;
-        charset utf-8;
-    }
-}
-</pre></div>
+    <span class="k">location</span> <span class="o">/</span><span class="n">pypi</span> <span class="err">{</span>
+        <span class="k">alias</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">mirror</span><span class="o">/</span><span class="n">pypi</span><span class="o">/</span><span class="n">web</span><span class="p">;</span>
+        <span class="n">autoindex</span> <span class="k">on</span><span class="p">;</span>
+        <span class="n">charset</span> <span class="n">utf</span><span class="o">-</span><span class="mi">8</span><span class="p">;</span>
+    <span class="err">}</span>
+<span class="err">}</span>
+</code></pre></div>
 
 
 <h1>pip.confの設定</h1>
 <p>$HOME/.config/pip/pip.conf</p>
-<div class="highlight"><pre><span></span>index-url = http://hostname/pipy/simple
-trusted-host = hostname
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">index-url = http://hostname/pipy/simple</span>
+<span class="err">trusted-host = hostname</span>
+</code></pre></div>
 
 
 <p>これで<code>pip install</code>がインターネットに接続できない環境でも使えるようになりました。</p>	
@@ -168,7 +168,7 @@ trusted-host = hostname
 
       <footer>
 		<p role="contentinfo">
-		  © 2013 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+		  © 2013 holrock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
     	</p>
 
 	  </footer>	

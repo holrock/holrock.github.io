@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>torque 6.1でarray jobが300しか実行されない - Starbug</title>	
-	<meta name="author" content="horlock">
+	<meta name="author" content="holrock">
 	
 
 	<meta name="description" content="torqueのバージョンを上げるとqstat -qでみたときに下記のように300しかでなくなった。 Queue Memory CPU Time Walltime Node Run Que Lm State ---------------- ------ -------- -------- ---- --- --- -- ----- batch -- -- -- -- 0 300 -- E R ----- ----- 0 300 http://docs.adaptivecomputing.com/torque/6-1-0/releaseNotes/Content/topics/releaseNotes/newFeatures.htm Job Arrays Now Only Partially Instantiated By Default Job arrays are now only partially instantiated by default …">
@@ -37,17 +37,17 @@
 <div class="metadata">
   <time datetime="2017-10-25T00:00:00+09:00" pubdate>水 25 10月 2017</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/server.html">server</a>
 </div>		
 		<p>torqueのバージョンを上げると<code>qstat -q</code>でみたときに下記のように300しかでなくなった。</p>
-<div class="highlight"><pre><span></span>Queue            Memory CPU Time Walltime Node  Run Que Lm  State
+<div class="highlight"><pre><span></span><code>Queue            Memory CPU Time Walltime Node  Run Que Lm  State
 ---------------- ------ -------- -------- ----  --- --- --  -----
 batch              --      --       --      --    0  300 --   E R
                                                ----- -----
                                                    0   300
-</pre></div>
+</code></pre></div>
 
 
 <p>http://docs.adaptivecomputing.com/torque/6-1-0/releaseNotes/Content/topics/releaseNotes/newFeatures.htm</p>
@@ -100,7 +100,7 @@ batch              --      --       --      --    0  300 --   E R
 
       <footer>
 		<p role="contentinfo">
-		  © 2013 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+		  © 2013 holrock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
     	</p>
 
 	  </footer>	

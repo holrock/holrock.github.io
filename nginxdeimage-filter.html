@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>nginxでimage filter - Starbug</title>	
-	<meta name="author" content="horlock">
+	<meta name="author" content="holrock">
 	
 
 	<meta name="description" content="前回、画像プロキシを使って外部画像を読み込むようにしました。 画像サイズが大きいものもあり、PageSpeed Insightsに怒られることがあります。 今回は画像をキャッシュしつつリサイズします。 参考 すべて同一サーバーで運用しています。 tlsimg.cattoy.info 画像フロントサーバー httpsで待ち受けるサーバーです。ここが入り口になります。 キャッシュもここでします。 proxy_cache_keyに使用する$arg_w, $arg_h, arg_qがリサイズパラメータになります。 それぞれ幅、高さ、jpeg qualityです。 バックエンドがomacなので、$document_uriにhmacのキーを含んでいるため、サイズ指定以外は$document_uri があればユニークになります。 server { server_name tlsimg.cattoy.info; location / { proxy_pass http://localhost:8889; proxy_cache TLSIMG; proxy_cache_key "$host$document_uri$is_args&$arg_w&$arg_h&$arg_q"; proxy_cache_lock on; proxy_cache_valid …">
@@ -37,7 +37,7 @@
 <div class="metadata">
   <time datetime="2016-11-10T00:00:00+09:00" pubdate>木 10 11月 2016</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/cattoy.html">cattoy</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a>, <a href="https://holrock.github.io/tag/nginx.html">nginx</a></p></div>		
@@ -53,7 +53,7 @@
 <p>proxy_cache_keyに使用する$arg_w, $arg_h, arg_qがリサイズパラメータになります。
 それぞれ幅、高さ、jpeg qualityです。</p>
 <p>バックエンドがomacなので、$document_uriにhmacのキーを含んでいるため、サイズ指定以外は$document_uri があればユニークになります。</p>
-<div class="highlight"><pre><span></span>  <span class="k">server</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><code>  <span class="k">server</span> <span class="p">{</span>
     <span class="kn">server_name</span> <span class="s">tlsimg.cattoy.info</span><span class="p">;</span>
     <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
       <span class="kn">proxy_pass</span> <span class="s">http://localhost:8889</span><span class="p">;</span>
@@ -66,7 +66,7 @@
       <span class="kn">proxy_http_version</span> <span class="mi">1</span><span class="s">.1</span><span class="p">;</span>
       <span class="kn">expires</span> <span class="s">30d</span><span class="p">;</span>
     <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 
 <h1>localhost:8889</h1>
@@ -74,7 +74,7 @@
 <p>クエリーをみて、リサイズします。
 クエリーがない場合はそのまま画像プロキシへリクエストを流します。</p>
 <p>画像プロキシ側にはurlパラメータを引き渡さないといけないので、ちょっと面倒です。</p>
-<div class="highlight"><pre><span></span>  <span class="k">server</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><code>  <span class="k">server</span> <span class="p">{</span>
     <span class="kn">server_name</span> <span class="s">_</span><span class="p">;</span>
     <span class="kn">listen</span> <span class="mi">8889</span><span class="p">;</span>
     <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
@@ -113,16 +113,16 @@
       <span class="kn">empty_gif</span><span class="p">;</span>
     <span class="p">}</span>
   <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 
 <h1>画像プロキシ</h1>
 <p>最後に画像プロキシ側の設定です。
 ここは特に変わっていません。</p>
-<div class="highlight"><pre><span></span>  <span class="nt">upstream</span> <span class="nt">omac</span> <span class="p">{</span>
-      <span class="err">server</span> <span class="err">127.0.0.1:8999</span><span class="p">;</span>
-  <span class="p">}</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">  upstream omac {</span>
+<span class="err">      server 127.0.0.1:8999;</span>
+<span class="err">  }</span>
+</code></pre></div>
 
 
 <h1>議論</h1>
@@ -171,7 +171,7 @@
 
       <footer>
 		<p role="contentinfo">
-		  © 2013 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+		  © 2013 holrock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
     	</p>
 
 	  </footer>	

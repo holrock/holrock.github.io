@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>インターネットにつながらないLinuxクラスターを運用する - Starbug</title>	
-	<meta name="author" content="horlock">
+	<meta name="author" content="holrock">
 	
 
 	<meta name="description" content="はしがき ここ最近は小規模なLinuxクラスターの運用管理もやっています。 事情よりクラスター自体がインターネットに接続できないため、通常に比べ管理が面倒だったり、外部サービスを利用できないため不便なことが多々あります。 そんな環境で色々やってるので書いておきます。 環境はCentOS7です。 構成管理 ansibleを使用しています。クライアント側にインストールの必要が無いため、管理用端末のみインターネットに接続してインストールすればいいので楽です。 ansible用ユーザーを作って公開鍵認証にしていますが、初回のユーザー作成と鍵配布もansibleで行うため、 そのときだけはremote_user: rootとbecome_method: suを使ってrootパスワードを使用しています。 --- - hosts: all become: yes become_method: su remote_user: root tasks: - name: provisioner user: name: provisioner append: yes - name: provisioner ssh key authorized_key: user: provisioner key: "{{ lookup('file', '../../ssh/id_rsa.pub') }}" - name …">
@@ -37,7 +37,7 @@
 <div class="metadata">
   <time datetime="2017-09-16T00:00:00+09:00" pubdate>土 16 9月 2017</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/server.html">server</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/server.html">server</a></p></div>		
@@ -50,25 +50,25 @@
 <p>ansibleを使用しています。クライアント側にインストールの必要が無いため、管理用端末のみインターネットに接続してインストールすればいいので楽です。</p>
 <p>ansible用ユーザーを作って公開鍵認証にしていますが、初回のユーザー作成と鍵配布もansibleで行うため、
 そのときだけは<code>remote_user: root</code>と<code>become_method: su</code>を使ってrootパスワードを使用しています。</p>
-<div class="highlight"><pre><span></span><span class="nn">---</span>
-<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
-  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
-  <span class="l l-Scalar l-Scalar-Plain">become_method</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">su</span>
-  <span class="l l-Scalar l-Scalar-Plain">remote_user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
-  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
-      <span class="l l-Scalar l-Scalar-Plain">user</span><span class="p p-Indicator">:</span>
-        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
-        <span class="l l-Scalar l-Scalar-Plain">append</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner ssh key</span>
-      <span class="l l-Scalar l-Scalar-Plain">authorized_key</span><span class="p p-Indicator">:</span>
-        <span class="l l-Scalar l-Scalar-Plain">user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
-        <span class="l l-Scalar l-Scalar-Plain">key</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">lookup(&#39;file&#39;,</span><span class="nv"> </span><span class="s">&#39;../../ssh/id_rsa.pub&#39;)</span><span class="nv"> </span><span class="s">}}&quot;</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">add sudoers</span>
-      <span class="l l-Scalar l-Scalar-Plain">lineinfile</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="nt">hosts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
+  <span class="nt">become</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+  <span class="nt">become_method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">su</span>
+  <span class="nt">remote_user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+  <span class="nt">tasks</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
+      <span class="nt">user</span><span class="p">:</span>
+        <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
+        <span class="nt">append</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner ssh key</span>
+      <span class="nt">authorized_key</span><span class="p">:</span>
+        <span class="nt">user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
+        <span class="nt">key</span><span class="p">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">lookup(&#39;file&#39;,</span><span class="nv"> </span><span class="s">&#39;../../ssh/id_rsa.pub&#39;)</span><span class="nv"> </span><span class="s">}}&quot;</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">add sudoers</span>
+      <span class="nt">lineinfile</span><span class="p">:</span> <span class="p p-Indicator">&gt;</span>
         <span class="no">dest=/etc/sudoers</span>
         <span class="no">line=&#39;provisioner ALL=(ALL) NOPASSWD: ALL&#39;</span>
-</pre></div>
+</code></pre></div>
 
 
 <p>上記のplaybookを<code>--ask-become-pass</code>, <code>--ask-pass</code>付きで流します。</p>
@@ -76,9 +76,9 @@
 他のplaybook<code>become:yes</code>だけでシステム設定できるようになりました。</p>
 <p>ちなみにこのときにansible.cfgで<code>ssh_args</code>でssh鍵を指定していると接続エラーになるので、
 手動でコメントアウトしています。いい方法ないかな。</p>
-<div class="highlight"><pre><span></span><span class="k">[ssh_connection]</span>
+<div class="highlight"><pre><span></span><code><span class="k">[ssh_connection]</span>
 <span class="na">ssh_args</span> <span class="o">=</span> <span class="s">-F ssh/ssh_config #ここ</span>
-</pre></div>
+</code></pre></div>
 
 
 <h1>package</h1>
@@ -88,34 +88,34 @@ rpmをコピーする方法では依存関係処理が面倒なため、フル�
 ftp.riken.jpあたりからrsyncしてくるのが早いです。</p>
 <p>yumミラーはhttpで見えるようにしてもいいのですが、今回は全ノードがnfsをマウントしているのでそこにおいています。</p>
 <p>/etc/yum.repos.dの中身を消して、次のようにローカルのものに書き換えれば完了です。</p>
-<div class="highlight"><pre><span></span> [local-repo-os]
-name=local-repo-os
-baseurl=file:///nfs/mirror/centos/7/os/x86_64
-enabled=1
+<div class="highlight"><pre><span></span><code> <span class="p">[</span><span class="k">local</span><span class="o">-</span><span class="n">repo</span><span class="o">-</span><span class="n">os</span><span class="p">]</span>
+<span class="n">name</span><span class="o">=</span><span class="k">local</span><span class="o">-</span><span class="n">repo</span><span class="o">-</span><span class="n">os</span>
+<span class="n">baseurl</span><span class="o">=</span><span class="n">file</span><span class="p">:</span><span class="o">///</span><span class="n">nfs</span><span class="o">/</span><span class="n">mirror</span><span class="o">/</span><span class="n">centos</span><span class="o">/</span><span class="mi">7</span><span class="o">/</span><span class="n">os</span><span class="o">/</span><span class="n">x86_64</span>
+<span class="n">enabled</span><span class="o">=</span><span class="mi">1</span>
 
-[local-repo-updates]
-name=local-repo-updates
-baseurl=file:///nfs/mirror/centos/7/updates/x86_64
-enabled=1
-</pre></div>
+<span class="p">[</span><span class="k">local</span><span class="o">-</span><span class="n">repo</span><span class="o">-</span><span class="n">updates</span><span class="p">]</span>
+<span class="n">name</span><span class="o">=</span><span class="k">local</span><span class="o">-</span><span class="n">repo</span><span class="o">-</span><span class="n">updates</span>
+<span class="n">baseurl</span><span class="o">=</span><span class="n">file</span><span class="p">:</span><span class="o">///</span><span class="n">nfs</span><span class="o">/</span><span class="n">mirror</span><span class="o">/</span><span class="n">centos</span><span class="o">/</span><span class="mi">7</span><span class="o">/</span><span class="n">updates</span><span class="o">/</span><span class="n">x86_64</span>
+<span class="n">enabled</span><span class="o">=</span><span class="mi">1</span>
+</code></pre></div>
 
 
 <h2>R</h2>
 <p>yum以外にもRのリポジトリミラーも作っています。</p>
 <p>Rの場合、rsyncでコピー後、Rからwrite_PACKAGE関数を読んでパッケージリストを作る必要があります。</p>
-<div class="highlight"><pre><span></span>tools<span class="o">:::</span>write_PACKAGES<span class="p">(</span><span class="s">&quot;/nfs/mirror/R/src/contrib&quot;</span><span class="p">)</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">tools</span><span class="o">:::</span><span class="nf">write_PACKAGES</span><span class="p">(</span><span class="s">&quot;/nfs/mirror/R/src/contrib&quot;</span><span class="p">)</span>
+</code></pre></div>
 
 
 <p>その後、$HOME/.Rprofileにmirrorの場所を指定すると通常どおり<code>install.packages</code>が使用できるようになります。</p>
-<div class="highlight"><pre><span></span><span class="kp">options</span><span class="p">(</span>repos<span class="o">=</span><span class="s">&quot;file:///nfs/mirror/R&quot;</span><span class="p">)</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="nf">options</span><span class="p">(</span><span class="n">repos</span><span class="o">=</span><span class="s">&quot;file:///nfs/mirror/R&quot;</span><span class="p">)</span>
+</code></pre></div>
 
 
 <p><a href="https://www.bioconductor.org/about/mirrors/mirror-how-to/">bioconductor</a>もミラーしているのですが、ディレクトリ構成が異なりcontribディレクトリの場所を<code>install.packages</code>が見つけてくれないため、上記のoptionsではうまく行きません。</p>
 <p>今のところ<code>contriburl</code>を直接指定していますが、もっといい方法がありそうです。</p>
-<div class="highlight"><pre><span></span>install.packages<span class="p">(</span>“package”<span class="p">,</span> contriburl<span class="o">=</span>”<span class="kp">file</span><span class="o">:///</span>nfs<span class="o">/</span>mirror<span class="o">/</span>biocondutor<span class="o">/</span>packages<span class="o">/</span><span class="m">3.5</span><span class="o">/</span>contrib”<span class="p">)</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="nf">install.packages</span><span class="p">(</span>“<span class="n">package</span>”<span class="p">,</span> <span class="n">contriburl</span><span class="o">=</span>”<span class="n">file</span><span class="o">:///</span><span class="n">nfs</span><span class="o">/</span><span class="n">mirror</span><span class="o">/</span><span class="n">biocondutor</span><span class="o">/</span><span class="n">packages</span><span class="o">/</span><span class="m">3.5</span><span class="o">/</span><span class="n">contrib</span>”<span class="p">)</span>
+</code></pre></div>
 
 
 <h3>stringi</h3>
@@ -123,15 +123,15 @@ enabled=1
 stringiがicudtNN.zip(NNは数字)をインストール中にダウンロードしようとするためです。</p>
 <p><a href="http://static.rexamine.com/packages/">http://static.rexamine.com/packages/</a>から対応バージョンのzipファイルをダウンロードして、ノードにコピーします。</p>
 <p><code>configure.vers</code>に<code>ICUDT_DIR</code>をzipのあるパスを指定してインストール可能です。</p>
-<div class="highlight"><pre><span></span>install.packages<span class="p">(</span><span class="s">&quot;stringi&quot;</span><span class="p">,</span> configure.vars<span class="o">=</span><span class="s">&quot;ICUDT_DIR=&lt;dir_to_copy_icudt_from&gt;&quot;</span><span class="p">)</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;stringi&quot;</span><span class="p">,</span> <span class="n">configure.vars</span><span class="o">=</span><span class="s">&quot;ICUDT_DIR=&lt;dir_to_copy_icudt_from&gt;&quot;</span><span class="p">)</span>
+</code></pre></div>
 
 
 <h2>python</h2>
 <p>直接whlファイルをpipで入れるときにプラットフォームが合わないとエラーになることがあります。</p>
 <p>whlフィアルの名前が<code>-cp27m-manylinux1_x86_64.whl</code>のようにmanylinuxとなっていたら</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pip</span><span class="p">;</span> <span class="k">print</span><span class="p">(</span><span class="n">pip</span><span class="o">.</span><span class="n">pep425tags</span><span class="o">.</span><span class="n">get_supported</span><span class="p">()</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">pip</span><span class="p">;</span> <span class="nb">print</span><span class="p">(</span><span class="n">pip</span><span class="o">.</span><span class="n">pep425tags</span><span class="o">.</span><span class="n">get_supported</span><span class="p">()</span>
+</code></pre></div>
 
 
 <p>とやって出て来るプラットフォーム名に合わせるとインストール可能になります。</p>
@@ -171,39 +171,39 @@ stringiがicudtNN.zip(NNは数字)をインストール中にダウンロード�
 <li>CPU温度</li>
 </ul>
 <p>などをとりあえず設定しています。雑です。</p>
-<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">groups</span><span class="p p-Indicator">:</span>
-<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">alert.rules</span>
-  <span class="l l-Scalar l-Scalar-Plain">rules</span><span class="p p-Indicator">:</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">alert</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">InstanceDown</span>
-    <span class="l l-Scalar l-Scalar-Plain">expr</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">up == 0</span>
-    <span class="l l-Scalar l-Scalar-Plain">for</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">2m</span>
-    <span class="l l-Scalar l-Scalar-Plain">labels</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">severity</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">critical</span>
-    <span class="l l-Scalar l-Scalar-Plain">annotations</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">$labels.instance</span><span class="nv"> </span><span class="s">}}</span><span class="nv"> </span><span class="s">has</span><span class="nv"> </span><span class="s">been</span><span class="nv"> </span><span class="s">down</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">more</span><span class="nv"> </span><span class="s">than</span><span class="nv"> </span><span class="s">2</span><span class="nv"> </span><span class="s">minutes.&#39;</span>
-      <span class="l l-Scalar l-Scalar-Plain">summary</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Instance {{ $labels.instance }} down</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">alert</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">RAIDFail</span>
-    <span class="l l-Scalar l-Scalar-Plain">expr</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">raid_failed + raid_degraded &gt; 0</span>
-    <span class="l l-Scalar l-Scalar-Plain">labels</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">severity</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">critical</span>
-    <span class="l l-Scalar l-Scalar-Plain">annotations</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">$labels.instance</span><span class="nv"> </span><span class="s">}}</span><span class="nv"> </span><span class="s">raid</span><span class="nv"> </span><span class="s">failed&#39;</span>
-      <span class="l l-Scalar l-Scalar-Plain">summary</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Instance {{ $labels.instance }} raid failed</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">alert</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">DiskSpace</span>
-    <span class="l l-Scalar l-Scalar-Plain">expr</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">min(node_filesystem_free / node_filesystem_size) &lt; 0.05</span>
-    <span class="l l-Scalar l-Scalar-Plain">labels</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">severity</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">critical</span>
-    <span class="l l-Scalar l-Scalar-Plain">annotations</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">$labels.instance</span><span class="nv"> </span><span class="s">}}</span><span class="nv"> </span><span class="s">disk</span><span class="nv"> </span><span class="s">full&#39;</span>
-      <span class="l l-Scalar l-Scalar-Plain">summary</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Instance {{ $labels.instance }} disk full</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">alert</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">CPUTemp</span>
-    <span class="l l-Scalar l-Scalar-Plain">expr</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">node_hwmon_temp_celsius{chip=~&quot;platform_coretemp_.*&quot;} &gt; 80</span>
-    <span class="l l-Scalar l-Scalar-Plain">labels</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">severity</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">critical</span>
-    <span class="l l-Scalar l-Scalar-Plain">annotations</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">$labels.instance</span><span class="nv"> </span><span class="s">}}</span><span class="nv"> </span><span class="s">cpu</span><span class="nv"> </span><span class="s">over</span><span class="nv"> </span><span class="s">temp&#39;</span>
-      <span class="l l-Scalar l-Scalar-Plain">summary</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Instance {{ $labels.instance }} cpu over temp</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="nt">groups</span><span class="p">:</span>
+<span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">alert.rules</span>
+  <span class="nt">rules</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">alert</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">InstanceDown</span>
+    <span class="nt">expr</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">up == 0</span>
+    <span class="nt">for</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2m</span>
+    <span class="nt">labels</span><span class="p">:</span>
+      <span class="nt">severity</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">critical</span>
+    <span class="nt">annotations</span><span class="p">:</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">$labels.instance</span><span class="nv"> </span><span class="s">}}</span><span class="nv"> </span><span class="s">has</span><span class="nv"> </span><span class="s">been</span><span class="nv"> </span><span class="s">down</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">more</span><span class="nv"> </span><span class="s">than</span><span class="nv"> </span><span class="s">2</span><span class="nv"> </span><span class="s">minutes.&#39;</span>
+      <span class="nt">summary</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Instance {{ $labels.instance }} down</span>
+  <span class="p p-Indicator">-</span> <span class="nt">alert</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RAIDFail</span>
+    <span class="nt">expr</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">raid_failed + raid_degraded &gt; 0</span>
+    <span class="nt">labels</span><span class="p">:</span>
+      <span class="nt">severity</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">critical</span>
+    <span class="nt">annotations</span><span class="p">:</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">$labels.instance</span><span class="nv"> </span><span class="s">}}</span><span class="nv"> </span><span class="s">raid</span><span class="nv"> </span><span class="s">failed&#39;</span>
+      <span class="nt">summary</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Instance {{ $labels.instance }} raid failed</span>
+  <span class="p p-Indicator">-</span> <span class="nt">alert</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">DiskSpace</span>
+    <span class="nt">expr</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">min(node_filesystem_free / node_filesystem_size) &lt; 0.05</span>
+    <span class="nt">labels</span><span class="p">:</span>
+      <span class="nt">severity</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">critical</span>
+    <span class="nt">annotations</span><span class="p">:</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">$labels.instance</span><span class="nv"> </span><span class="s">}}</span><span class="nv"> </span><span class="s">disk</span><span class="nv"> </span><span class="s">full&#39;</span>
+      <span class="nt">summary</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Instance {{ $labels.instance }} disk full</span>
+  <span class="p p-Indicator">-</span> <span class="nt">alert</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">CPUTemp</span>
+    <span class="nt">expr</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">node_hwmon_temp_celsius{chip=~&quot;platform_coretemp_.*&quot;} &gt; 80</span>
+    <span class="nt">labels</span><span class="p">:</span>
+      <span class="nt">severity</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">critical</span>
+    <span class="nt">annotations</span><span class="p">:</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">$labels.instance</span><span class="nv"> </span><span class="s">}}</span><span class="nv"> </span><span class="s">cpu</span><span class="nv"> </span><span class="s">over</span><span class="nv"> </span><span class="s">temp&#39;</span>
+      <span class="nt">summary</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Instance {{ $labels.instance }} cpu over temp</span>
+</code></pre></div>
 
 
 <h2>通知</h2>
@@ -216,7 +216,7 @@ grafanaのダッシュボードをずっと見ててもいいのですがあま�
 今回は使用しているStumpWM内にwebサーバーを動かし受信、メッセージを表示させてみました。</p>
 <p>.stumpwm/init.lispの初期化コード内でwookieを立てて、
 alertmanagerから送られてくるjsonをそのまま表示しています。</p>
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">ql:quickload</span> <span class="ss">&#39;wookie</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="nv">ql:quickload</span> <span class="ss">&#39;wookie</span><span class="p">)</span>
 <span class="p">(</span><span class="nv">ql:quickload</span> <span class="ss">&#39;cl-json</span><span class="p">)</span>
 <span class="p">(</span><span class="nv">wookie:load-plugins</span><span class="p">)</span>
 <span class="p">(</span><span class="nv">wookie:defroute</span> <span class="p">(</span><span class="ss">:post</span> <span class="s">&quot;/&quot;</span><span class="p">)</span> <span class="p">(</span><span class="nv">req</span> <span class="nv">res</span><span class="p">)</span>
@@ -231,7 +231,7 @@ alertmanagerから送られてくるjsonをそのまま表示しています。<
     <span class="p">(</span><span class="nv">as:with-event-loop</span> <span class="p">()</span>
       <span class="p">(</span><span class="nv">wookie:start-server</span>
         <span class="p">(</span><span class="nb">make-instance</span> <span class="ss">&#39;wookie:listener</span> <span class="ss">:port</span> <span class="mi">9999</span><span class="p">))))))</span>
-</pre></div>
+</code></pre></div>
 
 
 <p>お手軽ですが、まあ気がつくだろうという感じです。</p>
@@ -282,7 +282,7 @@ AWSとかdockerとかすごいなあと思いました。</p>
 
       <footer>
 		<p role="contentinfo">
-		  © 2013 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+		  © 2013 holrock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
     	</p>
 
 	  </footer>	

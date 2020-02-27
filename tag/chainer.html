@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>chainer - Starbug</title>	
-	<meta name="author" content="horlock">
+	<meta name="author" content="holrock">
 	
 
 	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
@@ -34,7 +34,7 @@
 <div class="metadata">
   <time datetime="2016-10-25T00:00:00+09:00" pubdate>火 25 10月 2016</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/python.html">python</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/chainer.html">chainer</a>, <a href="https://holrock.github.io/tag/python.html">python</a></p></div>  <div>
@@ -51,13 +51,13 @@ cattoyに登録されている画像を集めてきて手作業で分類、学�
 <li><a href="http://ksksksks2.hatenadiary.jp/entry/20160327/1459061931">http://ksksksks2.hatenadiary.jp/entry/20160327/1459061931</a>
 を参考にリサイズとトレーニングデータに分ける</li>
 </ul>
-<div class="highlight"><pre><span></span><span class="n">line</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">label</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">line</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">label</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+</code></pre></div>
 
 
 <p>の所がlabelのままだとcompute_mean.pyでエラーになるので</p>
-<div class="highlight"><pre><span></span><span class="n">line</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">line</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+</code></pre></div>
 
 
 <p>に変更する。</p>
@@ -101,7 +101,7 @@ cattoyに登録されている画像を集めてきて手作業で分類、学�
 
       <footer>
 		<p role="contentinfo">
-		  © 2013 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+		  © 2013 holrock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
     	</p>
 
 	  </footer>	

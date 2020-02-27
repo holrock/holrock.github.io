@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>AllegroGraph その2 - Starbug</title>	
-	<meta name="author" content="horlock">
+	<meta name="author" content="holrock">
 	
 
 	<meta name="description" content="AllegroGraphが動くようになったので、データ作って投入します。 データはcattoyから作ります。 こんなかんじ にRDF出力コードを仕込んだので、 g = RDF::Graph.new.tap {|g| Cat.all.each {|c| g << c.to_rdf }} File.open('/tmp/cat.ttl', 'w') {|f| f << g.to_ttl } でファイルに吐き出します。 なかみはこんなかんじです。 @prefix schema: <http://schema.org/> . @prefix xsd: <http://www.w3.org/2001/XMLSchema#> . <http://www.cattoy.info/histories …">
@@ -37,7 +37,7 @@
 <div class="metadata">
   <time datetime="2016-11-04T00:00:00+09:00" pubdate>金 04 11月 2016</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/lisp.html">lisp</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/lisp.html">lisp</a>, <a href="https://holrock.github.io/tag/allegrograph.html">allegrograph</a>, <a href="https://holrock.github.io/tag/ruby.html">ruby</a>, <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a></p></div>		
@@ -45,32 +45,32 @@
 <p>データは<a href="https://www.cattoy.info">cattoy</a>から作ります。</p>
 <p><a href="https://github.com/holrock/cattoy/commit/202415749077a2820bff11d3544af3fc03453b65">こんなかんじ</a>
 にRDF出力コードを仕込んだので、</p>
-<div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="no">RDF</span><span class="o">::</span><span class="no">Graph</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">tap</span> <span class="p">{</span><span class="o">|</span><span class="n">g</span><span class="o">|</span> <span class="no">Cat</span><span class="o">.</span><span class="n">all</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span><span class="o">|</span><span class="n">c</span><span class="o">|</span> <span class="n">g</span> <span class="o">&lt;&lt;</span> <span class="n">c</span><span class="o">.</span><span class="n">to_rdf</span> <span class="p">}}</span>
+<div class="highlight"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="no">RDF</span><span class="o">::</span><span class="no">Graph</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">tap</span> <span class="p">{</span><span class="o">|</span><span class="n">g</span><span class="o">|</span> <span class="no">Cat</span><span class="o">.</span><span class="n">all</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span><span class="o">|</span><span class="n">c</span><span class="o">|</span> <span class="n">g</span> <span class="o">&lt;&lt;</span> <span class="n">c</span><span class="o">.</span><span class="n">to_rdf</span> <span class="p">}}</span>
 <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;/tmp/cat.ttl&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="n">f</span> <span class="o">&lt;&lt;</span> <span class="n">g</span><span class="o">.</span><span class="n">to_ttl</span> <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 
 <p>でファイルに吐き出します。
 なかみはこんなかんじです。</p>
-<div class="highlight"><pre><span></span><span class="p">@</span><span class="k">prefix</span> <span class="nt">schema</span><span class="o">:</span> <span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">schema</span><span class="p">.</span><span class="nc">org</span><span class="o">/&gt;</span> <span class="o">.</span>
-<span class="p">@</span><span class="k">prefix</span> <span class="nt">xsd</span><span class="o">:</span> <span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">www</span><span class="p">.</span><span class="nc">w3</span><span class="p">.</span><span class="nc">org</span><span class="o">/</span><span class="nt">2001</span><span class="o">/</span><span class="nt">XMLSchema</span><span class="err">#</span><span class="o">&gt;</span> <span class="o">.</span>
+<div class="highlight"><pre><span></span><code><span class="k">@prefix</span><span class="w"> </span><span class="nn">schema:</span><span class="w"> </span><span class="nv">&lt;http://schema.org/&gt;</span><span class="w"> </span><span class="p">.</span><span class="w"></span>
+<span class="k">@prefix</span><span class="w"> </span><span class="nn">xsd:</span><span class="w"> </span><span class="nv">&lt;http://www.w3.org/2001/XMLSchema#&gt;</span><span class="w"> </span><span class="p">.</span><span class="w"></span>
 
-<span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">www</span><span class="p">.</span><span class="nc">cattoy</span><span class="p">.</span><span class="nc">info</span><span class="o">/</span><span class="nt">histories</span><span class="o">/</span><span class="nt">1</span><span class="o">&gt;</span> <span class="nt">schema</span><span class="p">:</span><span class="nd">creator</span> <span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">www</span><span class="p">.</span><span class="nc">cattoy</span><span class="p">.</span><span class="nc">info</span><span class="o">/</span><span class="nt">cats</span><span class="o">/</span><span class="nt">1</span><span class="o">&gt;</span><span class="p">;</span>
-   <span class="nt">schema</span><span class="p">:</span><span class="nd">itemReviewed</span> <span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">www</span><span class="p">.</span><span class="nc">cattoy</span><span class="p">.</span><span class="nc">info</span><span class="o">/</span><span class="nt">toys</span><span class="o">/</span><span class="nt">1</span><span class="o">&gt;</span><span class="p">;</span>
-   <span class="nt">schema</span><span class="p">:</span><span class="nd">ratingValue</span> <span class="nt">1</span><span class="o">;</span>
-   <span class="nt">schema</span><span class="p">:</span><span class="nd">reviewBody</span> <span class="s2">&quot;羽よりネズミが好き。音がして嚙めるものが好きっぽい&quot;</span> <span class="o">.</span>
+<span class="nv">&lt;http://www.cattoy.info/histories/1&gt;</span><span class="w"> </span><span class="nn">schema:</span><span class="nt">creator</span><span class="w"> </span><span class="nv">&lt;http://www.cattoy.info/cats/1&gt;</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="nn">schema:</span><span class="nt">itemReviewed</span><span class="w"> </span><span class="nv">&lt;http://www.cattoy.info/toys/1&gt;</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="nn">schema:</span><span class="nt">ratingValue</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="nn">schema:</span><span class="nt">reviewBody</span><span class="w"> </span><span class="s">&quot;羽よりネズミが好き。音がして嚙めるものが好きっぽい&quot;</span><span class="w"> </span><span class="p">.</span><span class="w"></span>
 
-<span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">www</span><span class="p">.</span><span class="nc">cattoy</span><span class="p">.</span><span class="nc">info</span><span class="o">/</span><span class="nt">histories</span><span class="o">/</span><span class="nt">10</span><span class="o">&gt;</span> <span class="nt">schema</span><span class="p">:</span><span class="nd">creator</span> <span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">www</span><span class="p">.</span><span class="nc">cattoy</span><span class="p">.</span><span class="nc">info</span><span class="o">/</span><span class="nt">cats</span><span class="o">/</span><span class="nt">1</span><span class="o">&gt;;</span>
-   <span class="nt">schema</span><span class="p">:</span><span class="nd">itemReviewed</span> <span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">www</span><span class="p">.</span><span class="nc">cattoy</span><span class="p">.</span><span class="nc">info</span><span class="o">/</span><span class="nt">toys</span><span class="o">/</span><span class="nt">10</span><span class="o">&gt;;</span>
-   <span class="nt">schema</span><span class="p">:</span><span class="nd">ratingValue</span> <span class="nt">1</span><span class="o">;</span>
-   <span class="nt">schema</span><span class="p">:</span><span class="nd">reviewBody</span> <span class="s2">&quot;たまに猫キックしてた&quot;</span> <span class="o">.</span>
+<span class="nv">&lt;http://www.cattoy.info/histories/10&gt;</span><span class="w"> </span><span class="nn">schema:</span><span class="nt">creator</span><span class="w"> </span><span class="nv">&lt;http://www.cattoy.info/cats/1&gt;</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="nn">schema:</span><span class="nt">itemReviewed</span><span class="w"> </span><span class="nv">&lt;http://www.cattoy.info/toys/10&gt;</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="nn">schema:</span><span class="nt">ratingValue</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="nn">schema:</span><span class="nt">reviewBody</span><span class="w"> </span><span class="s">&quot;たまに猫キックしてた&quot;</span><span class="w"> </span><span class="p">.</span><span class="w"></span>
 
-<span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">www</span><span class="p">.</span><span class="nc">cattoy</span><span class="p">.</span><span class="nc">info</span><span class="o">/</span><span class="nt">cats</span><span class="o">/</span><span class="nt">1</span><span class="o">&gt;</span> <span class="nt">schema</span><span class="p">:</span><span class="nd">name</span> <span class="s2">&quot;みけ&quot;</span> <span class="o">.</span>
-</pre></div>
+<span class="nv">&lt;http://www.cattoy.info/cats/1&gt;</span><span class="w"> </span><span class="nn">schema:</span><span class="nt">name</span><span class="w"> </span><span class="s">&quot;みけ&quot;</span><span class="w"> </span><span class="p">.</span><span class="w"></span>
+</code></pre></div>
 
 
 <p>これをWebViewに取り込んで、クエリを投げます</p>
-<div class="highlight"><pre><span></span><span class="nt">prefix</span> <span class="nt">sc</span><span class="o">:</span> <span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">schema</span><span class="p">.</span><span class="nc">org</span><span class="o">/&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">prefix</span> <span class="nt">sc</span><span class="o">:</span> <span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">schema</span><span class="p">.</span><span class="nc">org</span><span class="o">/&gt;</span>
 
 <span class="nt">select</span> <span class="o">?</span><span class="nt">cat</span> <span class="o">?</span><span class="nt">history</span> <span class="o">?</span><span class="nt">body</span> <span class="p">{</span>
   <span class="err">?cat</span> <span class="n">sc</span><span class="p">:</span><span class="n">name</span> <span class="s2">&quot;みけ&quot;</span><span class="o">.</span>
@@ -78,11 +78,11 @@
   <span class="n">sc</span><span class="p">:</span><span class="n">reviewBody</span> <span class="o">?</span><span class="n">body</span><span class="p">;</span>
   <span class="n">sc</span><span class="p">:</span><span class="n">ratingValue</span> <span class="s2">&quot;-1&quot;</span><span class="o">^^&lt;</span><span class="n">http</span><span class="o">://</span><span class="n">www</span><span class="o">.</span><span class="n">w3</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="mi">2001</span><span class="o">/</span><span class="n">XMLSchema</span><span class="mh">#intege</span><span class="n">r</span><span class="o">&gt;.</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 
 <p>結果は</p>
-<div class="highlight"><pre><span></span><span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
    <span class="s2">&quot;head&quot;</span> <span class="o">:</span> <span class="p">{</span>
       <span class="s2">&quot;vars&quot;</span> <span class="o">:</span> <span class="p">[</span>
          <span class="s2">&quot;cat&quot;</span><span class="p">,</span>
@@ -121,12 +121,12 @@
             <span class="p">}</span>
          <span class="p">},</span>
          <span class="c1">// snip</span>
-</pre></div>
+</code></pre></div>
 
 
 <p>無事取れてますが、これがないとダメでした。</p>
-<div class="highlight"><pre><span></span>  sc:ratingValue &quot;-1&quot;^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt;.
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">  sc:ratingValue &quot;-1&quot;^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt;.</span>
+</code></pre></div>
 
 
 <p>しかし、述語選ぶのが大変ですね。</p>	
@@ -170,7 +170,7 @@
 
       <footer>
 		<p role="contentinfo">
-		  © 2013 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+		  © 2013 holrock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
     	</p>
 
 	  </footer>	

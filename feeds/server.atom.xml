@@ -1,29 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug - server</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/server.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2018-01-17T00:00:00+09:00</updated><entry><title>torquestat</title><link href="https://holrock.github.io/torquestat.html" rel="alternate"></link><published>2018-01-17T00:00:00+09:00</published><updated>2018-01-17T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2018-01-17:/torquestat.html</id><summary type="html">&lt;p&gt;&lt;img alt="screenshot" src="https://raw.githubusercontent.com/holrock/holrock.github.io/working/content/images/torquestat.png"&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug - server</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/server.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2018-01-17T00:00:00+09:00</updated><entry><title>torquestat</title><link href="https://holrock.github.io/torquestat.html" rel="alternate"></link><published>2018-01-17T00:00:00+09:00</published><updated>2018-01-17T00:00:00+09:00</updated><author><name>holrock</name></author><id>tag:holrock.github.io,2018-01-17:/torquestat.html</id><content type="html">&lt;p&gt;&lt;img alt="screenshot" src="https://raw.githubusercontent.com/holrock/holrock.github.io/working/content/images/torquestat.png"&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://github.com/holrock/torquestat"&gt;github&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;年末年始にgolangやり直しで作ってたtorqueの監視ツールです。&lt;/p&gt;
-&lt;p&gt;こういうのが1バイナリでサクッとできるのはいいですね。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;img alt="screenshot" src="https://raw.githubusercontent.com/holrock/holrock.github.io/working/content/images/torquestat.png"&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://github.com/holrock/torquestat"&gt;github&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;年末年始にgolangやり直しで作ってたtorqueの監視ツールです。&lt;/p&gt;
-&lt;p&gt;こういうのが1バイナリでサクッとできるのはいいですね。&lt;/p&gt;</content></entry><entry><title>torque 6.1でarray jobが300しか実行されない</title><link href="https://holrock.github.io/torque-61dearray-jobga300shikashi-xing-sarenai.html" rel="alternate"></link><published>2017-10-25T00:00:00+09:00</published><updated>2017-10-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-10-25:/torque-61dearray-jobga300shikashi-xing-sarenai.html</id><summary type="html">&lt;p&gt;torqueのバージョンを上げると&lt;code&gt;qstat -q&lt;/code&gt;でみたときに下記のように300しかでなくなった。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Queue            Memory CPU Time Walltime Node  Run Que Lm  State
+&lt;p&gt;こういうのが1バイナリでサクッとできるのはいいですね。&lt;/p&gt;</content><category term="server"></category></entry><entry><title>torque 6.1でarray jobが300しか実行されない</title><link href="https://holrock.github.io/torque-61dearray-jobga300shikashi-xing-sarenai.html" rel="alternate"></link><published>2017-10-25T00:00:00+09:00</published><updated>2017-10-25T00:00:00+09:00</updated><author><name>holrock</name></author><id>tag:holrock.github.io,2017-10-25:/torque-61dearray-jobga300shikashi-xing-sarenai.html</id><summary type="html">&lt;p&gt;torqueのバージョンを上げると&lt;code&gt;qstat -q&lt;/code&gt;でみたときに下記のように300しかでなくなった。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Queue            Memory CPU Time Walltime Node  Run Que Lm  State
 ---------------- ------ -------- -------- ----  --- --- --  -----
 batch              --      --       --      --    0  300 --   E R
                                                ----- -----
                                                    0   300
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;http://docs.adaptivecomputing.com/torque/6-1-0/releaseNotes/Content/topics/releaseNotes/newFeatures.htm&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Job Arrays Now Only Partially Instantiated By Default&lt;/p&gt;
 &lt;p&gt;Job arrays are now only partially instantiated by default …&lt;/p&gt;&lt;/blockquote&gt;</summary><content type="html">&lt;p&gt;torqueのバージョンを上げると&lt;code&gt;qstat -q&lt;/code&gt;でみたときに下記のように300しかでなくなった。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Queue            Memory CPU Time Walltime Node  Run Que Lm  State
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Queue            Memory CPU Time Walltime Node  Run Que Lm  State
 ---------------- ------ -------- -------- ----  --- --- --  -----
 batch              --      --       --      --    0  300 --   E R
                                                ----- -----
                                                    0   300
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;http://docs.adaptivecomputing.com/torque/6-1-0/releaseNotes/Content/topics/releaseNotes/newFeatures.htm&lt;/p&gt;
@@ -35,13 +32,10 @@ batch              --      --       --      --    0  300 --   E R
 &lt;p&gt;ということなので&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;qmgr -c 'set server idle_slot_limit = 1000'&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;のように適当な値を入れる必要がある。&lt;/p&gt;
-&lt;p&gt;qsubにも-i オプションが増えてるのでarray jobのコントロールがやりやすくなっている。&lt;/p&gt;</content></entry><entry><title>maui alert</title><link href="https://holrock.github.io/maui-alert.html" rel="alternate"></link><published>2017-10-18T00:00:00+09:00</published><updated>2017-10-18T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-10-18:/maui-alert.html</id><summary type="html">&lt;p&gt;&lt;code&gt;ALERT:    cannnot create reservation in MJobReserv&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;qsubにも-i オプションが増えてるのでarray jobのコントロールがやりやすくなっている。&lt;/p&gt;</content><category term="server"></category></entry><entry><title>maui alert</title><link href="https://holrock.github.io/maui-alert.html" rel="alternate"></link><published>2017-10-18T00:00:00+09:00</published><updated>2017-10-18T00:00:00+09:00</updated><author><name>holrock</name></author><id>tag:holrock.github.io,2017-10-18:/maui-alert.html</id><content type="html">&lt;p&gt;&lt;code&gt;ALERT:    cannnot create reservation in MJobReserv&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;というメッセージがmaui.logに出ているときは
 &lt;code&gt;RESDEPTH&lt;/code&gt;の値を大きくする。&lt;/p&gt;
-&lt;p&gt;http://docs.adaptivecomputing.com/maui/a.fparameters.php&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;code&gt;ALERT:    cannnot create reservation in MJobReserv&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;というメッセージがmaui.logに出ているときは
-&lt;code&gt;RESDEPTH&lt;/code&gt;の値を大きくする。&lt;/p&gt;
-&lt;p&gt;http://docs.adaptivecomputing.com/maui/a.fparameters.php&lt;/p&gt;</content></entry><entry><title>インターネットにつながらないLinuxクラスターを運用する</title><link href="https://holrock.github.io/intanetsutonitsunagaranailinuxkurasutawoyun-yong-suru.html" rel="alternate"></link><published>2017-09-16T00:00:00+09:00</published><updated>2017-09-16T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-09-16:/intanetsutonitsunagaranailinuxkurasutawoyun-yong-suru.html</id><summary type="html">&lt;h1&gt;はしがき&lt;/h1&gt;
+&lt;p&gt;http://docs.adaptivecomputing.com/maui/a.fparameters.php&lt;/p&gt;</content><category term="server"></category></entry><entry><title>インターネットにつながらないLinuxクラスターを運用する</title><link href="https://holrock.github.io/intanetsutonitsunagaranailinuxkurasutawoyun-yong-suru.html" rel="alternate"></link><published>2017-09-16T00:00:00+09:00</published><updated>2017-09-16T00:00:00+09:00</updated><author><name>holrock</name></author><id>tag:holrock.github.io,2017-09-16:/intanetsutonitsunagaranailinuxkurasutawoyun-yong-suru.html</id><summary type="html">&lt;h1&gt;はしがき&lt;/h1&gt;
 &lt;p&gt;ここ最近は小規模なLinuxクラスターの運用管理もやっています。&lt;/p&gt;
 &lt;p&gt;事情よりクラスター自体がインターネットに接続できないため、通常に比べ管理が面倒だったり、外部サービスを利用できないため不便なことが多々あります。
 そんな環境で色々やってるので書いておきます。&lt;/p&gt;
@@ -50,21 +44,21 @@ batch              --      --       --      --    0  300 --   E R
 &lt;p&gt;ansibleを使用しています。クライアント側にインストールの必要が無いため、管理用端末のみインターネットに接続してインストールすればいいので楽です。&lt;/p&gt;
 &lt;p&gt;ansible用ユーザーを作って公開鍵認証にしていますが、初回のユーザー作成と鍵配布もansibleで行うため、
 そのときだけは&lt;code&gt;remote_user: root&lt;/code&gt;と&lt;code&gt;become_method: su&lt;/code&gt;を使ってrootパスワードを使用しています。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nn"&gt;---&lt;/span&gt;
-&lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;hosts&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;all&lt;/span&gt;
-  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;become&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;yes&lt;/span&gt;
-  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;become_method&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;su&lt;/span&gt;
-  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;remote_user&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;root&lt;/span&gt;
-  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;tasks&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
-    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner&lt;/span&gt;
-      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;user&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
-        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner&lt;/span&gt;
-        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;append&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;yes&lt;/span&gt;
-    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner ssh key&lt;/span&gt;
-      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;authorized_key&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
-        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;user&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner&lt;/span&gt;
-        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;key&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;lookup(&amp;#39;file&amp;#39;,&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;../../ssh/id_rsa.pub&amp;#39;)&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&amp;quot;&lt;/span&gt;
-    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name …&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;h1&gt;はしがき&lt;/h1&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nn"&gt;---&lt;/span&gt;
+&lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;hosts&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;all&lt;/span&gt;
+  &lt;span class="nt"&gt;become&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;yes&lt;/span&gt;
+  &lt;span class="nt"&gt;become_method&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;su&lt;/span&gt;
+  &lt;span class="nt"&gt;remote_user&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;root&lt;/span&gt;
+  &lt;span class="nt"&gt;tasks&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner&lt;/span&gt;
+      &lt;span class="nt"&gt;user&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner&lt;/span&gt;
+        &lt;span class="nt"&gt;append&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;yes&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner ssh key&lt;/span&gt;
+      &lt;span class="nt"&gt;authorized_key&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="nt"&gt;user&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner&lt;/span&gt;
+        &lt;span class="nt"&gt;key&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;lookup(&amp;#39;file&amp;#39;,&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;../../ssh/id_rsa.pub&amp;#39;)&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&amp;quot;&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;name …&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;h1&gt;はしがき&lt;/h1&gt;
 &lt;p&gt;ここ最近は小規模なLinuxクラスターの運用管理もやっています。&lt;/p&gt;
 &lt;p&gt;事情よりクラスター自体がインターネットに接続できないため、通常に比べ管理が面倒だったり、外部サービスを利用できないため不便なことが多々あります。
 そんな環境で色々やってるので書いておきます。&lt;/p&gt;
@@ -73,25 +67,25 @@ batch              --      --       --      --    0  300 --   E R
 &lt;p&gt;ansibleを使用しています。クライアント側にインストールの必要が無いため、管理用端末のみインターネットに接続してインストールすればいいので楽です。&lt;/p&gt;
 &lt;p&gt;ansible用ユーザーを作って公開鍵認証にしていますが、初回のユーザー作成と鍵配布もansibleで行うため、
 そのときだけは&lt;code&gt;remote_user: root&lt;/code&gt;と&lt;code&gt;become_method: su&lt;/code&gt;を使ってrootパスワードを使用しています。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nn"&gt;---&lt;/span&gt;
-&lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;hosts&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;all&lt;/span&gt;
-  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;become&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;yes&lt;/span&gt;
-  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;become_method&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;su&lt;/span&gt;
-  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;remote_user&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;root&lt;/span&gt;
-  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;tasks&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
-    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner&lt;/span&gt;
-      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;user&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
-        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner&lt;/span&gt;
-        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;append&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;yes&lt;/span&gt;
-    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner ssh key&lt;/span&gt;
-      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;authorized_key&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
-        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;user&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner&lt;/span&gt;
-        &lt;span class="l l-Scalar l-Scalar-Plain"&gt;key&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;lookup(&amp;#39;file&amp;#39;,&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;../../ssh/id_rsa.pub&amp;#39;)&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&amp;quot;&lt;/span&gt;
-    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;add sudoers&lt;/span&gt;
-      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;lineinfile&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="p p-Indicator"&gt;&amp;gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nn"&gt;---&lt;/span&gt;
+&lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;hosts&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;all&lt;/span&gt;
+  &lt;span class="nt"&gt;become&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;yes&lt;/span&gt;
+  &lt;span class="nt"&gt;become_method&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;su&lt;/span&gt;
+  &lt;span class="nt"&gt;remote_user&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;root&lt;/span&gt;
+  &lt;span class="nt"&gt;tasks&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner&lt;/span&gt;
+      &lt;span class="nt"&gt;user&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner&lt;/span&gt;
+        &lt;span class="nt"&gt;append&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;yes&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner ssh key&lt;/span&gt;
+      &lt;span class="nt"&gt;authorized_key&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="nt"&gt;user&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;provisioner&lt;/span&gt;
+        &lt;span class="nt"&gt;key&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;lookup(&amp;#39;file&amp;#39;,&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;../../ssh/id_rsa.pub&amp;#39;)&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&amp;quot;&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;add sudoers&lt;/span&gt;
+      &lt;span class="nt"&gt;lineinfile&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p p-Indicator"&gt;&amp;gt;&lt;/span&gt;
         &lt;span class="no"&gt;dest=/etc/sudoers&lt;/span&gt;
         &lt;span class="no"&gt;line=&amp;#39;provisioner ALL=(ALL) NOPASSWD: ALL&amp;#39;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;上記のplaybookを&lt;code&gt;--ask-become-pass&lt;/code&gt;, &lt;code&gt;--ask-pass&lt;/code&gt;付きで流します。&lt;/p&gt;
@@ -99,9 +93,9 @@ batch              --      --       --      --    0  300 --   E R
 他のplaybook&lt;code&gt;become:yes&lt;/code&gt;だけでシステム設定できるようになりました。&lt;/p&gt;
 &lt;p&gt;ちなみにこのときにansible.cfgで&lt;code&gt;ssh_args&lt;/code&gt;でssh鍵を指定していると接続エラーになるので、
 手動でコメントアウトしています。いい方法ないかな。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[ssh_connection]&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;[ssh_connection]&lt;/span&gt;
 &lt;span class="na"&gt;ssh_args&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;-F ssh/ssh_config #ここ&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h1&gt;package&lt;/h1&gt;
@@ -111,34 +105,34 @@ rpmをコピーする方法では依存関係処理が面倒なため、フル�
 ftp.riken.jpあたりからrsyncしてくるのが早いです。&lt;/p&gt;
 &lt;p&gt;yumミラーはhttpで見えるようにしてもいいのですが、今回は全ノードがnfsをマウントしているのでそこにおいています。&lt;/p&gt;
 &lt;p&gt;/etc/yum.repos.dの中身を消して、次のようにローカルのものに書き換えれば完了です。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt; [local-repo-os]
-name=local-repo-os
-baseurl=file:///nfs/mirror/centos/7/os/x86_64
-enabled=1
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="k"&gt;local&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;repo&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;local&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;repo&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;os&lt;/span&gt;
+&lt;span class="n"&gt;baseurl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;///&lt;/span&gt;&lt;span class="n"&gt;nfs&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mirror&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;centos&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;x86_64&lt;/span&gt;
+&lt;span class="n"&gt;enabled&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
 
-[local-repo-updates]
-name=local-repo-updates
-baseurl=file:///nfs/mirror/centos/7/updates/x86_64
-enabled=1
-&lt;/pre&gt;&lt;/div&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="k"&gt;local&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;repo&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;updates&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;local&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;repo&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;updates&lt;/span&gt;
+&lt;span class="n"&gt;baseurl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;///&lt;/span&gt;&lt;span class="n"&gt;nfs&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mirror&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;centos&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;updates&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;x86_64&lt;/span&gt;
+&lt;span class="n"&gt;enabled&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;R&lt;/h2&gt;
 &lt;p&gt;yum以外にもRのリポジトリミラーも作っています。&lt;/p&gt;
 &lt;p&gt;Rの場合、rsyncでコピー後、Rからwrite_PACKAGE関数を読んでパッケージリストを作る必要があります。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;tools&lt;span class="o"&gt;:::&lt;/span&gt;write_PACKAGES&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/nfs/mirror/R/src/contrib&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;tools&lt;/span&gt;&lt;span class="o"&gt;:::&lt;/span&gt;&lt;span class="nf"&gt;write_PACKAGES&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/nfs/mirror/R/src/contrib&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;その後、$HOME/.Rprofileにmirrorの場所を指定すると通常どおり&lt;code&gt;install.packages&lt;/code&gt;が使用できるようになります。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kp"&gt;options&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;repos&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;file:///nfs/mirror/R&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nf"&gt;options&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;repos&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;file:///nfs/mirror/R&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;&lt;a href="https://www.bioconductor.org/about/mirrors/mirror-how-to/"&gt;bioconductor&lt;/a&gt;もミラーしているのですが、ディレクトリ構成が異なりcontribディレクトリの場所を&lt;code&gt;install.packages&lt;/code&gt;が見つけてくれないため、上記のoptionsではうまく行きません。&lt;/p&gt;
 &lt;p&gt;今のところ&lt;code&gt;contriburl&lt;/code&gt;を直接指定していますが、もっといい方法がありそうです。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;install.packages&lt;span class="p"&gt;(&lt;/span&gt;“package”&lt;span class="p"&gt;,&lt;/span&gt; contriburl&lt;span class="o"&gt;=&lt;/span&gt;”&lt;span class="kp"&gt;file&lt;/span&gt;&lt;span class="o"&gt;:///&lt;/span&gt;nfs&lt;span class="o"&gt;/&lt;/span&gt;mirror&lt;span class="o"&gt;/&lt;/span&gt;biocondutor&lt;span class="o"&gt;/&lt;/span&gt;packages&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="m"&gt;3.5&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;contrib”&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nf"&gt;install.packages&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;“&lt;span class="n"&gt;package&lt;/span&gt;”&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;contriburl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;”&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="o"&gt;:///&lt;/span&gt;&lt;span class="n"&gt;nfs&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mirror&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;biocondutor&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;packages&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="m"&gt;3.5&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;contrib&lt;/span&gt;”&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;stringi&lt;/h3&gt;
@@ -146,15 +140,15 @@ enabled=1
 stringiがicudtNN.zip(NNは数字)をインストール中にダウンロードしようとするためです。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://static.rexamine.com/packages/"&gt;http://static.rexamine.com/packages/&lt;/a&gt;から対応バージョンのzipファイルをダウンロードして、ノードにコピーします。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;configure.vers&lt;/code&gt;に&lt;code&gt;ICUDT_DIR&lt;/code&gt;をzipのあるパスを指定してインストール可能です。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;install.packages&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;stringi&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; configure.vars&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;ICUDT_DIR=&amp;lt;dir_to_copy_icudt_from&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nf"&gt;install.packages&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;stringi&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;configure.vars&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;ICUDT_DIR=&amp;lt;dir_to_copy_icudt_from&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;python&lt;/h2&gt;
 &lt;p&gt;直接whlファイルをpipで入れるときにプラットフォームが合わないとエラーになることがあります。&lt;/p&gt;
 &lt;p&gt;whlフィアルの名前が&lt;code&gt;-cp27m-manylinux1_x86_64.whl&lt;/code&gt;のようにmanylinuxとなっていたら&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pip&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pip&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pep425tags&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_supported&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pip&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pip&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pep425tags&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_supported&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;とやって出て来るプラットフォーム名に合わせるとインストール可能になります。&lt;/p&gt;
@@ -194,39 +188,39 @@ stringiがicudtNN.zip(NNは数字)をインストール中にダウンロード�
 &lt;li&gt;CPU温度&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;などをとりあえず設定しています。雑です。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;groups&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
-&lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;name&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;alert.rules&lt;/span&gt;
-  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;rules&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
-  &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;alert&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;InstanceDown&lt;/span&gt;
-    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;expr&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;up == 0&lt;/span&gt;
-    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;for&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;2m&lt;/span&gt;
-    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;labels&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
-      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;severity&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;critical&lt;/span&gt;
-    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;annotations&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
-      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;description&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;$labels.instance&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;has&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;been&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;down&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;for&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;more&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;than&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;2&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;minutes.&amp;#39;&lt;/span&gt;
-      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;summary&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Instance {{ $labels.instance }} down&lt;/span&gt;
-  &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;alert&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;RAIDFail&lt;/span&gt;
-    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;expr&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;raid_failed + raid_degraded &amp;gt; 0&lt;/span&gt;
-    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;labels&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
-      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;severity&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;critical&lt;/span&gt;
-    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;annotations&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
-      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;description&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;$labels.instance&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;raid&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;failed&amp;#39;&lt;/span&gt;
-      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;summary&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Instance {{ $labels.instance }} raid failed&lt;/span&gt;
-  &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;alert&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;DiskSpace&lt;/span&gt;
-    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;expr&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;min(node_filesystem_free / node_filesystem_size) &amp;lt; 0.05&lt;/span&gt;
-    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;labels&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
-      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;severity&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;critical&lt;/span&gt;
-    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;annotations&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
-      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;description&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;$labels.instance&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;disk&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;full&amp;#39;&lt;/span&gt;
-      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;summary&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Instance {{ $labels.instance }} disk full&lt;/span&gt;
-  &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;alert&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;CPUTemp&lt;/span&gt;
-    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;expr&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;node_hwmon_temp_celsius{chip=~&amp;quot;platform_coretemp_.*&amp;quot;} &amp;gt; 80&lt;/span&gt;
-    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;labels&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
-      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;severity&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;critical&lt;/span&gt;
-    &lt;span class="l l-Scalar l-Scalar-Plain"&gt;annotations&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
-      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;description&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;$labels.instance&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;cpu&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;over&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;temp&amp;#39;&lt;/span&gt;
-      &lt;span class="l l-Scalar l-Scalar-Plain"&gt;summary&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Instance {{ $labels.instance }} cpu over temp&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nt"&gt;groups&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;alert.rules&lt;/span&gt;
+  &lt;span class="nt"&gt;rules&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+  &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;InstanceDown&lt;/span&gt;
+    &lt;span class="nt"&gt;expr&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;up == 0&lt;/span&gt;
+    &lt;span class="nt"&gt;for&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;2m&lt;/span&gt;
+    &lt;span class="nt"&gt;labels&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+      &lt;span class="nt"&gt;severity&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;critical&lt;/span&gt;
+    &lt;span class="nt"&gt;annotations&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+      &lt;span class="nt"&gt;description&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;$labels.instance&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;has&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;been&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;down&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;for&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;more&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;than&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;2&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;minutes.&amp;#39;&lt;/span&gt;
+      &lt;span class="nt"&gt;summary&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Instance {{ $labels.instance }} down&lt;/span&gt;
+  &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;RAIDFail&lt;/span&gt;
+    &lt;span class="nt"&gt;expr&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;raid_failed + raid_degraded &amp;gt; 0&lt;/span&gt;
+    &lt;span class="nt"&gt;labels&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+      &lt;span class="nt"&gt;severity&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;critical&lt;/span&gt;
+    &lt;span class="nt"&gt;annotations&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+      &lt;span class="nt"&gt;description&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;$labels.instance&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;raid&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;failed&amp;#39;&lt;/span&gt;
+      &lt;span class="nt"&gt;summary&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Instance {{ $labels.instance }} raid failed&lt;/span&gt;
+  &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;DiskSpace&lt;/span&gt;
+    &lt;span class="nt"&gt;expr&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;min(node_filesystem_free / node_filesystem_size) &amp;lt; 0.05&lt;/span&gt;
+    &lt;span class="nt"&gt;labels&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+      &lt;span class="nt"&gt;severity&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;critical&lt;/span&gt;
+    &lt;span class="nt"&gt;annotations&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+      &lt;span class="nt"&gt;description&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;$labels.instance&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;disk&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;full&amp;#39;&lt;/span&gt;
+      &lt;span class="nt"&gt;summary&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Instance {{ $labels.instance }} disk full&lt;/span&gt;
+  &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="nt"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;CPUTemp&lt;/span&gt;
+    &lt;span class="nt"&gt;expr&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;node_hwmon_temp_celsius{chip=~&amp;quot;platform_coretemp_.*&amp;quot;} &amp;gt; 80&lt;/span&gt;
+    &lt;span class="nt"&gt;labels&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+      &lt;span class="nt"&gt;severity&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;critical&lt;/span&gt;
+    &lt;span class="nt"&gt;annotations&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+      &lt;span class="nt"&gt;description&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;{{&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;$labels.instance&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;}}&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;cpu&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;over&lt;/span&gt;&lt;span class="nv"&gt; &lt;/span&gt;&lt;span class="s"&gt;temp&amp;#39;&lt;/span&gt;
+      &lt;span class="nt"&gt;summary&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Instance {{ $labels.instance }} cpu over temp&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;通知&lt;/h2&gt;
@@ -239,7 +233,7 @@ grafanaのダッシュボードをずっと見ててもいいのですがあま�
 今回は使用しているStumpWM内にwebサーバーを動かし受信、メッセージを表示させてみました。&lt;/p&gt;
 &lt;p&gt;.stumpwm/init.lispの初期化コード内でwookieを立てて、
 alertmanagerから送られてくるjsonをそのまま表示しています。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;ql:quickload&lt;/span&gt; &lt;span class="ss"&gt;&amp;#39;wookie&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;ql:quickload&lt;/span&gt; &lt;span class="ss"&gt;&amp;#39;wookie&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;ql:quickload&lt;/span&gt; &lt;span class="ss"&gt;&amp;#39;cl-json&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;wookie:load-plugins&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;wookie:defroute&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;:post&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;/&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;req&lt;/span&gt; &lt;span class="nv"&gt;res&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -254,7 +248,7 @@ alertmanagerから送られてくるjsonをそのまま表示しています。&
     &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;as:with-event-loop&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;
       &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;wookie:start-server&lt;/span&gt;
         &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;make-instance&lt;/span&gt; &lt;span class="ss"&gt;&amp;#39;wookie:listener&lt;/span&gt; &lt;span class="ss"&gt;:port&lt;/span&gt; &lt;span class="mi"&gt;9999&lt;/span&gt;&lt;span class="p"&gt;))))))&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;お手軽ですが、まあ気がつくだろうという感じです。&lt;/p&gt;
@@ -264,4 +258,4 @@ alertmanagerから送られてくるjsonをそのまま表示しています。&
 自前で運用するリスクやコストもかかるので&lt;strong&gt;可能なら&lt;/strong&gt;避けたほうが良いでしょう。&lt;/p&gt;
 &lt;p&gt;10年ぐらい前の運用はこんな感じだった気もするので、世の中便利になったのではないでしょうか。
 AWSとかdockerとかすごいなあと思いました。&lt;/p&gt;
-&lt;p&gt;他にも思いついたら書いていきたいと思います。&lt;/p&gt;</content><category term="server"></category></entry></feed>
+&lt;p&gt;他にも思いついたら書いていきたいと思います。&lt;/p&gt;</content><category term="server"></category><category term="server"></category></entry></feed>

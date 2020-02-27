@@ -2,8 +2,8 @@
 <html lang="">	
 <head>
 	<meta charset="utf-8"/>
-	<title>horlock - Starbug</title>	
-	<meta name="author" content="horlock">
+	<title>holrock - Starbug</title>	
+	<meta name="author" content="holrock">
 	
 
 	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
@@ -28,13 +28,47 @@
 
 		  <div role="main" class="content">
 
-<h1>Posts published by: horlock</h1>
+<h1>Posts published by: holrock</h1>
 
 <article class="summary">
 <div class="metadata">
+  <time datetime="2016-12-04T00:00:00+09:00" pubdate>日 04 12月 2016</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
+    </address>
+  in <a href="https://holrock.github.io/category/z-machine.html">z-machine</a>
+<p class="tags">tagged <a href="https://holrock.github.io/tag/z-machine.html">z-machine</a>, <a href="https://holrock.github.io/tag/lisp.html">lisp</a>, <a href="https://holrock.github.io/tag/zil.html">zil</a></p></div>  <div>
+    <h2>
+      <a href="https://holrock.github.io/zil.html" rel="bookmark" title="Permalink to ZIL">ZIL</a>
+    </h2>
+    <p><p>なんとなくZ-Machine周りについて調べていたので、ZILについてメモしておきます。</p>
+<p>ZIL(Zork Implementation Language)はZorkなどで知られるZ-Machineで動作するInteractive Fiction(IF)を記述するための言語です。</p>
+<p>まず、Z-Machine関係の用語を説明します。</p>
+<h2>IF</h2>
+<p>IFはいわゆるテキストアドベンチャーゲームです。
+テキストをコマンドとして入力して進行していくゲームで、
+<a href="https://ja.wikipedia.org/wiki/ゾーク#.E3.82.B3.E3.83.9E.E3.83.B3.E3.83.89.E5.85.A5.E5.8A.9B">zork</a>を
+見るとどんなものかはすぐわかります。</p>
+<h2>Z-Machine</h2>
+<p>Z-MachineはIFのための仮想マシンです。
+Infocom社によって作られました。</p>
+<p>多様なプラットフォームへの移植性を確保するため、Zork1などはZ-Machine上で動くようになっていました。</p>
+<p>Z-MachineはZILをコンパイルして出力されるZ-codeと呼ばれるを命令を解釈して実行します。</p>
+<p>Z-Machineの仕様は
+<a href="http://inform-fiction.org/zmachine/standards/z1point1/index.html">The Z-Machine Standards Document</a>
+にまとまっていますが、フラグなどの扱いについて一部、<a href="https://github.com/SamB/ztools">ztools</a>との相違が見られました。</p>
+<h2>ZIL</h2>
+<p>ここから本題です。</p>
+<p>ZILの情報は<a href="http://www.ifwiki.org/index.php/ZIL">ZIL Manual</a>などにあります。</p>
+<p>この後に出てくるソースコードは、ZIL Manualからの引用になります。</p>
+<h3>BASIC</h3>
+<p>オリジナルのZorkは MIT Design Language(MDL)で書かれていたとあり、ZILにもその影響が強く見られます …</p></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
   <time datetime="2016-11-10T00:00:00+09:00" pubdate>木 10 11月 2016</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/cattoy.html">cattoy</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a>, <a href="https://holrock.github.io/tag/nginx.html">nginx</a></p></div>  <div>
@@ -53,20 +87,20 @@
 <p>proxy_cache_keyに使用する$arg_w, $arg_h, arg_qがリサイズパラメータになります。
 それぞれ幅、高さ、jpeg qualityです。</p>
 <p>バックエンドがomacなので、$document_uriにhmacのキーを含んでいるため、サイズ指定以外は$document_uri があればユニークになります。</p>
-<div class="highlight"><pre><span></span>  <span class="k">server</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><code>  <span class="k">server</span> <span class="p">{</span>
     <span class="kn">server_name</span> <span class="s">tlsimg.cattoy.info</span><span class="p">;</span>
     <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
       <span class="kn">proxy_pass</span> <span class="s">http://localhost:8889</span><span class="p">;</span>
       <span class="kn">proxy_cache</span> <span class="s">TLSIMG</span><span class="p">;</span>
       <span class="kn">proxy_cache_key</span> <span class="s">&quot;</span><span class="nv">$host$document_uri$is_args&amp;$arg_w&amp;$arg_h&amp;$arg_q&quot;</span><span class="p">;</span>
       <span class="kn">proxy_cache_lock</span> <span class="no">on</span><span class="p">;</span>
-      <span class="kn">proxy_cache_valid …</span></pre></div></p>
+      <span class="kn">proxy_cache_valid …</span></code></pre></div></p>
   </div>
 </article><article class="summary">
 <div class="metadata">
   <time datetime="2016-11-07T00:00:00+09:00" pubdate>月 07 11月 2016</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/lisp.html">lisp</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/lisp.html">lisp</a>, <a href="https://holrock.github.io/tag/allegrograph.html">allegrograph</a></p></div>  <div>
@@ -85,24 +119,24 @@
 <li>AllegroGraph clientはalispでは動かないのでmlispを作ります</li>
 <li><a href="http://franz.com/support/faq/#s3q7">faq</a>にあるので、いちどalispを起動してから次にコードを実行します</li>
 </ul>
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="k">progn</span>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="k">progn</span>
   <span class="p">(</span><span class="nv">build-lisp-image</span> <span class="s">&quot;sys:mlisp.dxl&quot;</span> <span class="ss">:case-mode</span> <span class="ss">:case-sensitive-lower</span>
           <span class="ss">:include-ide</span> <span class="no">nil</span> <span class="ss">:restart-app-function</span> <span class="no">nil</span><span class="p">)</span>
     <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nb">probe-file</span> <span class="s">&quot;sys:mlisp&quot;</span><span class="p">)</span> <span class="p">(</span><span class="nb">delete-file</span> <span class="s">&quot;sys:mlisp&quot;</span><span class="p">))</span>
       <span class="p">(</span><span class="nv">sys:copy-file</span> <span class="s">&quot;sys:alisp&quot;</span> <span class="s">&quot;sys:mlisp&quot;</span><span class="p">))</span>
-</pre></div>
+</code></pre></div>
 
 
 <ul>
 <li>mlispができたらslimeの設定を通します</li>
 </ul>
-<div class="highlight"><pre><span></span>(setq inferior-lisp-program &quot;/Applications/AllegroCLexpress.app/Contents/Resources …</pre></div></p>
+<div class="highlight"><pre><span></span><code><span class="err">(setq inferior-lisp-program &quot;/Applications/AllegroCLexpress.app/Contents/Resources …</span></code></pre></div></p>
   </div>
 </article><article class="summary">
 <div class="metadata">
   <time datetime="2016-11-04T00:00:00+09:00" pubdate>金 04 11月 2016</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/lisp.html">lisp</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/lisp.html">lisp</a>, <a href="https://holrock.github.io/tag/allegrograph.html">allegrograph</a>, <a href="https://holrock.github.io/tag/ruby.html">ruby</a>, <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a></p></div>  <div>
@@ -113,23 +147,23 @@
 <p>データは<a href="https://www.cattoy.info">cattoy</a>から作ります。</p>
 <p><a href="https://github.com/holrock/cattoy/commit/202415749077a2820bff11d3544af3fc03453b65">こんなかんじ</a>
 にRDF出力コードを仕込んだので、</p>
-<div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="no">RDF</span><span class="o">::</span><span class="no">Graph</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">tap</span> <span class="p">{</span><span class="o">|</span><span class="n">g</span><span class="o">|</span> <span class="no">Cat</span><span class="o">.</span><span class="n">all</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span><span class="o">|</span><span class="n">c</span><span class="o">|</span> <span class="n">g</span> <span class="o">&lt;&lt;</span> <span class="n">c</span><span class="o">.</span><span class="n">to_rdf</span> <span class="p">}}</span>
+<div class="highlight"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="no">RDF</span><span class="o">::</span><span class="no">Graph</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">tap</span> <span class="p">{</span><span class="o">|</span><span class="n">g</span><span class="o">|</span> <span class="no">Cat</span><span class="o">.</span><span class="n">all</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span><span class="o">|</span><span class="n">c</span><span class="o">|</span> <span class="n">g</span> <span class="o">&lt;&lt;</span> <span class="n">c</span><span class="o">.</span><span class="n">to_rdf</span> <span class="p">}}</span>
 <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;/tmp/cat.ttl&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="n">f</span> <span class="o">&lt;&lt;</span> <span class="n">g</span><span class="o">.</span><span class="n">to_ttl</span> <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 
 <p>でファイルに吐き出します。
 なかみはこんなかんじです。</p>
-<div class="highlight"><pre><span></span><span class="p">@</span><span class="k">prefix</span> <span class="nt">schema</span><span class="o">:</span> <span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">schema</span><span class="p">.</span><span class="nc">org</span><span class="o">/&gt;</span> <span class="o">.</span>
-<span class="p">@</span><span class="k">prefix</span> <span class="nt">xsd</span><span class="o">:</span> <span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">www</span><span class="p">.</span><span class="nc">w3</span><span class="p">.</span><span class="nc">org</span><span class="o">/</span><span class="nt">2001</span><span class="o">/</span><span class="nt">XMLSchema</span><span class="err">#</span><span class="o">&gt;</span> <span class="o">.</span>
+<div class="highlight"><pre><span></span><code><span class="k">@prefix</span><span class="w"> </span><span class="nn">schema:</span><span class="w"> </span><span class="nv">&lt;http://schema.org/&gt;</span><span class="w"> </span><span class="p">.</span><span class="w"></span>
+<span class="k">@prefix</span><span class="w"> </span><span class="nn">xsd:</span><span class="w"> </span><span class="nv">&lt;http://www.w3.org/2001/XMLSchema#&gt;</span><span class="w"> </span><span class="p">.</span><span class="w"></span>
 
-<span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">www</span><span class="p">.</span><span class="nc">cattoy</span><span class="p">.</span><span class="nc">info</span><span class="o">/</span><span class="nt">histories …</span></pre></div></p>
+<span class="nv">&lt;http://www.cattoy.info/histories …</span></code></pre></div></p>
   </div>
 </article><article class="summary">
 <div class="metadata">
   <time datetime="2016-11-03T00:00:00+09:00" pubdate>木 03 11月 2016</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/lisp.html">lisp</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/lisp.html">lisp</a>, <a href="https://holrock.github.io/tag/allegrograph.html">allegrograph</a></p></div>  <div>
@@ -161,7 +195,7 @@
 <div class="metadata">
   <time datetime="2016-11-02T00:00:00+09:00" pubdate>水 02 11月 2016</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/ocaml.html">ocaml</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></div>  <div>
@@ -170,15 +204,15 @@
     </h2>
     <p><p>macOSをSierraにあげました。</p>
 <p>その後xcode8.1のインストールをして、omacのビルドをするとlibcryptoが見つからずエラーになりました。</p>
-<div class="highlight"><pre><span></span><span class="c">% ocaml setup.ml -build </span>
-<span class="n">Finished</span><span class="p">,</span> <span class="mi">0</span> <span class="n">targets</span> <span class="p">(</span><span class="mi">0</span> <span class="n">cached</span><span class="p">)</span> <span class="n">in</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.</span>
-<span class="o">+</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">hoge</span><span class="o">/</span><span class="p">.</span><span class="n">opam</span><span class="o">/</span><span class="mf">4.03</span><span class="p">.</span><span class="mi">0</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">ocamlfind</span> <span class="n">ocamlopt</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">linkpkg</span> <span class="o">-</span><span class="n">package</span> <span class="n">cohttp</span> <span class="o">-</span><span class="n">package</span> <span class="n">cohttp</span><span class="p">.</span><span class="n">lwt</span> <span class="o">-</span><span class="n">package</span> <span class="n">conduit</span> <span class="o">-</span><span class="n">package</span> <span class="n">cryptokit</span> <span class="o">-</span><span class="n">package</span> <span class="n">lwt</span> <span class="o">-</span><span class="n">package</span> <span class="n">str</span> <span class="n">src</span><span class="o">/</span><span class="n">omac</span><span class="p">.</span><span class="n">cmx</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="p">.</span><span class="n">cmx</span> <span class="o">-</span><span class="n">o</span> <span class="n">src</span><span class="o">/</span><span class="n">main …</span></pre></div></p>
+<div class="highlight"><pre><span></span><code><span class="o">%</span><span class="w"> </span><span class="n">ocaml</span><span class="w"> </span><span class="n">setup</span><span class="p">.</span><span class="n">ml</span><span class="w"> </span><span class="o">-</span><span class="n">build</span><span class="w"> </span>
+<span class="n">Finished</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">targets</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="w"> </span><span class="n">cached</span><span class="p">)</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="mi">00</span><span class="err">:</span><span class="mi">00</span><span class="err">:</span><span class="mf">00.</span><span class="w"></span>
+<span class="o">+</span><span class="w"> </span><span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">hoge</span><span class="o">/</span><span class="p">.</span><span class="n">opam</span><span class="o">/</span><span class="mf">4.03.0</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">ocamlfind</span><span class="w"> </span><span class="n">ocamlopt</span><span class="w"> </span><span class="o">-</span><span class="n">g</span><span class="w"> </span><span class="o">-</span><span class="n">linkpkg</span><span class="w"> </span><span class="o">-</span><span class="n">package</span><span class="w"> </span><span class="n">cohttp</span><span class="w"> </span><span class="o">-</span><span class="n">package</span><span class="w"> </span><span class="n">cohttp</span><span class="p">.</span><span class="n">lwt</span><span class="w"> </span><span class="o">-</span><span class="n">package</span><span class="w"> </span><span class="n">conduit</span><span class="w"> </span><span class="o">-</span><span class="n">package</span><span class="w"> </span><span class="n">cryptokit</span><span class="w"> </span><span class="o">-</span><span class="n">package</span><span class="w"> </span><span class="n">lwt</span><span class="w"> </span><span class="o">-</span><span class="n">package</span><span class="w"> </span><span class="nf">str</span><span class="w"> </span><span class="n">src</span><span class="o">/</span><span class="n">omac</span><span class="p">.</span><span class="n">cmx</span><span class="w"> </span><span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="p">.</span><span class="n">cmx</span><span class="w"> </span><span class="o">-</span><span class="n">o</span><span class="w"> </span><span class="n">src</span><span class="o">/</span><span class="n">main …</span></code></pre></div></p>
   </div>
 </article><article class="summary">
 <div class="metadata">
   <time datetime="2016-10-31T00:00:00+09:00" pubdate>月 31 10月 2016</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/cattoy.html">cattoy</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/omac.html">omac</a>, <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a>, <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a></p></div>  <div>
@@ -203,7 +237,7 @@ https接続でも警告が出てしまいます。</p>
 <div class="metadata">
   <time datetime="2016-10-28T00:00:00+09:00" pubdate>金 28 10月 2016</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/ocaml.html">ocaml</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></div>  <div>
@@ -215,8 +249,8 @@ https接続でも警告が出てしまいます。</p>
 <code>(Failure "No SSL or TLS support compiled into Conduit")</code>
 とエラーになった</p>
 <h1>対策</h1>
-<div class="highlight"><pre><span></span>CPPFLAGS=&quot;-I$HOME/homebrew/opt/openssl/include&quot; opam install ssl
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">CPPFLAGS=&quot;-I$HOME/homebrew/opt/openssl/include&quot; opam install ssl</span>
+</code></pre></div>
 
 
 <h1>原因</h1>
@@ -227,7 +261,7 @@ opamでsslをビルドできなかった。</p></p>
 <div class="metadata">
   <time datetime="2016-10-25T00:00:00+09:00" pubdate>火 25 10月 2016</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/python.html">python</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/chainer.html">chainer</a>, <a href="https://holrock.github.io/tag/python.html">python</a></p></div>  <div>
@@ -244,13 +278,13 @@ cattoyに登録されている画像を集めてきて手作業で分類、学�
 <li><a href="http://ksksksks2.hatenadiary.jp/entry/20160327/1459061931">http://ksksksks2.hatenadiary.jp/entry/20160327/1459061931</a>
 を参考にリサイズとトレーニングデータに分ける</li>
 </ul>
-<div class="highlight"><pre><span></span><span class="n">line</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">label</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">line</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">label</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+</code></pre></div>
 
 
 <p>の所がlabelのままだとcompute_mean.pyでエラーになるので</p>
-<div class="highlight"><pre><span></span><span class="n">line</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">line</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+</code></pre></div>
 
 
 <p>に変更する。</p>
@@ -262,7 +296,7 @@ cattoyに登録されている画像を集めてきて手作業で分類、学�
 <div class="metadata">
   <time datetime="2016-10-25T00:00:00+09:00" pubdate>火 25 10月 2016</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/lisp.html">lisp</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/lisp.html">lisp</a>, <a href="https://holrock.github.io/tag/lmfs.html">lmfs</a>, <a href="https://holrock.github.io/tag/lispmachine.html">lispmachine</a></p></div>  <div>
@@ -287,44 +321,15 @@ unlambda.comからCADRのイメージとソースが落とせるので中身を�
 </ul>
 </li>
 </ul>
-<div class="highlight"><pre><span></span><span class="gd">--- a/lmfs.c    2006-07-11 07:01:32.000000000 +0900</span>
+<div class="highlight"><pre><span></span><code><span class="gd">--- a/lmfs.c    2006-07-11 07:01:32.000000000 +0900</span>
 <span class="gi">+++ b/lmfs.c    2016-09-18 22:24:12.000000000 +0900</span>
-<span class="gu">@@ -127,6 +127,7 …</span></pre></div></p>
-  </div>
-</article><article class="summary">
-<div class="metadata">
-  <time datetime="2016-10-24T00:00:00+09:00" pubdate>月 24 10月 2016</time>
-    <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
-    </address>
-  in <a href="https://holrock.github.io/category/cattoy.html">cattoy</a>
-<p class="tags">tagged <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a>, <a href="https://holrock.github.io/tag/ruby.html">ruby</a>, <a href="https://holrock.github.io/tag/rails.html">rails</a></p></div>  <div>
-    <h2>
-      <a href="https://holrock.github.io/cattoy-memo.html" rel="bookmark" title="Permalink to cattoy memo">cattoy memo</a>
-    </h2>
-    <p><ul>
-<li><a href="https://www.cattoy.info">https://www.cattoy.info</a><ul>
-<li>Cat Exercise Wheelの使ってくれなさのあまり作りました。</li>
-</ul>
-</li>
-<li>さくらVPS mem1G/2Coreプラン</li>
-<li>CentOS 6.8</li>
-<li>nginx <ul>
-<li>http2に対応するためビルドした</li>
-<li>ついでにLibreSSLにした</li>
-</ul>
-</li>
-</ul>
-<div class="highlight"><pre><span></span>nginx version: nginx/1.11.5
-built by gcc 4.4.7 20120313 (Red Hat 4.4.7-17) (GCC) 
-built with LibreSSL 2.5.0
-TLS SNI support enabled
-configure arguments: --prefix=/opt/nginx-1 …</pre></div></p>
+<span class="gu">@@ -127,6 +127,7 …</span></code></pre></div></p>
   </div>
 </article>
 <div class="pagination">
-            <a href="https://holrock.github.io/author/horlock.html">&laquo;</a>
-    Page 2 / 2
+            <a href="https://holrock.github.io/author/holrock.html">&laquo;</a>
+    Page 2 / 3
+        <a href="https://holrock.github.io/author/holrock3.html">&raquo;</a>
 </div>
 
 		  </div>	
@@ -358,7 +363,7 @@ configure arguments: --prefix=/opt/nginx-1 …</pre></div></p>
 
       <footer>
 		<p role="contentinfo">
-		  © 2013 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+		  © 2013 holrock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
     	</p>
 
 	  </footer>	

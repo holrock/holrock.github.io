@@ -2,8 +2,8 @@
 <html lang="">	
 <head>
 	<meta charset="utf-8"/>
-	<title>horlock - Starbug</title>	
-	<meta name="author" content="horlock">
+	<title>holrock - Starbug</title>	
+	<meta name="author" content="holrock">
 	
 
 	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
@@ -28,13 +28,44 @@
 
 		  <div role="main" class="content">
 
-<h1>Posts published by: horlock</h1>
+<h1>Posts published by: holrock</h1>
 
 <article class="summary">
 <div class="metadata">
+  <time datetime="2019-02-27T00:00:00+09:00" pubdate>水 27 2月 2019</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
+    </address>
+  in <a href="https://holrock.github.io/category/ocaml.html">ocaml</a>
+<p class="tags">tagged <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></div>  <div>
+    <h2>
+      <a href="https://holrock.github.io/opam-2-local-mirrornozuo-rifang.html" rel="bookmark" title="Permalink to OPAM 2 local mirrorの作り方">OPAM 2 local mirrorの作り方</a>
+    </h2>
+    <p><p>インターネットに接続できないクラスター用リポジトリミラー作成シリーズのOPAM版です。</p>
+<p>opam1の頃はopam-mirrorを使って、しこしこ作ってましたが、opam2から楽になりました
+(https://discuss.ocaml.org/t/how-to-setup-local-opam-mirror/4423)</p>
+<p>作業環境にはopamインストールして、リポジトリのファイルを全てダウンロードします。</p>
+<div class="highlight"><pre><span></span><code>$ git clone https://github.com/ocaml/opam-repository.git
+$ <span class="nb">cd</span> opam-repository
+<span class="c1"># パッケージをダウンロードする</span>
+$ opam admin cache
+<span class="c1"># indexファイルをつくる</span>
+$ opam admin idnex
+</code></pre></div>
+
+
+<p>次はミラーサーバーにcacheとopam-repositoryをコピーして、httpdから見られるようにします。
+ここの設定は省略します。
+内部ノードから、<code>http://mirror-server/opam-repository</code>, <code>http://mirror-server/opam/cache</code>でアクセスできるものとします。</p>
+<p>内部ノードにopamの実行ファイルをコピーします。パスも通して使えるようにしておきます。</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># base-compilerのビルドでエラー出るが無視</span>
+$ opam init http://mirror-server …</code></pre></div></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
   <time datetime="2018-01-17T00:00:00+09:00" pubdate>水 17 1月 2018</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/server.html">server</a>
 </div>  <div>
@@ -50,7 +81,7 @@
 <div class="metadata">
   <time datetime="2017-12-23T00:00:00+09:00" pubdate>土 23 12月 2017</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/ruby.html">ruby</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/ruby.html">ruby</a></p></div>  <div>
@@ -71,19 +102,19 @@
 <p>何年か内部で使用していたツールですが、gem化のついでに公開しました。</p>
 <p>rubyでtorque jobを書く方はそういないと思いますが、お役に立てば幸いです。</p>
 <h2>簡単なサンプル</h2>
-<div class="highlight"><pre><span></span><span class="nb">require</span> <span class="s1">&#39;rub2&#39;</span>
+<div class="highlight"><pre><span></span><code><span class="nb">require</span> <span class="s1">&#39;rub2&#39;</span>
 
 <span class="n">submit</span> <span class="s2">&quot;SimpleJob&quot;</span> <span class="k">do</span>
   <span class="n">execute_with</span> <span class="no">Dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;/etc/*.conf&quot;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span>
      <span class="s2">&quot;wc -l </span><span class="si">#{</span><span class="n">file</span><span class="si">}</span><span class="s2">&quot;</span>
   <span class="k">end</span>
 <span class="k">end</span>
-</pre></div>
+</code></pre></div>
 
 
 <p>と書くと、</p>
-<div class="highlight"><pre><span></span>wc -l nfs.conf
-</pre></div>
+<div class="highlight"><pre><span></span><code>wc -l nfs.conf
+</code></pre></div>
 
 
 <p>のようなjobが<code>Dir.glob("/etc/*.conf")</code>が返した配列の要素ごとに生成され実行されます。</p>
@@ -94,7 +125,7 @@
 <div class="metadata">
   <time datetime="2017-11-13T00:00:00+09:00" pubdate>月 13 11月 2017</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/python.html">python</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/server.html">server</a>, <a href="https://holrock.github.io/tag/python.html">python</a></p></div>  <div>
@@ -104,23 +135,23 @@
     <p><p><a href="https://pypi.python.org/pypi/bandersnatch">bandersnatch</a>を使用してpypiミラーを作成します。</p>
 <p>数日ほど時間がかかる上、500GiBぐらいディスクを使います。</p>
 <h1>bandersnatchのインストール</h1>
-<div class="highlight"><pre><span></span>$ virtualenv bandersnatch
+<div class="highlight"><pre><span></span><code>$ virtualenv bandersnatch
 $ <span class="nb">cd</span> bandersnatch
 $ bin/pip install -r https://bitbucket.org/pypa/bandersnatch/raw/stable/requirements.txt
-</pre></div>
+</code></pre></div>
 
 
 <h1>bandersnatch.conf</h1>
-<div class="highlight"><pre><span></span># ミラーのコピー先
-directory = /usr/local/mirror/pypi/
-master = https://pypi.python.org
-timeout = 10
-# worker=1だとすごく時間がかかる
-workers = 3
-hash-index = false
-stop-on-error = false
-delete-packages = true
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err"># ミラーのコピー先</span>
+<span class="err">directory = /usr/local/mirror/pypi/</span>
+<span class="err">master = https://pypi.python.org</span>
+<span class="err">timeout = 10</span>
+<span class="err"># worker=1だとすごく時間がかかる</span>
+<span class="err">workers = 3</span>
+<span class="err">hash-index = false</span>
+<span class="err">stop-on-error = false</span>
+<span class="err">delete-packages = true</span>
+</code></pre></div>
 
 
 <h1>不要なバイナリのコピーをやめる</h1>
@@ -130,7 +161,7 @@ delete-packages = true
 <div class="metadata">
   <time datetime="2017-10-25T00:00:00+09:00" pubdate>水 25 10月 2017</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/server.html">server</a>
 </div>  <div>
@@ -138,12 +169,12 @@ delete-packages = true
       <a href="https://holrock.github.io/torque-61dearray-jobga300shikashi-xing-sarenai.html" rel="bookmark" title="Permalink to torque 6.1でarray jobが300しか実行されない">torque 6.1でarray jobが300しか実行されない</a>
     </h2>
     <p><p>torqueのバージョンを上げると<code>qstat -q</code>でみたときに下記のように300しかでなくなった。</p>
-<div class="highlight"><pre><span></span>Queue            Memory CPU Time Walltime Node  Run Que Lm  State
+<div class="highlight"><pre><span></span><code>Queue            Memory CPU Time Walltime Node  Run Que Lm  State
 ---------------- ------ -------- -------- ----  --- --- --  -----
 batch              --      --       --      --    0  300 --   E R
                                                ----- -----
                                                    0   300
-</pre></div>
+</code></pre></div>
 
 
 <p>http://docs.adaptivecomputing.com/torque/6-1-0/releaseNotes/Content/topics/releaseNotes/newFeatures.htm</p>
@@ -155,7 +186,7 @@ batch              --      --       --      --    0  300 --   E R
 <div class="metadata">
   <time datetime="2017-10-18T00:00:00+09:00" pubdate>水 18 10月 2017</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/server.html">server</a>
 </div>  <div>
@@ -171,7 +202,7 @@ batch              --      --       --      --    0  300 --   E R
 <div class="metadata">
   <time datetime="2017-09-16T00:00:00+09:00" pubdate>土 16 9月 2017</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/server.html">server</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/server.html">server</a></p></div>  <div>
@@ -187,27 +218,27 @@ batch              --      --       --      --    0  300 --   E R
 <p>ansibleを使用しています。クライアント側にインストールの必要が無いため、管理用端末のみインターネットに接続してインストールすればいいので楽です。</p>
 <p>ansible用ユーザーを作って公開鍵認証にしていますが、初回のユーザー作成と鍵配布もansibleで行うため、
 そのときだけは<code>remote_user: root</code>と<code>become_method: su</code>を使ってrootパスワードを使用しています。</p>
-<div class="highlight"><pre><span></span><span class="nn">---</span>
-<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
-  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
-  <span class="l l-Scalar l-Scalar-Plain">become_method</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">su</span>
-  <span class="l l-Scalar l-Scalar-Plain">remote_user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
-  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
-      <span class="l l-Scalar l-Scalar-Plain">user</span><span class="p p-Indicator">:</span>
-        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
-        <span class="l l-Scalar l-Scalar-Plain">append</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner ssh key</span>
-      <span class="l l-Scalar l-Scalar-Plain">authorized_key</span><span class="p p-Indicator">:</span>
-        <span class="l l-Scalar l-Scalar-Plain">user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
-        <span class="l l-Scalar l-Scalar-Plain">key</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">lookup(&#39;file&#39;,</span><span class="nv"> </span><span class="s">&#39;../../ssh/id_rsa.pub&#39;)</span><span class="nv"> </span><span class="s">}}&quot;</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name …</span></pre></div></p>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="nt">hosts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
+  <span class="nt">become</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+  <span class="nt">become_method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">su</span>
+  <span class="nt">remote_user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+  <span class="nt">tasks</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
+      <span class="nt">user</span><span class="p">:</span>
+        <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
+        <span class="nt">append</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner ssh key</span>
+      <span class="nt">authorized_key</span><span class="p">:</span>
+        <span class="nt">user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
+        <span class="nt">key</span><span class="p">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">lookup(&#39;file&#39;,</span><span class="nv"> </span><span class="s">&#39;../../ssh/id_rsa.pub&#39;)</span><span class="nv"> </span><span class="s">}}&quot;</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name …</span></code></pre></div></p>
   </div>
 </article><article class="summary">
 <div class="metadata">
   <time datetime="2017-06-25T00:00:00+09:00" pubdate>日 25 6月 2017</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/ocaml.html">ocaml</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></div>  <div>
@@ -224,15 +255,15 @@ batch              --      --       --      --    0  300 --   E R
 </ol>
 <p>注入される共有ライブラリは既存のランタイム内hookが利用可能で、
 この件とは直接関係ありませんが環境変数から注入可にしては強力すぎるように見えます。</p>
-<div class="highlight"><pre><span></span><span class="cm">/* Load dynamic plugins indicated in the CAML_CPLUGINS environment</span>
-<span class="cm">   variable. These plugins can be used to set currently existing</span>
-<span class="cm">   hooks, such as …</span></pre></div></p>
+<div class="highlight"><pre><span></span><code><span class="err">/* Load dynamic plugins indicated in the CAML_CPLUGINS environment</span>
+<span class="err">   variable. These plugins can be used to set currently existing</span>
+<span class="err">   hooks, such as …</span></code></pre></div></p>
   </div>
 </article><article class="summary">
 <div class="metadata">
   <time datetime="2017-04-16T00:00:00+09:00" pubdate>日 16 4月 2017</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/ocaml.html">ocaml</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></div>  <div>
@@ -253,7 +284,7 @@ batch              --      --       --      --    0  300 --   E R
 <div class="metadata">
   <time datetime="2017-02-21T00:00:00+09:00" pubdate>火 21 2月 2017</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/ocaml.html">ocaml</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></div>  <div>
@@ -266,51 +297,17 @@ batch              --      --       --      --    0  300 --   E R
 <code>@HG</code>ヘッダーにある<code>GO</code>(group order)に未対応で読めなかったため、
 ちょっと修正しました。</p>
 <p>opamで落ちてくる0.6.0用です。</p>
-<div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="o">#</span><span class="n">require</span> <span class="s2">&quot;biocaml.unix&quot;</span><span class="o">;;</span>
+<div class="highlight"><pre><span></span><code><span class="n">utop</span> <span class="o">#</span> <span class="o">#</span><span class="n">require</span> <span class="s2">&quot;biocaml.unix&quot;</span><span class="o">;;</span>
 <span class="n">utop</span> <span class="o">#</span> <span class="k">open</span> <span class="nn">Biocaml_unix</span><span class="p">.</span><span class="nc">Std</span><span class="o">;;</span>
 <span class="n">utop</span> <span class="o">#</span> <span class="nn">Bam</span><span class="p">.</span><span class="n">read</span> <span class="o">(</span><span class="n">open_in</span> <span class="s2">&quot;a.bam&quot;</span><span class="o">);;</span>
 <span class="o">-</span> <span class="o">:</span> <span class="o">(</span><span class="nn">Bam</span><span class="p">.</span><span class="nn">Header</span><span class="p">.</span><span class="n">t</span> <span class="o">*</span> <span class="nn">Sam</span><span class="p">.</span><span class="n">alignment</span> <span class="nn">Core_kernel</span><span class="p">.</span><span class="nn">Std</span><span class="p">.</span><span class="nn">Or_error</span><span class="p">.</span><span class="n">t</span> <span class="nn">Stream</span><span class="p">.</span><span class="n">t</span><span class="o">)</span>
 <span class="nn">Core_kernel</span><span class="p">.</span><span class="nn">Result_wrapper</span><span class="p">.</span><span class="nn">Result</span><span class="p">.</span><span class="nc">Error</span>
- <span class="o">(</span><span class="s2">&quot;unexpected tag for given header item type …</span></pre></div></p>
-  </div>
-</article><article class="summary">
-<div class="metadata">
-  <time datetime="2016-12-04T00:00:00+09:00" pubdate>日 04 12月 2016</time>
-    <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
-    </address>
-  in <a href="https://holrock.github.io/category/z-machine.html">z-machine</a>
-<p class="tags">tagged <a href="https://holrock.github.io/tag/z-machine.html">z-machine</a>, <a href="https://holrock.github.io/tag/lisp.html">lisp</a>, <a href="https://holrock.github.io/tag/zil.html">zil</a></p></div>  <div>
-    <h2>
-      <a href="https://holrock.github.io/zil.html" rel="bookmark" title="Permalink to ZIL">ZIL</a>
-    </h2>
-    <p><p>なんとなくZ-Machine周りについて調べていたので、ZILについてメモしておきます。</p>
-<p>ZIL(Zork Implementation Language)はZorkなどで知られるZ-Machineで動作するInteractive Fiction(IF)を記述するための言語です。</p>
-<p>まず、Z-Machine関係の用語を説明します。</p>
-<h2>IF</h2>
-<p>IFはいわゆるテキストアドベンチャーゲームです。
-テキストをコマンドとして入力して進行していくゲームで、
-<a href="https://ja.wikipedia.org/wiki/ゾーク#.E3.82.B3.E3.83.9E.E3.83.B3.E3.83.89.E5.85.A5.E5.8A.9B">zork</a>を
-見るとどんなものかはすぐわかります。</p>
-<h2>Z-Machine</h2>
-<p>Z-MachineはIFのための仮想マシンです。
-Infocom社によって作られました。</p>
-<p>多様なプラットフォームへの移植性を確保するため、Zork1などはZ-Machine上で動くようになっていました。</p>
-<p>Z-MachineはZILをコンパイルして出力されるZ-codeと呼ばれるを命令を解釈して実行します。</p>
-<p>Z-Machineの仕様は
-<a href="http://inform-fiction.org/zmachine/standards/z1point1/index.html">The Z-Machine Standards Document</a>
-にまとまっていますが、フラグなどの扱いについて一部、<a href="https://github.com/SamB/ztools">ztools</a>との相違が見られました。</p>
-<h2>ZIL</h2>
-<p>ここから本題です。</p>
-<p>ZILの情報は<a href="http://www.ifwiki.org/index.php/ZIL">ZIL Manual</a>などにあります。</p>
-<p>この後に出てくるソースコードは、ZIL Manualからの引用になります。</p>
-<h3>BASIC</h3>
-<p>オリジナルのZorkは MIT Design Language(MDL)で書かれていたとあり、ZILにもその影響が強く見られます …</p></p>
+ <span class="o">(</span><span class="s2">&quot;unexpected tag for given header item type …</span></code></pre></div></p>
   </div>
 </article>
 <div class="pagination">
-    Page 1 / 2
-        <a href="https://holrock.github.io/author/horlock2.html">&raquo;</a>
+    Page 1 / 3
+        <a href="https://holrock.github.io/author/holrock2.html">&raquo;</a>
 </div>
 
 		  </div>	
@@ -344,7 +341,7 @@ Infocom社によって作られました。</p>
 
       <footer>
 		<p role="contentinfo">
-		  © 2013 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+		  © 2013 holrock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
     	</p>
 
 	  </footer>	

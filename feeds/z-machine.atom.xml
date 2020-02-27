@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug - z-machine</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/z-machine.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2016-12-04T00:00:00+09:00</updated><entry><title>ZIL</title><link href="https://holrock.github.io/zil.html" rel="alternate"></link><published>2016-12-04T00:00:00+09:00</published><updated>2016-12-04T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-12-04:/zil.html</id><summary type="html">&lt;p&gt;なんとなくZ-Machine周りについて調べていたので、ZILについてメモしておきます。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug - z-machine</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/z-machine.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2016-12-04T00:00:00+09:00</updated><entry><title>ZIL</title><link href="https://holrock.github.io/zil.html" rel="alternate"></link><published>2016-12-04T00:00:00+09:00</published><updated>2016-12-04T00:00:00+09:00</updated><author><name>holrock</name></author><id>tag:holrock.github.io,2016-12-04:/zil.html</id><summary type="html">&lt;p&gt;なんとなくZ-Machine周りについて調べていたので、ZILについてメモしておきます。&lt;/p&gt;
 &lt;p&gt;ZIL(Zork Implementation Language)はZorkなどで知られるZ-Machineで動作するInteractive Fiction(IF)を記述するための言語です。&lt;/p&gt;
 &lt;p&gt;まず、Z-Machine関係の用語を説明します。&lt;/p&gt;
 &lt;h2&gt;IF&lt;/h2&gt;
@@ -46,23 +46,23 @@ Infocom社によって作られました。&lt;/p&gt;
 ~~MDLと違い、式にはangle bracket (&amp;lt;&amp;gt;) だけが使われます。~~&lt;/p&gt;
 &lt;p&gt;ここ不正確だったので修正。ご指摘ありがとうございます。
 フォームにangle bracket (&amp;lt;&amp;gt;), listに括弧が使われます。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;&amp;lt;*&lt;/span&gt; &lt;span class="nv"&gt;&amp;lt;+&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="nv"&gt;5&amp;gt;&lt;/span&gt; &lt;span class="nv"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="nv"&gt;&amp;lt;/&lt;/span&gt; &lt;span class="mi"&gt;26&lt;/span&gt; &lt;span class="nv"&gt;2&amp;gt;&lt;/span&gt; &lt;span class="nv"&gt;5&amp;gt;&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nv"&gt;&amp;lt;*&lt;/span&gt; &lt;span class="nv"&gt;&amp;lt;+&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="nv"&gt;5&amp;gt;&lt;/span&gt; &lt;span class="nv"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="nv"&gt;&amp;lt;/&lt;/span&gt; &lt;span class="mi"&gt;26&lt;/span&gt; &lt;span class="nv"&gt;2&amp;gt;&lt;/span&gt; &lt;span class="nv"&gt;5&amp;gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;括弧さえ読み替えれば、みたまんまLISPですね。&lt;/p&gt;
 &lt;p&gt;~~丸括弧も使用されますが、グループ化のみに使用されているようです。~~&lt;/p&gt;
 &lt;p&gt;例えば、&lt;code&gt;cond&lt;/code&gt; の条件と式には丸括弧が使用されます。
 関数引数なども丸括弧が使われています。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;&amp;lt;COND&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;&amp;lt;if-this-is-true&amp;gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nv"&gt;&amp;lt;COND&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;&amp;lt;if-this-is-true&amp;gt;&lt;/span&gt;
        &lt;span class="nv"&gt;&amp;lt;then-do-this&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nb"&gt;&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;ちなみに&lt;code&gt;&amp;lt;&amp;gt;&lt;/code&gt;は&lt;code&gt;FALSE&lt;/code&gt;を意味します。&lt;/p&gt;
 &lt;p&gt;次は関数定義を見て見ます。
 関数定義には &lt;code&gt;ROUTINE&lt;/code&gt; を使用します。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;&amp;lt;ROUTINE&lt;/span&gt; &lt;span class="nv"&gt;RHYME&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;AUX&amp;quot;&lt;/span&gt; &lt;span class="nv"&gt;ARG1&lt;/span&gt; &lt;span class="nv"&gt;ARG2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nv"&gt;&amp;lt;ROUTINE&lt;/span&gt; &lt;span class="nv"&gt;RHYME&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;AUX&amp;quot;&lt;/span&gt; &lt;span class="nv"&gt;ARG1&lt;/span&gt; &lt;span class="nv"&gt;ARG2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
       &lt;span class="nv"&gt;&amp;lt;SET&lt;/span&gt; &lt;span class="nv"&gt;ARG1&lt;/span&gt; &lt;span class="nv"&gt;30&amp;gt;&lt;/span&gt;
       &lt;span class="nv"&gt;&amp;lt;SET&lt;/span&gt; &lt;span class="nv"&gt;ARG2&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;September&amp;quot;&lt;/span&gt;&lt;span class="nb"&gt;&amp;gt;&lt;/span&gt;
       &lt;span class="nv"&gt;&amp;lt;LINE-IN-RHYME&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nv"&gt;ARG1&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nv"&gt;ARG2&amp;gt;&lt;/span&gt;
@@ -72,7 +72,7 @@ Infocom社によって作られました。&lt;/p&gt;
       &lt;span class="nv"&gt;etc.&amp;gt;&lt;/span&gt;
 &lt;span class="nv"&gt;&amp;lt;ROUTINE&lt;/span&gt; &lt;span class="nv"&gt;LINE-IN-RHYME&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;ARG-A&lt;/span&gt; &lt;span class="nv"&gt;ARG-B&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
       &lt;span class="nv"&gt;&amp;lt;TELL&lt;/span&gt; &lt;span class="nv"&gt;N&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nv"&gt;ARG-A&lt;/span&gt; &lt;span class="s"&gt;&amp;quot; days hath &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nv"&gt;ARG-B&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;.&amp;quot;&lt;/span&gt; &lt;span class="nv"&gt;CR&amp;gt;&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;ここでは &lt;code&gt;RHYME&lt;/code&gt; 、 &lt;code&gt;LINE-IN-RHYME&lt;/code&gt; の二つのルーチンを定義しています。&lt;/p&gt;
@@ -82,8 +82,8 @@ Infocom社によって作られました。&lt;/p&gt;
 &lt;p&gt;後、目につくのは&lt;code&gt;.ARG1&lt;/code&gt;の&lt;code&gt;.&lt;/code&gt;ですね。これはローカル変数の値を参照する意味になります。&lt;/p&gt;
 &lt;p&gt;ちなみに、グローバル変数を参照する場合は&lt;code&gt;,&lt;/code&gt;を使います。
 次のコードは&lt;code&gt;PIZZA-EATEN&lt;/code&gt;グローバル変数の値をインクリメントするコードです。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;lt;SETG PIZZA-EATEN &amp;lt;+ ,PIZZA-EATEN 1&amp;gt;&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;&amp;lt;SETG PIZZA-EATEN &amp;lt;+ ,PIZZA-EATEN 1&amp;gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;ROOM, OBJECT, ROUTINE&lt;/h2&gt;
@@ -93,7 +93,7 @@ Infocom社によって作られました。&lt;/p&gt;
 &lt;p&gt;ROOMは、playerが移動したり調べたりすることができる場所のことです。今でいうLEVELに近いかもしれません。&lt;/p&gt;
 &lt;p&gt;OBJECTはそのままゲーム中に存在するオブジェクトです。
 ROOMとOBJECTの定義方法は次の通りです。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;&amp;lt;ROOM&lt;/span&gt; &lt;span class="nv"&gt;LIVING-ROOM&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nv"&gt;&amp;lt;ROOM&lt;/span&gt; &lt;span class="nv"&gt;LIVING-ROOM&lt;/span&gt;
      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;LOC&lt;/span&gt; &lt;span class="nv"&gt;ROOMS&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;DESC&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Living Room&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;EAST&lt;/span&gt; &lt;span class="nv"&gt;TO&lt;/span&gt; &lt;span class="nv"&gt;KITCHEN&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -104,10 +104,10 @@ ROOMとOBJECTの定義方法は次の通りです。&lt;/p&gt;
      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;FLAGS&lt;/span&gt; &lt;span class="nv"&gt;RLANDBIT&lt;/span&gt; &lt;span class="nv"&gt;ONBIT&lt;/span&gt; &lt;span class="nv"&gt;SACREDBIT&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;GLOBAL&lt;/span&gt; &lt;span class="nv"&gt;STAIRS&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;THINGS&lt;/span&gt; &lt;span class="nv"&gt;&amp;lt;&amp;gt;&lt;/span&gt; &lt;span class="nv"&gt;NAILS&lt;/span&gt; &lt;span class="nv"&gt;NAILS-PSEUDO&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nb"&gt;&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;&amp;lt;OBJECT&lt;/span&gt; &lt;span class="nv"&gt;LANTERN&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nv"&gt;&amp;lt;OBJECT&lt;/span&gt; &lt;span class="nv"&gt;LANTERN&lt;/span&gt;
        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;LOC&lt;/span&gt; &lt;span class="nv"&gt;LIVING-ROOM&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;SYNONYM&lt;/span&gt; &lt;span class="nv"&gt;LAMP&lt;/span&gt; &lt;span class="nv"&gt;LANTERN&lt;/span&gt; &lt;span class="nv"&gt;LIGHT&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;ADJECTIVE&lt;/span&gt; &lt;span class="nv"&gt;BRASS&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -117,16 +117,16 @@ ROOMとOBJECTの定義方法は次の通りです。&lt;/p&gt;
        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;FDESC&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;A battery-powered lantern is on the trophy case.&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;LDESC&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;There is a brass lantern (battery-powered) here.&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;SIZE&lt;/span&gt; &lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nb"&gt;&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;これでLIVING-ROOMにLANTERNが置かれたことになります。&lt;/p&gt;
 &lt;h2&gt;Input, Praser, Handler&lt;/h2&gt;
 &lt;p&gt;IFはユーザーからのインプットをパースしてアクションを起こします。たとえば&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;gt;HIT UNCLE OTTO WITH THE HAMMER
-You knock some sense back into Uncle Otto, and he stops
-insisting that he&amp;#39;s Napoleon Bonaparte.
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;&amp;gt;HIT UNCLE OTTO WITH THE HAMMER&lt;/span&gt;
+&lt;span class="err"&gt;You knock some sense back into Uncle Otto, and he stops&lt;/span&gt;
+&lt;span class="err"&gt;insisting that he&amp;#39;s Napoleon Bonaparte.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;&lt;code&gt;HIT UNCLE OTTO WITH THE HAMMER&lt;/code&gt;がユーザーインプットで、2行目からが反応です。&lt;/p&gt;
@@ -143,29 +143,29 @@ insisting that he&amp;#39;s Napoleon Bonaparte.
 動詞のデフォルトアクションが呼ばれるまで連鎖します。&lt;/p&gt;
 &lt;p&gt;こうやってインプットをからゲーム内オブジェクトにインタラクションしていくことでゲームが進行していきます。&lt;/p&gt;
 &lt;p&gt;面白いのは、同じLANTERNでも&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;THROW THE NERF BALL AT THE BRASS LANTERN
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;THROW&lt;/span&gt; &lt;span class="n"&gt;THE&lt;/span&gt; &lt;span class="n"&gt;NERF&lt;/span&gt; &lt;span class="n"&gt;BALL&lt;/span&gt; &lt;span class="k"&gt;AT&lt;/span&gt; &lt;span class="n"&gt;THE&lt;/span&gt; &lt;span class="n"&gt;BRASS&lt;/span&gt; &lt;span class="n"&gt;LANTERN&lt;/span&gt;
 
-THROW THE BRASS LANTERN AT THE NERF BALL
-&lt;/pre&gt;&lt;/div&gt;
+&lt;span class="n"&gt;THROW&lt;/span&gt; &lt;span class="n"&gt;THE&lt;/span&gt; &lt;span class="n"&gt;BRASS&lt;/span&gt; &lt;span class="n"&gt;LANTERN&lt;/span&gt; &lt;span class="k"&gt;AT&lt;/span&gt; &lt;span class="n"&gt;THE&lt;/span&gt; &lt;span class="n"&gt;NERF&lt;/span&gt; &lt;span class="n"&gt;BALL&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;では前者の場合、LANTERNはPRSI、後者だとPRSOになるところです。&lt;/p&gt;
 &lt;p&gt;動詞の定義はSYNTAXで定義します。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;lt;SYNTAX GET OBJECT = V-TAKE&amp;gt;
-&amp;lt;SYNTAX GET IN OBJECT = V-ENTER&amp;gt;
-&amp;lt;SYNTAX GET ON OBJECT = V-ENTER&amp;gt;
-&amp;lt;SYNTAX GET OFF OBJECT = V-EXIT&amp;gt;
-&amp;lt;SYNTAX GET OBJECT WITH OBJECT = V-TAKE-WITH&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;&amp;lt;SYNTAX GET OBJECT = V-TAKE&amp;gt;&lt;/span&gt;
+&lt;span class="err"&gt;&amp;lt;SYNTAX GET IN OBJECT = V-ENTER&amp;gt;&lt;/span&gt;
+&lt;span class="err"&gt;&amp;lt;SYNTAX GET ON OBJECT = V-ENTER&amp;gt;&lt;/span&gt;
+&lt;span class="err"&gt;&amp;lt;SYNTAX GET OFF OBJECT = V-EXIT&amp;gt;&lt;/span&gt;
+&lt;span class="err"&gt;&amp;lt;SYNTAX GET OBJECT WITH OBJECT = V-TAKE-WITH&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;OBJECTとなっているところは名詞で置き換えられます。&lt;/p&gt;
 &lt;p&gt;V-TAKEなどはROUTINE名です。
 同じ動詞でもsyntaxによって振り分けることができます。&lt;/p&gt;
 &lt;p&gt;またSYNTAX内の括弧で囲まれた(HAVE)などのトークンは特別な意味を持ち、&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;&amp;lt;SYNTAX&lt;/span&gt; &lt;span class="nv"&gt;GIVE&lt;/span&gt; &lt;span class="nv"&gt;OBJECT&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;HAVE&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nv"&gt;&amp;lt;SYNTAX&lt;/span&gt; &lt;span class="nv"&gt;GIVE&lt;/span&gt; &lt;span class="nv"&gt;OBJECT&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;HAVE&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
      &lt;span class="nv"&gt;TO&lt;/span&gt; &lt;span class="nv"&gt;OBJECT&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;ON-GROUND&lt;/span&gt; &lt;span class="nv"&gt;IN-ROOM&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nb"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;V-GIVE&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;この例では、playerがOBJECTを持っていない場合、パース時にエラーとなります。&lt;/p&gt;
@@ -174,4 +174,4 @@ ZILは英語を前提として作られているため、日本語への移植�
 &lt;h2&gt;まとめ&lt;/h2&gt;
 &lt;p&gt;他にもEventなどがありますが、ここでは省略します。 興味がある方はZIL Manualを読んで見てください。&lt;/p&gt;
 &lt;p&gt;ZILはIFを作る目的でデザインされたコンパクトな言語です。
-あえて今テキストアドベンチャーを作るためにZILを使う必要はありませんが、IFの構成要素を知るためにZILを調べて見るのも面白いと思います。&lt;/p&gt;</content><category term="z-machine"></category><category term="lisp"></category><category term="zil"></category></entry></feed>
+あえて今テキストアドベンチャーを作るためにZILを使う必要はありませんが、IFの構成要素を知るためにZILを調べて見るのも面白いと思います。&lt;/p&gt;</content><category term="z-machine"></category><category term="z-machine"></category><category term="lisp"></category><category term="zil"></category></entry></feed>

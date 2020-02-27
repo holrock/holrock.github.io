@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>cattoyに画像proxyを入れました - Starbug</title>	
-	<meta name="author" content="horlock">
+	<meta name="author" content="holrock">
 	
 
 	<meta name="description" content="cattoy.infoでは外部画像を結構な数表示しています。 外部画像にはhttpでしかアクセスできないものもあり、せっかくwww.cattoy.infoが https接続でも警告が出てしまいます。 ちょうど、次の記事 Camoで実現するセキュアな画像プロキシサーバ を見かけたので camoクローンをocamlで作ってみました。 https://github.com/holrock/omac まだおもちゃみたいなものですが、一応本番で動いています。 構成は https -> nginx(cacheもここで) -> http -> omac -> [画像server] 今のままだとomacが落ちてもnginx側のキャッシュが有効で気がつかないことがあるようなので、 そのうちなんとかしないと。 ほかにもデーモン化やログ管理なんかもやらないといけないのですが、なんとなく動いてしまうと満足してしまいますね。">
@@ -37,7 +37,7 @@
 <div class="metadata">
   <time datetime="2016-10-31T00:00:00+09:00" pubdate>月 31 10月 2016</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/cattoy.html">cattoy</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/omac.html">omac</a>, <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a>, <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a></p></div>		
@@ -94,7 +94,7 @@ https接続でも警告が出てしまいます。</p>
 
       <footer>
 		<p role="contentinfo">
-		  © 2013 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+		  © 2013 holrock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
     	</p>
 
 	  </footer>	

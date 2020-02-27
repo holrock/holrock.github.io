@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>server - Starbug</title>	
-	<meta name="author" content="horlock">
+	<meta name="author" content="holrock">
 	
 
 	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
@@ -34,7 +34,7 @@
 <div class="metadata">
   <time datetime="2017-11-13T00:00:00+09:00" pubdate>月 13 11月 2017</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/python.html">python</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/server.html">server</a>, <a href="https://holrock.github.io/tag/python.html">python</a></p></div>  <div>
@@ -44,23 +44,23 @@
     <p><p><a href="https://pypi.python.org/pypi/bandersnatch">bandersnatch</a>を使用してpypiミラーを作成します。</p>
 <p>数日ほど時間がかかる上、500GiBぐらいディスクを使います。</p>
 <h1>bandersnatchのインストール</h1>
-<div class="highlight"><pre><span></span>$ virtualenv bandersnatch
+<div class="highlight"><pre><span></span><code>$ virtualenv bandersnatch
 $ <span class="nb">cd</span> bandersnatch
 $ bin/pip install -r https://bitbucket.org/pypa/bandersnatch/raw/stable/requirements.txt
-</pre></div>
+</code></pre></div>
 
 
 <h1>bandersnatch.conf</h1>
-<div class="highlight"><pre><span></span># ミラーのコピー先
-directory = /usr/local/mirror/pypi/
-master = https://pypi.python.org
-timeout = 10
-# worker=1だとすごく時間がかかる
-workers = 3
-hash-index = false
-stop-on-error = false
-delete-packages = true
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err"># ミラーのコピー先</span>
+<span class="err">directory = /usr/local/mirror/pypi/</span>
+<span class="err">master = https://pypi.python.org</span>
+<span class="err">timeout = 10</span>
+<span class="err"># worker=1だとすごく時間がかかる</span>
+<span class="err">workers = 3</span>
+<span class="err">hash-index = false</span>
+<span class="err">stop-on-error = false</span>
+<span class="err">delete-packages = true</span>
+</code></pre></div>
 
 
 <h1>不要なバイナリのコピーをやめる</h1>
@@ -70,7 +70,7 @@ delete-packages = true
 <div class="metadata">
   <time datetime="2017-09-16T00:00:00+09:00" pubdate>土 16 9月 2017</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/server.html">server</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/server.html">server</a></p></div>  <div>
@@ -86,21 +86,21 @@ delete-packages = true
 <p>ansibleを使用しています。クライアント側にインストールの必要が無いため、管理用端末のみインターネットに接続してインストールすればいいので楽です。</p>
 <p>ansible用ユーザーを作って公開鍵認証にしていますが、初回のユーザー作成と鍵配布もansibleで行うため、
 そのときだけは<code>remote_user: root</code>と<code>become_method: su</code>を使ってrootパスワードを使用しています。</p>
-<div class="highlight"><pre><span></span><span class="nn">---</span>
-<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
-  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
-  <span class="l l-Scalar l-Scalar-Plain">become_method</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">su</span>
-  <span class="l l-Scalar l-Scalar-Plain">remote_user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
-  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
-      <span class="l l-Scalar l-Scalar-Plain">user</span><span class="p p-Indicator">:</span>
-        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
-        <span class="l l-Scalar l-Scalar-Plain">append</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner ssh key</span>
-      <span class="l l-Scalar l-Scalar-Plain">authorized_key</span><span class="p p-Indicator">:</span>
-        <span class="l l-Scalar l-Scalar-Plain">user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
-        <span class="l l-Scalar l-Scalar-Plain">key</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">lookup(&#39;file&#39;,</span><span class="nv"> </span><span class="s">&#39;../../ssh/id_rsa.pub&#39;)</span><span class="nv"> </span><span class="s">}}&quot;</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name …</span></pre></div></p>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="nt">hosts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
+  <span class="nt">become</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+  <span class="nt">become_method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">su</span>
+  <span class="nt">remote_user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+  <span class="nt">tasks</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
+      <span class="nt">user</span><span class="p">:</span>
+        <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
+        <span class="nt">append</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner ssh key</span>
+      <span class="nt">authorized_key</span><span class="p">:</span>
+        <span class="nt">user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
+        <span class="nt">key</span><span class="p">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">lookup(&#39;file&#39;,</span><span class="nv"> </span><span class="s">&#39;../../ssh/id_rsa.pub&#39;)</span><span class="nv"> </span><span class="s">}}&quot;</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name …</span></code></pre></div></p>
   </div>
 </article>
 <div class="pagination">
@@ -138,7 +138,7 @@ delete-packages = true
 
       <footer>
 		<p role="contentinfo">
-		  © 2013 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+		  © 2013 holrock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
     	</p>
 
 	  </footer>	

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>ZIL - Starbug</title>	
-	<meta name="author" content="horlock">
+	<meta name="author" content="holrock">
 	
 
 	<meta name="description" content="なんとなくZ-Machine周りについて調べていたので、ZILについてメモしておきます。 ZIL(Zork Implementation Language)はZorkなどで知られるZ-Machineで動作するInteractive Fiction(IF)を記述するための言語です。 まず、Z-Machine関係の用語を説明します。 IF IFはいわゆるテキストアドベンチャーゲームです。 テキストをコマンドとして入力して進行していくゲームで、 zorkを 見るとどんなものかはすぐわかります。 Z-Machine Z-MachineはIFのための仮想マシンです。 Infocom社によって作られました。 多様なプラットフォームへの移植性を確保するため、Zork1などはZ-Machine上で動くようになっていました。 Z-MachineはZILをコンパイルして出力されるZ-codeと呼ばれるを命令を解釈して実行します。 Z-Machineの仕様は The Z-Machine Standards Document にまとまっていますが、フラグなどの扱いについて一部、ztoolsとの相違が見られました。 ZIL ここから本題です。 ZILの情報はZIL Manualなどにあります。 この後に出てくるソースコードは、ZIL Manualからの引用になります。 BASIC オリジナルのZorkは MIT Design Language(MDL)で書かれていたとあり、ZILにもその影響が強く見られます …">
@@ -37,7 +37,7 @@
 <div class="metadata">
   <time datetime="2016-12-04T00:00:00+09:00" pubdate>日 04 12月 2016</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/z-machine.html">z-machine</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/z-machine.html">z-machine</a>, <a href="https://holrock.github.io/tag/lisp.html">lisp</a>, <a href="https://holrock.github.io/tag/zil.html">zil</a></p></div>		
@@ -67,23 +67,23 @@ Infocom社によって作られました。</p>
 ~~MDLと違い、式にはangle bracket (&lt;&gt;) だけが使われます。~~</p>
 <p>ここ不正確だったので修正。ご指摘ありがとうございます。
 フォームにangle bracket (&lt;&gt;), listに括弧が使われます。</p>
-<div class="highlight"><pre><span></span><span class="nv">&lt;*</span> <span class="nv">&lt;+</span> <span class="mi">10</span> <span class="nv">5&gt;</span> <span class="nv">&lt;-</span> <span class="nv">&lt;/</span> <span class="mi">26</span> <span class="nv">2&gt;</span> <span class="nv">5&gt;&gt;</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="nv">&lt;*</span> <span class="nv">&lt;+</span> <span class="mi">10</span> <span class="nv">5&gt;</span> <span class="nv">&lt;-</span> <span class="nv">&lt;/</span> <span class="mi">26</span> <span class="nv">2&gt;</span> <span class="nv">5&gt;&gt;</span>
+</code></pre></div>
 
 
 <p>括弧さえ読み替えれば、みたまんまLISPですね。</p>
 <p>~~丸括弧も使用されますが、グループ化のみに使用されているようです。~~</p>
 <p>例えば、<code>cond</code> の条件と式には丸括弧が使用されます。
 関数引数なども丸括弧が使われています。</p>
-<div class="highlight"><pre><span></span><span class="nv">&lt;COND</span> <span class="p">(</span><span class="nv">&lt;if-this-is-true&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="nv">&lt;COND</span> <span class="p">(</span><span class="nv">&lt;if-this-is-true&gt;</span>
        <span class="nv">&lt;then-do-this&gt;</span><span class="p">)</span><span class="nb">&gt;</span>
-</pre></div>
+</code></pre></div>
 
 
 <p>ちなみに<code>&lt;&gt;</code>は<code>FALSE</code>を意味します。</p>
 <p>次は関数定義を見て見ます。
 関数定義には <code>ROUTINE</code> を使用します。</p>
-<div class="highlight"><pre><span></span><span class="nv">&lt;ROUTINE</span> <span class="nv">RHYME</span> <span class="p">(</span><span class="s">&quot;AUX&quot;</span> <span class="nv">ARG1</span> <span class="nv">ARG2</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="nv">&lt;ROUTINE</span> <span class="nv">RHYME</span> <span class="p">(</span><span class="s">&quot;AUX&quot;</span> <span class="nv">ARG1</span> <span class="nv">ARG2</span><span class="p">)</span>
       <span class="nv">&lt;SET</span> <span class="nv">ARG1</span> <span class="nv">30&gt;</span>
       <span class="nv">&lt;SET</span> <span class="nv">ARG2</span> <span class="s">&quot;September&quot;</span><span class="nb">&gt;</span>
       <span class="nv">&lt;LINE-IN-RHYME</span> <span class="o">.</span><span class="nv">ARG1</span> <span class="o">.</span><span class="nv">ARG2&gt;</span>
@@ -93,7 +93,7 @@ Infocom社によって作られました。</p>
       <span class="nv">etc.&gt;</span>
 <span class="nv">&lt;ROUTINE</span> <span class="nv">LINE-IN-RHYME</span> <span class="p">(</span><span class="nv">ARG-A</span> <span class="nv">ARG-B</span><span class="p">)</span>
       <span class="nv">&lt;TELL</span> <span class="nv">N</span> <span class="o">.</span><span class="nv">ARG-A</span> <span class="s">&quot; days hath &quot;</span> <span class="o">.</span><span class="nv">ARG-B</span> <span class="s">&quot;.&quot;</span> <span class="nv">CR&gt;&gt;</span>
-</pre></div>
+</code></pre></div>
 
 
 <p>ここでは <code>RHYME</code> 、 <code>LINE-IN-RHYME</code> の二つのルーチンを定義しています。</p>
@@ -103,8 +103,8 @@ Infocom社によって作られました。</p>
 <p>後、目につくのは<code>.ARG1</code>の<code>.</code>ですね。これはローカル変数の値を参照する意味になります。</p>
 <p>ちなみに、グローバル変数を参照する場合は<code>,</code>を使います。
 次のコードは<code>PIZZA-EATEN</code>グローバル変数の値をインクリメントするコードです。</p>
-<div class="highlight"><pre><span></span>&lt;SETG PIZZA-EATEN &lt;+ ,PIZZA-EATEN 1&gt;&gt;
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">&lt;SETG PIZZA-EATEN &lt;+ ,PIZZA-EATEN 1&gt;&gt;</span>
+</code></pre></div>
 
 
 <h2>ROOM, OBJECT, ROUTINE</h2>
@@ -114,7 +114,7 @@ Infocom社によって作られました。</p>
 <p>ROOMは、playerが移動したり調べたりすることができる場所のことです。今でいうLEVELに近いかもしれません。</p>
 <p>OBJECTはそのままゲーム中に存在するオブジェクトです。
 ROOMとOBJECTの定義方法は次の通りです。</p>
-<div class="highlight"><pre><span></span><span class="nv">&lt;ROOM</span> <span class="nv">LIVING-ROOM</span>
+<div class="highlight"><pre><span></span><code><span class="nv">&lt;ROOM</span> <span class="nv">LIVING-ROOM</span>
      <span class="p">(</span><span class="nv">LOC</span> <span class="nv">ROOMS</span><span class="p">)</span>
      <span class="p">(</span><span class="nv">DESC</span> <span class="s">&quot;Living Room&quot;</span><span class="p">)</span>
      <span class="p">(</span><span class="nv">EAST</span> <span class="nv">TO</span> <span class="nv">KITCHEN</span><span class="p">)</span>
@@ -125,10 +125,10 @@ ROOMとOBJECTの定義方法は次の通りです。</p>
      <span class="p">(</span><span class="nv">FLAGS</span> <span class="nv">RLANDBIT</span> <span class="nv">ONBIT</span> <span class="nv">SACREDBIT</span><span class="p">)</span>
      <span class="p">(</span><span class="nv">GLOBAL</span> <span class="nv">STAIRS</span><span class="p">)</span>
      <span class="p">(</span><span class="nv">THINGS</span> <span class="nv">&lt;&gt;</span> <span class="nv">NAILS</span> <span class="nv">NAILS-PSEUDO</span><span class="p">)</span><span class="nb">&gt;</span>
-</pre></div>
+</code></pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="nv">&lt;OBJECT</span> <span class="nv">LANTERN</span>
+<div class="highlight"><pre><span></span><code><span class="nv">&lt;OBJECT</span> <span class="nv">LANTERN</span>
        <span class="p">(</span><span class="nv">LOC</span> <span class="nv">LIVING-ROOM</span><span class="p">)</span>
        <span class="p">(</span><span class="nv">SYNONYM</span> <span class="nv">LAMP</span> <span class="nv">LANTERN</span> <span class="nv">LIGHT</span><span class="p">)</span>
        <span class="p">(</span><span class="nv">ADJECTIVE</span> <span class="nv">BRASS</span><span class="p">)</span>
@@ -138,16 +138,16 @@ ROOMとOBJECTの定義方法は次の通りです。</p>
        <span class="p">(</span><span class="nv">FDESC</span> <span class="s">&quot;A battery-powered lantern is on the trophy case.&quot;</span><span class="p">)</span>
        <span class="p">(</span><span class="nv">LDESC</span> <span class="s">&quot;There is a brass lantern (battery-powered) here.&quot;</span><span class="p">)</span>
        <span class="p">(</span><span class="nv">SIZE</span> <span class="mi">15</span><span class="p">)</span><span class="nb">&gt;</span>
-</pre></div>
+</code></pre></div>
 
 
 <p>これでLIVING-ROOMにLANTERNが置かれたことになります。</p>
 <h2>Input, Praser, Handler</h2>
 <p>IFはユーザーからのインプットをパースしてアクションを起こします。たとえば</p>
-<div class="highlight"><pre><span></span>&gt;HIT UNCLE OTTO WITH THE HAMMER
-You knock some sense back into Uncle Otto, and he stops
-insisting that he&#39;s Napoleon Bonaparte.
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">&gt;HIT UNCLE OTTO WITH THE HAMMER</span>
+<span class="err">You knock some sense back into Uncle Otto, and he stops</span>
+<span class="err">insisting that he&#39;s Napoleon Bonaparte.</span>
+</code></pre></div>
 
 
 <p><code>HIT UNCLE OTTO WITH THE HAMMER</code>がユーザーインプットで、2行目からが反応です。</p>
@@ -164,29 +164,29 @@ insisting that he&#39;s Napoleon Bonaparte.
 動詞のデフォルトアクションが呼ばれるまで連鎖します。</p>
 <p>こうやってインプットをからゲーム内オブジェクトにインタラクションしていくことでゲームが進行していきます。</p>
 <p>面白いのは、同じLANTERNでも</p>
-<div class="highlight"><pre><span></span>THROW THE NERF BALL AT THE BRASS LANTERN
+<div class="highlight"><pre><span></span><code><span class="n">THROW</span> <span class="n">THE</span> <span class="n">NERF</span> <span class="n">BALL</span> <span class="k">AT</span> <span class="n">THE</span> <span class="n">BRASS</span> <span class="n">LANTERN</span>
 
-THROW THE BRASS LANTERN AT THE NERF BALL
-</pre></div>
+<span class="n">THROW</span> <span class="n">THE</span> <span class="n">BRASS</span> <span class="n">LANTERN</span> <span class="k">AT</span> <span class="n">THE</span> <span class="n">NERF</span> <span class="n">BALL</span>
+</code></pre></div>
 
 
 <p>では前者の場合、LANTERNはPRSI、後者だとPRSOになるところです。</p>
 <p>動詞の定義はSYNTAXで定義します。</p>
-<div class="highlight"><pre><span></span>&lt;SYNTAX GET OBJECT = V-TAKE&gt;
-&lt;SYNTAX GET IN OBJECT = V-ENTER&gt;
-&lt;SYNTAX GET ON OBJECT = V-ENTER&gt;
-&lt;SYNTAX GET OFF OBJECT = V-EXIT&gt;
-&lt;SYNTAX GET OBJECT WITH OBJECT = V-TAKE-WITH&gt;
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">&lt;SYNTAX GET OBJECT = V-TAKE&gt;</span>
+<span class="err">&lt;SYNTAX GET IN OBJECT = V-ENTER&gt;</span>
+<span class="err">&lt;SYNTAX GET ON OBJECT = V-ENTER&gt;</span>
+<span class="err">&lt;SYNTAX GET OFF OBJECT = V-EXIT&gt;</span>
+<span class="err">&lt;SYNTAX GET OBJECT WITH OBJECT = V-TAKE-WITH&gt;</span>
+</code></pre></div>
 
 
 <p>OBJECTとなっているところは名詞で置き換えられます。</p>
 <p>V-TAKEなどはROUTINE名です。
 同じ動詞でもsyntaxによって振り分けることができます。</p>
 <p>またSYNTAX内の括弧で囲まれた(HAVE)などのトークンは特別な意味を持ち、</p>
-<div class="highlight"><pre><span></span><span class="nv">&lt;SYNTAX</span> <span class="nv">GIVE</span> <span class="nv">OBJECT</span> <span class="p">(</span><span class="nv">HAVE</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="nv">&lt;SYNTAX</span> <span class="nv">GIVE</span> <span class="nv">OBJECT</span> <span class="p">(</span><span class="nv">HAVE</span><span class="p">)</span>
      <span class="nv">TO</span> <span class="nv">OBJECT</span> <span class="p">(</span><span class="nv">ON-GROUND</span> <span class="nv">IN-ROOM</span><span class="p">)</span> <span class="nb">=</span> <span class="nv">V-GIVE&gt;</span>
-</pre></div>
+</code></pre></div>
 
 
 <p>この例では、playerがOBJECTを持っていない場合、パース時にエラーとなります。</p>
@@ -236,7 +236,7 @@ ZILは英語を前提として作られているため、日本語への移植�
 
       <footer>
 		<p role="contentinfo">
-		  © 2013 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+		  © 2013 holrock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
     	</p>
 
 	  </footer>	

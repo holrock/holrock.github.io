@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>lmfsを見る - Starbug</title>	
-	<meta name="author" content="horlock">
+	<meta name="author" content="holrock">
 	
 
 	<meta name="description" content="lsmfとはMTIのLispマシンのファイルシステムです。 unlambda.comからCADRのイメージとソースが落とせるので中身を見てみます。 ダンプしてみる http://unlambda.com/index.php?n=Main.Cadr からファイルを落とす CADR emulator tar file system 78.48 source file partition usim.tar.gzを展開してlmfs.cをコンパイルする コンパイルエラーと実行時のオーバランを修正 --- a/lmfs.c 2006-07-11 07:01:32.000000000 +0900 +++ b/lmfs.c 2016-09-18 22:24:12.000000000 +0900 @@ -127,6 +127,7 …">
@@ -37,7 +37,7 @@
 <div class="metadata">
   <time datetime="2016-10-25T00:00:00+09:00" pubdate>火 25 10月 2016</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/lisp.html">lisp</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/lisp.html">lisp</a>, <a href="https://holrock.github.io/tag/lmfs.html">lmfs</a>, <a href="https://holrock.github.io/tag/lispmachine.html">lispmachine</a></p></div>		
@@ -59,7 +59,7 @@ unlambda.comからCADRのイメージとソースが落とせるので中身を�
 </ul>
 </li>
 </ul>
-<div class="highlight"><pre><span></span><span class="gd">--- a/lmfs.c    2006-07-11 07:01:32.000000000 +0900</span>
+<div class="highlight"><pre><span></span><code><span class="gd">--- a/lmfs.c    2006-07-11 07:01:32.000000000 +0900</span>
 <span class="gi">+++ b/lmfs.c    2016-09-18 22:24:12.000000000 +0900</span>
 <span class="gu">@@ -127,6 +127,7 @@</span>
  typedef int address;
@@ -78,7 +78,7 @@ unlambda.comからCADRのイメージとソースが落とせるので中身を�
      int left, use;
 
      left = remaining_access(&amp;b);
-</pre></div>
+</code></pre></div>
 
 
 <ul>
@@ -87,20 +87,20 @@ unlambda.comからCADRのイメージとソースが落とせるので中身を�
 <li>FILE.sys99の方はsegmentation faultしてしまう</li>
 <li>CADR disk image(disk.img)はdiskmakerで結合しているので、そのままでは正当なパーティーションではない</li>
 </ul>
-<div class="highlight"><pre><span></span>00000000  4c 41 42 4c 01 00 00 00  2f 03 00 00 13 00 00 00  |LABL..../.......|
-00000010  11 00 00 00 43 01 00 00  4d 43 52 31 4c 4f 44 31  |....C...MCR1LOD1|
-00000020  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
-00000040  43 41 44 52 20 64 69 73  6b 6d 61 6b 65 72 20 69  |CADR diskmaker i|
-00000050  6d 61 67 65 00 20 20 20  20 20 20 20 20 20 20 20  |mage.           |
-00000060  75 63 61 64 72 2e 6d 63  72 2e 38 34 31 00 00 00  |ucadr.mcr.841...|
-00000070  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">00000000  4c 41 42 4c 01 00 00 00  2f 03 00 00 13 00 00 00  |LABL..../.......|</span>
+<span class="err">00000010  11 00 00 00 43 01 00 00  4d 43 52 31 4c 4f 44 31  |....C...MCR1LOD1|</span>
+<span class="err">00000020  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|</span>
+<span class="err">00000040  43 41 44 52 20 64 69 73  6b 6d 61 6b 65 72 20 69  |CADR diskmaker i|</span>
+<span class="err">00000050  6d 61 67 65 00 20 20 20  20 20 20 20 20 20 20 20  |mage.           |</span>
+<span class="err">00000060  75 63 61 64 72 2e 6d 63  72 2e 38 34 31 00 00 00  |ucadr.mcr.841...|</span>
+<span class="err">00000070  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|</span>
+</code></pre></div>
 
 
 <h1>パーティションの構成</h1>
 <h2>partition-label</h2>
 <p>上記、unlambda.comで配布されているunix tar of source tree for system 78.48のtree/lmfs/fs-dcls.lispに定義がある</p>
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">defstorage</span> <span class="p">(</span><span class="nv">partition-label</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="nv">defstorage</span> <span class="p">(</span><span class="nv">partition-label</span><span class="p">)</span>
   <span class="p">(</span><span class="nv">version</span>  <span class="kt">fixnum</span><span class="p">)</span>             <span class="c1">;of structure</span>
   <span class="p">(</span><span class="nv">name</span>                         <span class="nv">char-with-length</span> <span class="mi">30.</span><span class="p">)</span>
   <span class="p">(</span><span class="nv">label-size</span>                                    <span class="kt">fixnum</span><span class="p">)</span>                <span class="c1">;in words</span>
@@ -123,7 +123,7 @@ unlambda.comからCADRのイメージとソースが落とせるので中身を�
   <span class="p">(</span><span class="nv">monotone-generator</span>   <span class="kt">fixnum</span><span class="p">)</span>
   <span class="p">(</span><span class="nv">root-list</span>            <span class="nv">fh-element</span><span class="p">)</span>
   <span class="p">)</span>
-</pre></div>
+</code></pre></div>
 
 
 <ul>
@@ -162,18 +162,18 @@ unlambda.comからCADRのイメージとソースが落とせるので中身を�
 </ul>
 </li>
 </ul>
-<div class="highlight"><pre><span></span>0    1023 :    0 1007
-1024 2047 : 1008 2015
-2048 3071 : 2016 3025
-3072 4095 : 3026 4033
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">0    1023 :    0 1007</span>
+<span class="err">1024 2047 : 1008 2015</span>
+<span class="err">2048 3071 : 2016 3025</span>
+<span class="err">3072 4095 : 3026 4033</span>
+</code></pre></div>
 
 
 <ul>
 <li>この辺は調べきれず</li>
 </ul>
 <h1>file-header</h1>
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">defstorage</span> <span class="p">(</span><span class="nv">file-header</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="nv">defstorage</span> <span class="p">(</span><span class="nv">file-header</span><span class="p">)</span>
   <span class="p">(</span><span class="nv">version</span>    <span class="kt">fixnum</span><span class="p">)</span>
   <span class="p">(</span><span class="nv">logical-size</span>   <span class="nv">fixnum-bytes</span> <span class="mi">2</span><span class="p">)</span>
   <span class="p">(</span><span class="nv">bootload-generation</span>  <span class="kt">fixnum</span><span class="p">)</span>       <span class="c1">;for validating</span>
@@ -191,7 +191,7 @@ unlambda.comからCADRのイメージとソースが落とせるので中身を�
     <span class="nv">file-map</span>
     <span class="nv">pad-area</span>            <span class="c1">;many natures of obsolescence</span>
     <span class="nv">pad2-area</span><span class="p">))</span>           <span class="c1">;are supported</span>
-</pre></div>
+</code></pre></div>
 
 
 <ul>
@@ -209,11 +209,11 @@ unlambda.comからCADRのイメージとソースが落とせるので中身を�
 </li>
 </ul>
 <h2>fh-element</h2>
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">defstorage</span> <span class="p">(</span><span class="nv">fh-element</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="nv">defstorage</span> <span class="p">(</span><span class="nv">fh-element</span><span class="p">)</span>
   <span class="p">(</span><span class="nv">name</span>     <span class="nb">char</span> <span class="mi">4</span><span class="p">)</span>
   <span class="p">(</span><span class="nv">location</span>   <span class="nv">fixnum-bytes</span> <span class="mi">2</span><span class="p">)</span>     <span class="c1">;in words in log. headr</span>
   <span class="p">(</span><span class="nb">length</span>   <span class="nv">fixnum-bytes</span> <span class="mi">2</span><span class="p">))</span>      <span class="c1">;in words</span>
-</pre></div>
+</code></pre></div>
 
 
 <ul>
@@ -223,22 +223,22 @@ unlambda.comからCADRのイメージとソースが落とせるので中身を�
 </ul>
 </li>
 </ul>
-<div class="highlight"><pre><span></span><span class="c">% hexdump -C -s 29241460 -n 140 ./FILE.78.48</span>
-<span class="mi">01</span><span class="n">be3074</span>  <span class="mi">04</span> <span class="mi">00</span> <span class="mi">72</span> <span class="mi">6</span><span class="n">f</span> <span class="mi">6</span><span class="n">f</span> <span class="mi">74</span> <span class="mi">00</span> <span class="mi">00</span>  <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span>  <span class="o">|</span><span class="p">..</span><span class="n">root</span><span class="c">..........|</span>
-<span class="mi">01</span><span class="n">be3084</span>  <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span>  <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span>  <span class="o">|</span><span class="c">................|</span>
-<span class="mi">01</span><span class="n">be3094</span>  <span class="mi">05</span> <span class="mi">00</span> <span class="mi">2</span><span class="n">a</span> <span class="mi">44</span> <span class="mi">49</span> <span class="mi">52</span> <span class="mi">2</span><span class="n">a</span> <span class="mi">00</span>  <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span>  <span class="o">|</span><span class="p">.</span><span class="o">.*</span><span class="n">DIR</span><span class="o">*</span><span class="c">.........|</span>
-<span class="mi">01</span><span class="n">be30a4</span>  <span class="mi">01</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">08</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span>  <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span>  <span class="o">|</span><span class="c">................|</span>
-<span class="mi">01</span><span class="n">be30b4</span>  <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">04</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span>  <span class="mi">01</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="n">de</span> <span class="mi">79</span> <span class="mi">5</span><span class="n">e</span> <span class="n">c8</span>  <span class="o">|</span><span class="c">.............y^.|</span>
-<span class="mi">01</span><span class="n">be30c4</span>  <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span>  <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span>  <span class="o">|</span><span class="c">................|</span>
-<span class="mi">01</span><span class="n">be30d4</span>  <span class="n">de</span> <span class="mi">79</span> <span class="mi">5</span><span class="n">e</span> <span class="n">c8</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span>  <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="n">e3</span> <span class="mi">1</span><span class="n">b</span> <span class="mi">00</span> <span class="mi">00</span>  <span class="o">|</span><span class="p">.</span><span class="n">y</span>^<span class="c">.............|</span>
-<span class="mi">01</span><span class="n">be30e4</span>  <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span>  <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span>  <span class="o">|</span><span class="c">................|</span>
-<span class="mi">01</span><span class="n">be30f4</span>  <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span>  <span class="mi">04</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span>              <span class="o">|</span><span class="c">............|</span>
-<span class="mi">01</span><span class="n">be3100</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="c">% hexdump -C -s 29241460 -n 140 ./FILE.78.48</span>
+<span class="n">01be3074  </span><span class="s">04 00 72 6f 6f 74 00 00  00 00 00 00 00 00 00 00  |..root..........|</span><span class="p"></span>
+<span class="n">01be3084  </span><span class="s">00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|</span><span class="p"></span>
+<span class="n">01be3094  </span><span class="s">05 00 2a 44 49 52 2a 00  00 00 00 00 00 00 00 00  |..*DIR*.........|</span><span class="p"></span>
+<span class="n">01be30a4  </span><span class="s">01 00 00 08 00 00 00 00  00 00 00 00 00 00 00 00  |................|</span><span class="p"></span>
+<span class="n">01be30b4  </span><span class="s">00 00 00 00 04 00 00 00  01 00 00 00 de 79 5e c8  |.............y^.|</span><span class="p"></span>
+<span class="n">01be30c4  </span><span class="s">00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|</span><span class="p"></span>
+<span class="n">01be30d4  </span><span class="s">de 79 5e c8 00 00 00 00  00 00 00 00 e3 1b 00 00  |.y^.............|</span><span class="p"></span>
+<span class="n">01be30e4  </span><span class="s">00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|</span><span class="p"></span>
+<span class="n">01be30f4  </span><span class="s">00 00 00 00 00 00 00 00  04 00 00 00              |............|</span><span class="p"></span>
+<span class="n">01be3100</span>
+</code></pre></div>
 
 
 <h1>dir-header</h1>
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">defstorage</span> <span class="p">(</span><span class="nv">dir-header</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="nv">defstorage</span> <span class="p">(</span><span class="nv">dir-header</span><span class="p">)</span>
   <span class="p">(</span><span class="nv">version</span>        <span class="nv">fixnum-bytes</span> <span class="mi">2</span><span class="p">)</span>     <span class="c1">;structure version</span>
   <span class="p">(</span><span class="nv">size</span>         <span class="nv">fixnum-bytes</span> <span class="mi">2</span><span class="p">)</span>
   <span class="p">(</span><span class="nv">name</span>         <span class="nv">char-with-length</span> <span class="mi">30.</span><span class="p">)</span>
@@ -263,7 +263,7 @@ unlambda.comからCADRのイメージとソースが落とせるので中身を�
   <span class="p">(</span><span class="nv">auto-expunge-last-time</span>  <span class="nv">date</span><span class="p">)</span>
 
   <span class="p">(</span><span class="nv">default-link-transparencies</span> <span class="nv">link-transparencies</span><span class="p">))</span>
-</pre></div>
+</code></pre></div>
 
 
 <ul>
@@ -273,13 +273,13 @@ unlambda.comからCADRのイメージとソースが落とせるので中身を�
 <ul>
 <li>大きいので省略</li>
 </ul>
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">defstorage</span> <span class="p">(</span><span class="nv">directory-entry</span> <span class="ss">:abbrev</span> <span class="nv">dire</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="nv">defstorage</span> <span class="p">(</span><span class="nv">directory-entry</span> <span class="ss">:abbrev</span> <span class="nv">dire</span><span class="p">)</span>
   <span class="p">(</span><span class="nv">file-name</span>          <span class="nv">char-with-length</span> <span class="mi">30.</span><span class="p">)</span>     <span class="c1">;File name, to 30 chars</span>
   <span class="p">(</span><span class="nv">file-type</span>                <span class="nv">char-with-length</span> <span class="mi">14.</span><span class="p">)</span>         <span class="c1">;Extension</span>
   <span class="p">(</span><span class="nv">file-version</span>               <span class="nv">fixnum-bytes</span> <span class="mi">3.</span><span class="p">)</span>          <span class="c1">;Generation</span>
   <span class="o">...</span>
   <span class="p">(</span><span class="nv">record-0-address</span>   <span class="nv">disk-address</span><span class="p">)</span>     <span class="c1">;how to find the file</span>
-</pre></div>
+</code></pre></div>
 
 
 <ul>
@@ -329,7 +329,7 @@ unlambda.comからCADRのイメージとソースが落とせるので中身を�
 
       <footer>
 		<p role="contentinfo">
-		  © 2013 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+		  © 2013 holrock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
     	</p>
 
 	  </footer>	

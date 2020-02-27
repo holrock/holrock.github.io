@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>ocaml - Starbug</title>	
-	<meta name="author" content="horlock">
+	<meta name="author" content="holrock">
 	
 
 	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
@@ -32,9 +32,40 @@
 
 <article class="summary">
 <div class="metadata">
+  <time datetime="2019-02-27T00:00:00+09:00" pubdate>水 27 2月 2019</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
+    </address>
+  in <a href="https://holrock.github.io/category/ocaml.html">ocaml</a>
+<p class="tags">tagged <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></div>  <div>
+    <h2>
+      <a href="https://holrock.github.io/opam-2-local-mirrornozuo-rifang.html" rel="bookmark" title="Permalink to OPAM 2 local mirrorの作り方">OPAM 2 local mirrorの作り方</a>
+    </h2>
+    <p><p>インターネットに接続できないクラスター用リポジトリミラー作成シリーズのOPAM版です。</p>
+<p>opam1の頃はopam-mirrorを使って、しこしこ作ってましたが、opam2から楽になりました
+(https://discuss.ocaml.org/t/how-to-setup-local-opam-mirror/4423)</p>
+<p>作業環境にはopamインストールして、リポジトリのファイルを全てダウンロードします。</p>
+<div class="highlight"><pre><span></span><code>$ git clone https://github.com/ocaml/opam-repository.git
+$ <span class="nb">cd</span> opam-repository
+<span class="c1"># パッケージをダウンロードする</span>
+$ opam admin cache
+<span class="c1"># indexファイルをつくる</span>
+$ opam admin idnex
+</code></pre></div>
+
+
+<p>次はミラーサーバーにcacheとopam-repositoryをコピーして、httpdから見られるようにします。
+ここの設定は省略します。
+内部ノードから、<code>http://mirror-server/opam-repository</code>, <code>http://mirror-server/opam/cache</code>でアクセスできるものとします。</p>
+<p>内部ノードにopamの実行ファイルをコピーします。パスも通して使えるようにしておきます。</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># base-compilerのビルドでエラー出るが無視</span>
+$ opam init http://mirror-server …</code></pre></div></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
   <time datetime="2017-06-25T00:00:00+09:00" pubdate>日 25 6月 2017</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/ocaml.html">ocaml</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></div>  <div>
@@ -51,15 +82,15 @@
 </ol>
 <p>注入される共有ライブラリは既存のランタイム内hookが利用可能で、
 この件とは直接関係ありませんが環境変数から注入可にしては強力すぎるように見えます。</p>
-<div class="highlight"><pre><span></span><span class="cm">/* Load dynamic plugins indicated in the CAML_CPLUGINS environment</span>
-<span class="cm">   variable. These plugins can be used to set currently existing</span>
-<span class="cm">   hooks, such as …</span></pre></div></p>
+<div class="highlight"><pre><span></span><code><span class="err">/* Load dynamic plugins indicated in the CAML_CPLUGINS environment</span>
+<span class="err">   variable. These plugins can be used to set currently existing</span>
+<span class="err">   hooks, such as …</span></code></pre></div></p>
   </div>
 </article><article class="summary">
 <div class="metadata">
   <time datetime="2017-04-16T00:00:00+09:00" pubdate>日 16 4月 2017</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/ocaml.html">ocaml</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></div>  <div>
@@ -80,7 +111,7 @@
 <div class="metadata">
   <time datetime="2017-02-21T00:00:00+09:00" pubdate>火 21 2月 2017</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/ocaml.html">ocaml</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></div>  <div>
@@ -93,18 +124,18 @@
 <code>@HG</code>ヘッダーにある<code>GO</code>(group order)に未対応で読めなかったため、
 ちょっと修正しました。</p>
 <p>opamで落ちてくる0.6.0用です。</p>
-<div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="o">#</span><span class="n">require</span> <span class="s2">&quot;biocaml.unix&quot;</span><span class="o">;;</span>
+<div class="highlight"><pre><span></span><code><span class="n">utop</span> <span class="o">#</span> <span class="o">#</span><span class="n">require</span> <span class="s2">&quot;biocaml.unix&quot;</span><span class="o">;;</span>
 <span class="n">utop</span> <span class="o">#</span> <span class="k">open</span> <span class="nn">Biocaml_unix</span><span class="p">.</span><span class="nc">Std</span><span class="o">;;</span>
 <span class="n">utop</span> <span class="o">#</span> <span class="nn">Bam</span><span class="p">.</span><span class="n">read</span> <span class="o">(</span><span class="n">open_in</span> <span class="s2">&quot;a.bam&quot;</span><span class="o">);;</span>
 <span class="o">-</span> <span class="o">:</span> <span class="o">(</span><span class="nn">Bam</span><span class="p">.</span><span class="nn">Header</span><span class="p">.</span><span class="n">t</span> <span class="o">*</span> <span class="nn">Sam</span><span class="p">.</span><span class="n">alignment</span> <span class="nn">Core_kernel</span><span class="p">.</span><span class="nn">Std</span><span class="p">.</span><span class="nn">Or_error</span><span class="p">.</span><span class="n">t</span> <span class="nn">Stream</span><span class="p">.</span><span class="n">t</span><span class="o">)</span>
 <span class="nn">Core_kernel</span><span class="p">.</span><span class="nn">Result_wrapper</span><span class="p">.</span><span class="nn">Result</span><span class="p">.</span><span class="nc">Error</span>
- <span class="o">(</span><span class="s2">&quot;unexpected tag for given header item type …</span></pre></div></p>
+ <span class="o">(</span><span class="s2">&quot;unexpected tag for given header item type …</span></code></pre></div></p>
   </div>
 </article><article class="summary">
 <div class="metadata">
   <time datetime="2016-11-02T00:00:00+09:00" pubdate>水 02 11月 2016</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/ocaml.html">ocaml</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></div>  <div>
@@ -113,15 +144,15 @@
     </h2>
     <p><p>macOSをSierraにあげました。</p>
 <p>その後xcode8.1のインストールをして、omacのビルドをするとlibcryptoが見つからずエラーになりました。</p>
-<div class="highlight"><pre><span></span><span class="c">% ocaml setup.ml -build </span>
-<span class="n">Finished</span><span class="p">,</span> <span class="mi">0</span> <span class="n">targets</span> <span class="p">(</span><span class="mi">0</span> <span class="n">cached</span><span class="p">)</span> <span class="n">in</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.</span>
-<span class="o">+</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">hoge</span><span class="o">/</span><span class="p">.</span><span class="n">opam</span><span class="o">/</span><span class="mf">4.03</span><span class="p">.</span><span class="mi">0</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">ocamlfind</span> <span class="n">ocamlopt</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">linkpkg</span> <span class="o">-</span><span class="n">package</span> <span class="n">cohttp</span> <span class="o">-</span><span class="n">package</span> <span class="n">cohttp</span><span class="p">.</span><span class="n">lwt</span> <span class="o">-</span><span class="n">package</span> <span class="n">conduit</span> <span class="o">-</span><span class="n">package</span> <span class="n">cryptokit</span> <span class="o">-</span><span class="n">package</span> <span class="n">lwt</span> <span class="o">-</span><span class="n">package</span> <span class="n">str</span> <span class="n">src</span><span class="o">/</span><span class="n">omac</span><span class="p">.</span><span class="n">cmx</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="p">.</span><span class="n">cmx</span> <span class="o">-</span><span class="n">o</span> <span class="n">src</span><span class="o">/</span><span class="n">main …</span></pre></div></p>
+<div class="highlight"><pre><span></span><code><span class="o">%</span><span class="w"> </span><span class="n">ocaml</span><span class="w"> </span><span class="n">setup</span><span class="p">.</span><span class="n">ml</span><span class="w"> </span><span class="o">-</span><span class="n">build</span><span class="w"> </span>
+<span class="n">Finished</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">targets</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="w"> </span><span class="n">cached</span><span class="p">)</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="mi">00</span><span class="err">:</span><span class="mi">00</span><span class="err">:</span><span class="mf">00.</span><span class="w"></span>
+<span class="o">+</span><span class="w"> </span><span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">hoge</span><span class="o">/</span><span class="p">.</span><span class="n">opam</span><span class="o">/</span><span class="mf">4.03.0</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">ocamlfind</span><span class="w"> </span><span class="n">ocamlopt</span><span class="w"> </span><span class="o">-</span><span class="n">g</span><span class="w"> </span><span class="o">-</span><span class="n">linkpkg</span><span class="w"> </span><span class="o">-</span><span class="n">package</span><span class="w"> </span><span class="n">cohttp</span><span class="w"> </span><span class="o">-</span><span class="n">package</span><span class="w"> </span><span class="n">cohttp</span><span class="p">.</span><span class="n">lwt</span><span class="w"> </span><span class="o">-</span><span class="n">package</span><span class="w"> </span><span class="n">conduit</span><span class="w"> </span><span class="o">-</span><span class="n">package</span><span class="w"> </span><span class="n">cryptokit</span><span class="w"> </span><span class="o">-</span><span class="n">package</span><span class="w"> </span><span class="n">lwt</span><span class="w"> </span><span class="o">-</span><span class="n">package</span><span class="w"> </span><span class="nf">str</span><span class="w"> </span><span class="n">src</span><span class="o">/</span><span class="n">omac</span><span class="p">.</span><span class="n">cmx</span><span class="w"> </span><span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="p">.</span><span class="n">cmx</span><span class="w"> </span><span class="o">-</span><span class="n">o</span><span class="w"> </span><span class="n">src</span><span class="o">/</span><span class="n">main …</span></code></pre></div></p>
   </div>
 </article><article class="summary">
 <div class="metadata">
   <time datetime="2016-10-28T00:00:00+09:00" pubdate>金 28 10月 2016</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/ocaml.html">ocaml</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></div>  <div>
@@ -133,8 +164,8 @@
 <code>(Failure "No SSL or TLS support compiled into Conduit")</code>
 とエラーになった</p>
 <h1>対策</h1>
-<div class="highlight"><pre><span></span>CPPFLAGS=&quot;-I$HOME/homebrew/opt/openssl/include&quot; opam install ssl
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">CPPFLAGS=&quot;-I$HOME/homebrew/opt/openssl/include&quot; opam install ssl</span>
+</code></pre></div>
 
 
 <h1>原因</h1>
@@ -177,7 +208,7 @@ opamでsslをビルドできなかった。</p></p>
 
       <footer>
 		<p role="contentinfo">
-		  © 2013 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+		  © 2013 holrock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
     	</p>
 
 	  </footer>	

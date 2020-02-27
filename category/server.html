@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>server - Starbug</title>	
-	<meta name="author" content="horlock">
+	<meta name="author" content="holrock">
 	
 
 	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
@@ -34,7 +34,7 @@
 <div class="metadata">
   <time datetime="2018-01-17T00:00:00+09:00" pubdate>水 17 1月 2018</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/server.html">server</a>
 </div>  <div>
@@ -50,7 +50,7 @@
 <div class="metadata">
   <time datetime="2017-10-25T00:00:00+09:00" pubdate>水 25 10月 2017</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/server.html">server</a>
 </div>  <div>
@@ -58,12 +58,12 @@
       <a href="https://holrock.github.io/torque-61dearray-jobga300shikashi-xing-sarenai.html" rel="bookmark" title="Permalink to torque 6.1でarray jobが300しか実行されない">torque 6.1でarray jobが300しか実行されない</a>
     </h2>
     <p><p>torqueのバージョンを上げると<code>qstat -q</code>でみたときに下記のように300しかでなくなった。</p>
-<div class="highlight"><pre><span></span>Queue            Memory CPU Time Walltime Node  Run Que Lm  State
+<div class="highlight"><pre><span></span><code>Queue            Memory CPU Time Walltime Node  Run Que Lm  State
 ---------------- ------ -------- -------- ----  --- --- --  -----
 batch              --      --       --      --    0  300 --   E R
                                                ----- -----
                                                    0   300
-</pre></div>
+</code></pre></div>
 
 
 <p>http://docs.adaptivecomputing.com/torque/6-1-0/releaseNotes/Content/topics/releaseNotes/newFeatures.htm</p>
@@ -75,7 +75,7 @@ batch              --      --       --      --    0  300 --   E R
 <div class="metadata">
   <time datetime="2017-10-18T00:00:00+09:00" pubdate>水 18 10月 2017</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/server.html">server</a>
 </div>  <div>
@@ -91,7 +91,7 @@ batch              --      --       --      --    0  300 --   E R
 <div class="metadata">
   <time datetime="2017-09-16T00:00:00+09:00" pubdate>土 16 9月 2017</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/server.html">server</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/server.html">server</a></p></div>  <div>
@@ -107,21 +107,21 @@ batch              --      --       --      --    0  300 --   E R
 <p>ansibleを使用しています。クライアント側にインストールの必要が無いため、管理用端末のみインターネットに接続してインストールすればいいので楽です。</p>
 <p>ansible用ユーザーを作って公開鍵認証にしていますが、初回のユーザー作成と鍵配布もansibleで行うため、
 そのときだけは<code>remote_user: root</code>と<code>become_method: su</code>を使ってrootパスワードを使用しています。</p>
-<div class="highlight"><pre><span></span><span class="nn">---</span>
-<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
-  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
-  <span class="l l-Scalar l-Scalar-Plain">become_method</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">su</span>
-  <span class="l l-Scalar l-Scalar-Plain">remote_user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
-  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
-      <span class="l l-Scalar l-Scalar-Plain">user</span><span class="p p-Indicator">:</span>
-        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
-        <span class="l l-Scalar l-Scalar-Plain">append</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner ssh key</span>
-      <span class="l l-Scalar l-Scalar-Plain">authorized_key</span><span class="p p-Indicator">:</span>
-        <span class="l l-Scalar l-Scalar-Plain">user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
-        <span class="l l-Scalar l-Scalar-Plain">key</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">lookup(&#39;file&#39;,</span><span class="nv"> </span><span class="s">&#39;../../ssh/id_rsa.pub&#39;)</span><span class="nv"> </span><span class="s">}}&quot;</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name …</span></pre></div></p>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="nt">hosts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
+  <span class="nt">become</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+  <span class="nt">become_method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">su</span>
+  <span class="nt">remote_user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+  <span class="nt">tasks</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
+      <span class="nt">user</span><span class="p">:</span>
+        <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
+        <span class="nt">append</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner ssh key</span>
+      <span class="nt">authorized_key</span><span class="p">:</span>
+        <span class="nt">user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">provisioner</span>
+        <span class="nt">key</span><span class="p">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">lookup(&#39;file&#39;,</span><span class="nv"> </span><span class="s">&#39;../../ssh/id_rsa.pub&#39;)</span><span class="nv"> </span><span class="s">}}&quot;</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name …</span></code></pre></div></p>
   </div>
 </article>
 <div class="pagination">
@@ -159,7 +159,7 @@ batch              --      --       --      --    0  300 --   E R
 
       <footer>
 		<p role="contentinfo">
-		  © 2013 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+		  © 2013 holrock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
     	</p>
 
 	  </footer>	

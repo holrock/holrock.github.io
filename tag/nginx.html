@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>nginx - Starbug</title>	
-	<meta name="author" content="horlock">
+	<meta name="author" content="holrock">
 	
 
 	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
@@ -34,7 +34,7 @@
 <div class="metadata">
   <time datetime="2016-11-10T00:00:00+09:00" pubdate>木 10 11月 2016</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/cattoy.html">cattoy</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a>, <a href="https://holrock.github.io/tag/nginx.html">nginx</a></p></div>  <div>
@@ -53,14 +53,14 @@
 <p>proxy_cache_keyに使用する$arg_w, $arg_h, arg_qがリサイズパラメータになります。
 それぞれ幅、高さ、jpeg qualityです。</p>
 <p>バックエンドがomacなので、$document_uriにhmacのキーを含んでいるため、サイズ指定以外は$document_uri があればユニークになります。</p>
-<div class="highlight"><pre><span></span>  <span class="k">server</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><code>  <span class="k">server</span> <span class="p">{</span>
     <span class="kn">server_name</span> <span class="s">tlsimg.cattoy.info</span><span class="p">;</span>
     <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
       <span class="kn">proxy_pass</span> <span class="s">http://localhost:8889</span><span class="p">;</span>
       <span class="kn">proxy_cache</span> <span class="s">TLSIMG</span><span class="p">;</span>
       <span class="kn">proxy_cache_key</span> <span class="s">&quot;</span><span class="nv">$host$document_uri$is_args&amp;$arg_w&amp;$arg_h&amp;$arg_q&quot;</span><span class="p">;</span>
       <span class="kn">proxy_cache_lock</span> <span class="no">on</span><span class="p">;</span>
-      <span class="kn">proxy_cache_valid …</span></pre></div></p>
+      <span class="kn">proxy_cache_valid …</span></code></pre></div></p>
   </div>
 </article>
 <div class="pagination">
@@ -98,7 +98,7 @@
 
       <footer>
 		<p role="contentinfo">
-		  © 2013 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+		  © 2013 holrock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
     	</p>
 
 	  </footer>	

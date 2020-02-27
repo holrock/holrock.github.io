@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>lisp - Starbug</title>	
-	<meta name="author" content="horlock">
+	<meta name="author" content="holrock">
 	
 
 	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
@@ -34,7 +34,7 @@
 <div class="metadata">
   <time datetime="2016-11-07T00:00:00+09:00" pubdate>月 07 11月 2016</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/lisp.html">lisp</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/lisp.html">lisp</a>, <a href="https://holrock.github.io/tag/allegrograph.html">allegrograph</a></p></div>  <div>
@@ -53,24 +53,24 @@
 <li>AllegroGraph clientはalispでは動かないのでmlispを作ります</li>
 <li><a href="http://franz.com/support/faq/#s3q7">faq</a>にあるので、いちどalispを起動してから次にコードを実行します</li>
 </ul>
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="k">progn</span>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="k">progn</span>
   <span class="p">(</span><span class="nv">build-lisp-image</span> <span class="s">&quot;sys:mlisp.dxl&quot;</span> <span class="ss">:case-mode</span> <span class="ss">:case-sensitive-lower</span>
           <span class="ss">:include-ide</span> <span class="no">nil</span> <span class="ss">:restart-app-function</span> <span class="no">nil</span><span class="p">)</span>
     <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nb">probe-file</span> <span class="s">&quot;sys:mlisp&quot;</span><span class="p">)</span> <span class="p">(</span><span class="nb">delete-file</span> <span class="s">&quot;sys:mlisp&quot;</span><span class="p">))</span>
       <span class="p">(</span><span class="nv">sys:copy-file</span> <span class="s">&quot;sys:alisp&quot;</span> <span class="s">&quot;sys:mlisp&quot;</span><span class="p">))</span>
-</pre></div>
+</code></pre></div>
 
 
 <ul>
 <li>mlispができたらslimeの設定を通します</li>
 </ul>
-<div class="highlight"><pre><span></span>(setq inferior-lisp-program &quot;/Applications/AllegroCLexpress.app/Contents/Resources …</pre></div></p>
+<div class="highlight"><pre><span></span><code><span class="err">(setq inferior-lisp-program &quot;/Applications/AllegroCLexpress.app/Contents/Resources …</span></code></pre></div></p>
   </div>
 </article><article class="summary">
 <div class="metadata">
   <time datetime="2016-11-04T00:00:00+09:00" pubdate>金 04 11月 2016</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/lisp.html">lisp</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/lisp.html">lisp</a>, <a href="https://holrock.github.io/tag/allegrograph.html">allegrograph</a>, <a href="https://holrock.github.io/tag/ruby.html">ruby</a>, <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a></p></div>  <div>
@@ -81,23 +81,23 @@
 <p>データは<a href="https://www.cattoy.info">cattoy</a>から作ります。</p>
 <p><a href="https://github.com/holrock/cattoy/commit/202415749077a2820bff11d3544af3fc03453b65">こんなかんじ</a>
 にRDF出力コードを仕込んだので、</p>
-<div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="no">RDF</span><span class="o">::</span><span class="no">Graph</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">tap</span> <span class="p">{</span><span class="o">|</span><span class="n">g</span><span class="o">|</span> <span class="no">Cat</span><span class="o">.</span><span class="n">all</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span><span class="o">|</span><span class="n">c</span><span class="o">|</span> <span class="n">g</span> <span class="o">&lt;&lt;</span> <span class="n">c</span><span class="o">.</span><span class="n">to_rdf</span> <span class="p">}}</span>
+<div class="highlight"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="no">RDF</span><span class="o">::</span><span class="no">Graph</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">tap</span> <span class="p">{</span><span class="o">|</span><span class="n">g</span><span class="o">|</span> <span class="no">Cat</span><span class="o">.</span><span class="n">all</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span><span class="o">|</span><span class="n">c</span><span class="o">|</span> <span class="n">g</span> <span class="o">&lt;&lt;</span> <span class="n">c</span><span class="o">.</span><span class="n">to_rdf</span> <span class="p">}}</span>
 <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;/tmp/cat.ttl&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="n">f</span> <span class="o">&lt;&lt;</span> <span class="n">g</span><span class="o">.</span><span class="n">to_ttl</span> <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 
 <p>でファイルに吐き出します。
 なかみはこんなかんじです。</p>
-<div class="highlight"><pre><span></span><span class="p">@</span><span class="k">prefix</span> <span class="nt">schema</span><span class="o">:</span> <span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">schema</span><span class="p">.</span><span class="nc">org</span><span class="o">/&gt;</span> <span class="o">.</span>
-<span class="p">@</span><span class="k">prefix</span> <span class="nt">xsd</span><span class="o">:</span> <span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">www</span><span class="p">.</span><span class="nc">w3</span><span class="p">.</span><span class="nc">org</span><span class="o">/</span><span class="nt">2001</span><span class="o">/</span><span class="nt">XMLSchema</span><span class="err">#</span><span class="o">&gt;</span> <span class="o">.</span>
+<div class="highlight"><pre><span></span><code><span class="k">@prefix</span><span class="w"> </span><span class="nn">schema:</span><span class="w"> </span><span class="nv">&lt;http://schema.org/&gt;</span><span class="w"> </span><span class="p">.</span><span class="w"></span>
+<span class="k">@prefix</span><span class="w"> </span><span class="nn">xsd:</span><span class="w"> </span><span class="nv">&lt;http://www.w3.org/2001/XMLSchema#&gt;</span><span class="w"> </span><span class="p">.</span><span class="w"></span>
 
-<span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">www</span><span class="p">.</span><span class="nc">cattoy</span><span class="p">.</span><span class="nc">info</span><span class="o">/</span><span class="nt">histories …</span></pre></div></p>
+<span class="nv">&lt;http://www.cattoy.info/histories …</span></code></pre></div></p>
   </div>
 </article><article class="summary">
 <div class="metadata">
   <time datetime="2016-11-03T00:00:00+09:00" pubdate>木 03 11月 2016</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/lisp.html">lisp</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/lisp.html">lisp</a>, <a href="https://holrock.github.io/tag/allegrograph.html">allegrograph</a></p></div>  <div>
@@ -129,7 +129,7 @@
 <div class="metadata">
   <time datetime="2016-10-25T00:00:00+09:00" pubdate>火 25 10月 2016</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/lisp.html">lisp</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/lisp.html">lisp</a>, <a href="https://holrock.github.io/tag/lmfs.html">lmfs</a>, <a href="https://holrock.github.io/tag/lispmachine.html">lispmachine</a></p></div>  <div>
@@ -154,9 +154,9 @@ unlambda.comからCADRのイメージとソースが落とせるので中身を�
 </ul>
 </li>
 </ul>
-<div class="highlight"><pre><span></span><span class="gd">--- a/lmfs.c    2006-07-11 07:01:32.000000000 +0900</span>
+<div class="highlight"><pre><span></span><code><span class="gd">--- a/lmfs.c    2006-07-11 07:01:32.000000000 +0900</span>
 <span class="gi">+++ b/lmfs.c    2016-09-18 22:24:12.000000000 +0900</span>
-<span class="gu">@@ -127,6 +127,7 …</span></pre></div></p>
+<span class="gu">@@ -127,6 +127,7 …</span></code></pre></div></p>
   </div>
 </article>
 <div class="pagination">
@@ -194,7 +194,7 @@ unlambda.comからCADRのイメージとソースが落とせるので中身を�
 
       <footer>
 		<p role="contentinfo">
-		  © 2013 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+		  © 2013 holrock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
     	</p>
 
 	  </footer>	

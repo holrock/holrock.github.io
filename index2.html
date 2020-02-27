@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>Starbug</title>	
-	<meta name="author" content="horlock">
+	<meta name="author" content="holrock">
 	
 
 	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
@@ -31,11 +31,48 @@
 
 
       <article>
-        <h1><a href="https://holrock.github.io/torquestat.html">torquestat</a></h1>
-        <p><img alt="screenshot" src="https://raw.githubusercontent.com/holrock/holrock.github.io/working/content/images/torquestat.png"></p>
-<p><a href="https://github.com/holrock/torquestat">github</a></p>
-<p>年末年始にgolangやり直しで作ってたtorqueの監視ツールです。</p>
-<p>こういうのが1バイナリでサクッとできるのはいいですね。</p>
+        <h1><a href="https://holrock.github.io/opam-2-local-mirrornozuo-rifang.html">OPAM 2 local mirrorの作り方</a></h1>
+        <p>インターネットに接続できないクラスター用リポジトリミラー作成シリーズのOPAM版です。</p>
+<p>opam1の頃はopam-mirrorを使って、しこしこ作ってましたが、opam2から楽になりました
+(https://discuss.ocaml.org/t/how-to-setup-local-opam-mirror/4423)</p>
+<p>作業環境にはopamインストールして、リポジトリのファイルを全てダウンロードします。</p>
+<div class="highlight"><pre><span></span><code>$ git clone https://github.com/ocaml/opam-repository.git
+$ <span class="nb">cd</span> opam-repository
+<span class="c1"># パッケージをダウンロードする</span>
+$ opam admin cache
+<span class="c1"># indexファイルをつくる</span>
+$ opam admin idnex
+</code></pre></div>
+
+
+<p>次はミラーサーバーにcacheとopam-repositoryをコピーして、httpdから見られるようにします。
+ここの設定は省略します。
+内部ノードから、<code>http://mirror-server/opam-repository</code>, <code>http://mirror-server/opam/cache</code>でアクセスできるものとします。</p>
+<p>内部ノードにopamの実行ファイルをコピーします。パスも通して使えるようにしておきます。</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># base-compilerのビルドでエラー出るが無視</span>
+$ opam init http://mirror-server/opam-repository
+</code></pre></div>
+
+
+<div class="highlight"><pre><span></span><code>$ vi ~/.opam/config
+<span class="c1"># archive-mirrors: [ &quot;http://mirror-server/opam/cache&quot; ]を追加l(pathはコピーしたところ)</span>
+<span class="c1"># コンパイラを入れる</span>
+$ opam switch create <span class="m">4</span>.09
+</code></pre></div>
+
+
+<p>これで完了です。あとはopamから好きなパッケージをインストール出来ます。</p>
+<p>インストールしたパッケージのドキュメントがみたい場合は
+<code>opam odig</code>で<code>odig</code>をインストール後、<code>odig odoc</code>でドキュメントを作成。
+ブラウザが使用できれば、そのまま<code>odig</code>で見ることができます。</p>
+<p>ブラウザが使用できない環境では<code>$(odig cache path)/html/$1/index.html</code>にhtmlファイルができるので、
+次のようなスクリプトを作って見ることができます。とりあえず<code>wodig</code>として保存します。</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/sh</span>
+w3m -s -o <span class="nv">confirm_qq</span><span class="o">=</span><span class="nb">false</span> <span class="s2">&quot;</span><span class="k">$(</span>odig cache path<span class="k">)</span><span class="s2">/html/</span><span class="nv">$1</span><span class="s2">/index.html&quot;</span>
+</code></pre></div>
+
+
+<p><code>wodig odig</code>と実行します。</p>
       </article>
 
       <hr />
@@ -44,6 +81,12 @@
           <h3>Last posts</h3>
           <ol class="archive">
     
+
+
+      <li>
+<a href="https://holrock.github.io/torquestat.html" rel="bookmark" title="Permalink to torquestat">torquestat</a>
+  <time datetime="2018-01-17T00:00:00+09:00" pubdate>水 17 1月 2018</time>
+</a>      </li>
 
 
       <li>
@@ -70,10 +113,6 @@
 </a>      </li>
 
 
-      <li>
-<a href="https://holrock.github.io/intanetsutonitsunagaranailinuxkurasutawoyun-yong-suru.html" rel="bookmark" title="Permalink to インターネットにつながらないLinuxクラスターを運用する">インターネットにつながらないLinuxクラスターを運用する</a>
-  <time datetime="2017-09-16T00:00:00+09:00" pubdate>土 16 9月 2017</time>
-<p class="tags">tags: <a href="https://holrock.github.io/tag/server.html">server</a></p></a>      </li>
 
 
 
@@ -138,7 +177,7 @@
 
       <footer>
 		<p role="contentinfo">
-		  © 2013 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+		  © 2013 holrock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
     	</p>
 
 	  </footer>	

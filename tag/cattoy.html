@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>cattoy - Starbug</title>	
-	<meta name="author" content="horlock">
+	<meta name="author" content="holrock">
 	
 
 	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
@@ -34,7 +34,7 @@
 <div class="metadata">
   <time datetime="2016-11-10T00:00:00+09:00" pubdate>木 10 11月 2016</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/cattoy.html">cattoy</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a>, <a href="https://holrock.github.io/tag/nginx.html">nginx</a></p></div>  <div>
@@ -53,20 +53,20 @@
 <p>proxy_cache_keyに使用する$arg_w, $arg_h, arg_qがリサイズパラメータになります。
 それぞれ幅、高さ、jpeg qualityです。</p>
 <p>バックエンドがomacなので、$document_uriにhmacのキーを含んでいるため、サイズ指定以外は$document_uri があればユニークになります。</p>
-<div class="highlight"><pre><span></span>  <span class="k">server</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><code>  <span class="k">server</span> <span class="p">{</span>
     <span class="kn">server_name</span> <span class="s">tlsimg.cattoy.info</span><span class="p">;</span>
     <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
       <span class="kn">proxy_pass</span> <span class="s">http://localhost:8889</span><span class="p">;</span>
       <span class="kn">proxy_cache</span> <span class="s">TLSIMG</span><span class="p">;</span>
       <span class="kn">proxy_cache_key</span> <span class="s">&quot;</span><span class="nv">$host$document_uri$is_args&amp;$arg_w&amp;$arg_h&amp;$arg_q&quot;</span><span class="p">;</span>
       <span class="kn">proxy_cache_lock</span> <span class="no">on</span><span class="p">;</span>
-      <span class="kn">proxy_cache_valid …</span></pre></div></p>
+      <span class="kn">proxy_cache_valid …</span></code></pre></div></p>
   </div>
 </article><article class="summary">
 <div class="metadata">
   <time datetime="2016-11-04T00:00:00+09:00" pubdate>金 04 11月 2016</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/lisp.html">lisp</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/lisp.html">lisp</a>, <a href="https://holrock.github.io/tag/allegrograph.html">allegrograph</a>, <a href="https://holrock.github.io/tag/ruby.html">ruby</a>, <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a></p></div>  <div>
@@ -77,23 +77,23 @@
 <p>データは<a href="https://www.cattoy.info">cattoy</a>から作ります。</p>
 <p><a href="https://github.com/holrock/cattoy/commit/202415749077a2820bff11d3544af3fc03453b65">こんなかんじ</a>
 にRDF出力コードを仕込んだので、</p>
-<div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="no">RDF</span><span class="o">::</span><span class="no">Graph</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">tap</span> <span class="p">{</span><span class="o">|</span><span class="n">g</span><span class="o">|</span> <span class="no">Cat</span><span class="o">.</span><span class="n">all</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span><span class="o">|</span><span class="n">c</span><span class="o">|</span> <span class="n">g</span> <span class="o">&lt;&lt;</span> <span class="n">c</span><span class="o">.</span><span class="n">to_rdf</span> <span class="p">}}</span>
+<div class="highlight"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="no">RDF</span><span class="o">::</span><span class="no">Graph</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">tap</span> <span class="p">{</span><span class="o">|</span><span class="n">g</span><span class="o">|</span> <span class="no">Cat</span><span class="o">.</span><span class="n">all</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span><span class="o">|</span><span class="n">c</span><span class="o">|</span> <span class="n">g</span> <span class="o">&lt;&lt;</span> <span class="n">c</span><span class="o">.</span><span class="n">to_rdf</span> <span class="p">}}</span>
 <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;/tmp/cat.ttl&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="n">f</span> <span class="o">&lt;&lt;</span> <span class="n">g</span><span class="o">.</span><span class="n">to_ttl</span> <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 
 <p>でファイルに吐き出します。
 なかみはこんなかんじです。</p>
-<div class="highlight"><pre><span></span><span class="p">@</span><span class="k">prefix</span> <span class="nt">schema</span><span class="o">:</span> <span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">schema</span><span class="p">.</span><span class="nc">org</span><span class="o">/&gt;</span> <span class="o">.</span>
-<span class="p">@</span><span class="k">prefix</span> <span class="nt">xsd</span><span class="o">:</span> <span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">www</span><span class="p">.</span><span class="nc">w3</span><span class="p">.</span><span class="nc">org</span><span class="o">/</span><span class="nt">2001</span><span class="o">/</span><span class="nt">XMLSchema</span><span class="err">#</span><span class="o">&gt;</span> <span class="o">.</span>
+<div class="highlight"><pre><span></span><code><span class="k">@prefix</span><span class="w"> </span><span class="nn">schema:</span><span class="w"> </span><span class="nv">&lt;http://schema.org/&gt;</span><span class="w"> </span><span class="p">.</span><span class="w"></span>
+<span class="k">@prefix</span><span class="w"> </span><span class="nn">xsd:</span><span class="w"> </span><span class="nv">&lt;http://www.w3.org/2001/XMLSchema#&gt;</span><span class="w"> </span><span class="p">.</span><span class="w"></span>
 
-<span class="o">&lt;</span><span class="nt">http</span><span class="o">://</span><span class="nt">www</span><span class="p">.</span><span class="nc">cattoy</span><span class="p">.</span><span class="nc">info</span><span class="o">/</span><span class="nt">histories …</span></pre></div></p>
+<span class="nv">&lt;http://www.cattoy.info/histories …</span></code></pre></div></p>
   </div>
 </article><article class="summary">
 <div class="metadata">
   <time datetime="2016-10-31T00:00:00+09:00" pubdate>月 31 10月 2016</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/cattoy.html">cattoy</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/omac.html">omac</a>, <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a>, <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a></p></div>  <div>
@@ -118,7 +118,7 @@ https接続でも警告が出てしまいます。</p>
 <div class="metadata">
   <time datetime="2016-10-24T00:00:00+09:00" pubdate>月 24 10月 2016</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/cattoy.html">cattoy</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/cattoy.html">cattoy</a>, <a href="https://holrock.github.io/tag/ruby.html">ruby</a>, <a href="https://holrock.github.io/tag/rails.html">rails</a></p></div>  <div>
@@ -138,11 +138,11 @@ https接続でも警告が出てしまいます。</p>
 </ul>
 </li>
 </ul>
-<div class="highlight"><pre><span></span>nginx version: nginx/1.11.5
-built by gcc 4.4.7 20120313 (Red Hat 4.4.7-17) (GCC) 
-built with LibreSSL 2.5.0
-TLS SNI support enabled
-configure arguments: --prefix=/opt/nginx-1 …</pre></div></p>
+<div class="highlight"><pre><span></span><code><span class="err">nginx version: nginx/1.11.5</span>
+<span class="err">built by gcc 4.4.7 20120313 (Red Hat 4.4.7-17) (GCC) </span>
+<span class="err">built with LibreSSL 2.5.0</span>
+<span class="err">TLS SNI support enabled</span>
+<span class="err">configure arguments: --prefix=/opt/nginx-1 …</span></code></pre></div></p>
   </div>
 </article>
 <div class="pagination">
@@ -180,7 +180,7 @@ configure arguments: --prefix=/opt/nginx-1 …</pre></div></p>
 
       <footer>
 		<p role="contentinfo">
-		  © 2013 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+		  © 2013 holrock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
     	</p>
 
 	  </footer>	

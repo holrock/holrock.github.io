@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>AllegroGraph その3 - Starbug</title>	
-	<meta name="author" content="horlock">
+	<meta name="author" content="holrock">
 	
 
 	<meta name="description" content="前回全然lispじゃなかった。 今回はACLから繋いでみます。 準備 Allegro CL 10.0 Free Express Editionのインストール Macの場合X11とかGTKとか必要とありますが、slimeから使うならなくてもいけます mlispをつくる AllegroGraph clientはalispでは動かないのでmlispを作ります faqにあるので、いちどalispを起動してから次にコードを実行します (progn (build-lisp-image "sys:mlisp.dxl" :case-mode :case-sensitive-lower :include-ide nil :restart-app-function nil) (when (probe-file "sys:mlisp") (delete-file "sys:mlisp")) (sys:copy-file "sys:alisp" "sys:mlisp")) mlispができたらslimeの設定を通します (setq inferior-lisp-program "/Applications/AllegroCLexpress.app/Contents/Resources …">
@@ -37,7 +37,7 @@
 <div class="metadata">
   <time datetime="2016-11-07T00:00:00+09:00" pubdate>月 07 11月 2016</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/lisp.html">lisp</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/lisp.html">lisp</a>, <a href="https://holrock.github.io/tag/allegrograph.html">allegrograph</a></p></div>		
@@ -53,19 +53,19 @@
 <li>AllegroGraph clientはalispでは動かないのでmlispを作ります</li>
 <li><a href="http://franz.com/support/faq/#s3q7">faq</a>にあるので、いちどalispを起動してから次にコードを実行します</li>
 </ul>
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="k">progn</span>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="k">progn</span>
   <span class="p">(</span><span class="nv">build-lisp-image</span> <span class="s">&quot;sys:mlisp.dxl&quot;</span> <span class="ss">:case-mode</span> <span class="ss">:case-sensitive-lower</span>
           <span class="ss">:include-ide</span> <span class="no">nil</span> <span class="ss">:restart-app-function</span> <span class="no">nil</span><span class="p">)</span>
     <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nb">probe-file</span> <span class="s">&quot;sys:mlisp&quot;</span><span class="p">)</span> <span class="p">(</span><span class="nb">delete-file</span> <span class="s">&quot;sys:mlisp&quot;</span><span class="p">))</span>
       <span class="p">(</span><span class="nv">sys:copy-file</span> <span class="s">&quot;sys:alisp&quot;</span> <span class="s">&quot;sys:mlisp&quot;</span><span class="p">))</span>
-</pre></div>
+</code></pre></div>
 
 
 <ul>
 <li>mlispができたらslimeの設定を通します</li>
 </ul>
-<div class="highlight"><pre><span></span>(setq inferior-lisp-program &quot;/Applications/AllegroCLexpress.app/Contents/Resources/mlisp&quot;)
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">(setq inferior-lisp-program &quot;/Applications/AllegroCLexpress.app/Contents/Resources/mlisp&quot;)</span>
+</code></pre></div>
 
 
 <h2>AllegroGraphのポート指定</h2>
@@ -94,7 +94,7 @@
 <li>tuple-storeはその2で作ったcattoyを使います</li>
 <li>せっかくなのでprologで</li>
 </ul>
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">load</span> <span class="s">&quot;/path/to/agraph-6.1.3-macosx86-client-lisp-acl10.0/agraph.fasl&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="nb">load</span> <span class="s">&quot;/path/to/agraph-6.1.3-macosx86-client-lisp-acl10.0/agraph.fasl&quot;</span><span class="p">)</span>
 <span class="p">(</span><span class="nb">in-package</span> <span class="ss">:db.agraph.user</span><span class="p">)</span>
 <span class="p">(</span><span class="nv">enable-!-reader</span><span class="p">)</span>
 
@@ -114,7 +114,7 @@
 <span class="c1">; こっちはattempt to call `#:q-/3&#39; which is an undefined function.になって動かなかった</span>
 <span class="c1">; なんでだろう</span>
 <span class="c1">; (?- (q- ?x ?y ?z))</span>
-</pre></div>
+</code></pre></div>
 
 
 <p>とりあえず問い合わせまでできるようになりました</p>
@@ -161,7 +161,7 @@
 
       <footer>
 		<p role="contentinfo">
-		  © 2013 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+		  © 2013 holrock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
     	</p>
 
 	  </footer>	

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>python - Starbug</title>	
-	<meta name="author" content="horlock">
+	<meta name="author" content="holrock">
 	
 
 	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
@@ -34,7 +34,7 @@
 <div class="metadata">
   <time datetime="2017-11-13T00:00:00+09:00" pubdate>月 13 11月 2017</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/python.html">python</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/server.html">server</a>, <a href="https://holrock.github.io/tag/python.html">python</a></p></div>  <div>
@@ -44,23 +44,23 @@
     <p><p><a href="https://pypi.python.org/pypi/bandersnatch">bandersnatch</a>を使用してpypiミラーを作成します。</p>
 <p>数日ほど時間がかかる上、500GiBぐらいディスクを使います。</p>
 <h1>bandersnatchのインストール</h1>
-<div class="highlight"><pre><span></span>$ virtualenv bandersnatch
+<div class="highlight"><pre><span></span><code>$ virtualenv bandersnatch
 $ <span class="nb">cd</span> bandersnatch
 $ bin/pip install -r https://bitbucket.org/pypa/bandersnatch/raw/stable/requirements.txt
-</pre></div>
+</code></pre></div>
 
 
 <h1>bandersnatch.conf</h1>
-<div class="highlight"><pre><span></span># ミラーのコピー先
-directory = /usr/local/mirror/pypi/
-master = https://pypi.python.org
-timeout = 10
-# worker=1だとすごく時間がかかる
-workers = 3
-hash-index = false
-stop-on-error = false
-delete-packages = true
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err"># ミラーのコピー先</span>
+<span class="err">directory = /usr/local/mirror/pypi/</span>
+<span class="err">master = https://pypi.python.org</span>
+<span class="err">timeout = 10</span>
+<span class="err"># worker=1だとすごく時間がかかる</span>
+<span class="err">workers = 3</span>
+<span class="err">hash-index = false</span>
+<span class="err">stop-on-error = false</span>
+<span class="err">delete-packages = true</span>
+</code></pre></div>
 
 
 <h1>不要なバイナリのコピーをやめる</h1>
@@ -70,7 +70,7 @@ delete-packages = true
 <div class="metadata">
   <time datetime="2016-10-25T00:00:00+09:00" pubdate>火 25 10月 2016</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/python.html">python</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/chainer.html">chainer</a>, <a href="https://holrock.github.io/tag/python.html">python</a></p></div>  <div>
@@ -87,13 +87,13 @@ cattoyに登録されている画像を集めてきて手作業で分類、学�
 <li><a href="http://ksksksks2.hatenadiary.jp/entry/20160327/1459061931">http://ksksksks2.hatenadiary.jp/entry/20160327/1459061931</a>
 を参考にリサイズとトレーニングデータに分ける</li>
 </ul>
-<div class="highlight"><pre><span></span><span class="n">line</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">label</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">line</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">label</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+</code></pre></div>
 
 
 <p>の所がlabelのままだとcompute_mean.pyでエラーになるので</p>
-<div class="highlight"><pre><span></span><span class="n">line</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">line</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+</code></pre></div>
 
 
 <p>に変更する。</p>
@@ -137,7 +137,7 @@ cattoyに登録されている画像を集めてきて手作業で分類、学�
 
       <footer>
 		<p role="contentinfo">
-		  © 2013 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+		  © 2013 holrock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
     	</p>
 
 	  </footer>	

@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug - python</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/python.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2017-11-13T00:00:00+09:00</updated><entry><title>pypiのミラーを作る</title><link href="https://holrock.github.io/pypinomirawozuo-ru.html" rel="alternate"></link><published>2017-11-13T00:00:00+09:00</published><updated>2017-11-13T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2017-11-13:/pypinomirawozuo-ru.html</id><summary type="html">&lt;p&gt;&lt;a href="https://pypi.python.org/pypi/bandersnatch"&gt;bandersnatch&lt;/a&gt;を使用してpypiミラーを作成します。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Starbug - python</title><link href="https://holrock.github.io/" rel="alternate"></link><link href="https://holrock.github.io/feeds/python.atom.xml" rel="self"></link><id>https://holrock.github.io/</id><updated>2017-11-13T00:00:00+09:00</updated><entry><title>pypiのミラーを作る</title><link href="https://holrock.github.io/pypinomirawozuo-ru.html" rel="alternate"></link><published>2017-11-13T00:00:00+09:00</published><updated>2017-11-13T00:00:00+09:00</updated><author><name>holrock</name></author><id>tag:holrock.github.io,2017-11-13:/pypinomirawozuo-ru.html</id><summary type="html">&lt;p&gt;&lt;a href="https://pypi.python.org/pypi/bandersnatch"&gt;bandersnatch&lt;/a&gt;を使用してpypiミラーを作成します。&lt;/p&gt;
 &lt;p&gt;数日ほど時間がかかる上、500GiBぐらいディスクを使います。&lt;/p&gt;
 &lt;h1&gt;bandersnatchのインストール&lt;/h1&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ virtualenv bandersnatch
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ virtualenv bandersnatch
 $ &lt;span class="nb"&gt;cd&lt;/span&gt; bandersnatch
 $ bin/pip install -r https://bitbucket.org/pypa/bandersnatch/raw/stable/requirements.txt
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h1&gt;bandersnatch.conf&lt;/h1&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# ミラーのコピー先
-directory = /usr/local/mirror/pypi/
-master = https://pypi.python.org
-timeout = 10
-# worker=1だとすごく時間がかかる
-workers = 3
-hash-index = false
-stop-on-error = false
-delete-packages = true
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;# ミラーのコピー先&lt;/span&gt;
+&lt;span class="err"&gt;directory = /usr/local/mirror/pypi/&lt;/span&gt;
+&lt;span class="err"&gt;master = https://pypi.python.org&lt;/span&gt;
+&lt;span class="err"&gt;timeout = 10&lt;/span&gt;
+&lt;span class="err"&gt;# worker=1だとすごく時間がかかる&lt;/span&gt;
+&lt;span class="err"&gt;workers = 3&lt;/span&gt;
+&lt;span class="err"&gt;hash-index = false&lt;/span&gt;
+&lt;span class="err"&gt;stop-on-error = false&lt;/span&gt;
+&lt;span class="err"&gt;delete-packages = true&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h1&gt;不要なバイナリのコピーをやめる&lt;/h1&gt;
 &lt;p&gt;完全なミラーを作る必要がなく、linuxでだけ使用するのでwin32 …&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://pypi.python.org/pypi/bandersnatch"&gt;bandersnatch&lt;/a&gt;を使用してpypiミラーを作成します。&lt;/p&gt;
 &lt;p&gt;数日ほど時間がかかる上、500GiBぐらいディスクを使います。&lt;/p&gt;
 &lt;h1&gt;bandersnatchのインストール&lt;/h1&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ virtualenv bandersnatch
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ virtualenv bandersnatch
 $ &lt;span class="nb"&gt;cd&lt;/span&gt; bandersnatch
 $ bin/pip install -r https://bitbucket.org/pypa/bandersnatch/raw/stable/requirements.txt
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h1&gt;bandersnatch.conf&lt;/h1&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# ミラーのコピー先
-directory = /usr/local/mirror/pypi/
-master = https://pypi.python.org
-timeout = 10
-# worker=1だとすごく時間がかかる
-workers = 3
-hash-index = false
-stop-on-error = false
-delete-packages = true
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;# ミラーのコピー先&lt;/span&gt;
+&lt;span class="err"&gt;directory = /usr/local/mirror/pypi/&lt;/span&gt;
+&lt;span class="err"&gt;master = https://pypi.python.org&lt;/span&gt;
+&lt;span class="err"&gt;timeout = 10&lt;/span&gt;
+&lt;span class="err"&gt;# worker=1だとすごく時間がかかる&lt;/span&gt;
+&lt;span class="err"&gt;workers = 3&lt;/span&gt;
+&lt;span class="err"&gt;hash-index = false&lt;/span&gt;
+&lt;span class="err"&gt;stop-on-error = false&lt;/span&gt;
+&lt;span class="err"&gt;delete-packages = true&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h1&gt;不要なバイナリのコピーをやめる&lt;/h1&gt;
@@ -49,7 +49,7 @@ delete-packages = true
 &lt;p&gt;lib/python3.6/site-packages/bandersnatch/package.py 
 にパッチを当ててダウンロードしないようにしました。
 バージョンは2.0.0です。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;sync_release_files&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;sync_release_files&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
         &lt;span class="n"&gt;release_files&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
 
         &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;release&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;releases&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;values&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
@@ -59,11 +59,11 @@ delete-packages = true
 
         &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;release_file&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;release_files&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
             &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;download_file&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;release_file&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;url&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;release_file&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;md5_digest&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;ここにダウンロードしない条件を入れました&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;sync_release_files&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;sync_release_files&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
         &lt;span class="n"&gt;release_files&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
 
         &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;release&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;releases&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;values&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
@@ -73,42 +73,42 @@ delete-packages = true
 
         &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;release_file&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;release_files&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;search&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;macosx|win32|win_amd64&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;release_file&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;url&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]):&lt;/span&gt;
-               &lt;span class="n"&gt;logger&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;info&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;u&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;skip: {0}&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;release_file&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;url&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]))&lt;/span&gt;
+               &lt;span class="n"&gt;logger&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;info&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;u&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;skip: &lt;/span&gt;&lt;span class="si"&gt;{0}&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;release_file&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;url&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]))&lt;/span&gt;
            &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
                &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;download_file&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;release_file&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;url&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;release_file&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;md5_digest&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h1&gt;実行&lt;/h1&gt;
 &lt;p&gt;かなり時間がかかります。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;bandersnatch -c ./bandersnatch.conf mirror
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;bandersnatch -c ./bandersnatch.conf mirror
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h1&gt;webサーバーを立てる&lt;/h1&gt;
 &lt;p&gt;nginxをインストールし、ミラーしたパスへaliasを設定します。&lt;/p&gt;
 &lt;p&gt;nginx.conf&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;server {
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;server&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
 
-    ...
+    &lt;span class="p"&gt;...&lt;/span&gt;
 
-    location /pypi {
-        alias /usr/local/mirror/pypi/web;
-        autoindex on;
-        charset utf-8;
-    }
-}
-&lt;/pre&gt;&lt;/div&gt;
+    &lt;span class="k"&gt;location&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pypi&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;alias&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="k"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mirror&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pypi&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;web&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;autoindex&lt;/span&gt; &lt;span class="k"&gt;on&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;charset&lt;/span&gt; &lt;span class="n"&gt;utf&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="err"&gt;}&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h1&gt;pip.confの設定&lt;/h1&gt;
 &lt;p&gt;$HOME/.config/pip/pip.conf&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;index-url = http://hostname/pipy/simple
-trusted-host = hostname
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;index-url = http://hostname/pipy/simple&lt;/span&gt;
+&lt;span class="err"&gt;trusted-host = hostname&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;これで&lt;code&gt;pip install&lt;/code&gt;がインターネットに接続できない環境でも使えるようになりました。&lt;/p&gt;</content><category term="server"></category><category term="python"></category></entry><entry><title>chainerで分類(できてない)</title><link href="https://holrock.github.io/chainerdefen-lei-dekitenai.html" rel="alternate"></link><published>2016-10-25T00:00:00+09:00</published><updated>2016-10-25T00:00:00+09:00</updated><author><name>horlock</name></author><id>tag:holrock.github.io,2016-10-25:/chainerdefen-lei-dekitenai.html</id><summary type="html">&lt;p&gt;cattoyでおもちゃの分類を自動でやりたくてchainerを試しました。
+&lt;p&gt;これで&lt;code&gt;pip install&lt;/code&gt;がインターネットに接続できない環境でも使えるようになりました。&lt;/p&gt;</content><category term="python"></category><category term="server"></category><category term="python"></category></entry><entry><title>chainerで分類(できてない)</title><link href="https://holrock.github.io/chainerdefen-lei-dekitenai.html" rel="alternate"></link><published>2016-10-25T00:00:00+09:00</published><updated>2016-10-25T00:00:00+09:00</updated><author><name>holrock</name></author><id>tag:holrock.github.io,2016-10-25:/chainerdefen-lei-dekitenai.html</id><summary type="html">&lt;p&gt;cattoyでおもちゃの分類を自動でやりたくてchainerを試しました。
 cattoyに登録されている画像を集めてきて手作業で分類、学習をやってみましたが、
 やはり分類が面倒なのと、素材不足で全然だめでした。&lt;/p&gt;
 &lt;p&gt;やったことをメモしておきます。&lt;/p&gt;
@@ -118,13 +118,13 @@ cattoyに登録されている画像を集めてきて手作業で分類、学�
 &lt;li&gt;&lt;a href="http://ksksksks2.hatenadiary.jp/entry/20160327/1459061931"&gt;http://ksksksks2.hatenadiary.jp/entry/20160327/1459061931&lt;/a&gt;
 を参考にリサイズとトレーニングデータに分ける&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;label&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;label&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;の所がlabelのままだとcompute_mean.pyでエラーになるので&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;に変更する。&lt;/p&gt;
@@ -140,13 +140,13 @@ cattoyに登録されている画像を集めてきて手作業で分類、学�
 &lt;li&gt;&lt;a href="http://ksksksks2.hatenadiary.jp/entry/20160327/1459061931"&gt;http://ksksksks2.hatenadiary.jp/entry/20160327/1459061931&lt;/a&gt;
 を参考にリサイズとトレーニングデータに分ける&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;label&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;label&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;の所がlabelのままだとcompute_mean.pyでエラーになるので&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;に変更する。&lt;/p&gt;
@@ -157,17 +157,17 @@ cattoyに登録されている画像を集めてきて手作業で分類、学�
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;epoch       iteration   main/loss   validation/main/loss  main/accuracy  validation/main/accuracy  lr
-5           10          6.24469     3.47694               0.378125       0.777778                  0.01
-10          20          3.63611     2.24688               0.571875       0.777778                  0.01
-15          30          1.78171     1.3616                0.471875       0.111111                  0.01
-20          40          1.13622     0.96606               0.521875       0.777778                  0.01
-26          50          0.987004    0.830154              0.553125       0.777778                  0.01
-31          60          0.974401    1.08021               0.54375        0.111111                  0.01
-36          70          0.966584    0.874548              0.528125       0.777778                  0.01
-41          80          0.96336     0.798205              0.553125       0.777778                  0.01
-47          90          0.956709    0.891943              0.546875       0.777778                  0.01
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;epoch       iteration   main/loss   validation/main/loss  main/accuracy  validation/main/accuracy  lr&lt;/span&gt;
+&lt;span class="err"&gt;5           10          6.24469     3.47694               0.378125       0.777778                  0.01&lt;/span&gt;
+&lt;span class="err"&gt;10          20          3.63611     2.24688               0.571875       0.777778                  0.01&lt;/span&gt;
+&lt;span class="err"&gt;15          30          1.78171     1.3616                0.471875       0.111111                  0.01&lt;/span&gt;
+&lt;span class="err"&gt;20          40          1.13622     0.96606               0.521875       0.777778                  0.01&lt;/span&gt;
+&lt;span class="err"&gt;26          50          0.987004    0.830154              0.553125       0.777778                  0.01&lt;/span&gt;
+&lt;span class="err"&gt;31          60          0.974401    1.08021               0.54375        0.111111                  0.01&lt;/span&gt;
+&lt;span class="err"&gt;36          70          0.966584    0.874548              0.528125       0.777778                  0.01&lt;/span&gt;
+&lt;span class="err"&gt;41          80          0.96336     0.798205              0.553125       0.777778                  0.01&lt;/span&gt;
+&lt;span class="err"&gt;47          90          0.956709    0.891943              0.546875       0.777778                  0.01&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;と、まあ微妙な感じでした&lt;/p&gt;</content><category term="chainer"></category><category term="python"></category></entry></feed>
+&lt;p&gt;と、まあ微妙な感じでした&lt;/p&gt;</content><category term="python"></category><category term="chainer"></category><category term="python"></category></entry></feed>

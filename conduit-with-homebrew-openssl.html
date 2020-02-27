@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>conduit with homebrew openssl - Starbug</title>	
-	<meta name="author" content="horlock">
+	<meta name="author" content="holrock">
 	
 
 	<meta name="description" content="現象 cohttpでhttpsからClient.getすると (Failure "No SSL or TLS support compiled into Conduit") とエラーになった 対策 CPPFLAGS="-I$HOME/homebrew/opt/openssl/include" opam install ssl 原因 homebrewでopensslを入れており、homebrewのpathを/usr/localから$HOME/homebrewに変えていたため、 opamでsslをビルドできなかった。">
@@ -37,7 +37,7 @@
 <div class="metadata">
   <time datetime="2016-10-28T00:00:00+09:00" pubdate>金 28 10月 2016</time>
     <address class="vcard author">
-      by <a class="url fn" href="https://holrock.github.io/author/horlock.html">horlock</a>
+      by <a class="url fn" href="https://holrock.github.io/author/holrock.html">holrock</a>
     </address>
   in <a href="https://holrock.github.io/category/ocaml.html">ocaml</a>
 <p class="tags">tagged <a href="https://holrock.github.io/tag/ocaml.html">ocaml</a></p></div>		
@@ -46,8 +46,8 @@
 <code>(Failure "No SSL or TLS support compiled into Conduit")</code>
 とエラーになった</p>
 <h1>対策</h1>
-<div class="highlight"><pre><span></span>CPPFLAGS=&quot;-I$HOME/homebrew/opt/openssl/include&quot; opam install ssl
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">CPPFLAGS=&quot;-I$HOME/homebrew/opt/openssl/include&quot; opam install ssl</span>
+</code></pre></div>
 
 
 <h1>原因</h1>
@@ -93,7 +93,7 @@ opamでsslをビルドできなかった。</p>
 
       <footer>
 		<p role="contentinfo">
-		  © 2013 horlock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+		  © 2013 holrock - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
     	</p>
 
 	  </footer>	
